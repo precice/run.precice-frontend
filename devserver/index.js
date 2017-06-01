@@ -13,6 +13,7 @@ server.use(webpackMiddleware(webpack(webpackDevConfig), {
   // public path to bind the middleware to
   // use the same as in webpack
 
+  stats: 'errors-only',
 }));
 
 
