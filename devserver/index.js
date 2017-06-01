@@ -3,10 +3,14 @@ const argv = require('minimist')(process.argv.slice(2));
 var webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackDevConfig = require('../config/webpack/webpack.dev');
+const fs = require('fs');
+const path = require('path');
 
 const server = express();
 
-server.use(webpackMiddleware(webpack(webpackDevConfig), {
+const comp = webpack(webpackDevConfig);
+
+server.use(webpackMiddleware(comp, {
   // publicPath is required, whereas all other options are optional
 
   publicPath: webpackDevConfig.output.publicPath ,
@@ -17,15 +21,16 @@ server.use(webpackMiddleware(webpack(webpackDevConfig), {
 }));
 
 
-// app.get('*', (req, res) => {
-//   fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
-//     if (err) {
-//       res.sendStatus(404);
-//     } else {
-//       res.send(file.toString());
-//     }
-//   });
-// });
+// redirect all requests to react app
+server.get('*', (req, res) => {
+  fs.readFile(path.join(comp.outputPath, 'index.html'), (err, file) => {
+    if (err) {
+      res.sendStatus(404);
+    } else {
+      res.send(file.toString());
+    }
+  });
+});
 
 
 const port = argv.port || process.env.PORT || 3000;
