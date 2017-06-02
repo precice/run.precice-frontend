@@ -4,12 +4,12 @@
  *
  */
 
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 
 import {
-  EXAMPLE_ACTION
+  EXAMPLE_ACTION,
 } from '../constants';
-import {Action} from "redux";
+import { Action } from 'redux';
 
 
 const initialState = fromJS({

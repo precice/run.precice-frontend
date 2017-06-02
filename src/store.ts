@@ -1,23 +1,30 @@
 /**
- * Create the store with asynchronously loaded reducers
+ * Create the store
  */
 
-import { createStore, applyMiddleware, compose, Middleware, StoreEnhancer } from 'redux';
+import { createStore, applyMiddleware, compose, Middleware, StoreEnhancer, GenericStoreEnhancer } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import allReducers from './containers/reducers';
-import { Map } from 'immutable';
+import { routerMiddlewareInstace } from './router';
+import { fromJS } from 'immutable';
 
+const middlewares: Middleware[] = [
+  routerMiddlewareInstace,
 
-const middlewares: Middleware[] = [];
+];
 
-// const enhancers: StoreEnhancer<Map>[] = [
-//   applyMiddleware(...middlewares),
-// ];
+const enhancers: GenericStoreEnhancer[] = [
+  applyMiddleware(...middlewares),
+];
 
+// If Redux DevTools Extension is installed use it, otherwise use Redux compose
+const composeEnhancers: (...enhancers: GenericStoreEnhancer[]) => GenericStoreEnhancer =
+  window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line:no-string-literal
 
 const store = createStore(
   combineReducers(allReducers),
-  compose(applyMiddleware(...middlewares))
+  fromJS({}),
+  composeEnhancers(...enhancers),
 );
 
 

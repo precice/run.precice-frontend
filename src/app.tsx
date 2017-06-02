@@ -3,42 +3,37 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import {
-  BrowserRouter as Router,
   Route,
-} from 'react-router-dom'
-import LandingPage from "./components/LandingPage/index";
-import Example from "./containers/Example/index";
+} from 'react-router-dom';
 
 import './sass/global.scss';
-import { rootRoute, RouteDefinition } from "./routeDefinitions";
-
+import { history, rootRoute, RouteDefinition } from './router';
+import { ConnectedRouter } from 'react-router-redux';
+const a = store;
 
 const RouteWithSubRoutes = (route: RouteDefinition) => {
-  let childRoutes = route.childRoutes;
-  if (childRoutes && !Array.isArray(childRoutes)) {
-    childRoutes = [childRoutes];
-  }
+  const childRoutes = route.childRoutes && route.childRoutes.map((cr, i) => {
+      return <RouteWithSubRoutes key={i} {...cr}/>;
+    });
 
   const render = (props: any) => (
     // pass the sub-routes down to keep nesting
     <route.component {...props}>
-      {childRoutes && childRoutes.map((cr, i) => {
-        return <RouteWithSubRoutes key={i} {...cr}/>
-      })}
+      {childRoutes}
     </route.component>
   );
 
   return <Route exact={!childRoutes} path={route.path} render={render}/>;
-}
+};
 
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <ConnectedRouter history={history}>
       <RouteWithSubRoutes {...rootRoute} />
-    </Router>
+    </ConnectedRouter>
   </Provider>,
-  document.getElementById('app-root')
+  document.getElementById('app-root'),
 );
 
 

@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react"
+  ],
+  "rules": {
+    "interface-name": false,
+    "object-literal-sort-keys": false,
+    "no-consecutive-blank-lines": [true, 2],
+    "ordered-imports": false,
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ]
+  }
+}
