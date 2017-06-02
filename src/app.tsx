@@ -10,6 +10,8 @@ import {
 import LandingPage from "./components/LandingPage/index";
 import Example from "./containers/Example/index";
 
+import './sass/global.scss';
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>
