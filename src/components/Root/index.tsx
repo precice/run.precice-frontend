@@ -5,7 +5,10 @@ interface rootProps {
 }
 class Root extends React.Component<rootProps, undefined> {
   render() {
-    return <div> Test </div>;
+    return <div>
+      <div>Header</div>
+      <div>{this.props.children}</div>
+      </div>;
   }
 }
 
