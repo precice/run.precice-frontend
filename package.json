@@ -4,7 +4,7 @@
     "build": "webpack --config config/webpack/webpack.dev.js --color -p --progress",
     "build:production": "cross-env NODE_ENV=production webpack --config config/webpack/webpack.prod.js --color -p --progress",
     "build:clean": "rimraf ./build",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --history-api-fallback --config ./config/webpack/webpack.dev.js --port 3000"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack/webpack.dev.js"
   },
   "dependencies": {
     "@types/react": "^15.0.25",

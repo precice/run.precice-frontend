@@ -17,7 +17,7 @@ export interface RouteDefinition {
 
 
 export const rootRoute: RouteDefinition = {
-  path: '/',
+  path: '',
   component: Root,
   childRoutes: [
     {
