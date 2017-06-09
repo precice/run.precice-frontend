@@ -5,18 +5,24 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 
-interface step1Props {
+interface step4Props {
 }
 
 
-class Step1 extends React.Component<step1Props, undefined> {
+class Step4 extends React.Component<step4Props, undefined> {
 
   render() {
-    return <body className={styles.TuInContainer}>
-      <header className={styles.TuInHeader}>introduction</header>
-      <li className={styles.TuInContent}>In this tutorial, we are going to solve a 1D problem. </li>
-      <li className={styles.TuInContent}>We use two solvers: SU2 and Calculix.</li>
-      <li className={styles.TuInContent}>The role of preCICE is to couple those two solvers.</li>
+    return <body className={styles.subContainer}>
+    <div className={styles.expContainer}>
+      <div className={styles.expHeader}>
+        what to do
+      </div>
+    </div>
+    <div className={styles.visialize}>
+      <div className={styles.visialHeader}>
+        Visualization
+      </div>
+    </div>
     </body>;
   }
 }
@@ -32,4 +38,4 @@ function mapDispatchToProps(dispatch) {
 export default connect<any, any, any>(
   mapStateToProps,
   mapDispatchToProps
-)(Step1);
+)(Step4);

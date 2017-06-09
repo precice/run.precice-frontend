@@ -1,0 +1,28 @@
+$primary-color: white;
+$background-color: rgb(61, 170, 255);
+$emphasize-color: rgb(255, 144, 95);
+$explain-background-color: rgba(255,255,255,0.3);
+.TuInContainer{
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 500px;
+  max-width: 1200px;
+  background: $explain-background-color;
+  .TuInHeader{
+    font-size: 20px;
+    padding-top: 10px;
+    line-height: 1.5;
+    color: $primary-color;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .TuInContent{
+    font-size: 16px;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    line-height: 1.5;
+    color: $primary-color;
+  }
+}

@@ -1,40 +1,11 @@
 $primary-color: white;
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
-body{
-  font-family: Verdana;
-}
-a{
-  text-decoration: none;
-}
-.container{
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1%;
-  padding-left: 2.5%;
-  padding-right: 2.5%;
-  width: 95%;
-  height: 100%;
-  background: $background-color;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  .banner{
-    color: $primary-color;
-    font-size: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 20px;
-    .pre{
-      color: $emphasize-color;
-    }
-  }
-  .small{
-    padding-top: 15%;
-    margin: 0 auto;
-    max-width:1000px;
-    text-align: center;
-  }
+.LandingPage{
+  padding-top: 15%;
+  margin: 0 auto;
+  max-width:1000px;
+  text-align: center;
   .intro{
     font-size: 45px;
     line-height: 1.5;
@@ -47,34 +18,20 @@ a{
     color: $emphasize-color;
   }
 }
+
 .Btn_container{
   padding-top: 50px;
+  display: inline-block;
+  font-size: 20px;
   .Btn{
     color: $primary-color;
     background: $emphasize-color;
     height: 20px;
-    display: inline-block;
     padding: 10px;
     text-align: center;
     letter-spacing: 1px;
-    border-radius: 6px;
+    border-radius: 10px;
     touch-action: manipulation;
     cursor: pointer;
-    font-size: 20px;
   }
-}
-
-.footer{
-  color: $primary-color;
-  text-align: center;
-  padding-top: 200px;
-  padding-bottom: 10px;
-  .pre{
-    color: $emphasize-color;
-  }
-}
-
-.warnBg {
-  background: red;
-
 }

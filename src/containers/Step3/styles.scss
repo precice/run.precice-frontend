@@ -1,0 +1,67 @@
+$primary-color: white;
+$background-color: rgb(61, 170, 255);
+$emphasize-color: rgb(255, 144, 95);
+$explain-background-color: rgba(255,255,255,0.3);
+$solver-background-color: white;
+$solver-text-color: rgba(0,0,0,0.5);
+
+.subContainer{
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 500px;
+  max-width: 1200px;
+  display: block;
+  .expContainer{
+    background-color: $explain-background-color;
+    width: 380px;
+    height: 500px;
+    display: inline-block;
+    color: $primary-color;
+    .expHeader{
+      font-size: 20px;
+      padding-top: 10px;
+      line-height: 1.5;
+      color: $primary-color;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+  .subsubContainer{
+    display: inline-block;
+    width: 790px;
+    height: 500px;
+    float: right;
+    .solvers{
+      .solL{
+        background-color: $solver-background-color;
+        display: inline-block;
+        width: 380px;
+        height: 325px;
+        float: left;
+      }
+      .solR{
+        background-color: $solver-background-color;
+        display: inline-block;
+        width: 380px;
+        height: 325px;
+        float: right;
+      }
+    }
+    .convergentplot{
+      background-color: $solver-background-color;
+      width: 790px;
+      height: 145px;
+      margin-top: 355px;
+    }
+    .solHeader{
+      font-size: 20px;
+      padding-top: 10px;
+      line-height: 1.5;
+      color: $solver-text-color;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+
+}

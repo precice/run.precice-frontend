@@ -1,0 +1,54 @@
+$primary-color: white;
+$background-color: rgb(61, 170, 255);
+$emphasize-color: rgb(255, 144, 95);
+$pre-color: rgb(255, 144, 95);
+$cice-color: white;
+$label-font-family: courier;
+$body-font-family: Verdana;
+
+body{
+  font-family: Verdana, serif;
+}
+a{
+  text-decoration: none;
+}
+.container{
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1%;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  width: 100%;
+  height: 1200px;
+  background: $background-color;
+  .banner{
+    margin: 25px auto;
+    padding-left: 15px;
+    color: $primary-color;
+    font-size: 25px;
+    max-width: 1300px;
+    max-height: 25px;
+  }
+}
+
+.footer{
+  color: $primary-color;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 10px;
+}
+
+.warnBg {
+  background: red;
+
+}
+.label {
+  font-family: $label-font-family;
+  .pre {
+    color: $emphasize-color;
+  }
+  .CICE {
+    color: $cice-color;
+  }
+}

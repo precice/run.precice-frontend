@@ -1,0 +1,52 @@
+$primary-color: white;
+$background-color: rgb(61, 170, 255);
+$emphasize-color: rgb(255, 144, 95);
+$explain-background-color: rgba(255,255,255,0.3);
+$solver-background-color: white;
+$solver-text-color: rgba(0,0,0,0.5);
+
+.subContainer{
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 500px;
+  max-width: 1200px;
+  display: block;
+  .expContainer{
+    background-color: $explain-background-color;
+    width: 380px;
+    height: 500px;
+    display: inline-block;
+    color: $primary-color;
+    .expHeader{
+      font-size: 20px;
+      padding-top: 10px;
+      line-height: 1.5;
+      color: $primary-color;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+  .interaction{
+    margin-left: 30px;
+    background-color: $solver-background-color;
+    display: inline-block;
+    width: 380px;
+    height: 500px;
+    float: right;
+    color: $solver-text-color;
+    .interactionHeader{
+      font-size: 20px;
+      padding-top: 10px;
+      line-height: 1.5;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .text{
+      margin: 10px auto;
+      width: 370px;
+      height: 430px;
+      font-family: courier;
+    }
+  }
+}
