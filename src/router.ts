@@ -5,6 +5,8 @@ import { routerMiddleware } from 'react-router-redux';
 import Root from './components/Root';
 import LandingPage from './components/LandingPage';
 import Example from './containers/Example';
+import Tutorial from './containers/Tutorial';
+import Step1 from './containers/Step1';
 
 
 export interface RouteDefinition {
@@ -25,6 +27,16 @@ export const rootRoute: RouteDefinition = {
     {
       path: '/example',
       component: Example,
+    },
+    {
+      path: '/tutorial',
+      component: Tutorial,
+      childRoutes: [
+        {
+          path: '/step1',
+          component: Step1,
+        },
+      ],
     },
   ],
 };

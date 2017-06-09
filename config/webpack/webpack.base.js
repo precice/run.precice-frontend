@@ -6,10 +6,12 @@ const autoprefixer = require('autoprefixer');
 module.exports = (options) => {
   const componentsCss = new ExtractTextPlugin('[name].[hash].css');
   return {
+
     entry: './src/app.tsx',
     output: {
       filename: 'bundle.js',
       path: path.join(__dirname, '../../build'),
+      publicPath: '/',
     },
 
     resolve: {
@@ -83,6 +85,7 @@ module.exports = (options) => {
 
 
     devtool: options.devtool,
+    devServer: options.devServer,
 
   }
 

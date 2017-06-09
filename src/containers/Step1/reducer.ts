@@ -16,11 +16,11 @@ const initialState = fromJS({
   example: '123',
 });
 
-function exampleReducer(state = initialState, action: any) {
+function exampleReducer(state = initialState, action: Action) {
   switch (action.type) {
     case EXAMPLE_ACTION:
       return state
-        .set('exampleField', action.newText);
+        .set('example', '234');
     default:
       return state;
   }
