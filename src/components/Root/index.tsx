@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 
-interface rootProps {
-  children: any,
+interface RootProps {
+  children: any;
 }
-class Root extends React.Component<rootProps, undefined> {
+class Root extends React.Component<RootProps, undefined> {
   render() {
-    return <body className={styles.container}>
+    return <div className={styles.container}>
     <div className={styles.banner}>
       <span className={styles.label}>
       <span className={styles.pre}>pre</span>
@@ -21,7 +21,7 @@ class Root extends React.Component<rootProps, undefined> {
       <span className={styles.CICE}>CICE</span>
       </span>
     </footer>
-    </body>;
+    </div>;
   }
 }
 

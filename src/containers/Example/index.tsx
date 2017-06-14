@@ -1,23 +1,26 @@
-import { connect } from "react-redux";
-import { EXAMPLE_ACTION } from "../constants";
-import { createStructuredSelector } from "reselect";
+import { connect } from 'react-redux';
+import { EXAMPLE_ACTION } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { exampleFieldSelector } from './selectors';
 
-interface exampleProps {
-  example: Function,
-  exampleField: String,
+interface ExampleProps {
+  example: () => void;
+  exampleField: string;
 }
 
 
-class Example extends React.Component<exampleProps, undefined> {
+class Example extends React.Component<ExampleProps, undefined> {
 
-  render() {
-    return <div>This is an Example <Link to="/"> Link to Landing</Link>
-      <button onClick={() => {this.props.example()}}>Change state</button>
-      <div>Example Field value: {this.props.exampleField}</div>
-    </div>;
+  public render() {
+    return (
+      <div>This is an Example <Link to="/"> Link to Landing</Link>
+        <button onClick={this.props.example}>Change state
+        </button>
+        <div>Example Field value: {this.props.exampleField}</div>
+      </div>
+    );
   }
 }
 
@@ -31,7 +34,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect<any, any, any>(
+export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Example);

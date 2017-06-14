@@ -1,4 +1,4 @@
-$primary-color: white;
+$primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
 .LandingPage{
@@ -9,13 +9,13 @@ $emphasize-color: rgb(255, 144, 95);
   .intro{
     font-size: 45px;
     line-height: 1.5;
-    color: $primary-color;
   }
-  .sub_intro{
-    padding-top: 20px;
+
+  .sub-intro {
+    color: $emphasize-color;
     font-size: 25px;
     line-height: 1.5;
-    color: $emphasize-color;
+    padding-top: 20px;
   }
 }
 
@@ -35,3 +35,4 @@ $emphasize-color: rgb(255, 144, 95);
     cursor: pointer;
   }
 }
+

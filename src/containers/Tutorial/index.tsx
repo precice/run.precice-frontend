@@ -1,16 +1,17 @@
-import { connect } from "react-redux";
-import { EXAMPLE_ACTION } from "../constants";
-import { createStructuredSelector } from "reselect";
+import { connect } from 'react-redux';
+import { EXAMPLE_ACTION } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 
 
-interface tutorialProps {
+interface TutorialProps {
+  example: () => void;
 }
 
 
-class Tutorial extends React.Component<tutorialProps, undefined> {
+class Tutorial extends React.Component<TutorialProps, undefined> {
 
   render() {
     return <div>
@@ -42,7 +43,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect<any, any, any>(
+export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Tutorial);

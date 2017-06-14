@@ -5,5 +5,5 @@ const exampleSelector = (state) => {
 
 export const exampleFieldSelector = () => createSelector(
   exampleSelector,
-  (exampleSubstate) => exampleSubstate.get('exampleField')
+  (exampleSubstate) => exampleSubstate.get('exampleField'),
 );
