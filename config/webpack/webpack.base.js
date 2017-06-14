@@ -43,6 +43,7 @@ module.exports = (options) => {
               options: {
                 modules: true,
                 namedExport: true,
+                camelCase: true,
                 sourceMap: true,
                 localIdentName: '[local]__[path][name]__[hash:base64:5]',
               },

@@ -1,80 +1,90 @@
-$primary-color: white;
+$primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
-body{
+
+body {
   font-family: Verdana;
 }
-a{
+
+a {
   text-decoration: none;
 }
-.container{
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1%;
-  padding-left: 2.5%;
-  padding-right: 2.5%;
-  width: 95%;
-  height: 100%;
+
+.container {
   background: $background-color;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  padding-top: 1%;
   position: relative;
-  .banner{
+  width: 95%;
+
+  .banner {
     color: $primary-color;
     font-size: 20px;
     margin-left: 10px;
     margin-right: 10px;
     padding: 20px;
-    .pre{
+
+    .pre {
       color: $emphasize-color;
     }
   }
-  .small{
-    padding-top: 15%;
+
+  .small {
     margin: 0 auto;
-    max-width:1000px;
+    max-width: 1000px;
+    padding-top: 15%;
     text-align: center;
   }
-  .intro{
+
+  .intro {
+    color: $primary-color;
     font-size: 45px;
     line-height: 1.5;
-    color: $primary-color;
   }
-  .sub_intro{
-    padding-top: 20px;
+
+  .sub-intro {
+    color: $emphasize-color;
     font-size: 25px;
     line-height: 1.5;
-    color: $emphasize-color;
+    padding-top: 20px;
   }
 }
-.Btn_container{
+
+.btn-container {
   padding-top: 50px;
-  .Btn{
-    color: $primary-color;
+
+  .btn {
     background: $emphasize-color;
-    height: 20px;
+    border-radius: 6px;
+    color: $primary-color;
+    cursor: pointer;
     display: inline-block;
+    font-size: 20px;
+    height: 20px;
+    letter-spacing: 1px;
     padding: 10px;
     text-align: center;
-    letter-spacing: 1px;
-    border-radius: 6px;
     touch-action: manipulation;
-    cursor: pointer;
-    font-size: 20px;
   }
 }
 
-.footer{
+.footer {
   color: $primary-color;
-  text-align: center;
-  padding-top: 200px;
   padding-bottom: 10px;
-  .pre{
+  padding-top: 200px;
+  text-align: center;
+
+  .pre {
     color: $emphasize-color;
   }
 }
 
-.warnBg {
-  background: red;
-
+.warn-bg {
+  background: rgb(255, 0, 0);
 }

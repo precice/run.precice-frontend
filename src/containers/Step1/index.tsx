@@ -1,16 +1,17 @@
-import { connect } from "react-redux";
-import { EXAMPLE_ACTION } from "../constants";
-import { createStructuredSelector } from "reselect";
+import { connect } from 'react-redux';
+import { EXAMPLE_ACTION } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-interface step1Props {
+interface Step1Props {
+  example: () => void;
 }
 
 
-class Step1 extends React.Component<step1Props, undefined> {
+class Step1 extends React.Component<Step1Props, undefined> {
 
-  render() {
+  public render() {
     return <div>Step1</div>;
   }
 }
@@ -25,5 +26,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Step1);
