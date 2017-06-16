@@ -1,80 +1,82 @@
-$primary-color: white;
+$primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
 $pre-color: rgb(255, 144, 95);
-$cice-color: white;
+$cice-color: rgb(255, 255, 255);
 $label-font-family: courier;
 $body-font-family: Verdana;
-.BarContainer{
-  margin: 0 auto 30px auto;
-  max-width:1000px;
+
+.bar-container {
   height: 50px;
-  .progressBtnAfter{
-    margin-top: 0;
-    height: 44px;
-    width: 44px;
-    margin-left: 180px;
-    -moz-border-radius: 22px;
-    -webkit-border-radius: 22px;
-    border-radius: 22px;
+  margin: 0 auto 30px;
+  max-width: 1000px;
+
+  .progress-btn-after {
     background-color: $emphasize-color;
-    display: inline-block;
-  }
-  .progressBtnBefore{
-    margin-top: 0;
-    height: 44px;
-    width: 44px;
-    margin-left: 180px;
-    -moz-border-radius: 22px;
-    -webkit-border-radius: 22px;
     border-radius: 22px;
-    background-color: $primary-color;
     display: inline-block;
+    height: 44px;
+    margin-left: 180px;
+    margin-top: 0;
+    width: 44px;
+  }
+
+  .progress-btn-before {
+    background-color: $primary-color;
+    border-radius: 22px;
+    display: inline-block;
+    height: 44px;
+    margin-left: 180px;
+    margin-top: 0;
+    width: 44px;
   }
 }
 
-.Btn_container{
-  margin: 50px auto;
-  font-size: 20px;
-  max-width: 1300px;
+.btn-container {
   display: block;
-  .Btn{
+  font-size: 20px;
+  margin: 50px auto;
+  max-width: 1300px;
+
+  .btn {
+    background: $emphasize-color;
+    border-radius: 10px;
+    color: $primary-color;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    letter-spacing: 1px;
     margin-left: 38%;
-    display: inline-block;
-    color: $primary-color;
-    background: $emphasize-color;
-    height: 20px;
     padding: 10px;
     text-align: center;
-    letter-spacing: 1px;
-    border-radius: 10px;
     touch-action: manipulation;
-    cursor: pointer;
   }
-  .BtnL{
-    display: inline-block;
-    color: $primary-color;
+
+  .btn-l {
     background: $emphasize-color;
-    height: 20px;
-    padding: 10px;
-    text-align: center;
-    letter-spacing: 1px;
     border-radius: 10px;
-    touch-action: manipulation;
+    color: $primary-color;
     cursor: pointer;
+    display: inline-block;
     float: left;
-  }
-  .BtnR{
-    display: inline-block;
-    color: $primary-color;
-    background: $emphasize-color;
     height: 20px;
+    letter-spacing: 1px;
     padding: 10px;
     text-align: center;
-    letter-spacing: 1px;
-    border-radius: 10px;
     touch-action: manipulation;
+  }
+
+  .btn-r {
+    background: $emphasize-color;
+    border-radius: 10px;
+    color: $primary-color;
     cursor: pointer;
+    display: inline-block;
     float: right;
+    height: 20px;
+    letter-spacing: 1px;
+    padding: 10px;
+    text-align: center;
+    touch-action: manipulation;
   }
 }

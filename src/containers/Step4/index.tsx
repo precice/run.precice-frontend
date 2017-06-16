@@ -12,7 +12,7 @@ interface step4Props {
 class Step4 extends React.Component<step4Props, undefined> {
 
   render() {
-    return <body className={styles.subContainer}>
+    return <div className={styles.subContainer}>
     <div className={styles.expContainer}>
       <div className={styles.expHeader}>
         what to do
@@ -23,7 +23,7 @@ class Step4 extends React.Component<step4Props, undefined> {
         Visualization
       </div>
     </div>
-    </body>;
+    </div>;
   }
 }
 

@@ -11,14 +11,14 @@ class Root extends React.Component<RootProps, undefined> {
     <div className={styles.banner}>
       <span className={styles.label}>
       <span className={styles.pre}>pre</span>
-      <span className={styles.CICE}>CICE</span>
+      <span className={styles.cice}>CICE</span>
       </span>
     </div>
     <div>{this.props.children}</div>
     <footer className={styles.footer}>Copyright &copy;
       <span className={styles.label}>
       <span className={styles.pre}>pre</span>
-      <span className={styles.CICE}>CICE</span>
+      <span className={styles.cice}>CICE</span>
       </span>
     </footer>
     </div>;

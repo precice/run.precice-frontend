@@ -1,67 +1,85 @@
-$primary-color: white;
+$primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
-$explain-background-color: rgba(255,255,255,0.3);
-$solver-background-color: white;
-$solver-text-color: rgba(0,0,0,0.5);
+$explain-background-color: rgba(255, 255, 255, 0.3);
+$solver-background-color: rgb(255, 255, 255);
+$solver-text-color: rgba(0, 0, 0, 0.5);
 
-.subContainer{
-  margin-top: 20px;
+
+.sub-container {
+  display: block;
+  height: 500px;
   margin-left: auto;
   margin-right: auto;
-  height: 500px;
+  margin-top: 20px;
   max-width: 1200px;
-  display: block;
-  .expContainer{
-    background-color: $explain-background-color;
-    width: 380px;
-    height: 500px;
-    display: inline-block;
+
+  .converge-plot {
+    background-color: $solver-background-color;
     color: $primary-color;
-    .expHeader{
-      font-size: 20px;
-      padding-top: 10px;
-      line-height: 1.5;
-      color: $primary-color;
-      text-align: center;
-      text-transform: uppercase;
-    }
-  }
-  .subsubContainer{
     display: inline-block;
-    width: 790px;
-    height: 500px;
     float: right;
-    .solvers{
-      .solL{
+    height: 235px;
+    margin-bottom: 30px;
+    width: 380px;
+
+
+  }
+
+  .subsub-container {
+    display: inline-block;
+    float: left;
+    height: 500px;
+    width: 790px;
+
+    .solvers {
+      margin-top: 30px;
+
+      .sol-l {
         background-color: $solver-background-color;
         display: inline-block;
-        width: 380px;
-        height: 325px;
         float: left;
+        height: 370px;
+        width: 380px;
       }
-      .solR{
+
+      .sol-r {
         background-color: $solver-background-color;
         display: inline-block;
-        width: 380px;
-        height: 325px;
         float: right;
+        height: 370px;
+        width: 380px;
       }
     }
-    .convergentplot{
-      background-color: $solver-background-color;
+
+    .exp-container {
+      background-color: $explain-background-color;
+      color: $primary-color;
+      height: 100px;
       width: 790px;
-      height: 145px;
-      margin-top: 355px;
     }
-    .solHeader{
+
+    .exp-header {
+      color: $primary-color;
       font-size: 20px;
-      padding-top: 10px;
       line-height: 1.5;
-      color: $solver-text-color;
+      padding-top: 10px;
       text-align: center;
       text-transform: uppercase;
     }
+
+
+
+
+  }
+
+  .sol-header {
+    color: $solver-text-color;
+    font-size: 20px;
+    line-height: 1.5;
+    padding-top: 10px;
+    text-align: center;
+    text-transform: uppercase;
   }
 
 }

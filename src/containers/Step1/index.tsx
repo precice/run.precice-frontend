@@ -13,11 +13,11 @@ interface Step1Props {
 class Step1 extends React.Component<Step1Props, undefined> {
 
   render() {
-    return <div className={styles.TuInContainer}>
-      <header className={styles.TuInHeader}>introduction</header>
-      <li className={styles.TuInContent}>In this tutorial, we are going to solve a 1D problem. </li>
-      <li className={styles.TuInContent}>We use two solvers: SU2 and Calculix.</li>
-      <li className={styles.TuInContent}>The role of preCICE is to couple those two solvers.</li>
+    return <div className={styles.tuInContainer}>
+      <header className={styles.tuInHeader}>introduction</header>
+      <li className={styles.tuInContent}>In this tutorial, we are going to solve a 1D problem. </li>
+      <li className={styles.tuInContent}>We use two solvers: SU2 and Calculix.</li>
+      <li className={styles.tuInContent}>The role of preCICE is to couple those two solvers.</li>
     </div>;
   }
 }

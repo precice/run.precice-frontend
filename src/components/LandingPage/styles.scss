@@ -1,12 +1,15 @@
 $primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
-.LandingPage{
-  padding-top: 15%;
+
+.landing-page {
+  color: $primary-color;
   margin: 0 auto;
-  max-width:1000px;
+  max-width: 1000px;
+  padding-top: 15%;
   text-align: center;
-  .intro{
+
+  .intro {
     font-size: 45px;
     line-height: 1.5;
   }
@@ -19,20 +22,21 @@ $emphasize-color: rgb(255, 144, 95);
   }
 }
 
-.Btn_container{
-  padding-top: 50px;
+.btn-container {
   display: inline-block;
   font-size: 20px;
-  .Btn{
-    color: $primary-color;
+  padding-top: 50px;
+
+  .btn {
     background: $emphasize-color;
+    border-radius: 10px;
+    color: $primary-color;
+    cursor: pointer;
     height: 20px;
+    letter-spacing: 1px;
     padding: 10px;
     text-align: center;
-    letter-spacing: 1px;
-    border-radius: 10px;
     touch-action: manipulation;
-    cursor: pointer;
   }
 }
 

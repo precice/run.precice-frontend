@@ -1,54 +1,66 @@
-$primary-color: white;
+$primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
 $pre-color: rgb(255, 144, 95);
-$cice-color: white;
+$cice-color: rgb(255, 255, 255);
 $label-font-family: courier;
 $body-font-family: Verdana;
 
-body{
+body {
   font-family: Verdana, serif;
 }
-a{
+
+a {
   text-decoration: none;
 }
-.container{
+
+.container {
+
+  background: $background-color;
   box-sizing: border-box;
+  height: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 1%;
   padding-left: 2.5%;
   padding-right: 2.5%;
+  padding-top: 1%;
   width: 100%;
-  height: 1200px;
-  background: $background-color;
-  .banner{
-    margin: 25px auto;
-    padding-left: 15px;
+
+  .banner {
     color: $primary-color;
     font-size: 25px;
-    max-width: 1300px;
+    margin: 25px auto;
     max-height: 25px;
+    max-width: 1300px;
+    padding-left: 15px;
+
   }
+
 }
 
-.footer{
+.footer {
   color: $primary-color;
-  text-align: center;
-  padding-top: 50px;
   padding-bottom: 10px;
-}
-
-.warnBg {
-  background: red;
+  padding-top: 50px;
+  text-align: center;
 
 }
+
+.warn-bg {
+  background: rgb(255, 0, 0);
+
+}
+
 .label {
   font-family: $label-font-family;
+
   .pre {
     color: $emphasize-color;
+
   }
-  .CICE {
+
+  .cice {
     color: $cice-color;
+
   }
 }

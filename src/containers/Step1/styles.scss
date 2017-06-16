@@ -1,28 +1,31 @@
-$primary-color: white;
+$primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
-$explain-background-color: rgba(255,255,255,0.3);
-.TuInContainer{
-  margin-top: 20px;
+$explain-background-color: rgba(255, 255, 255, 0.3);
+
+.tu-in-container {
+  background: $explain-background-color;
+  height: 500px;
   margin-left: auto;
   margin-right: auto;
-  height: 500px;
+  margin-top: 20px;
   max-width: 1200px;
-  background: $explain-background-color;
-  .TuInHeader{
-    font-size: 20px;
-    padding-top: 10px;
-    line-height: 1.5;
+
+  .tu-in-header {
     color: $primary-color;
+    font-size: 20px;
+    line-height: 1.5;
+    padding-top: 10px;
     text-align: center;
     text-transform: uppercase;
   }
-  .TuInContent{
+
+  .tu-in-content {
+    color: $primary-color;
     font-size: 16px;
-    padding-top: 10px;
+    line-height: 1.5;
     padding-left: 25px;
     padding-right: 25px;
-    line-height: 1.5;
-    color: $primary-color;
+    padding-top: 10px;
   }
 }

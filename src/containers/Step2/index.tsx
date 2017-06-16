@@ -12,7 +12,7 @@ interface step2Props {
 class Step2 extends React.Component<step2Props, undefined> {
 
   render() {
-    return <body className={styles.subContainer}>
+    return <div className={styles.subContainer}>
     <div className={styles.expContainer}>
       <div className={styles.expHeader}>
         what to do
@@ -34,7 +34,7 @@ class Step2 extends React.Component<step2Props, undefined> {
         print('hello world');
       </textarea>
     </div>
-    </body>;
+    </div>;
   }
 }
 
