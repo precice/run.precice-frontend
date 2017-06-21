@@ -1,11 +1,23 @@
 import {createSelector} from 'reselect';
 import {locationSelector} from '../Router/selectors';
-export const percentageSelector = () => createSelector
+
+export const pathnameSelector = () => createSelector
 (
+  // This function returns the pathname
   locationSelector,
   (location) => {
-    const pathname = location && location.pathname
-    switch (pathname.split('/')[2]) {
+    const pathname = location && location.pathname;
+    return pathname;
+  },
+)
+
+export const percentageSelector = () => createSelector
+(
+  // pathnameSelector returns lambda function
+  pathnameSelector(),
+  (pathname) => {
+    // extract step number from pathname for switch
+    switch ( pathname.split('/')[2] ) {
       case 'step1':
         return 25;
 
@@ -23,4 +35,21 @@ export const percentageSelector = () => createSelector
 
     }
   },
+)
+
+export const buttonLinksSelector = () => createSelector
+(
+  // Provide paths for buttons
+  pathnameSelector(),
+    ( pathname ) => {
+      const stepArray = ['/tutorial/step1', '/tutorial/step2', '/tutorial/step3', '/tutorial/step4'];
+      const index = stepArray.indexOf( pathname );
+      const buttonLinks = {
+        next: stepArray[index + 1],
+        current: pathname,
+        previous: stepArray [index - 1],
+      };
+
+      return buttonLinks;
+    },
 )

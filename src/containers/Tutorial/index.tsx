@@ -5,10 +5,15 @@ import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 import ProgressBar from '../Progress/index';
-import {percentageSelector} from './selectors';
+import {buttonLinksSelector, percentageSelector} from './selectors';
 
 interface TutorialProps {
   percentage: number;
+  buttonLinks: {
+    previous?: string,
+    current: string,
+    next?: string,
+  };
 }
 
 class Tutorial extends React.Component<TutorialProps, undefined> {
@@ -18,9 +23,10 @@ class Tutorial extends React.Component<TutorialProps, undefined> {
         <ProgressBar percentage={this.props.percentage}/>
         <div>{this.props.children}</div>
         <div className={styles.btnContainer}>
-          <Link to="/tutorial/step2" className={styles.btnL}>BACK</Link>
-          <Link to="/tutorial/step2" className={styles.btn}> VALIDATE</Link>
-          <Link to="/tutorial/step2" className={styles.btnR}>NEXT</Link>
+          {/* Remove buttons on first and last step */}
+          {this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
+          <Link to={this.props.buttonLinks.current} className={styles.btn}> VALIDATE</Link>
+          {this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>}
         </div>
       </div>
     );
@@ -29,6 +35,7 @@ class Tutorial extends React.Component<TutorialProps, undefined> {
 
 const mapStateToProps = createStructuredSelector({
   percentage: percentageSelector(),
+  buttonLinks: buttonLinksSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
