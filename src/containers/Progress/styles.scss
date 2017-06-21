@@ -3,19 +3,18 @@ $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
 $explain-background-color: rgba(255, 255, 255, 0.3);
 
-.progress
-{
-  margin-top: 20px;
+.progress {
+  background-color: $background-color;
   margin-left: auto;
   margin-right: auto;
-  width : 100%;
-  background-color : $background-color;
-  //match width to the steps
-  max-width: 1200px
+  margin-top: 20px;
+  max-width: 1200px;
+  // match width to the steps
+  width: 100%;
 }
 
-.bar
-{
-  height : 20px;
-  background-color : orange;
+.bar {
+  background-color: orange;
+  height: 20px;
+  transition: width 0.5s;
 }
