@@ -9,7 +9,6 @@ import {percentageSelector} from './selectors';
 
 interface TutorialProps {
   percentage: number;
-  example: () => void;
 }
 
 class Tutorial extends React.Component<TutorialProps, undefined> {
@@ -17,13 +16,6 @@ class Tutorial extends React.Component<TutorialProps, undefined> {
     return (
       <div>
         <ProgressBar percentage={this.props.percentage}/>
-{/*        <div className={styles.barContainer}>
-          <div className={styles.progressBtnAfter} />
-          <div className={styles.progressBtnAfter} />
-          <div className={styles.progressBtnBefore} />
-          <div className={styles.progressBtnBefore} />
-         </div>
-         */}
         <div>{this.props.children}</div>
         <div className={styles.btnContainer}>
           <Link to="/tutorial/step2" className={styles.btnL}>BACK</Link>
@@ -41,11 +33,11 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
+    dispatch,
   };
 }
 
-export default connect(
+export default connect<{}, {}, TutorialProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(Tutorial);
