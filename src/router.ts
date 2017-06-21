@@ -12,14 +12,21 @@ import Step3 from './containers/Step3';
 import Step4 from './containers/Step4';
 
 
+// Create a history of your choosing (we're using a browser history in this case)
+export const history = createHistory();
+
+// Build the middleware for intercepting and dispatching navigation actions
+export const routerMiddlewareInstace = routerMiddleware(history);
+
+
 export interface RouteDefinition {
   path: string;
   component: any;
-  childRoutes?: [RouteDefinition];
+  childRoutes?: RouteDefinition[];
 }
 
 
-export const rootRoute: RouteDefinition = {
+const rootRouteRaw: RouteDefinition = {
   path: '',
   component: Root,
   childRoutes: [
@@ -56,10 +63,15 @@ export const rootRoute: RouteDefinition = {
   ],
 };
 
+export const rootRoute = addPaths(rootRouteRaw);
 
-// Create a history of your choosing (we're using a browser history in this case)
-export const history = createHistory();
 
-// Build the middleware for intercepting and dispatching navigation actions
-export const routerMiddlewareInstace = routerMiddleware(history);
-
+function addPaths(route: RouteDefinition): RouteDefinition {
+  if (route.childRoutes) {
+    route.childRoutes = route.childRoutes.map((cR) => {
+      cR.path = route.path + cR.path;
+      return addPaths(cR);
+    });
+  }
+  return route;
+}

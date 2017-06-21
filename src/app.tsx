@@ -12,10 +12,7 @@ import { ConnectedRouter } from 'react-router-redux';
 const a = store;
 
 const RouteWithSubRoutes = (route: RouteDefinition) => {
-  const childRoutes = route.childRoutes && route.childRoutes.map((cr, i) => {
-      cr.path = route.path + cr.path;
-      return <RouteWithSubRoutes key={i} {...cr}/>;
-    });
+  const childRoutes = route.childRoutes && route.childRoutes.map((cr, i) => <RouteWithSubRoutes key={i} {...cr}/>);
 
   const render = (props: any) => (
     // pass the sub-routes down to keep nesting
