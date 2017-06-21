@@ -1,0 +1,21 @@
+$primary-color: rgb(255, 255, 255);
+$background-color: rgb(61, 170, 255);
+$emphasize-color: rgb(255, 144, 95);
+$explain-background-color: rgba(255, 255, 255, 0.3);
+
+.progress
+{
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width : 100%;
+  background-color : $background-color;
+  //match width to the steps
+  max-width: 1200px
+}
+
+.bar
+{
+  height : 20px;
+  background-color : orange;
+}

@@ -4,24 +4,26 @@ import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
-
+import ProgressBar from '../Progress/index';
+import {percentageSelector} from './selectors';
 
 interface TutorialProps {
+  percentage: number;
   example: () => void;
 }
 
-
 class Tutorial extends React.Component<TutorialProps, undefined> {
-
   public render() {
     return (
       <div>
-        <div className={styles.barContainer}>
+        <ProgressBar percentage={this.props.percentage}/>
+{/*        <div className={styles.barContainer}>
           <div className={styles.progressBtnAfter} />
           <div className={styles.progressBtnAfter} />
           <div className={styles.progressBtnBefore} />
           <div className={styles.progressBtnBefore} />
-        </div>
+         </div>
+         */}
         <div>{this.props.children}</div>
         <div className={styles.btnContainer}>
           <Link to="/tutorial/step2" className={styles.btnL}>BACK</Link>
@@ -33,7 +35,9 @@ class Tutorial extends React.Component<TutorialProps, undefined> {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  percentage: percentageSelector(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
