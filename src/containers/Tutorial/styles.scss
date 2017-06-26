@@ -6,32 +6,6 @@ $cice-color: rgb(255, 255, 255);
 $label-font-family: courier;
 $body-font-family: Verdana;
 
-.bar-container {
-  height: 50px;
-  margin: 0 auto 30px;
-  max-width: 1000px;
-
-  .progress-btn-after {
-    background-color: $emphasize-color;
-    border-radius: 22px;
-    display: inline-block;
-    height: 44px;
-    margin-left: 180px;
-    margin-top: 0;
-    width: 44px;
-  }
-
-  .progress-btn-before {
-    background-color: $primary-color;
-    border-radius: 22px;
-    display: inline-block;
-    height: 44px;
-    margin-left: 180px;
-    margin-top: 0;
-    width: 44px;
-  }
-}
-
 .btn-container {
   display: block;
   font-size: 20px;

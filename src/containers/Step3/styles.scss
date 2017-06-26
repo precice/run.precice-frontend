@@ -19,8 +19,8 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
     color: $primary-color;
     display: inline-block;
     float: right;
-    height: 235px;
-    margin-bottom: 30px;
+    height: 240px;
+    margin-bottom: 20px;
     width: 380px;
 
 
@@ -30,25 +30,25 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
     display: inline-block;
     float: left;
     height: 500px;
-    width: 790px;
+    width: 800px;
 
     .solvers {
-      margin-top: 30px;
+      margin-top: 20px;
 
       .sol-l {
         background-color: $solver-background-color;
         display: inline-block;
         float: left;
-        height: 370px;
-        width: 380px;
+        height: 380px;
+        width: 390px;
       }
 
       .sol-r {
         background-color: $solver-background-color;
         display: inline-block;
         float: right;
-        height: 370px;
-        width: 380px;
+        height: 380px;
+        width: 390px;
       }
     }
 
@@ -56,7 +56,7 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
       background-color: $explain-background-color;
       color: $primary-color;
       height: 100px;
-      width: 790px;
+      width: 800px;
     }
 
     .exp-header {

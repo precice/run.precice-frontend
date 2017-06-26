@@ -18,7 +18,7 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
     color: $primary-color;
     display: inline-block;
     height: 500px;
-    width: 380px;
+    width: 300px;
 
     .exp-header {
       color: $primary-color;
@@ -30,16 +30,32 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
     }
   }
 
-  .interaction {
+  .xml {
+    background-color: #000;
+    display: inline-block;
+    flex: 1;
+    float: right;
+    font-size: 12px;
+    height: 500px;
+    margin-left: 20px;
+    overflow: scroll;
+    width: 560px;
+
+  }
+
+  .comment-container {
     background-color: $solver-background-color;
     color: $solver-text-color;
     display: inline-block;
+    flex: 1;
     float: right;
+    font-size: 12px;
     height: 500px;
-    margin-left: 30px;
-    width: 380px;
+    margin-left: 20px;
+    overflow: scroll;
+    width: 300px;
 
-    .interaction-header {
+    .comment-header {
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
@@ -47,11 +63,12 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
       text-transform: uppercase;
     }
 
-    .text {
+    .exp {
       font-family: Courier;
       height: 430px;
-      margin: 10px auto;
-      width: 370px;
+      margin: auto;
+      width: 280px;
     }
+
   }
 }

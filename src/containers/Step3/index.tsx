@@ -1,6 +1,6 @@
-import {connect} from "react-redux";
-import {EXAMPLE_ACTION} from "../constants";
-import {createStructuredSelector} from "reselect";
+import {connect} from 'react-redux';
+import {EXAMPLE_ACTION} from '../constants';
+import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
