@@ -1,14 +1,17 @@
 $primary-color: rgb(255, 255, 255);
 $background-color: rgb(61, 170, 255);
 $emphasize-color: rgb(255, 144, 95);
+$explain-background-color: rgba(255, 255, 255, 0.3);
+$solver-background-color: rgb(255, 255, 255);
+$solver-text-color: rgba(0, 0, 0, 0.5);
 
 .landing-page {
-  color: $primary-color;
-  margin: 150px auto 100px;
+  margin: 150px auto 250px;
   text-align: center;
   width: 1200px;
 
   .intro {
+    color: $primary-color;
     font-size: 45px;
     line-height: 1.5;
   }
@@ -38,4 +41,43 @@ $emphasize-color: rgb(255, 144, 95);
     touch-action: manipulation;
   }
 }
+
+.team {
+  background-color: $explain-background-color;
+  display: block;
+  height: 500px;
+  overflow-x: auto;
+  width: 1200px;
+
+  .intro {
+    color: $primary-color;
+    font-size: 45px;
+    line-height: 1.5;
+    margin: 25px auto;
+    text-align: center;
+  }
+
+  .sub-intro {
+    color: $solver-text-color;
+    font-size: 20px;
+    line-height: 1.5;
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .img-container {
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+
+    .img {
+      border-radius: 50%;
+      display: block;
+      height: 150px;
+      margin: 0 auto;
+    }
+  }
+
+}
+
 
