@@ -21,6 +21,7 @@ a {
   height: 1200px;
   margin-left: auto;
   margin-right: auto;
+  overflow-x: auto;
   padding-left: 2.5%;
   padding-right: 2.5%;
   padding-top: 1%;
@@ -31,7 +32,7 @@ a {
     font-size: 25px;
     margin: 25px auto;
     max-height: 25px;
-    max-width: 1300px;
+    max-width: 1200px;
     padding-left: 15px;
 
   }
@@ -40,9 +41,12 @@ a {
 
 .footer {
   color: $primary-color;
+  overflow-x: auto;
   padding-bottom: 10px;
   padding-top: 50px;
   text-align: center;
+  width: 1200px;
+
 
 }
 

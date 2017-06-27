@@ -11,26 +11,10 @@ interface step2Props {
 }
 
 
-class Step2 extends React.Component<step2Props, undefined> {
-  public render() {
-    return (
-      <div className={styles.subContainer}>
-        <div className={styles.expContainer}>
-          <div className={styles.expHeader}>
-            what to do
-          </div>
-        </div>
-        <div className={styles.commentContainer}>
-          <div className={styles.commentHeader}>
-            Explaination
-          </div>
-          <div className={styles.exp}>
-            hello world
-          </div>
-        </div>
-        <div className={styles.xml}>
-          <SyntaxHighlighter style={sunburst} contentEditable={true} showLineNumbers="true" language="xml" >
-            {`<?xml version="1.0"?>
+class Step2 extends React.Component<step2Props, any> {
+  constructor(){
+    super();
+    const initialCodeString = `<?xml version="1.0"?>
 
 <precice-configuration>
 
@@ -96,7 +80,35 @@ class Step2 extends React.Component<step2Props, undefined> {
     </coupling-scheme:serial-implicit>
 
   </solver-interface>
-</precice-configuration>`}
+</precice-configuration>`;
+    this.state = {
+      code: initialCodeString,
+    };
+  }
+  public render() {
+    return (
+      <div className={styles.subContainer}>
+        <div className={styles.expContainer}>
+          <div className={styles.expHeader}>
+            what to do
+          </div>
+        </div>
+        <div className={styles.commentContainer}>
+          <div className={styles.commentHeader}>
+            Explaination
+          </div>
+          <div className={styles.exp}>
+            hello world
+          </div>
+        </div>
+        <div className={styles.xml}>
+          <SyntaxHighlighter style={sunburst}
+                             value={this.state.code}
+                             showLineNumbers="true"
+                             language="xml"
+                             onChange={(e) => this.setState({code: e.target.value})}
+                             contentEditable="true">
+            {this.state.code}
           </SyntaxHighlighter>
         </div>
       </div>

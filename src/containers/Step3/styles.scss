@@ -5,25 +5,32 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
 $solver-background-color: rgb(255, 255, 255);
 $solver-text-color: rgba(0, 0, 0, 0.5);
 
-
 .sub-container {
   display: block;
   height: 500px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  max-width: 1200px;
+  overflow-x: auto;
+  width: 1200px;
 
   .converge-plot {
-    background-color: $solver-background-color;
     color: $primary-color;
     display: inline-block;
     float: right;
-    height: 240px;
-    margin-bottom: 20px;
-    width: 380px;
 
+    .cp-u {
+      background-color: $solver-background-color;
+      height: 240px;
+      width: 380px;
+    }
 
+    .cp-d {
+      background-color: $solver-background-color;
+      height: 240px;
+      margin-top: 20px;
+      width: 380px;
+    }
   }
 
   .subsub-container {
@@ -67,10 +74,6 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
       text-align: center;
       text-transform: uppercase;
     }
-
-
-
-
   }
 
   .sol-header {

@@ -34,13 +34,15 @@ class Step3 extends React.Component<step3Props, undefined> {
           </div>
         </div>
         <div className={styles.convergePlot}>
-          <div className={styles.solHeader}>
-            convergence plot for solver 1
+          <div className={styles.cpU}>
+            <div className={styles.solHeader}>
+              convergence plot for solver 1
+            </div>
           </div>
-        </div>
-        <div className={styles.convergePlot}>
-          <div className={styles.solHeader}>
-            convergence plot for solver 2
+          <div className={styles.cpD}>
+            <div className={styles.solHeader}>
+              convergence plot for solver 2
+            </div>
           </div>
         </div>
       </div>

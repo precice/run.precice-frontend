@@ -10,7 +10,8 @@ $body-font-family: Verdana;
   display: block;
   font-size: 20px;
   margin: 50px auto;
-  max-width: 1300px;
+  overflow-x: auto;
+  width: 1000px;
 
   .btn {
     background: $emphasize-color;
