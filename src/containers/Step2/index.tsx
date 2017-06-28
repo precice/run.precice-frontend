@@ -93,14 +93,6 @@ class Step2 extends React.Component<step2Props, any> {
             what to do
           </div>
         </div>
-        <div className={styles.commentContainer}>
-          <div className={styles.commentHeader}>
-            Explaination
-          </div>
-          <div className={styles.exp}>
-            hello world
-          </div>
-        </div>
         <div className={styles.xml}>
           <SyntaxHighlighter style={sunburst}
                              value={this.state.code}
@@ -111,6 +103,15 @@ class Step2 extends React.Component<step2Props, any> {
             {this.state.code}
           </SyntaxHighlighter>
         </div>
+        <div className={styles.commentContainer}>
+          <div className={styles.commentHeader}>
+            Explanation
+          </div>
+          <div className={styles.exp}>
+            hello world
+          </div>
+        </div>
+
       </div>
     );
   }

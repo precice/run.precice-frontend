@@ -6,53 +6,78 @@ $cice-color: rgb(255, 255, 255);
 $label-font-family: courier;
 $body-font-family: Verdana;
 
-.btn-container {
-  display: block;
-  font-size: 20px;
-  margin: 50px auto;
-  overflow-x: auto;
-  width: 1000px;
+.tutorial-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
 
-  .btn {
-    background: $emphasize-color;
-    border-radius: 10px;
-    color: $primary-color;
-    cursor: pointer;
-    display: inline-block;
-    height: 20px;
-    letter-spacing: 1px;
-    margin-left: 38%;
-    padding: 10px;
-    text-align: center;
-    touch-action: manipulation;
+  .btn-container {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    font-size: 20px;
+    margin: 10px auto 0;
+    width: 100%;
+
+    .btn-sub-con {
+      align-content: stretch;
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      margin: auto;
+
+      .btn {
+        align-self: center;
+        background: $emphasize-color;
+        border-radius: 10px;
+        color: $primary-color;
+        cursor: pointer;
+        height: 20px;
+        letter-spacing: 1px;
+        padding: 10px;
+        text-align: center;
+        touch-action: manipulation;
+      }
+
+      .btn-l {
+        align-self: flex-start;
+        background: $emphasize-color;
+        border-radius: 10px;
+        color: $primary-color;
+        cursor: pointer;
+        display: inline-block;
+        float: left;
+        height: 20px;
+        letter-spacing: 1px;
+        padding: 10px;
+        text-align: center;
+        touch-action: manipulation;
+      }
+
+      .btn-r {
+        align-self: flex-end;
+        background: $emphasize-color;
+        border-radius: 10px;
+        color: $primary-color;
+        cursor: pointer;
+        display: inline-block;
+        float: right;
+        height: 20px;
+        letter-spacing: 1px;
+        padding: 10px;
+        text-align: center;
+        touch-action: manipulation;
+      }
+    }
   }
 
-  .btn-l {
-    background: $emphasize-color;
-    border-radius: 10px;
-    color: $primary-color;
-    cursor: pointer;
-    display: inline-block;
-    float: left;
-    height: 20px;
-    letter-spacing: 1px;
-    padding: 10px;
-    text-align: center;
-    touch-action: manipulation;
+  .child {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: 10px auto;
+    width: 100%;
   }
 
-  .btn-r {
-    background: $emphasize-color;
-    border-radius: 10px;
-    color: $primary-color;
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    height: 20px;
-    letter-spacing: 1px;
-    padding: 10px;
-    text-align: center;
-    touch-action: manipulation;
-  }
 }
-

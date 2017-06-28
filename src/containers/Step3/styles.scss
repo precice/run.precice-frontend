@@ -4,66 +4,73 @@ $emphasize-color: rgb(255, 144, 95);
 $explain-background-color: rgba(255, 255, 255, 0.3);
 $solver-background-color: rgb(255, 255, 255);
 $solver-text-color: rgba(0, 0, 0, 0.5);
+$margin-between: 10px;
 
 .sub-container {
-  display: block;
-  height: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  overflow-x: auto;
-  width: 1200px;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  margin: 0 auto;
+  overflow-y: scroll;
+  width: 100%;
 
   .converge-plot {
     color: $primary-color;
-    display: inline-block;
-    float: right;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    margin-left: $margin-between;
+    width: 380px;
+    order: 2;
 
     .cp-u {
       background-color: $solver-background-color;
-      height: 240px;
-      width: 380px;
+      flex: 1 1 auto;
+      min-height: 100px;
     }
 
     .cp-d {
       background-color: $solver-background-color;
-      height: 240px;
-      margin-top: 20px;
-      width: 380px;
+      flex: 1 1 auto;
+      margin-top: $margin-between;
+      min-height: 100px;
     }
   }
 
   .subsub-container {
-    display: inline-block;
-    float: left;
-    height: 500px;
-    width: 800px;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    order: 1;
+    width: 700px;
 
     .solvers {
-      margin-top: 20px;
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: row;
+      margin-top: $margin-between;
+      order: 2;
 
       .sol-l {
         background-color: $solver-background-color;
-        display: inline-block;
-        float: left;
-        height: 380px;
-        width: 390px;
+        flex: 1 1 auto;
+        min-height: 100px;
       }
 
       .sol-r {
         background-color: $solver-background-color;
-        display: inline-block;
-        float: right;
-        height: 380px;
-        width: 390px;
+        flex: 1 1 auto;
+        min-height: 100px;
+        margin-left: $margin-between;
       }
     }
 
     .exp-container {
       background-color: $explain-background-color;
       color: $primary-color;
+      flex: 0 0 auto;
       height: 100px;
-      width: 800px;
+      order: 1;
     }
 
     .exp-header {

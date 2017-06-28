@@ -5,80 +5,98 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
 $solver-background-color: rgb(255, 255, 255);
 $solver-text-color: rgba(0, 0, 0, 0.5);
 
-.landing-page {
-  margin: 150px auto 250px;
-  text-align: center;
-  width: 1200px;
+.landingbox {
+  flex: 1 1 auto;
+  height: 100%;
 
-  .intro {
-    color: $primary-color;
-    font-size: 45px;
-    line-height: 1.5;
-  }
-
-  .sub-intro {
-    color: $emphasize-color;
-    font-size: 25px;
-    line-height: 1.5;
-    padding-top: 20px;
-  }
-}
-
-.btn-container {
-  display: inline-block;
-  font-size: 20px;
-  padding-top: 50px;
-
-  .btn {
-    background: $emphasize-color;
-    border-radius: 10px;
-    color: $primary-color;
-    cursor: pointer;
-    height: 20px;
-    letter-spacing: 1px;
-    padding: 10px;
+  .landing-page {
+    margin: 250px auto;
     text-align: center;
-    touch-action: manipulation;
-  }
-}
+    width: 100%;
 
-.team {
-  background-color: $explain-background-color;
-  margin: auto;
-  display: block;
-  height: 500px;
-  overflow-x: auto;
-  width: 1200px;
+    .intro {
+      color: $primary-color;
+      font-size: 45px;
+      line-height: 1.5;
+    }
 
-  .intro {
-    color: $primary-color;
-    font-size: 45px;
-    line-height: 1.5;
-    margin: 25px auto;
-    text-align: center;
-  }
-
-  .sub-intro {
-    color: $solver-text-color;
-    font-size: 20px;
-    line-height: 1.5;
-    padding-top: 20px;
-    text-align: center;
-  }
-
-  .img-container {
-    display: inline-block;
-    height: 200px;
-    width: 200px;
-
-    .img {
-      border-radius: 50%;
-      display: block;
-      height: 150px;
-      margin: 0 auto;
+    .sub-intro {
+      color: $emphasize-color;
+      font-size: 25px;
+      line-height: 1.5;
+      padding-top: 20px;
     }
   }
 
-}
+  .btn-container {
+    display: inline-block;
+    font-size: 20px;
+    padding-top: 50px;
 
+    .btn {
+      background: $emphasize-color;
+      border-radius: 10px;
+      color: $primary-color;
+      cursor: pointer;
+      height: 20px;
+      letter-spacing: 1px;
+      padding: 10px;
+      text-align: center;
+      touch-action: manipulation;
+    }
+  }
+
+  .team {
+    background-color: $explain-background-color;
+    display: flex;
+    flex-direction: column;
+    margin: 125px auto;
+    width: 100%;
+
+    .intro {
+      color: $primary-color;
+      font-size: 45px;
+      line-height: 1.5;
+      margin: 25px auto;
+      text-align: center;
+    }
+
+    .sub-intro {
+      color: $solver-text-color;
+      font-size: 20px;
+      line-height: 1.5;
+      padding: 70px 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .img-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin: auto;
+      width: 100%;
+
+      .img-container {
+        flex: 1 1 auto;
+        height: 200px;
+
+        .img {
+          border-radius: 50%;
+          display: block;
+          height: 150px;
+          margin: 0 auto;
+        }
+        .sub-intro {
+          color: $solver-text-color;
+          font-size: 20px;
+          line-height: 1.5;
+          padding-top: 20px;
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+
+  }
+}
 

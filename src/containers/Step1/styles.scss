@@ -5,12 +5,9 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
 
 .tu-in-container {
   background: $explain-background-color;
-  height: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  overflow-x: auto;
-  width: 1200px;
+  flex: 1 1 auto;
+  margin: auto;
+  width: 100%;
 
   .tu-in-header {
     color: $primary-color;

@@ -5,18 +5,18 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
 
 .progress {
   background-color: $background-color;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+  flex: 0 0 auto;
+  margin: 10px auto;
   // match width to the steps
-  overflow-x: auto;
-  width: 1200px;
-;
+  width: 100%;
+
+  .bar {
+    background-color: $emphasize-color;
+    border-radius: 10px;
+    height: 20px;
+    transition: width 0.5s;
+  }
+
 }
 
-.bar {
-  background-color: $emphasize-color;
-  border-radius: 10px;
-  height: 20px;
-  transition: width 0.5s;
-}
+

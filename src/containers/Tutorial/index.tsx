@@ -19,14 +19,20 @@ interface TutorialProps {
 class Tutorial extends React.Component<TutorialProps, undefined> {
   public render() {
     return (
-      <div>
+      <div className={styles.tutorialContainer}>
         <ProgressBar percentage={this.props.percentage}/>
-        <div>{this.props.children}</div>
+        <div className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
-          {this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
-          <Link to={this.props.buttonLinks.current} className={styles.btn}> VALIDATE</Link>
-          {this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>}
+          <div className={styles.btnSubCon}>
+            {this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
+          </div>
+          <div className={styles.btnSubCon}>
+            <Link to={this.props.buttonLinks.current} className={styles.btn}> VALIDATE</Link>
+          </div>
+          <div className={styles.btnSubCon}>
+            {this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>}
+          </div>
         </div>
       </div>
     );

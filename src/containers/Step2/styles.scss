@@ -4,22 +4,21 @@ $emphasize-color: rgb(255, 144, 95);
 $explain-background-color: rgba(255, 255, 255, 0.3);
 $solver-background-color: rgb(255, 255, 255);
 $solver-text-color: rgba(0, 0, 0, 0.5);
+$margin-between: 10px;
 
 .sub-container {
-  display: block;
-  height: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  overflow-x: auto;
-  width: 1200px;
+  display: flex;
+  flex: 1 1 auto;
+  margin: 0 auto;
+  overflow-y: scroll;
+  width: 100%;
 
   .exp-container {
     background-color: $explain-background-color;
     color: $primary-color;
     display: inline-block;
-    height: 500px;
-    width: 300px;
+    flex: 0 1 auto;
+    width: 290px;
 
     .exp-header {
       color: $primary-color;
@@ -33,14 +32,10 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
 
   .xml {
     background-color: #000;
-    display: inline-block;
-    flex: 1;
-    float: right;
+    flex: 1 0.8 auto;
     font-size: 12px;
-    height: 500px;
-    margin-left: 20px;
-    overflow: scroll;
-    width: 560px;
+    margin-left: $margin-between;
+    width: 600px;
 
   }
 
@@ -48,13 +43,10 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
     background-color: $solver-background-color;
     color: $solver-text-color;
     display: inline-block;
-    flex: 1;
-    float: right;
+    flex: 0 1 auto;
     font-size: 12px;
-    height: 500px;
-    margin-left: 20px;
-    overflow: scroll;
-    width: 300px;
+    margin-left: $margin-between;
+    width: 290px;
 
     .comment-header {
       font-size: 20px;
@@ -68,7 +60,6 @@ $solver-text-color: rgba(0, 0, 0, 0.5);
       font-family: Courier;
       height: 430px;
       margin: auto;
-      width: 280px;
     }
 
   }

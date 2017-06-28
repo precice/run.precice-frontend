@@ -15,40 +15,50 @@ a {
 }
 
 .container {
-
+  align-content: center;
   background: $background-color;
   box-sizing: border-box;
-  height: 1325px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   margin-left: auto;
   margin-right: auto;
-  overflow-x: auto;
-  padding-left: 2.5%;
-  padding-right: 2.5%;
-  padding-top: 1%;
+  position: absolute;
   width: 100%;
 
   .banner {
+    box-sizing: border-box;
     color: $primary-color;
+    flex: 0 0 auto;
     font-size: 25px;
     margin: 25px auto;
     max-height: 25px;
-    max-width: 1200px;
-    padding-left: 15px;
+    padding-left: 25px;
+    width: 100%;
+
+  }
+
+  .child {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: auto;
+    overflow-y: scroll;
+    width: 100%;
+  }
+
+  .footer {
+    color: $primary-color;
+    flex: 0 0 auto;
+    margin: 20px auto;
+    text-align: center;
+    width: 100%;
 
   }
 
 }
 
-.footer {
-  color: $primary-color;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  padding-top: 50px;
-  text-align: center;
-  width: 1200px;
 
-
-}
 
 .warn-bg {
   background: rgb(255, 0, 0);
