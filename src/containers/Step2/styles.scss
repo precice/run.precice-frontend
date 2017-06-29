@@ -10,7 +10,6 @@ $margin-between: 10px;
   display: flex;
   flex: 1 1 auto;
   margin: 0 auto;
-  overflow-y: scroll;
   width: 100%;
 
   .exp-container {
@@ -35,6 +34,7 @@ $margin-between: 10px;
     flex: 1 0.8 auto;
     font-size: 12px;
     margin-left: $margin-between;
+    overflow-y: scroll;
     width: 600px;
 
   }
@@ -58,7 +58,6 @@ $margin-between: 10px;
 
     .exp {
       font-family: Courier;
-      height: 430px;
       margin: auto;
     }
 

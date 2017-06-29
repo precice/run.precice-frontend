@@ -7,6 +7,7 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
   background: $explain-background-color;
   flex: 1 1 auto;
   margin: auto;
+  overflow-y: scroll;
   width: 100%;
 
   .tu-in-header {
@@ -25,5 +26,16 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 10px;
+
+    .img {
+      display: block;
+      height: 150px;
+      margin: 0 auto;
+    }
+
+    .link {
+      color: $primary-color;
+      font-style: italic;
+    }
   }
 }

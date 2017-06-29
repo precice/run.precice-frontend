@@ -10,10 +10,10 @@ class Root extends React.Component<RootProps, undefined> {
     return (
       <div className={styles.container}>
         <div className={styles.banner}>
-          <span className={styles.label}>
+          <Link to="/" className={styles.label}>
             <span className={styles.pre}>pre</span>
             <span className={styles.cice}>CICE</span>
-          </span>
+          </Link>
         </div>
         <div className={styles.child}>{this.props.children}</div>
         <footer className={styles.footer}>Copyright &copy;
