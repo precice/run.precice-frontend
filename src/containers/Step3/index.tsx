@@ -4,13 +4,23 @@ import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
+import Console from 'react-console-component';
 
 interface step3Props {
 }
 
 
 class Step3 extends React.Component<step3Props, undefined> {
-
+  public child: {
+    console?: Console,
+  } = {};
+  constructor(props: {}) {
+    super(props);
+  }
+  public echo = (text: string) => {
+    this.child.console.log(text);
+    this.setState({}, this.child.console.return);
+  }
   public render() {
     return (
       <div className={styles.subContainer}>
@@ -21,15 +31,21 @@ class Step3 extends React.Component<step3Props, undefined> {
             </div>
           </div>
           <div className={styles.solvers}>
-            <div className={styles.solL}>
-              <div className={styles.solHeader}>
-                solver One
-              </div>
+            <div className={styles.solL} contentEditable={true}>
+              <Console ref={ref => this.child.console = ref}
+                       handler={this.echo}
+                       promptLabel={'> '}
+                       welcomeMessage={'Welcome to Solver One!'}
+                       autofocus={true}
+              />
             </div>
-            <div className={styles.solR}>
-              <div className={styles.solHeader}>
-                solver Two
-              </div>
+            <div className={styles.solR} contentEditable={true}>
+              <Console ref={ref => this.child.console = ref}
+                       handler={this.echo}
+                       promptLabel={'> '}
+                       welcomeMessage={'Welcome to Solver Two!'}
+                       autofocus={true}
+              />
             </div>
           </div>
         </div>
@@ -62,3 +78,4 @@ export default connect<any, any, any>(
   mapStateToProps,
   mapDispatchToProps
 )(Step3);
+

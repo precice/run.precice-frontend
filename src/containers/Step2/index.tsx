@@ -108,7 +108,6 @@ class Step2 extends React.Component<step2Props, any> {
             Explanation
           </div>
           <div className={styles.exp}>
-            hello world
           </div>
         </div>
 
@@ -127,5 +126,6 @@ function mapDispatchToProps(dispatch) {
 
 export default connect < any, any, any > (
   mapStateToProps,
-    mapDispatchToProps
+  mapDispatchToProps
 )(Step2);
+

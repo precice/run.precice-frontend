@@ -4,11 +4,11 @@ $emphasize-color: rgb(255, 144, 95);
 $explain-background-color: rgba(255, 255, 255, 0.3);
 
 .progress {
-  background-color: $background-color;
+  background-color: $explain-background-color;
+  border-radius: 10px;
   flex: 0 0 auto;
-  margin: 10px auto;
+  margin: 10px 10%;
   // match width to the steps
-  width: 100%;
 
   .bar {
     background-color: $emphasize-color;
@@ -18,5 +18,6 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
   }
 
 }
+
 
 

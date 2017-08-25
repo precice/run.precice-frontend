@@ -1,22 +1,54 @@
+import {connect} from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
+import {socket} from "../Root/index";
 
-class LandingPage extends React.Component<{}, undefined> {
+interface LandPageProps {
+}
+
+class LandingPage extends React.Component<LandPageProps, any> {
+  constructor(props) {
+    super(props);
+    this.state = {code: '', text: ''};
+    this.updateCode = this.updateCode.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  public componentWillReceiveProps() {
+    socket.emit('cmd2Backend', {code: this.state.code});
+  }
+  private updateCode(data) {
+    this.setState({
+      code: data.target.value});
+  }
+  private getReceivedData() {
+    socket.on('data2Backend', (data) => {
+      this.setState({
+        text: data.text,
+      });
+    });
+  }
+  private handleSubmit(event) {
+    alert('A code was submitted: ' + this.state.code);
+    event.preventDefault();
+    this.componentWillReceiveProps();
+    this.getReceivedData();
+  }
 
   public render() {
     return (
       <div className={styles.landingbox}>
-        <div className={styles.landingPage}>
+        <div className={styles.landingPage}>{/*landing page with titles and start button*/}
           <div className={styles.intro}>Coupling tool for partitioned simulations<br />of multi-physics scenarios.</div>
           <div className={styles.subIntro}>Make Coupling Easy Again</div>
           <div className={styles.btnContainer}><Link to="/tutorial/step1" className={styles.btn}> Start Now</Link></div>
-        </div>
-        <div className={styles.team}>
+        </div>{/*landing page with titles and start button*/}
+        <div className={styles.team}>{/*the introduction for our team*/}
           <div className={styles.intro}>
             Our Team
           </div>
-          <div className={styles.imgGroup}>
+          <div className={styles.imgGroup}>{/*photos*/}
             <div className={styles.imgContainer}>
               <img src="src/components/LandingPage/Dmytro.jpg" className={styles.img}/>
               <div className={styles.subIntro}>
@@ -53,15 +85,23 @@ class LandingPage extends React.Component<{}, undefined> {
                 Pei-Hsuan Huang
               </div>
             </div>
-          </div>
+          </div>{/*photos*/}
           <div className={styles.subIntro}>
             The tutorial website is designed by us.<br/>
             We all study at Msc. Computational Science and Engineering, TUM now :-)
           </div>
-        </div>
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.code} onChange={this.updateCode} placeholder="Enter a test code"/>
+            <button>input</button>
+          </form>
+          <div>{this.state.text}</div>
+        </div>{/*the introduction for our team*/}
       </div>
     );
   }
 }
 
+
 export default LandingPage;
+
+

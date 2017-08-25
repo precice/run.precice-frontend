@@ -42,9 +42,8 @@ a {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    margin: auto;
+    margin: 0 20px;
     overflow-y: scroll;
-    width: 100%;
   }
 
   .footer {
@@ -66,15 +65,22 @@ a {
 }
 
 .label {
+  display: inline-block;
   font-family: $label-font-family;
 
   .pre {
     color: $emphasize-color;
-
+    vertical-align: bottom;
   }
 
   .cice {
     color: $cice-color;
+    vertical-align: bottom;
+  }
 
+  .img {
+    height: 50px;
+    vertical-align: bottom;
   }
 }
+

@@ -13,6 +13,8 @@
       "single",
       "jsx-double"
     ],
-    "max-line-length": false
+    "max-line-length": false,
+    "jsx-no-multiline-js": false
   }
 }
+
