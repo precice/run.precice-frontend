@@ -1,10 +1,4 @@
-$primary-color: rgb(255, 255, 255);
-$background-color: rgb(61, 170, 255);
-$emphasize-color: rgb(255, 144, 95);
-$pre-color: rgb(255, 144, 95);
-$cice-color: rgb(255, 255, 255);
-$label-font-family: courier;
-$body-font-family: Verdana;
+@import '../../sass/colors';
 
 body {
   font-family: Verdana, serif;

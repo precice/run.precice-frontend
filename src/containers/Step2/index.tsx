@@ -6,118 +6,96 @@ import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburst } from 'react-syntax-highlighter/dist/styles/';
+import * as TextForStep2 from './TextForStep2';
+import { lineSelector } from './selectors';
 
-interface step2Props {
+interface Step2Props {
+  lineIndex: {
+    start: number,
+    end: number,
+  };
 }
 
-
-class Step2 extends React.Component<step2Props, any> {
-  constructor() {
-    super();
-    const initialCodeString = `<?xml version="1.0"?>
-
-<precice-configuration>
-
-  <solver-interface dimensions="2">
-
-    <!-- Data fields that are exchanged between the solvers -->
-    <data:scalar name="Pressure"/>
-    <data:scalar name="CrossSectionLength"/>
-
-    <!-- A common mesh that uses these data fields -->
-    <mesh name="Fluid_Nodes">
-      <use-data name="CrossSectionLength"/>
-      <use-data name="Pressure"/>
-    </mesh>
-
-    <mesh name="Structure_Nodes">
-      <use-data name="CrossSectionLength"/>
-      <use-data name="Pressure"/>
-    </mesh>
-
-    <!-- Represents each solver using preCICE. In a coupled simulation, two participants have to be
-         defined. The name of the participant has to match the name given on construction of the
-         precice::SolverInterface object used by the participant. -->
-
-    <participant name="FLUID">
-      <!-- Makes the named mesh available to the participant. Mesh is provided by the solver directly. -->
-      <use-mesh name="Fluid_Nodes" provide="yes"/>
-      <use-mesh name="Structure_Nodes" from="STRUCTURE"/>
-      <!-- Define input/output of the solver.  -->
-      <write-data name="Pressure" mesh="Fluid_Nodes"/>
-      <read-data  name="CrossSectionLength" mesh="Fluid_Nodes"/>
-      <mapping:nearest-neighbor direction="write" from="Fluid_Nodes" to="Structure_Nodes" constraint="consistent" timing="initial"/>
-      <mapping:nearest-neighbor direction="read"  from="Structure_Nodes" to="Fluid_Nodes" constraint="consistent" timing="initial"/>
-    </participant>
-
-    <participant name="STRUCTURE">
-      <use-mesh name="Structure_Nodes" provide="yes"/>
-      <write-data name="CrossSectionLength" mesh="Structure_Nodes"/>
-      <read-data  name="Pressure"      mesh="Structure_Nodes"/>
-    </participant>
-
-    <!-- Communication method, use TCP/IP sockets, change network to "ib0" on SuperMUC -->
-    <m2n:sockets from="FLUID" to="STRUCTURE" distribution-type="gather-scatter" network="lo"/>
-
-    <coupling-scheme:serial-implicit>
-      <participants first="FLUID" second="STRUCTURE"/>
-      <max-time value="1.0"/>
-      <timestep-length value="1e-2" valid-digits="8"/>
-      <max-iterations value="40"/>
-      <exchange data="Pressure"      mesh="Structure_Nodes" from="FLUID" to="STRUCTURE" />
-      <exchange data="CrossSectionLength" mesh="Structure_Nodes" from="STRUCTURE" to="FLUID" initialize="true"/>
-      <relative-convergence-measure data="Pressure"        mesh="Structure_Nodes" limit="1e-5"/>
-      <relative-convergence-measure data="CrossSectionLength" mesh="Structure_Nodes" limit="1e-5"/>
-      <extrapolation-order value="2"/>
-      <post-processing:IQN-ILS>
-	<!-- PostProc always done on the second participant -->
-        <data name="CrossSectionLength" mesh="Structure_Nodes"/>
-        <initial-relaxation value="0.01"/>
-        <max-used-iterations value="50"/>
-        <timesteps-reused value="8"/>
-        <filter type="QR2" limit="1e-3"/>
-      </post-processing:IQN-ILS>
-    </coupling-scheme:serial-implicit>
-
-  </solver-interface>
-</precice-configuration>`;
+class Step2 extends React.Component<Step2Props, any> {
+  constructor(props: Step2Props) {
+    super(props);
     this.state = {
-      code: initialCodeString,
+      code: TextForStep2.initialCodeString,
+      hid: false,
     };
+    this.shrinkWhatToDo = this.shrinkWhatToDo.bind(this);
+  }
+
+  private shrinkWhatToDo(event) {
+    if (this.state.hid === false) {
+      this.setState({
+        hid: true,
+      });
+    } else {
+      this.setState({
+        hid: false,
+      });
+    }
   }
 
   public render() {
     return (
       <div className={styles.subContainer}>
         <div className={styles.expContainer}>
-          <div className={styles.expHeader}>
+          <div onClick={this.shrinkWhatToDo} className={styles.expHeader}>
             what to do
           </div>
-        </div>
-        <div className={styles.xml}>
-          <SyntaxHighlighter
-            style={sunburst}
-            value={this.state.code}
-            showLineNumbers="true"
-            language="xml"
-            onChange={(e) => this.setState({ code: e.target.value })}
-            contentEditable="true">
-            {this.state.code}
-          </SyntaxHighlighter>
-        </div>
-        <div className={styles.commentContainer}>
-          <div className={styles.commentHeader}>
-            Explanation
+          <div className={styles.expContent} hidden={this.state.hid}>
+            preCICE is set up via a precice-config.xml file. It contains all the settings preCICE needs to run the
+            coupled simulation.
+            <br/>
+            Following this five sub-step, you will learn how to set up the configuration file.
+            <br/>
+            <li><Link to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1}</Link></li>
+            <li><Link to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2}</Link></li>
+            <li><Link to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3}</Link></li>
+            <li><Link to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4}</Link></li>
+            <li><Link to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5}</Link></li>
+            (TIP1: click "WHAT TO DO" to shrink the instruction)
+            <br/>
+            (TIP2: click each step to go directly to the step)
           </div>
-          <div className={styles.exp} />
+        </div>
+        <div className={styles.interactContainer}>
+          <div className={styles.xml}>
+            <SyntaxHighlighter
+              style={sunburst}
+              showLineNumbers="true"
+              language="xml"
+              wrapLines={true}
+              lineStyle={lineNumber => {
+                let style = { display: 'block', backgroundColor: '' };
+                if (lineNumber > this.props.lineIndex.start && lineNumber < this.props.lineIndex.end) {
+                  style.backgroundColor = '#404040';
+                }
+                return style;
+              }}>
+              {this.state.code}
+              {}
+            </SyntaxHighlighter>
+          </div>
+          <div className={styles.commentContainer}>
+            <div className={styles.commentHeader}>
+              Explanation
+            </div>
+            <div className={styles.exp}>
+              {this.props.children}
+            </div>
+          </div>
         </div>
 
       </div>
     );
   }
 }
-
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  lineIndex: lineSelector(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {

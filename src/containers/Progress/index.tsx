@@ -18,9 +18,7 @@ class ProgressBar extends React.Component<ProgressProps, any> {
       <div className={styles.progress}>
         <div style={{width: this.props.percentage + '%'}} className={styles.bar}/>
       </div>
-
     );
-
   }
 }
 

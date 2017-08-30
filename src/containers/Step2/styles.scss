@@ -1,14 +1,10 @@
-$primary-color: rgb(255, 255, 255);
-$background-color: rgb(61, 170, 255);
-$emphasize-color: rgb(255, 144, 95);
-$explain-background-color: rgba(255, 255, 255, 0.3);
-$solver-background-color: rgb(255, 255, 255);
-$solver-text-color: rgba(0, 0, 0, 0.5);
-$margin-between: 10px;
+@import '../../sass/colors';
+
 
 .sub-container {
   display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
   margin: 0 auto;
   width: 100%;
 
@@ -17,49 +13,66 @@ $margin-between: 10px;
     color: $primary-color;
     display: inline-block;
     flex: 0 1 auto;
-    width: 290px;
+    margin-bottom: $margin-between;
 
     .exp-header {
-      color: $primary-color;
+      cursor: pointer;
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
       text-align: center;
       text-transform: uppercase;
     }
+
+    .exp-content {
+      line-height: 1.5;
+      margin: 10px auto;
+      max-width: 1000px;
+
+      .link {
+        color: $primary-color;
+        font-style: italic;
+      }
+    }
   }
 
-  .xml {
-    background-color: #000;
-    flex: 1 0.8 auto;
-    font-size: 12px;
-    margin-left: $margin-between;
-    overflow-y: scroll;
-    width: 600px;
-
-  }
-
-  .comment-container {
-    background-color: $solver-background-color;
-    color: $solver-text-color;
-    display: inline-block;
+  .interact-container {
+    display: flex;
     flex: 0 1 auto;
-    font-size: 12px;
-    margin-left: $margin-between;
-    width: 290px;
 
-    .comment-header {
-      font-size: 20px;
-      line-height: 1.5;
-      padding-top: 10px;
-      text-align: center;
-      text-transform: uppercase;
+    .xml {
+      background-color: #000;
+      flex: 1 0.8 auto;
+      font-size: 12px;
+      overflow-y: scroll;
+      width: 600px;
+
     }
 
-    .exp {
-      font-family: Courier;
-      margin: auto;
-    }
+    .comment-container {
+      background-color: $solver-background-color;
+      color: $solver-text-color;
+      display: inline-block;
+      flex: 1 1 auto;
+      margin-left: $margin-between;
+      overflow-y: scroll;
+      width: 290px;
 
+      .comment-header {
+        font-size: 20px;
+        line-height: 1.5;
+        padding-top: 10px;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .exp {
+        line-height: 1.5;
+        font-family: Courier;
+        margin: 10px;
+      }
+
+    }
   }
+
 }
