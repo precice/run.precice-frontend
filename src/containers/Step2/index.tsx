@@ -1,8 +1,8 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
-import {createStructuredSelector} from 'reselect';
+import { connect } from 'react-redux';
+import { EXAMPLE_ACTION } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburst } from 'react-syntax-highlighter/dist/styles/';
@@ -12,7 +12,7 @@ interface step2Props {
 
 
 class Step2 extends React.Component<step2Props, any> {
-  constructor(){
+  constructor() {
     super();
     const initialCodeString = `<?xml version="1.0"?>
 
@@ -85,6 +85,7 @@ class Step2 extends React.Component<step2Props, any> {
       code: initialCodeString,
     };
   }
+
   public render() {
     return (
       <div className={styles.subContainer}>
@@ -94,12 +95,13 @@ class Step2 extends React.Component<step2Props, any> {
           </div>
         </div>
         <div className={styles.xml}>
-          <SyntaxHighlighter style={sunburst}
-                             value={this.state.code}
-                             showLineNumbers="true"
-                             language="xml"
-                             onChange={(e) => this.setState({code: e.target.value})}
-                             contentEditable="true">
+          <SyntaxHighlighter
+            style={sunburst}
+            value={this.state.code}
+            showLineNumbers="true"
+            language="xml"
+            onChange={(e) => this.setState({ code: e.target.value })}
+            contentEditable="true">
             {this.state.code}
           </SyntaxHighlighter>
         </div>
@@ -107,8 +109,7 @@ class Step2 extends React.Component<step2Props, any> {
           <div className={styles.commentHeader}>
             Explanation
           </div>
-          <div className={styles.exp}>
-          </div>
+          <div className={styles.exp} />
         </div>
 
       </div>
@@ -120,12 +121,12 @@ const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
+    example: () => dispatch({ type: EXAMPLE_ACTION }),
   };
 }
 
-export default connect < any, any, any > (
+export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Step2);
 

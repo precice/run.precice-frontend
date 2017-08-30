@@ -7,20 +7,24 @@
 import { fromJS } from 'immutable';
 
 import {
-  EXAMPLE_ACTION,
+  INIT_CONSOLE,
 } from '../constants';
 import { Action } from 'redux';
+import { ConsoleId } from './index';
 
 
 const initialState = fromJS({
-  example: '123',
+  consoles: {
+    [ConsoleId.left]: null,
+    [ConsoleId.right]: null,
+  },
 });
 
-function exampleReducer(state = initialState, action: Action) {
+function exampleReducer(state = initialState, action: any) {
   switch (action.type) {
-    case EXAMPLE_ACTION:
+    case INIT_CONSOLE:
       return state
-        .set('example', '234');
+        .setIn(['consoles', action.consoleId], action.console);
     default:
       return state;
   }

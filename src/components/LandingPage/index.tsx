@@ -3,38 +3,12 @@ import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
-import {socket} from "../Root/index";
 
 interface LandPageProps {
 }
 
 class LandingPage extends React.Component<LandPageProps, any> {
-  constructor(props) {
-    super(props);
-    this.state = {code: '', text: ''};
-    this.updateCode = this.updateCode.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  public componentWillReceiveProps() {
-    socket.emit('cmd2Backend', {code: this.state.code});
-  }
-  private updateCode(data) {
-    this.setState({
-      code: data.target.value});
-  }
-  private getReceivedData() {
-    socket.on('data2Backend', (data) => {
-      this.setState({
-        text: data.text,
-      });
-    });
-  }
-  private handleSubmit(event) {
-    alert('A code was submitted: ' + this.state.code);
-    event.preventDefault();
-    this.componentWillReceiveProps();
-    this.getReceivedData();
-  }
+
 
   public render() {
     return (
@@ -90,11 +64,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
             The tutorial website is designed by us.<br/>
             We all study at Msc. Computational Science and Engineering, TUM now :-)
           </div>
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" value={this.state.code} onChange={this.updateCode} placeholder="Enter a test code"/>
-            <button>input</button>
-          </form>
-          <div>{this.state.text}</div>
+
         </div>{/*the introduction for our team*/}
       </div>
     );
