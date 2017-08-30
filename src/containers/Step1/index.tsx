@@ -1,14 +1,11 @@
 import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 
 interface Step1Props {
-  example: () => void;
 }
-
 
 class Step1 extends React.Component<Step1Props, undefined> {
 
@@ -16,8 +13,8 @@ class Step1 extends React.Component<Step1Props, undefined> {
     return (
       <div className={styles.tuInContainer}>
         <header className={styles.tuInHeader}>introduction</header>
-        <li className={styles.tuInContent}>In this tutorial, we are going to do a coupled fluid- structure interaction
-          (FSI) simulation.
+        <li className={styles.tuInContent}>In this tutorial, we will tutor you how to do a coupled fluid- structure
+          interaction (FSI) simulation step by step with some interaction.
           <div><br/>We model a compressible fluid flowing through a channel. In the channel, an elastic flap is fixed to the
             floor. This flap oscillates due to the fluid pressure building up on its surface.
             The setup is shown schematically here:</div><br/>
@@ -32,16 +29,15 @@ class Step1 extends React.Component<Step1Props, undefined> {
         <li className={styles.tuInContent}>We use two solvers: SU2 and CalculiX.
           <ul>
             <li>
-              <a href="http://www.calculix.de" className={styles.link}>CalculiX
-              </a>
+              <a href="http://www.calculix.de" className={styles.link}>CalculiX</a>
               : a free three-dimensional finite element solver. We use it to simulate the flap deformation</li>
             <li>
-              <a href="http://su2.stanford.edu" className={styles.link}>SU2
-              </a>
+              <a href="http://su2.stanford.edu" className={styles.link}>SU2</a>
               : an open source CFD solver developed at Stanford. We use it to simulate the fluid flow.</li>
           </ul>
         </li>
         <li className={styles.tuInContent}>The role of preCICE is to couple those two solvers.</li>
+        <br/>
       </div>
     );
   }
@@ -49,13 +45,6 @@ class Step1 extends React.Component<Step1Props, undefined> {
 
 const mapStateToProps = createStructuredSelector({});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Step1);

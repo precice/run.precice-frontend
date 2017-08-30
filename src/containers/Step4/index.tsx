@@ -5,11 +5,11 @@ import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 
-interface step4Props {
+interface Step4Props {
 }
 
 
-class Step4 extends React.Component<step4Props, undefined> {
+class Step4 extends React.Component<Step4Props, undefined> {
 
   public render() {
     return (
@@ -31,13 +31,6 @@ class Step4 extends React.Component<step4Props, undefined> {
 
 const mapStateToProps = createStructuredSelector({});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
-  };
-}
-
 export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps
 )(Step4);

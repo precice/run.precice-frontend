@@ -1,7 +1,5 @@
-$primary-color: rgb(255, 255, 255);
-$background-color: rgb(61, 170, 255);
-$emphasize-color: rgb(255, 144, 95);
-$explain-background-color: rgba(255, 255, 255, 0.3);
+@import '../../sass/colors';
+
 
 .tu-in-container {
   background: $explain-background-color;
@@ -23,9 +21,7 @@ $explain-background-color: rgba(255, 255, 255, 0.3);
     color: $primary-color;
     font-size: 16px;
     line-height: 1.5;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 10px;
+    padding: 10px 25px;
 
     .img {
       display: block;

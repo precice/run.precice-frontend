@@ -1,86 +1,76 @@
-$primary-color: rgb(255, 255, 255);
-$background-color: rgb(61, 170, 255);
-$emphasize-color: rgb(255, 144, 95);
-$explain-background-color: rgba(255, 255, 255, 0.3);
-$solver-background-color: rgb(255, 255, 255);
-$solver-text-color: rgba(0, 0, 0, 0.5);
-$margin-between: 10px;
+@import '../../sass/colors';
 
 .sub-container {
   display: flex;
   flex: 1 1 auto;
-  flex-direction: row;
+  flex-direction: column;
   margin: 0 auto;
   overflow-y: scroll;
   width: 100%;
 
-  .converge-plot {
+  .exp-container {
+    background-color: $explain-background-color;
     color: $primary-color;
-    display: flex;
+    display: inline-block;
     flex: 0 1 auto;
-    flex-direction: column;
-    margin-left: $margin-between;
-    width: 380px;
-    order: 2;
-
-    .cp-u {
-      background-color: $solver-background-color;
-      flex: 1 1 auto;
-      min-height: 100px;
-    }
-
-    .cp-d {
-      background-color: $solver-background-color;
-      flex: 1 1 auto;
-      margin-top: $margin-between;
-      min-height: 100px;
-    }
-  }
-
-  .subsub-container {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    order: 1;
-    width: 700px;
-
-    .solvers {
-      display: flex;
-      flex: 1 1 auto;
-      flex-direction: row;
-      margin-top: $margin-between;
-      order: 2;
-
-      .sol-l {
-        background-color: $solver-background-color;
-        flex: 1 1 auto;
-        min-height: 100px;
-      }
-
-      .sol-r {
-        background-color: $solver-background-color;
-        flex: 1 1 auto;
-        min-height: 100px;
-        margin-left: $margin-between;
-      }
-    }
-
-    .exp-container {
-      background-color: $explain-background-color;
-      color: $primary-color;
-      flex: 0 0 auto;
-      height: 100px;
-      order: 1;
-    }
+    margin-bottom: $margin-between;
 
     .exp-header {
-      color: $primary-color;
+      cursor: pointer;
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
       text-align: center;
       text-transform: uppercase;
     }
+
+    .exp-content {
+      line-height: 1.5;
+      margin: 10px auto;
+      max-width: 1000px;
+
+      .exp-command {
+        background-color: $solver-background-color;
+        color: $terminal-code-color;
+        font-family: Courier;
+      }
+    }
+  }
+
+  .subsub-container {
+    display: flex;
+    flex: 1 1 auto;
+    order: 1;
+
+    .converge-plot {
+      background-color: $solver-background-color;
+      color: $primary-color;
+      display: flex;
+      flex: 0 1 auto;
+      margin-left: $margin-between;
+      order: 2;
+    }
+
+    .solvers {
+      color: $terminal-code-color;
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: row;
+      font-family: Courier;
+      order: 2;
+
+      .sol-l {
+        background-color: $solver-background-color;
+        flex: 1 1 auto;
+      }
+
+      .sol-r {
+        background-color: $solver-background-color;
+        flex: 1 1 auto;
+        margin-left: $margin-between;
+      }
+    }
+
   }
 
   .sol-header {
