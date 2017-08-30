@@ -1,13 +1,13 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
-import {createStructuredSelector} from 'reselect';
+import { connect } from 'react-redux';
+import { EXAMPLE_ACTION } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburst } from 'react-syntax-highlighter/dist/styles/';
 import * as TextForStep2 from './TextForStep2';
-import {lineSelector} from './selectors';
+import { lineSelector } from './selectors';
 
 interface Step2Props {
   lineIndex: {
@@ -17,14 +17,15 @@ interface Step2Props {
 }
 
 class Step2 extends React.Component<Step2Props, any> {
-  constructor() {
-    super();
+  constructor(props: Step2Props) {
+    super(props);
     this.state = {
       code: TextForStep2.initialCodeString,
       hid: false,
     };
     this.shrinkWhatToDo = this.shrinkWhatToDo.bind(this);
   }
+
   private shrinkWhatToDo(event) {
     if (this.state.hid === false) {
       this.setState({
@@ -61,30 +62,31 @@ class Step2 extends React.Component<Step2Props, any> {
           </div>
         </div>
         <div className={styles.interactContainer}>
-        <div className={styles.xml}>
-          <SyntaxHighlighter style={sunburst}
-                             showLineNumbers="true"
-                             language="xml"
-                             wrapLines={true}
-                             lineStyle={lineNumber => {
-                               let style = { display: 'block', backgroundColor: '' };
-                               if (lineNumber > this.props.lineIndex.start && lineNumber < this.props.lineIndex.end) {
-                                 style.backgroundColor = '#404040';
-                               }
-                               return style;
-                             }}>
-            {this.state.code}
-            {}
-          </SyntaxHighlighter>
-        </div>
-        <div className={styles.commentContainer}>
-          <div className={styles.commentHeader}>
-            Explanation
+          <div className={styles.xml}>
+            <SyntaxHighlighter
+              style={sunburst}
+              showLineNumbers="true"
+              language="xml"
+              wrapLines={true}
+              lineStyle={lineNumber => {
+                let style = { display: 'block', backgroundColor: '' };
+                if (lineNumber > this.props.lineIndex.start && lineNumber < this.props.lineIndex.end) {
+                  style.backgroundColor = '#404040';
+                }
+                return style;
+              }}>
+              {this.state.code}
+              {}
+            </SyntaxHighlighter>
           </div>
-          <div className={styles.exp}>
-            {this.props.children}
+          <div className={styles.commentContainer}>
+            <div className={styles.commentHeader}>
+              Explanation
+            </div>
+            <div className={styles.exp}>
+              {this.props.children}
+            </div>
           </div>
-        </div>
         </div>
 
       </div>
@@ -97,12 +99,12 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
+    example: () => dispatch({ type: EXAMPLE_ACTION }),
   };
 }
 
-export default connect < any, any, any > (
+export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Step2);
 

@@ -15,6 +15,9 @@
     ],
     "max-line-length": false,
     "jsx-no-multiline-js": false,
+    "member-ordering": false,
+    "jsx-no-lambda": false,
+    "arrow-parens": false,
     "no-empty-interface": false
   }
 }
