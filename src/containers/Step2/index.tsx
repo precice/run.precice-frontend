@@ -45,8 +45,8 @@ class Step2 extends React.Component<Step2Props, any> {
             what to do
           </div>
           <div className={styles.expContent} hidden={this.state.hid}>
-            preCICE is set up via a precice-config.xml file. It contains all the settings preCICE needs to run the
-            coupled simulation.
+            preCICE is set up via a precice-config.xml file. It contains most of the settings preCICE needs to run the
+            coupled simulation. However, we still need solvers specific configuartion file, that we will not discuss in this tutorial.
             <br/>
             Following this five sub-step, you will learn how to set up the configuration file.
             <br/>
