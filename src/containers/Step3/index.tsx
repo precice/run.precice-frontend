@@ -64,27 +64,27 @@ class Step3 extends React.Component<Step3Props, any> {
             </p>
             For SU2, type in command:
             <p className={styles.expCommand}>
-              ./SU2_CFD su2-config.cfg
+              ~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg
             </p>
           </div>
         </div>
         <div className={styles.subsubContainer}>
-          <div className={styles.solvers}>
-            <div className={styles.solL}>
-              <Console
-                ref={(ref: Console) => this.props.initConsole(ConsoleId.left, ref)}
-                handler={(txt: string) => this.props.sendMsg(ConsoleId.left, txt)}
-                welcomeMessage={'Welcome to Terminal for CalculiX!'}
-                autofocus={true}
-              />
-            </div>
-            <div className={styles.solR}>
-              <Console
-                ref={(ref) => this.props.initConsole(ConsoleId.right, ref)}
-                handler={(txt: string) => this.props.sendMsg(ConsoleId.right, txt)}
-                welcomeMessage={'Welcome to Terminal for SU2!'}
-              />
-            </div>
+          <div className={styles.solL}>
+            <Console
+              ref={(ref: Console) => this.props.initConsole(ConsoleId.left, ref)}
+              handler={(txt: string) => this.props.sendMsg(ConsoleId.left, txt)}
+              welcomeMessage={'Welcome to Terminal for CalculiX!'}
+              autofocus={true}
+              promptLabel="$ "
+            />
+          </div>
+          <div className={styles.solR}>
+            <Console
+              ref={(ref) => this.props.initConsole(ConsoleId.right, ref)}
+              handler={(txt: string) => this.props.sendMsg(ConsoleId.right, txt)}
+              welcomeMessage={'Welcome to Terminal for SU2!'}
+              promptLabel="$ "
+            />
           </div>
           <div className={styles.convergePlot}>
             <div className={styles.solHeader}>
@@ -117,19 +117,61 @@ export const consoleMiddleware = store => next => action => {
   const consoleAction = action.type === 'socket/stdout' || action.type === 'socket/stderr' || action.type === 'socket/exit';
 
   if (consoleAction) {
-
     // replace with selector
     const cons = store.getState().getIn(['step3', 'consoles', action.consoleId]);
 
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
-      action.data.split('\n').forEach((t) => cons.log(t));
+      const dats = new Uint8Array(action.data);
+      const lines = [];
+
+      console.log('+++++++++++new', dats.length);
+      let nextStart = 0;
+      let result;
+      do {
+        ({ result, nextStart } = arrayBufferToString(dats, nextStart));
+        lines.push(result);
+      } while (nextStart !== -1);
+
+      cons.log(...lines);
     } else if (action.type === 'socket/exit') {
       cons.log('returned with exit code ' + action.code);
       cons.return();
     }
+
+    cons.scrollToBottom();
   }
 
 
   return next(action);
 };
+
+function arrayBufferToString(uint16, start = 0) {
+
+  const length = uint16.length;
+  let result = '';
+  let addition = Math.pow(2, 16) - 1;
+
+  for (let i = start; i < length; i += addition) {
+
+    if (i + addition > length) {
+      addition = length - i;
+    }
+    const chunk = String.fromCharCode.apply(null, uint16.subarray(i, i + addition));
+    const newlineIndex = chunk.indexOf('\n');
+    if (newlineIndex !== -1) {
+      return {
+        result: result + chunk.substring(0, newlineIndex),
+        nextStart: i + newlineIndex + 1,
+      };
+    }
+    result += chunk;
+
+  }
+
+  return {
+    result,
+    nextStart: -1,
+  };
+
+}
 
