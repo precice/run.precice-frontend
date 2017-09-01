@@ -15,6 +15,7 @@ import Sub2 from './containers/sub2';
 import Sub3 from './containers/sub3';
 import Sub4 from './containers/sub4';
 import Sub5 from './containers/sub5';
+import Sub6 from './containers/sub6';
 
 // Create a history of your choosing (we're using a browser history in this case)
 export const history = createHistory();
@@ -73,6 +74,10 @@ const rootRouteRaw: RouteDefinition = {
             {
               path: '/sub5',
               component: Sub5,
+            },
+            {
+              path: '/sub6',
+              component: Sub6,
             },
           ],
         },

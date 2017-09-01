@@ -18,7 +18,26 @@ class Sub5 extends React.Component<Sub5Props, any> {
   public render() {
     return (
       <div>
-        Last, we need to set up the way the two solver couple with each other.
+        Now, we can set the way to communicate the two solvers to each other.
+        <br/><br/>
+        <li>
+          "From" indicates the solver that initiates communication, "To" indicate the other.
+          <br/>
+          However, for most of the cases, it makes no difference
+          which solver initiates the communication.
+          <br/><br/>
+          Here, we set from "SU2_CFD" to "Calculix".
+          <button>set</button>
+        </li>
+        <br/>
+        <li>
+          We now set distribution-type:
+          <select id="distribution-type" name="distribution-type">
+            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option value="gather-scatter">gather-scatter</option>
+            <option value="point-to-point">point-to-point</option>
+          </select>
+        </li>
       </div>
     );
   }

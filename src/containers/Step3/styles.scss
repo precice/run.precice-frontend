@@ -16,12 +16,24 @@
     margin-bottom: $margin-between;
 
     .exp-header {
-      cursor: pointer;
+      display: flex;
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
-      text-align: center;
       text-transform: uppercase;
+
+      .title {
+        flex: 1 1 auto;
+        text-align: center;
+        width: 80%;
+      }
+
+      .hide {
+        flex: 0 0 auto;
+        cursor: pointer;
+        text-align: center;
+        width: 10%;
+      }
     }
 
     .exp-content {
@@ -30,9 +42,10 @@
       max-width: 1000px;
 
       .exp-command {
-        background-color: $solver-background-color;
+        background-color: $terminal-background-color;
         color: $terminal-code-color;
         font-family: Courier;
+        padding: 0.1em;
       }
     }
   }
@@ -60,14 +73,18 @@
       order: 2;
 
       .sol-l {
-        background-color: $solver-background-color;
+        background-color: $terminal-background-color;
         flex: 1 1 auto;
+        overflow-y: scroll;
+        padding: 0.5em;
       }
 
       .sol-r {
-        background-color: $solver-background-color;
+        background-color: $terminal-background-color;
         flex: 1 1 auto;
         margin-left: $margin-between;
+        overflow-y: scroll;
+        padding: 0.5em;
       }
     }
 

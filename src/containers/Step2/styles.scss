@@ -16,12 +16,24 @@
     margin-bottom: $margin-between;
 
     .exp-header {
-      cursor: pointer;
+      display: flex;
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
-      text-align: center;
       text-transform: uppercase;
+
+      .title {
+        flex: 1 1 auto;
+        text-align: center;
+        width: 80%;
+      }
+
+      .hide {
+        flex: 0 0 auto;
+        cursor: pointer;
+        text-align: center;
+        width: 10%;
+      }
     }
 
     .exp-content {
@@ -45,7 +57,12 @@
       flex: 1 0.8 auto;
       font-size: 12px;
       overflow-y: scroll;
+      padding: 1em 0.5em;
       width: 600px;
+
+      .highlighter {
+        margin: 0;
+      }
 
     }
 

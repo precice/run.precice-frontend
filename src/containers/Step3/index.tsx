@@ -21,6 +21,7 @@ class Step3 extends React.Component<Step3Props, any> {
     super(props);
     this.state = {
       hid: false,
+      hidString: 'hide',
     };
     this.shrinkWhatToDo = this.shrinkWhatToDo.bind(this);
   }
@@ -29,10 +30,12 @@ class Step3 extends React.Component<Step3Props, any> {
     if (this.state.hid === false) {
       this.setState({
         hid: true,
+        hidString: 'expand',
       });
     } else {
       this.setState({
         hid: false,
+        hidString: 'hide',
       });
     }
   }
@@ -42,8 +45,10 @@ class Step3 extends React.Component<Step3Props, any> {
     return (
       <div className={styles.subContainer}>
         <div className={styles.expContainer}>
-          <div onClick={this.shrinkWhatToDo} className={styles.expHeader}>
-            what to do
+          <div className={styles.expHeader}>
+            <span className={styles.hide}/>
+            <span className={styles.title}>what to do</span>
+            <span onClick={this.shrinkWhatToDo} className={styles.hide}>{this.state.hidString}</span>
           </div>
           <div className={styles.expContent} hidden={this.state.hid}>
             After the setup is complete, we are ready to run the coupled simulation. We need to start two terminals,
@@ -61,7 +66,6 @@ class Step3 extends React.Component<Step3Props, any> {
             <p className={styles.expCommand}>
               ./SU2_CFD su2-config.cfg
             </p>
-            (TIP: click "WHAT TO DO" to shrink the instruction)
           </div>
         </div>
         <div className={styles.subsubContainer}>

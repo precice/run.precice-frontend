@@ -23,6 +23,7 @@ class Sub1 extends React.Component<Sub1Props, any> {
         <li>
           To set the dimension for the scenario.
           <select id="data type" name="data type">
+            <option hidden={true} selected={true} > -- select an option -- </option>
             <option value="twoD">2</option>
             <option value="oneD">3</option>
           </select>
@@ -33,6 +34,7 @@ class Sub1 extends React.Component<Sub1Props, any> {
           For coupling, we need data transfer between two solvers.
           We first define the data type:
           <select id="data type" name="data type">
+            <option hidden={true} selected={true} > -- select an option -- </option>
             <option value="scalar">scalar</option>
             <option value="vector">vector</option>
           </select>

@@ -27,9 +27,11 @@ class Tutorial extends React.Component<TutorialProps, undefined> {
           <div className={styles.btnSubCon}>
             {this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
+          {/*
           <div className={styles.btnSubCon}>
             <Link to={this.props.buttonLinks.current} className={styles.btn}> VALIDATE</Link>
           </div>
+          */}
           <div className={styles.btnSubCon}>
             {this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>}
           </div>

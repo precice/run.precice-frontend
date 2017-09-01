@@ -18,23 +18,59 @@ class Sub4 extends React.Component<Sub4Props, any> {
   public render() {
     return (
       <div>
-        Now, we can set the way to communicate the two solvers to each other.
-        <br/><br/>
+        For Calculix, the procedure is the same. However, we don't need to set the mapping direction again.
+        <br/>
         <li>
-          "From" indicates the solver that initiates communication, "To" indicate the other.
-          <br/>
-          However, for most of the cases, it makes no difference
-          which solver initiates the communication.
-          <br/><br/>
-          Here, we set from "SU2_CFD" to "Calculix".
+          Set the participant name "Calculix"
           <button>set</button>
         </li>
         <br/>
         <li>
-          We now set distribution-type:
-          <select id="distribution-type" name="distribution-type">
-            <option value="gather-scatter">gather-scatter</option>
-            <option value="point-to-point">point-to-point</option>
+          Solid only uses one mesh, that is, "Calculix_Mesh".
+          <button>set</button>
+          <br/>
+          Provider:
+          <select id="provideCalculixinCalculix" name="provide">
+            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option value="yes">provide = "yes"</option>
+            <option value="SU2">from = "SU2_CFD"</option>
+            <option value="Calculix">from = "Calculix"</option>
+          </select>
+        </li>
+        <br/>
+        <li>
+          Now we set the dataset in which Calculix needs to write:
+          <br/>
+          name:
+          <select id="writeCalculixname" name="writeCalculixname">
+            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option value="Forces0">Forces0</option>
+            <option value="DisplacementDeltas0">DisplacementDeltas0</option>
+          </select>
+          <br/>
+          mesh:
+          <select id="writeCalculixmesh" name="writeCalculixmesh">
+            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option value="SU2_Mesh0">SU2_Mesh0</option>
+            <option value="Calculix_Mesh">Calculix_Mesh</option>
+          </select>
+        </li>
+        <br/>
+        <li>
+          Same procedure for read:
+          <br/>
+          name:
+          <select id="readCalculixname" name="readCalculixname">
+            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option value="Forces0">Forces0</option>
+            <option value="DisplacementDeltas0">DisplacementDeltas0</option>
+          </select>
+          <br/>
+          mesh:
+          <select id="readCalculixmesh" name="readCalculixmesh">
+            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option value="SU2_Mesh0">SU2_Mesh0</option>
+            <option value="Calculix_Mesh">Calculix_Mesh</option>
           </select>
         </li>
       </div>
