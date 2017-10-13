@@ -1,10 +1,9 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
-import {createStructuredSelector} from 'reselect';
+import { connect } from 'react-redux';
+import { EXAMPLE_ACTION } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
-import {Link} from 'react-router-dom';
 // import * as styles from './styles.scss';
-import * as TextForStep2 from '../Step2/TextForStep2';
+import { Tooltip } from 'react-tippy';
 
 interface Sub1Props {
 }
@@ -12,9 +11,9 @@ interface Sub1Props {
 class Sub1 extends React.Component<Sub1Props, any> {
   constructor() {
     super();
-    this.state = {
-    };
+    this.state = {};
   }
+
   public render() {
     return (
       <div>
@@ -23,7 +22,7 @@ class Sub1 extends React.Component<Sub1Props, any> {
         <li>
           To set the dimension for the scenario.
           <select id="data type" name="data type">
-            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option hidden={true} selected={true}> -- select an option --</option>
             <option value="twoD">2</option>
             <option value="oneD">3</option>
           </select>
@@ -33,8 +32,15 @@ class Sub1 extends React.Component<Sub1Props, any> {
         <li>
           For coupling, we need data transfer between two solvers.
           We first define the data type:
+          <Tooltip
+            trigger="click"
+            width="100"
+            title="Scalar means the communication consists only of unstructured numbers while vector transfers multiple dimensions at once. In scenarios with heavy communication between precice node, vector can lead to a small speed up, but usually this option has not a big performance impact"
+          >
+            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
+          </Tooltip>
           <select id="data type" name="data type">
-            <option hidden={true} selected={true} > -- select an option -- </option>
+            <option hidden={true} selected={true}> -- select an option --</option>
             <option value="scalar">scalar</option>
             <option value="vector">vector</option>
           </select>
@@ -55,12 +61,12 @@ const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
+    example: () => dispatch({ type: EXAMPLE_ACTION }),
   };
 }
 
-export default connect < any, any, any > (
+export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Sub1);
 

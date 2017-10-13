@@ -3,8 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
+const COMPONENTS_DIRS = [
+  path.resolve(__dirname, '../../src/components'),
+  path.resolve(__dirname, '../../src/containers'),
+];
+console.log(COMPONENTS_DIRS);
 module.exports = (options) => {
-  const componentsCss = new ExtractTextPlugin('[name].[hash].css');
+  const componentsCss = new ExtractTextPlugin('[name].[hash].components.css');
+  const globalCss = new ExtractTextPlugin('[name].[hash].global.css');
   return {
 
     entry: './src/app.tsx',
@@ -36,6 +42,7 @@ module.exports = (options) => {
 
         {
           test: /^[^_].*scss$/,
+          include: COMPONENTS_DIRS,
           loader: componentsCss.extract([
 
             {
@@ -71,7 +78,47 @@ module.exports = (options) => {
             }]),
 
         },
-      ]
+        {
+          test: /^[^_].*scss$/,
+          exclude: COMPONENTS_DIRS,
+          loader: globalCss.extract([
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                plugins: [
+                  autoprefixer(),
+                ],
+              }
+            },
+            {
+              // compile sass
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                // add here include paths
+                includePaths: [
+                  path.join(__dirname, '../../src/sass'),
+                  path.join(__dirname, '../../node_modules'),
+                ],
+              },
+            },
+
+
+          ]),
+
+        },
+        {
+          test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,
+          loader: 'file-loader'
+        }
+      ],
     },
 
     plugins: [
@@ -82,6 +129,7 @@ module.exports = (options) => {
         inject: true,
       }),
       componentsCss,
+      globalCss,
     ],
 
 
