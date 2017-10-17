@@ -6,24 +6,27 @@
 
 import { fromJS } from 'immutable';
 
+
 import {
-  EXAMPLE_ACTION,
+  HID_CHECK2,
 } from '../constants';
 import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  example: '123',
+  hidAction: '123',
+  hidCheck: false,
 });
 
-function exampleReducer(state = initialState, action: Action) {
+function step2Reducer(state = initialState, action: any) {
   switch (action.type) {
-    case EXAMPLE_ACTION:
+    case HID_CHECK2:
       return state
-        .set('example', '234');
+        .set('hidCheck2', !action.check);
     default:
       return state;
   }
 }
 
-export default exampleReducer;
+export default step2Reducer;
+

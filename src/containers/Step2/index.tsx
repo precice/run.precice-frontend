@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { EXAMPLE_ACTION } from '../constants';
+import { HID_CHECK2 } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -7,15 +7,15 @@ import * as styles from './styles.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburst } from 'react-syntax-highlighter/dist/styles/';
 import * as TextForStep2 from './TextForStep2';
-import { lineSelector, titleSelector} from './selectors';
+import { lineSelector, titleSelector, hidCheckSelector} from './selectors';
 
 interface Step2Props {
   lineIndex: {
     start: number,
     end: number,
   };
-  hidField: boolean;
-  hid: () => void;
+  hidAction: () => void;
+  hidCheck2: boolean;
   subStepTitle: string;
 }
 
@@ -23,29 +23,13 @@ class Step2 extends React.Component<Step2Props, any> {
   constructor(props: Step2Props) {
     super(props);
     this.state = {
-      hid: false,
-      hidString: 'hide',
       mouseOverLineIndex: {
         start: 1,
         end: 1,
       },
     };
-    this.shrinkWhatToDo = this.shrinkWhatToDo.bind(this);
     this.setMouseOver = this.setMouseOver.bind(this);
     this.setMouseOut = this.setMouseOut.bind(this);
-  }
-  private shrinkWhatToDo(event) {
-    if (this.state.hid === false) {
-      this.setState({
-        hid: true,
-        hidString: 'expand',
-      });
-    } else {
-      this.setState({
-        hid: false,
-        hidString: 'hide',
-      });
-    }
   }
   private setMouseOver(event) {
     switch (event.currentTarget.id) {
@@ -101,9 +85,10 @@ class Step2 extends React.Component<Step2Props, any> {
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span className={styles.title}>what to do</span>
-            <span onClick={this.shrinkWhatToDo} className={styles.hide}>{this.state.hidString}</span>
+            <span onClick={this.props.hidAction} className={styles.hide}>{this.props.hidCheck2 ? 'expand' : 'hide'}
+            </span>
           </div>
-          <div className={styles.expContent} hidden={this.state.hid}>
+          <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
             preCICE is set up via a precice-config.xml file. It contains most of the settings preCICE needs to run the
             coupled simulation. However, we still need solvers specific configuartion file, that we will not discuss in this tutorial.
             <br/>
@@ -445,13 +430,13 @@ class Step2 extends React.Component<Step2Props, any> {
 }
 const mapStateToProps = createStructuredSelector({
   lineIndex: lineSelector(),
-  //hidField: hidSelector(),
   subStepTitle: titleSelector(),
+  hidCheck2: hidCheckSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    //hid: () => dispatch({ hid: hideWhatToDo_Action }),
+    hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
   };
 }
 

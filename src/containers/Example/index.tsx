@@ -16,8 +16,8 @@ class Example extends React.Component<ExampleProps, undefined> {
   public render() {
     return (
       <div>This is an Example <Link to="/"> Link to Landing</Link>
-        <button onClick={this.props.example}>Change state
-        </button>
+        <div onClick={this.props.example}>Change state
+        </div>
         <div>Example Field value: {this.props.exampleField}</div>
       </div>
     );

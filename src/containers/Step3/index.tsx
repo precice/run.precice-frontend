@@ -4,10 +4,14 @@ import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import * as styles from './styles.scss';
 import Console from 'react-console-component';
+import { hidCheckSelector} from './selectors';
+import { HID_CHECK3 } from '../constants';
 
 interface Step3Props {
   sendMsg: any;
   initConsole: any;
+  hidAction: () => void;
+  hidCheck: boolean;
 }
 
 export enum ConsoleId {
@@ -17,29 +21,6 @@ export enum ConsoleId {
 
 
 class Step3 extends React.Component<Step3Props, any> {
-  constructor(props: Step3Props) {
-    super(props);
-    this.state = {
-      hid: false,
-      hidString: 'hide',
-    };
-    this.shrinkWhatToDo = this.shrinkWhatToDo.bind(this);
-  }
-
-  private shrinkWhatToDo(event) {
-    if (this.state.hid === false) {
-      this.setState({
-        hid: true,
-        hidString: 'expand',
-      });
-    } else {
-      this.setState({
-        hid: false,
-        hidString: 'hide',
-      });
-    }
-  }
-
 
   public render() {
     return (
@@ -48,9 +29,9 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span className={styles.title}>what to do</span>
-            <span onClick={this.shrinkWhatToDo} className={styles.hide}>{this.state.hidString}</span>
+            <span onClick={this.props.hidAction} className={styles.hide}>{this.props.hidCheck ? 'expand' : 'hide'}</span>
           </div>
-          <div className={styles.expContent} hidden={this.state.hid}>
+          <div id="hideStep3" className={styles.expContent} hidden={this.props.hidCheck}>
             After the setup is complete, we are ready to run the coupled simulation. We need to start two terminals,
             one for each solver that we use.
             <br/>
@@ -98,12 +79,15 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  hidCheck: hidCheckSelector(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
     initConsole: (consoleId: ConsoleId, console: Console) => dispatch({ type: INIT_CONSOLE, consoleId, console }),
     sendMsg: (consoleId: ConsoleId, cmd: string) => dispatch({ type: 'socket/exec_cmd', consoleId, cmd }),
+    hidAction: () => { dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden}); },
   };
 }
 

@@ -11,6 +11,13 @@ export const pathnameSelector = () => createSelector
     return pathname;
   },
 );
+const step2SubstateSelector = (state) => {
+  return state.get('step2');
+};
+
+export const hidCheckSelector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('hidCheck2'));
 
 export const lineSelector = () => createSelector
 (
@@ -98,11 +105,3 @@ export const titleSelector = () => createSelector
   },
 );
 
-const hidSelector = (state) => {
-  return state.get('hid');
-};
-
-export const hidFieldSelector = () => createSelector(
-  hidSelector,
-  (hidSubstate) => hidSubstate.get('hidField'),
-);
