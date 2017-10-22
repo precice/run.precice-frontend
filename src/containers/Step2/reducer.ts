@@ -8,14 +8,18 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2,
+  HID_CHECK2, XML_CLICK, XML_ALL_CLICK,
 } from '../constants';
 import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  hidAction: '123',
-  hidCheck: false,
+  xmlflag1: true,
+  xmlflag2: false,
+  xmlflag3: false,
+  xmlflag4: false,
+  xmlflag5: false,
+  xmlflag6: false,
 });
 
 function step2Reducer(state = initialState, action: any) {
@@ -23,6 +27,12 @@ function step2Reducer(state = initialState, action: any) {
     case HID_CHECK2:
       return state
         .set('hidCheck2', !action.check);
+    case XML_CLICK:
+      return state
+        .set(action.check, true);
+    case XML_ALL_CLICK:
+      return state
+        .set('xmlflag2', true).set('xmlflag3', true).set('xmlflag4', true).set('xmlflag5', true).set('xmlflag6', true);
     default:
       return state;
   }

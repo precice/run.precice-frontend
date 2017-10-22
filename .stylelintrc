@@ -5,7 +5,7 @@
   ],
   "rules": {
     "at-rule-blacklist": ["debug"],
-    "at-rule-no-vendor-prefix": true,
+    "at-rule-no-vendor-prefix": false,
     "block-no-empty": true,
     "block-opening-brace-space-before": "always",
     "color-hex-case": "lower",
@@ -38,7 +38,7 @@
     "number-no-trailing-zeros": true,
     "order/properties-alphabetical-order": true,
     "property-no-unknown": true,
-    "property-no-vendor-prefix": true,
+    "property-no-vendor-prefix": false,
     "rule-empty-line-before": [
       "always-multi-line",
       {
