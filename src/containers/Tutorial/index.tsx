@@ -61,9 +61,9 @@ class Tutorial extends React.Component<TutorialProps, any> {
               <span hidden={this.props.xmlflag6}> 46-61,</span>
                to check the explanation.
             </div>
-            <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
+            {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
             No, I want to skip those parts.
-            </Link>
+            </Link>}
           </div>{/*modal content*/}
         </div>{/*the modal*/}
         <ProgressBar percentage={this.props.percentage}/>
@@ -79,15 +79,15 @@ class Tutorial extends React.Component<TutorialProps, any> {
           </div>
           */}
           <div className={styles.btnSubCon}>
-            {this.props.buttonLinks.next &&
+            {
               (this.props.buttonLinks.next === '/tutorial/step3' &&
               ( this.props.xmlflag2 === false ||
                 this.props.xmlflag3 === false ||
                 this.props.xmlflag4 === false ||
                 this.props.xmlflag5 === false ||
                 this.props.xmlflag6 === false )) ?
-              <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-               <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>
+                this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
+                this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>
             }
           </div>
         </div>
