@@ -55,15 +55,15 @@ export const initialCodeString4 = `    <participant name="Calculix">
     </participant>`
 export const initialCodeString45 = `
     <!-- Communication method, use TCP/IP sockets, change network to "ib0" on SuperMUC -->`
-export const initialCodeString5 = `    <m2n:sockets from="SU2_CFD" to="Calculix"  exchange-directory="../" distribution-type="gather-scatter"/>`
+export const initialCodeString5 = `    <m2n:sockets from="SU2_CFD" to="Calculix" exchange-directory="../" distribution-type="gather-scatter"/>`
 export const initialCodeString56 = ` `;
 export const initialCodeString6 = `    <coupling-scheme:serial-implicit>
       <participants first="SU2_CFD" second="Calculix"/>
       <max-time value="10000"/>
       <timestep-length value="1e-4" />
+      <max-iterations value="50"/>
       <exchange data="Forces0" mesh="Calculix_Mesh" from="SU2_CFD" to="Calculix"/>
       <exchange data="DisplacementDeltas0" mesh="Calculix_Mesh" from="Calculix" to="SU2_CFD" />
-      <max-iterations value="50"/>
       <relative-convergence-measure limit="1e-4" data="DisplacementDeltas0" mesh="Calculix_Mesh"/>
       <relative-convergence-measure limit="1e-4" data="Forces0" mesh="Calculix_Mesh"/>
       <extrapolation-order value="2"/>

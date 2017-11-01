@@ -1,10 +1,11 @@
 import {connect} from 'react-redux';
-import {XML_ALL_CLICK} from '../constants';
+import {XML_ALL_CLICK, XML_CLICK} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 import ProgressBar from '../Progress/index';
+import * as TextForStep2 from '../Step2/TextForStep2';
 import {
   buttonLinksSelector,
   percentageSelector} from './selectors';
@@ -23,7 +24,9 @@ interface TutorialProps {
     current: string,
     next?: string,
   };
+  path: string;
   xmlSkip: () => void;
+  xmlAction: () => void;
   xmlflag2: boolean;
   xmlflag3: boolean;
   xmlflag4: boolean;
@@ -47,19 +50,24 @@ class Tutorial extends React.Component<TutorialProps, any> {
     return (
       <div className={styles.tutorialContainer}>
         <div id="myModal" className={styles.modal}>
+          {
+            window.onclick = (event) => {
+              if (event.target === document.getElementById('myModal')) {
+                document.getElementById('myModal').style.display = 'none';
+              }
+            }
+          }
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <span onClick={this.closeModal} className={styles.close}>&times;</span>
               <h2>Oops, you forgot some parts ;-)</h2>
             </div>
             <div className={styles.modalBody}>
-              Click on line
-              <span hidden={this.props.xmlflag2}> 12~20,</span>
-              <span hidden={this.props.xmlflag3}> 26~35,</span>
-              <span hidden={this.props.xmlflag4}> 37~41,</span>
-              <span hidden={this.props.xmlflag5}> 44,</span>
-              <span hidden={this.props.xmlflag6}> 46-61,</span>
-               to check the explanation.
+              <li hidden={this.props.xmlflag2}><Link id="xmlflag2" onClick={this.props.xmlAction} to="/tutorial/step2/sub2">{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
+              <li hidden={this.props.xmlflag3}><Link id="xmlflag3" onClick={this.props.xmlAction} to="/tutorial/step2/sub3">{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
+              <li hidden={this.props.xmlflag4}><Link id="xmlflag4" onClick={this.props.xmlAction} to="/tutorial/step2/sub4">{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
+              <li hidden={this.props.xmlflag5}><Link id="xmlflag5" onClick={this.props.xmlAction} to="/tutorial/step2/sub5">{TextForStep2.sub5} (line 44)</Link></li>
+              <li hidden={this.props.xmlflag6}><Link id="xmlflag6" onClick={this.props.xmlAction} to="/tutorial/step2/sub6">{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
             </div>
             {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
             No, I want to skip those parts.
@@ -109,6 +117,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     xmlSkip: () => { dispatch({ type: XML_ALL_CLICK}); document.getElementById('myModal').style.display = 'none'; },
+    xmlAction: (event) => { dispatch({ type: XML_CLICK, check: event.currentTarget.id}); document.getElementById('myModal').style.display = 'none'; },
   };
 }
 

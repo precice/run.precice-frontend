@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { EXAMPLE_ACTION } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
-// import * as styles from './styles.scss';
+import * as styles from '../sub1/styles.scss';
 import { Tooltip } from 'react-tippy';
 
 interface Sub1Props {
@@ -20,37 +20,21 @@ class Sub1 extends React.Component<Sub1Props, any> {
         We first need to set up the general setting of the interface.
         <br/><br/>
         <li>
-          To set the dimension for the scenario.
-          <select id="data type" name="data type">
-            <option hidden={true} selected={true}> -- select an option --</option>
-            <option value="twoD">2</option>
-            <option value="oneD">3</option>
-          </select>
-          <br/>
-        </li>
-        <br/>
-        <li>
-          For coupling, we need data transfer between two solvers.
-          We first define the data type:
+          <span className={styles.highlight}>dimensions</span>
+          : Specifies the number of dimensions of the problem. Can be either 2 or 3
           <Tooltip
             trigger="click"
             width="100"
-            title="Scalar means the communication consists only of unstructured numbers while vector transfers multiple dimensions at once. In scenarios with heavy communication between precice node, vector can lead to a small speed up, but usually this option has not a big performance impact"
+            title="preCICE does not fully support 1D solvers. For this example, however, we can treat our 1D solvers as 2D solvers by ignoring all the y-components."
           >
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-          </Tooltip>
-          <select id="data type" name="data type">
-            <option hidden={true} selected={true}> -- select an option --</option>
-            <option value="scalar">scalar</option>
-            <option value="vector">vector</option>
-          </select>
-          <br/><br/>
+          </Tooltip>.
         </li>
+        <br/>
         <li>
-          For this tutorial, we need to transfer the force and displacement.
-          <br/>
-          We named it "Forces0" and "DisplacementDeltas0".
-          <button>set</button>
+          <span className={styles.highlight}>data:vector name="Force0"</span>
+          : Datasets are defined here, which are later assigned to the meshes used in the simulation. The data type could be either vector or scalar.
+          <br/><br/> We can set the name as we like, but should be consist to solver's configuration file.
         </li>
       </div>
     );

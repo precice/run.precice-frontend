@@ -110,12 +110,12 @@ class Step2 extends React.Component<Step2Props, any> {
             <br/>
             Click on the XML file, you will learn how to set up the configuration file.
             <br/>
-            <li><Link to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1}</Link></li>
-            <li><Link to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2}</Link></li>
-            <li><Link to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3}</Link></li>
-            <li><Link to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4}</Link></li>
-            <li><Link to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5}</Link></li>
-            <li><Link to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6}</Link></li>
+            <li><Link id="xmlflag1" onClick={this.props.xmlAction} to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1} (line 5 ~ 9)</Link></li>
+            <li><Link id="xmlflag2" onClick={this.props.xmlAction} to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
+            <li><Link id="xmlflag3" onClick={this.props.xmlAction} to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
+            <li><Link id="xmlflag4" onClick={this.props.xmlAction} to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
+            <li><Link id="xmlflag5" onClick={this.props.xmlAction} to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5} (line 44)</Link></li>
+            <li><Link id="xmlflag6" onClick={this.props.xmlAction} to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
           </div>
         </div>
         <div className={styles.interactContainer}>
