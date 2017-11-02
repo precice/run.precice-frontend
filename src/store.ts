@@ -12,6 +12,7 @@ import createSocketIoMiddleware from 'redux-socket.io';
 import { consoleMiddleware } from './containers/Step3/index';
 
 const socket = io('http://localhost:3001');
+// const socket = io('http://131.159.36.247:3001');
 
 const middlewares: Middleware[] = [
   routerMiddlewareInstace,
