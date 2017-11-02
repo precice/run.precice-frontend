@@ -4,14 +4,23 @@ import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import * as styles from './styles.scss';
 import Console from 'react-console-component';
-import { hidCheckSelector} from './selectors';
+import { hidCheckSelector, chartDataSelector} from './selectors';
 import { HID_CHECK3 } from '../constants';
+import { CHART_DATA } from '../constants'
+
+// VictoryChart is a wrapper
+import {VictoryScatter, VictoryChart, VictoryTheme} from 'victory';
+
+// TODO:
+// 1. How do I receive data from the server and add it to redux store?
 
 interface Step3Props {
   sendMsg: any;
   initConsole: any;
   hidAction: () => void;
   hidCheck: boolean;
+  // data is object array for Victory chart
+  data: object[];
 }
 
 export enum ConsoleId {
@@ -69,7 +78,16 @@ class Step3 extends React.Component<Step3Props, any> {
           </div>
           <div className={styles.convergePlot}>
             <div className={styles.solHeader}>
-              convergence plot for coupling
+              <VictoryChart
+                theme={VictoryTheme.material}
+                domain={{}}
+              >
+                <VictoryScatter
+                  style={{ data: { fill: '#c43a31' } }}
+                  size={10}
+                  data={this.props.data}
+                />
+              </VictoryChart>
             </div>
           </div>
         </div>
@@ -81,6 +99,7 @@ class Step3 extends React.Component<Step3Props, any> {
 
 const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
+  data: chartDataSelector(),
 });
 
 function mapDispatchToProps(dispatch) {

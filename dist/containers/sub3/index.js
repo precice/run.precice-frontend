@@ -1,0 +1,117 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_redux_1 = require("react-redux");
+const constants_1 = require("../constants");
+const reselect_1 = require("reselect");
+const React = require("react");
+class Sub3 extends React.Component {
+    constructor() {
+        super();
+        this.state = {};
+    }
+    render() {
+        return (React.createElement("div", null,
+            "Third, let's speicify the behavior of SU2.",
+            React.createElement("br", null),
+            React.createElement("br", null),
+            React.createElement("li", null,
+                "We first set the participant name \"SU2_CFD\"",
+                React.createElement("button", null, "set")),
+            React.createElement("br", null),
+            React.createElement("li", null,
+                "For fluid, we uses two meshes, one is \"SU2_Mesh0\", the other is \"Calculix_Mesh\"",
+                React.createElement("button", null, "set"),
+                React.createElement("br", null),
+                "We also need to set the provider of SU2 Provider of \"SU2_Mesh0\"",
+                React.createElement("select", { id: "provideSU2inSU2", name: "provide" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "yes" }, "provide = \"yes\""),
+                    React.createElement("option", { value: "SU2" }, "from = \"SU2_CFD\""),
+                    React.createElement("option", { value: "Calculix" }, "from = \"Calculix\"")),
+                React.createElement("br", null),
+                "Provider of \"Calculix_Mesh\"",
+                React.createElement("select", { id: "provideCalculixinSU2", name: "provide" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "yes" }, "provide = \"yes\""),
+                    React.createElement("option", { value: "SU2" }, "from = \"SU2_CFD\""),
+                    React.createElement("option", { value: "Calculix" }, "from = \"Calculix\""))),
+            React.createElement("br", null),
+            React.createElement("li", null,
+                "Now we set the dataset in which SU2 needs to write:",
+                React.createElement("br", null),
+                "name:",
+                React.createElement("select", { id: "writeSU2name", name: "writeSU2name" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "Forces0" }, "Forces0"),
+                    React.createElement("option", { value: "DisplacementDeltas0" }, "DisplacementDeltas0")),
+                React.createElement("br", null),
+                "mesh:",
+                React.createElement("select", { id: "writeSU2mesh", name: "writeSU2mesh" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "SU2_Mesh0" }, "SU2_Mesh0"),
+                    React.createElement("option", { value: "Calculix_Mesh" }, "Calculix_Mesh"))),
+            React.createElement("br", null),
+            React.createElement("li", null,
+                "Same procedure for read:",
+                React.createElement("br", null),
+                "name:",
+                React.createElement("select", { id: "readSU2name", name: "readSU2name" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "Forces0" }, "Forces0"),
+                    React.createElement("option", { value: "DisplacementDeltas0" }, "DisplacementDeltas0")),
+                React.createElement("br", null),
+                "mesh:",
+                React.createElement("select", { id: "readSU2mesh", name: "readSU2mesh" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "SU2_Mesh0" }, "SU2_Mesh0"),
+                    React.createElement("option", { value: "Calculix_Mesh" }, "Calculix_Mesh"))),
+            React.createElement("br", null),
+            React.createElement("li", null,
+                "For mapping, we first set the writing direction:",
+                React.createElement("br", null),
+                "from:",
+                React.createElement("select", { id: "mappingWriteSU2from", name: "mappingWriteSU2from" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "SU2_Mesh0" }, "SU2_Mesh0"),
+                    React.createElement("option", { value: "Calculix_Mesh" }, "Calculix_Mesh")),
+                "to:",
+                React.createElement("select", { id: "mappingWriteSU2to", name: "mappingWriteSU2to" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "SU2_Mesh0" }, "SU2_Mesh0"),
+                    React.createElement("option", { value: "Calculix_Mesh" }, "Calculix_Mesh")),
+                React.createElement("br", null),
+                "Aslo the constraint:",
+                React.createElement("select", { id: "mappingWriteSU2constraint", name: "mappingWriteSU2constraint" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "conservative" }, "conservative"),
+                    React.createElement("option", { value: "consistent" }, "consistent"))),
+            React.createElement("br", null),
+            React.createElement("li", null,
+                "For the reading direction of mapping, the procedure is the same:",
+                React.createElement("br", null),
+                "from:",
+                React.createElement("select", { id: "mappingReadSU2from", name: "mappingReadSU2from" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "SU2_Mesh0" }, "SU2_Mesh0"),
+                    React.createElement("option", { value: "Calculix_Mesh" }, "Calculix_Mesh")),
+                "to:",
+                React.createElement("select", { id: "mappingReadSU2to", name: "mappingReadSU2to" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "SU2_Mesh0" }, "SU2_Mesh0"),
+                    React.createElement("option", { value: "Calculix_Mesh" }, "Calculix_Mesh")),
+                React.createElement("br", null),
+                "Aslo the constraint:",
+                React.createElement("select", { id: "mappingReadSU2constraint", name: "mappingReadSU2constraint" },
+                    React.createElement("option", { hidden: true, selected: true }, " -- select an option -- "),
+                    React.createElement("option", { value: "conservative" }, "conservative"),
+                    React.createElement("option", { value: "consistent" }, "consistent")))));
+    }
+}
+const mapStateToProps = reselect_1.createStructuredSelector({});
+function mapDispatchToProps(dispatch) {
+    return {
+        example: () => dispatch({ type: constants_1.EXAMPLE_ACTION }),
+    };
+}
+exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Sub3);
+//# sourceMappingURL=index.js.map
