@@ -9,7 +9,7 @@ import {
 import './sass/global.scss';
 import { history, rootRoute, RouteDefinition } from './router';
 import { ConnectedRouter } from 'react-router-redux';
-const a = store;
+
 
 const RouteWithSubRoutes = (route: RouteDefinition) => {
   const childRoutes = route.childRoutes && route.childRoutes.map((cr, i) => <RouteWithSubRoutes key={i} {...cr}/>);

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
-
+import * as preiceLogo from '../../static/Precice-logo.gif';
 
 interface RootProps {
   children: any;
 }
 class Root extends React.Component<RootProps, undefined> {
-
   public render() {
+
     return (
       <div className={styles.container}>
         <div className={styles.banner}>
           <Link to="/" className={styles.label}>{/*preCICE label*/}
-            <img src="src/components/Root/Precice-logo.gif" className={styles.img}/>
+            <img src={preiceLogo} className={styles.img}/>
             <span className={styles.pre}>pre</span>
             <span className={styles.cice}>CICE</span>
           </Link>{/*preCICE label*/}

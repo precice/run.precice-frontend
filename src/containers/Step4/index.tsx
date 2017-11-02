@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
+import * as exampleGraph from '../../static/visualization.png';
 
 interface Step4Props {
 }
@@ -22,6 +23,7 @@ class Step4 extends React.Component<Step4Props, undefined> {
         <div className={styles.visialize}>
           <div className={styles.visialHeader}>
             Visualization
+            <img src={exampleGraph} className={styles.graph} />
           </div>
         </div>
       </div>
