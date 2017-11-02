@@ -2,6 +2,32 @@ import {createSelector} from 'reselect';
 import {locationSelector} from '../Router/selectors';
 import * as TextForStep2 from './TextForStep2';
 
+const step2SubstateSelector = (state) => {
+  return state.get('step2');
+};
+
+export const hidCheckSelector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('hidCheck2'));
+
+export const xmlFlag1Selector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('xmlflag1'));
+export const xmlFlag2Selector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('xmlflag2'));
+export const xmlFlag3Selector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('xmlflag3'));
+export const xmlFlag4Selector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('xmlflag4'));
+export const xmlFlag5Selector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('xmlflag5'));
+export const xmlFlag6Selector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('xmlflag6'));
 export const pathnameSelector = () => createSelector
 (
   // This function returns the pathname
@@ -98,11 +124,3 @@ export const titleSelector = () => createSelector
   },
 );
 
-const hidSelector = (state) => {
-  return state.get('hid');
-};
-
-export const hidFieldSelector = () => createSelector(
-  hidSelector,
-  (hidSubstate) => hidSubstate.get('hidField'),
-);

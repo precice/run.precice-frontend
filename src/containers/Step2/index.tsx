@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { EXAMPLE_ACTION } from '../constants';
+import { HID_CHECK2, XML_CLICK } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -7,45 +7,45 @@ import * as styles from './styles.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburst } from 'react-syntax-highlighter/dist/styles/';
 import * as TextForStep2 from './TextForStep2';
-import { lineSelector, titleSelector} from './selectors';
+import {
+  lineSelector,
+  titleSelector,
+  hidCheckSelector,
+  xmlFlag1Selector,
+  xmlFlag2Selector,
+  xmlFlag3Selector,
+  xmlFlag4Selector,
+  xmlFlag5Selector,
+  xmlFlag6Selector} from './selectors';
 
 interface Step2Props {
   lineIndex: {
     start: number,
     end: number,
   };
-  hidField: boolean;
-  hid: () => void;
+  hidAction: () => void;
+  hidCheck2: boolean;
   subStepTitle: string;
+  xmlAction: () => void;
+  xmlflag1: boolean;
+  xmlflag2: boolean;
+  xmlflag3: boolean;
+  xmlflag4: boolean;
+  xmlflag5: boolean;
+  xmlflag6: boolean;
 }
 
 class Step2 extends React.Component<Step2Props, any> {
   constructor(props: Step2Props) {
     super(props);
     this.state = {
-      hid: false,
-      hidString: 'hide',
       mouseOverLineIndex: {
         start: 1,
         end: 1,
       },
     };
-    this.shrinkWhatToDo = this.shrinkWhatToDo.bind(this);
     this.setMouseOver = this.setMouseOver.bind(this);
     this.setMouseOut = this.setMouseOut.bind(this);
-  }
-  private shrinkWhatToDo(event) {
-    if (this.state.hid === false) {
-      this.setState({
-        hid: true,
-        hidString: 'expand',
-      });
-    } else {
-      this.setState({
-        hid: false,
-        hidString: 'hide',
-      });
-    }
   }
   private setMouseOver(event) {
     switch (event.currentTarget.id) {
@@ -101,20 +101,21 @@ class Step2 extends React.Component<Step2Props, any> {
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span className={styles.title}>what to do</span>
-            <span onClick={this.shrinkWhatToDo} className={styles.hide}>{this.state.hidString}</span>
+            <span onClick={this.props.hidAction} className={styles.hide}>{this.props.hidCheck2 ? 'expand' : 'hide'}
+            </span>
           </div>
-          <div className={styles.expContent} hidden={this.state.hid}>
+          <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
             preCICE is set up via a precice-config.xml file. It contains most of the settings preCICE needs to run the
             coupled simulation. However, we still need solvers specific configuartion file, that we will not discuss in this tutorial.
             <br/>
             Click on the XML file, you will learn how to set up the configuration file.
             <br/>
-            <li><Link to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1}</Link></li>
-            <li><Link to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2}</Link></li>
-            <li><Link to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3}</Link></li>
-            <li><Link to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4}</Link></li>
-            <li><Link to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5}</Link></li>
-            <li><Link to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6}</Link></li>
+            <li><Link id="xmlflag1" onClick={this.props.xmlAction} to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1} (line 5 ~ 9)</Link></li>
+            <li><Link id="xmlflag2" onClick={this.props.xmlAction} to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
+            <li><Link id="xmlflag3" onClick={this.props.xmlAction} to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
+            <li><Link id="xmlflag4" onClick={this.props.xmlAction} to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
+            <li><Link id="xmlflag5" onClick={this.props.xmlAction} to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5} (line 44)</Link></li>
+            <li><Link id="xmlflag6" onClick={this.props.xmlAction} to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
           </div>
         </div>
         <div className={styles.interactContainer}>
@@ -139,8 +140,8 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeString0}
-            </SyntaxHighlighter>
-            <Link to="/tutorial/step2/sub1">
+            </SyntaxHighlighter>{/*text01*/}
+            <Link id="xmlflag1" onClick={this.props.xmlAction} to="/tutorial/step2/sub1">
               <SyntaxHighlighter
                 id="xml1"
                 style={TextForStep2.sunburstModified}
@@ -163,7 +164,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOut={this.setMouseOut}
               >
               {TextForStep2.initialCodeString1}
-              </SyntaxHighlighter>
+              </SyntaxHighlighter>{/*text1*/}
             </Link>
             <SyntaxHighlighter
               id="xml12"
@@ -187,8 +188,8 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeString12}
-            </SyntaxHighlighter>
-            <Link to="/tutorial/step2/sub2">
+            </SyntaxHighlighter>{/*text12*/}
+            <Link id="xmlflag2" onClick={this.props.xmlAction} to="/tutorial/step2/sub2">
               <SyntaxHighlighter
                 id="xml2"
                 style={TextForStep2.sunburstModified}
@@ -211,7 +212,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOut={this.setMouseOut}
               >
                 {TextForStep2.initialCodeString2}
-              </SyntaxHighlighter>
+              </SyntaxHighlighter>{/*text2*/}
             </Link>
             <SyntaxHighlighter
               id="xml23"
@@ -235,8 +236,8 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeString23}
-            </SyntaxHighlighter>
-            <Link to="/tutorial/step2/sub3">
+            </SyntaxHighlighter>{/*text23*/}
+            <Link id="xmlflag3" onClick={this.props.xmlAction} to="/tutorial/step2/sub3">
               <SyntaxHighlighter
                 id="xml3"
                 style={TextForStep2.sunburstModified}
@@ -259,7 +260,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOut={this.setMouseOut}
               >
                 {TextForStep2.initialCodeString3}
-              </SyntaxHighlighter>
+              </SyntaxHighlighter>{/*text3*/}
             </Link>
             <SyntaxHighlighter
               id="xml34"
@@ -283,8 +284,8 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeString34}
-            </SyntaxHighlighter>
-            <Link to="/tutorial/step2/sub4">
+            </SyntaxHighlighter>{/*text34*/}
+            <Link id="xmlflag4" onClick={this.props.xmlAction} to="/tutorial/step2/sub4">
               <SyntaxHighlighter
                 id="xml4"
                 style={TextForStep2.sunburstModified}
@@ -307,7 +308,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOut={this.setMouseOut}
               >
                 {TextForStep2.initialCodeString4}
-              </SyntaxHighlighter>
+              </SyntaxHighlighter>{/*text4*/}
             </Link>
             <SyntaxHighlighter
               id="xml45"
@@ -331,8 +332,8 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeString45}
-            </SyntaxHighlighter>
-            <Link to="/tutorial/step2/sub5">
+            </SyntaxHighlighter>{/*text45*/}
+            <Link id="xmlflag5" onClick={this.props.xmlAction} to="/tutorial/step2/sub5">
               <SyntaxHighlighter
                 id="xml5"
                 style={TextForStep2.sunburstModified}
@@ -355,7 +356,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOut={this.setMouseOut}
               >
                 {TextForStep2.initialCodeString5}
-              </SyntaxHighlighter>
+              </SyntaxHighlighter>{/*text5*/}
             </Link>
             <SyntaxHighlighter
               id="xml56"
@@ -379,8 +380,8 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeString56}
-            </SyntaxHighlighter>
-            <Link to="/tutorial/step2/sub6">
+            </SyntaxHighlighter>{/*text56*/}
+            <Link id="xmlflag6" onClick={this.props.xmlAction} to="/tutorial/step2/sub6">
               <SyntaxHighlighter
                 id="xml6"
                 style={TextForStep2.sunburstModified}
@@ -403,7 +404,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOut={this.setMouseOut}
               >
                 {TextForStep2.initialCodeString6}
-              </SyntaxHighlighter>
+              </SyntaxHighlighter>{/*text6*/}
             </Link>
             <SyntaxHighlighter
               id="xmlEnd"
@@ -427,7 +428,7 @@ class Step2 extends React.Component<Step2Props, any> {
               onMouseOut={this.setMouseOut}
             >
               {TextForStep2.initialCodeStringEnd}
-            </SyntaxHighlighter>
+            </SyntaxHighlighter>{/*textend*/}
           </div>{/*XML*/}
           <div className={styles.commentContainer}>
             <div className={styles.commentHeader}>
@@ -445,13 +446,20 @@ class Step2 extends React.Component<Step2Props, any> {
 }
 const mapStateToProps = createStructuredSelector({
   lineIndex: lineSelector(),
-  //hidField: hidSelector(),
   subStepTitle: titleSelector(),
+  hidCheck2: hidCheckSelector(),
+  xmlflag1: xmlFlag1Selector(),
+  xmlflag2: xmlFlag2Selector(),
+  xmlflag3: xmlFlag3Selector(),
+  xmlflag4: xmlFlag4Selector(),
+  xmlflag5: xmlFlag5Selector(),
+  xmlflag6: xmlFlag6Selector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    //hid: () => dispatch({ hid: hideWhatToDo_Action }),
+    hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
+    xmlAction: (event) => { dispatch({ type: XML_CLICK, check: event.currentTarget.id}); },
   };
 }
 

@@ -6,24 +6,37 @@
 
 import { fromJS } from 'immutable';
 
+
 import {
-  EXAMPLE_ACTION,
+  HID_CHECK2, XML_CLICK, XML_ALL_CLICK,
 } from '../constants';
 import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  example: '123',
+  xmlflag1: true,
+  xmlflag2: false,
+  xmlflag3: false,
+  xmlflag4: false,
+  xmlflag5: false,
+  xmlflag6: false,
 });
 
-function exampleReducer(state = initialState, action: Action) {
+function step2Reducer(state = initialState, action: any) {
   switch (action.type) {
-    case EXAMPLE_ACTION:
+    case HID_CHECK2:
       return state
-        .set('example', '234');
+        .set('hidCheck2', !action.check);
+    case XML_CLICK:
+      return state
+        .set(action.check, true);
+    case XML_ALL_CLICK:
+      return state
+        .set('xmlflag2', true).set('xmlflag3', true).set('xmlflag4', true).set('xmlflag5', true).set('xmlflag6', true);
     default:
       return state;
   }
 }
 
-export default exampleReducer;
+export default step2Reducer;
+

@@ -16,63 +16,63 @@ export const initialCodeString0 = `<?xml version="1.0"?>
 <precice-configuration>
  `;
 
-export const initialCodeString1 = `  <solver-interface dimensions="">
+export const initialCodeString1 = `  <solver-interface dimensions="3">
 
     <!-- Data fields that are exchanged between the solvers -->
-    <data:(type) name="(string)"/>
-    <data:(type) name="(string)"/>`;
+    <data:vector name="Forces0"/>
+    <data:vector name="DisplacementDeltas0"/>`;
 export const initialCodeString12 = `
     <!-- A common mesh that uses these data fields -->`;
-export const initialCodeString2 = `    <mesh name="(string)">
-      <use-data name="(string)"/>
-      <use-data name="(string)"/>
+export const initialCodeString2 = `    <mesh name="SU2_Mesh0">
+      <use-data name="Forces0"/>
+      <use-data name="DisplacementDeltas0"/>
     </mesh>
 
-    <mesh name="(string)">
-      <use-data name="(string)"/>
-      <use-data name="(string)"/>
+    <mesh name="Calculix_Mesh">
+      <use-data name="DisplacementDeltas0"/>
+      <use-data name="Forces0"/>
     </mesh>`
 export const initialCodeString23 = `
     <!-- Represents each solver using preCICE. In a coupled simulation, two participants have to be
          defined. The name of the participant has to match the name given on construction of the
          precice::SolverInterface object used by the participant. -->
  `
-export const initialCodeString3 = `    <participant name="">
+export const initialCodeString3 = `    <participant name="SU2_CFD">
       <!-- Makes the named mesh available to the participant. Mesh is provided by the solver directly. -->
-      <use-mesh name="" (Provider)/>
-      <use-mesh name="" (Provider)/>
+      <use-mesh name="Calculix_Mesh" from="Calculix"/>
+      <use-mesh name="SU2_Mesh0" provide="yes"/>
       <!-- Define input/output of the solver.  -->
-      <write-data name="" mesh=""/>
-      <read-data  name="" mesh=""/>
-      <mapping:nearest-neighbor direction="write" from="" to="" constraint="" timing="initial"/>
-      <mapping:nearest-neighbor direction="read"  from="" to="" constraint="" timing="initial"/>
+      <write-data name="Forces0" mesh="SU2_Mesh0"/>
+      <read-data  name="DisplacementDeltas0" mesh="SU2_Mesh0"/>
+      <mapping:nearest-neighbor direction="write" from="SU2_Mesh0" to="Calculix_Mesh" constraint="conservative" timing="initial"/>
+      <mapping:nearest-neighbor direction="read" from="Calculix_Mesh" to="SU2_Mesh0" constraint="consistent" timing="initial"/>
     </participant>`
 export const initialCodeString34 = ` `
-export const initialCodeString4 = `    <participant name="">
-      <use-mesh name="" (Provider)"/>
-      <write-data name="" mesh=""/>
-      <read-data  name=""      mesh=""/>
+export const initialCodeString4 = `    <participant name="Calculix">
+      <use-mesh name="Calculix_Mesh" provide="yes"/>
+      <write-data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
+      <read-data  name="Forces0"      mesh="Calculix_Mesh"/>
     </participant>`
 export const initialCodeString45 = `
     <!-- Communication method, use TCP/IP sockets, change network to "ib0" on SuperMUC -->`
-export const initialCodeString5 = `    <m2n:sockets from="" to="" distribution-type="" exchange-directory="../"/>`
+export const initialCodeString5 = `    <m2n:sockets from="SU2_CFD" to="Calculix" exchange-directory="../" distribution-type="gather-scatter"/>`
 export const initialCodeString56 = ` `;
-export const initialCodeString6 = `    <coupling-scheme:(scheme)>
-      <participants first="" second=""/>
-      <max-time value=""/>
-      <timestep-length value=""/>
-      <max-iterations value=""/>
-      <exchange data=""      mesh="" from="" to="" />
-      <exchange data=""      mesh="" from="" to="" />
-      <relative-convergence-measure data="" mesh="" limit=""/>
-      <relative-convergence-measure data="" mesh="" limit=""/>
+export const initialCodeString6 = `    <coupling-scheme:serial-implicit>
+      <participants first="SU2_CFD" second="Calculix"/>
+      <max-time value="10000"/>
+      <timestep-length value="1e-4" />
+      <max-iterations value="50"/>
+      <exchange data="Forces0" mesh="Calculix_Mesh" from="SU2_CFD" to="Calculix"/>
+      <exchange data="DisplacementDeltas0" mesh="Calculix_Mesh" from="Calculix" to="SU2_CFD" />
+      <relative-convergence-measure limit="1e-4" data="DisplacementDeltas0" mesh="Calculix_Mesh"/>
+      <relative-convergence-measure limit="1e-4" data="Forces0" mesh="Calculix_Mesh"/>
       <extrapolation-order value="2"/>
       <post-processing:aitken>
 	<!-- PostProc always done on the second participant -->
-        <data name="" mesh=""/>
-        <initial-relaxation value=""/>
+        <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
+        <initial-relaxation value="0.1"/>
       </post-processing:aitken>
-    </coupling-scheme:(scheme)>`
+    </coupling-scheme:serial-implicit>`
 export const initialCodeStringEnd = `
   </solver-interface>
 </precice-configuration>`;
