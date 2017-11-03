@@ -6,7 +6,7 @@ import * as styles from './styles.scss';
 import Console from 'react-console-component';
 import { hidCheckSelector, chartDataSelector} from './selectors';
 import { HID_CHECK3 } from '../constants';
-import { CHART_DATA } from '../constants'
+import { ADD_CHART_DATA } from '../constants'
 
 // VictoryChart is a wrapper
 import {VictoryScatter, VictoryChart, VictoryTheme} from 'victory';
@@ -125,6 +125,20 @@ export const consoleMiddleware = store => next => action => {
 
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
       const lines = action.data.split('\n');
+      const itReg = /it\s\d+\sof\d+/;
+      const dtReg = /dt#\s\d+\sof\s\d+/;
+      // Adding our parsing logic here:
+      if (action.consoleId === ConsoleId.left) {
+        for (const line of lines) {
+          const foundIt = line.match(itReg);
+          if (foundIt != null) {
+            const foundDt = line.match(dtReg);
+            store.dispatch(ADD_CHART_DATA)
+            console.log(foundIt, foundDt);
+          }
+        }
+      }
+
       cons.log(...lines);
     } else if (action.type === 'socket/exit') {
       cons.log('returned with exit code ' + action.code);
