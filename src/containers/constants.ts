@@ -17,3 +17,5 @@ export const xmlEmphasizeBackgroundColor = '#8f4746';
 
 export const ADD_CHART_DATA = 'actions/ADD_CHART_DATA';
 
+
+export const ADD_PROGRESS_MAX_ITER = 'actions/ADD_PROGRESS_MAX_ITER';

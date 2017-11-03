@@ -6,7 +6,7 @@ import * as styles from './styles.scss';
 import Console from 'react-console-component';
 import { hidCheckSelector, chartDataSelector} from './selectors';
 import { HID_CHECK3 } from '../constants';
-import { ADD_CHART_DATA } from '../constants'
+import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER } from '../constants';
 
 // VictoryChart is a wrapper
 import {VictoryScatter, VictoryChart, VictoryTheme} from 'victory';
@@ -115,6 +115,16 @@ export default connect<any, any, any>(
   mapDispatchToProps,
 )(Step3);
 
+  // Variables to hold global information for
+  // parsing inside consoleMiddleware
+let lastIt = 0;
+// lastDt = 1 reflects starting value of dt
+// in Calculix output
+let lastDt = 1;
+
+// See explanation below in consoleMiddleware
+let dtFlag = 1;
+
 export const consoleMiddleware = store => next => action => {
 
   const consoleAction = action.type === 'socket/stdout' || action.type === 'socket/stderr' || action.type === 'socket/exit';
@@ -125,16 +135,46 @@ export const consoleMiddleware = store => next => action => {
 
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
       const lines = action.data.split('\n');
-      const itReg = /it\s\d+\sof\d+/;
-      const dtReg = /dt#\s\d+\sof\s\d+/;
+      const itReg = /it\s(\d+)\sof\s\d+/;
+      const dtReg = /dt#\s(\d+)\sof\s(\d+)/;
       // Adding our parsing logic here:
-      if (action.consoleId === ConsoleId.left) {
+
+      // We want the Calculix console
+      // And we're assuming it's the first one
+      // TODO: Determine Calculix console
+      if (action.consoleId === 1) {
         for (const line of lines) {
           const foundIt = line.match(itReg);
           if (foundIt != null) {
             const foundDt = line.match(dtReg);
-            store.dispatch(ADD_CHART_DATA)
-            console.log(foundIt, foundDt);
+
+            // foundIt[1] because that contains the
+            // matched number. Look up parenthesis in
+            // javascript regex.
+
+            const it = parseInt( foundIt[1], 10 );
+            const dt = parseInt( foundDt[1], 10 );
+
+            // Multiple instances of dt === 1 and it === 1
+            // We only want to update the state once
+            // so we use dtFlag to make sure of that.
+            if ( dtFlag === 1 && dt === 1 && it === 1 ) {
+              const maxDt = parseInt( foundDt[2], 10 );
+              store.dispatch( {type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt} );
+              dtFlag = 0;
+            }
+
+            // if current 'it' is less than
+            // lastIt and 'dt' is greater than lastDt
+            // then we have moved to a new time step
+            if (dt > lastDt) {
+              store.dispatch( {type: ADD_CHART_DATA, TimeSteps: [lastDt], Iterations: [lastIt] } );
+              lastIt = it;
+              lastDt = dt;
+            } else {
+              lastIt = it;
+            }
+
           }
         }
       }
