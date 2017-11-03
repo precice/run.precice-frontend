@@ -20,11 +20,12 @@ const initialState = fromJS({
   },
 });
 
-export function chartDataReducer(state = {TimeSteps: [0], Iterations: [0], maxDt: 0 }, action) {
+export function chartDataReducer(state = { data: [ {x: 0, y: 0 } ], maxDt: 0 }, action) {
   switch (action.type) {
     case ADD_CHART_DATA:
-      return Object.assign({}, state, { TimeSteps: [ ...state.TimeSteps, action.TimeSteps[0] ],
-        Iterations: [ ...state.Iterations, action.Iterations[0] ]  } );
+      return Object.assign({}, state, {
+        // data is array of objects
+        data: [ ...state.data, action.data ]  } );
 
       case ADD_PROGRESS_MAX_ITER:
       return Object.assign( {}, state, {maxDt: action.maxTimeSteps} );

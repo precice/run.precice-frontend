@@ -4,6 +4,14 @@ const step3SubstateSelector = (state) => {
   return state.get('step3');
 };
 
+// TODO:
+// We added something to reducers so this is
+// probably what we need. But let's be sure and
+// investigate.
+const chartDataSubstateSelector = (state) => {
+  return state.get('chartData');
+};
+
 export const hidCheckSelector = () => createSelector(
   step3SubstateSelector,
   (step3Substate) => step3Substate.get('hidCheck'));
@@ -19,5 +27,7 @@ export const hidCheckSelector = () => createSelector(
 // that we update based on new values arriving
 // from the server?
 export const chartDataSelector = () => createSelector(
-  step3SubstateSelector,
-  (step3Substate) => step3Substate.get('chartData'));
+  chartDataSubstateSelector,
+  (chartDataSubstate) => {
+    return chartDataSubstate.data;
+  });

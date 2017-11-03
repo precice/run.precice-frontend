@@ -13,7 +13,7 @@ const combined: ReducersMapObject = {
   step1: step1Reducer,
   step2: step2Reducer,
   step3: step3Reducer,
-  chart: chartDataReducer,
+  chartData: chartDataReducer,
 };
 
 export default combined;

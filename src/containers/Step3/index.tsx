@@ -84,7 +84,6 @@ class Step3 extends React.Component<Step3Props, any> {
               >
                 <VictoryScatter
                   style={{ data: { fill: '#c43a31' } }}
-                  size={10}
                   data={this.props.data}
                 />
               </VictoryChart>
@@ -168,7 +167,7 @@ export const consoleMiddleware = store => next => action => {
             // lastIt and 'dt' is greater than lastDt
             // then we have moved to a new time step
             if (dt > lastDt) {
-              store.dispatch( {type: ADD_CHART_DATA, TimeSteps: [lastDt], Iterations: [lastIt] } );
+              store.dispatch( {type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt} } );
               lastIt = it;
               lastDt = dt;
             } else {
