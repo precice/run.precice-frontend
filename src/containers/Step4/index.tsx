@@ -1,16 +1,17 @@
 import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 import * as exampleGraph from '../../static/visualization.png';
+import {FIRST_TASK_COMPLETED} from '../constants';
+
 
 interface Step4Props {
+  completeAction: () => void;
 }
 
-
-class Step4 extends React.Component<Step4Props, undefined> {
+class Step4 extends React.Component<Step4Props, any> {
 
   public render() {
     return (
@@ -32,7 +33,10 @@ class Step4 extends React.Component<Step4Props, undefined> {
 }
 
 const mapStateToProps = createStructuredSelector({});
-
+function mapDispatchToProps(dispatch) {
+  return {
+    };
+}
 export default connect<any, any, any>(
   mapStateToProps,
 )(Step4);

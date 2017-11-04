@@ -14,7 +14,7 @@ import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  xmlflag1: true,
+  xmlflag1: false,
   xmlflag2: false,
   xmlflag3: false,
   xmlflag4: false,

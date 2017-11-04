@@ -17,15 +17,21 @@ import {
   xmlFlag4Selector,
   xmlFlag5Selector,
   xmlFlag6Selector} from './selectors';
+import {
+  completedTaskSelector,
+  modalClickSelector} from '../Tutorial/selectors';
 
 interface Step2Props {
   lineIndex: {
     start: number,
     end: number,
+    section: string,
   };
   hidAction: () => void;
   hidCheck2: boolean;
   subStepTitle: string;
+  firstTaskCompleted: boolean;
+  modalClick: boolean;
   xmlAction: () => void;
   xmlflag1: boolean;
   xmlflag2: boolean;
@@ -34,6 +40,8 @@ interface Step2Props {
   xmlflag5: boolean;
   xmlflag6: boolean;
 }
+
+let whichSection = '';
 
 class Step2 extends React.Component<Step2Props, any> {
   constructor(props: Step2Props) {
@@ -46,43 +54,46 @@ class Step2 extends React.Component<Step2Props, any> {
     };
     this.setMouseOver = this.setMouseOver.bind(this);
     this.setMouseOut = this.setMouseOut.bind(this);
+    this.closeOverlay = this.closeOverlay.bind(this);
+    this.overlayButtonColorChange = this.overlayButtonColorChange.bind(this);
+    this.overlayButtonColorOriginal = this.overlayButtonColorOriginal.bind(this);
   }
   private setMouseOver(event) {
     switch (event.currentTarget.id) {
       case 'xml1': {
         return this.setState({mouseOverLineIndex: {
-          start: 4,
-          end: 10,
+          start: TextForStep2.sec1.start - 1 ,
+          end: TextForStep2.sec1.end + 1,
         }});
       }
       case 'xml2': {
         return this.setState({mouseOverLineIndex: {
-          start: 11,
-          end: 21,
+          start: TextForStep2.sec2.start - 1,
+          end: TextForStep2.sec2.end + 1,
         }});
       }
       case 'xml3': {
         return this.setState({mouseOverLineIndex: {
-          start: 25,
-          end: 36,
+          start: TextForStep2.sec3.start - 1,
+          end: TextForStep2.sec3.end + 1,
         }});
       }
       case 'xml4': {
         return this.setState({mouseOverLineIndex: {
-          start: 36,
-          end: 42,
+          start: TextForStep2.sec4.start - 1,
+          end: TextForStep2.sec4.end + 1,
         }});
       }
       case 'xml5': {
         return this.setState({mouseOverLineIndex: {
-          start: 43,
-          end: 45,
+          start: TextForStep2.sec5.start - 1,
+          end: TextForStep2.sec5.end + 1,
         }});
       }
       case 'xml6': {
         return this.setState({mouseOverLineIndex: {
-          start: 45,
-          end: 62,
+          start: TextForStep2.sec6.start - 1,
+          end: TextForStep2.sec6.end + 1,
         }});
       }
     }
@@ -93,10 +104,29 @@ class Step2 extends React.Component<Step2Props, any> {
       end: 1,
     }});
   }
-
+  private closeOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+  }
+  private overlayButtonColorChange() {
+    document.getElementById('overlayButton').style.color = 'gray';
+  }
+  private overlayButtonColorOriginal() {
+    document.getElementById('overlayButton').style.color = 'white';
+  }
   public render() {
     return (
-      <div className={styles.subContainer}>
+      <div onMouseOver={this.props.xmlAction} className={styles.subContainer}>
+        {!this.props.firstTaskCompleted ?
+        <div id="overlay" className={styles.overlay}>
+          <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
+          <div className={styles.overlayIntro}>You can hide this box by clicking HIDE</div>
+          <div className={styles.overlayXml}>By clicking these lines, <br/>you can see explanation of the section you click on the left</div>
+          <div className={styles.overlayExp}>You can see explanation for each line.
+          Also, you can click on <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/> to get further information.</div>
+          <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.overlayButtonColorChange} onMouseOut={this.overlayButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
+        </div> :
+          <div/>}
+        <script>{whichSection = this.props.lineIndex.section}</script>
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
@@ -110,12 +140,12 @@ class Step2 extends React.Component<Step2Props, any> {
             <br/>
             Click on the XML file, you will learn how to set up the configuration file.
             <br/>
-            <li><Link id="xmlflag1" onClick={this.props.xmlAction} to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1} (line 5 ~ 9)</Link></li>
-            <li><Link id="xmlflag2" onClick={this.props.xmlAction} to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
-            <li><Link id="xmlflag3" onClick={this.props.xmlAction} to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
-            <li><Link id="xmlflag4" onClick={this.props.xmlAction} to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
-            <li><Link id="xmlflag5" onClick={this.props.xmlAction} to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5} (line 44)</Link></li>
-            <li><Link id="xmlflag6" onClick={this.props.xmlAction} to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
+            <li><Link to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1} (line 5 ~ 9)</Link></li>
+            <li><Link to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
+            <li><Link to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
+            <li><Link to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
+            <li><Link to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5} (line 44)</Link></li>
+            <li><Link to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
           </div>
         </div>
         <div className={styles.interactContainer}>
@@ -141,18 +171,18 @@ class Step2 extends React.Component<Step2Props, any> {
             >
               {TextForStep2.initialCodeString0}
             </SyntaxHighlighter>{/*text01*/}
-            <Link id="xmlflag1" onClick={this.props.xmlAction} to="/tutorial/step2/sub1">
+            <Link to="/tutorial/step2/sub1">
               <SyntaxHighlighter
                 id="xml1"
                 style={TextForStep2.sunburstModified}
                 showLineNumbers="true"
-                startingLineNumber={5}
+                startingLineNumber={TextForStep2.sec1.start}
                 language="xml"
                 className={styles.highlighter}
                 wrapLines={true}
                 lineStyle={lineNumber => {
                   const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + 4;
+                  const localLineNumber = lineNumber + TextForStep2.sec01.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                     style.backgroundColor = '#505050';
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -170,13 +200,13 @@ class Step2 extends React.Component<Step2Props, any> {
               id="xml12"
               style={TextForStep2.sunburstModified}
               showLineNumbers="true"
-              startingLineNumber={10}
+              startingLineNumber={TextForStep2.sec12.start}
               language="xml"
               className={styles.highlighter}
               wrapLines={true}
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + 9;
+                const localLineNumber = lineNumber + TextForStep2.sec1.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                   style.backgroundColor = '#505050';
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -189,22 +219,26 @@ class Step2 extends React.Component<Step2Props, any> {
             >
               {TextForStep2.initialCodeString12}
             </SyntaxHighlighter>{/*text12*/}
-            <Link id="xmlflag2" onClick={this.props.xmlAction} to="/tutorial/step2/sub2">
+            <Link to="/tutorial/step2/sub2">
               <SyntaxHighlighter
                 id="xml2"
                 style={TextForStep2.sunburstModified}
                 showLineNumbers="true"
-                startingLineNumber={12}
+                startingLineNumber={TextForStep2.sec2.start}
                 language="xml"
                 className={styles.highlighter}
                 wrapLines={true}
                 lineStyle={lineNumber => {
                   const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + 11;
+                  const localLineNumber = lineNumber + TextForStep2.sec12.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                     style.backgroundColor = '#505050';
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
                     style.backgroundColor = '#505050';
+                  } else if (this.props.modalClick &&
+                              !this.props.xmlflag2 &&
+                          (localLineNumber > TextForStep2.sec2.start - 1 && localLineNumber < TextForStep2.sec2.end + 1)) {
+                    style.backgroundColor = '#931131';
                   }
                   return style;
                 }}
@@ -218,13 +252,13 @@ class Step2 extends React.Component<Step2Props, any> {
               id="xml23"
               style={TextForStep2.sunburstModified}
               showLineNumbers="true"
-              startingLineNumber={21}
+              startingLineNumber={TextForStep2.sec23.start}
               language="xml"
               className={styles.highlighter}
               wrapLines={true}
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + 20;
+                const localLineNumber = lineNumber + TextForStep2.sec2.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                   style.backgroundColor = '#505050';
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -237,22 +271,26 @@ class Step2 extends React.Component<Step2Props, any> {
             >
               {TextForStep2.initialCodeString23}
             </SyntaxHighlighter>{/*text23*/}
-            <Link id="xmlflag3" onClick={this.props.xmlAction} to="/tutorial/step2/sub3">
+            <Link to="/tutorial/step2/sub3">
               <SyntaxHighlighter
                 id="xml3"
                 style={TextForStep2.sunburstModified}
                 showLineNumbers="true"
-                startingLineNumber={26}
+                startingLineNumber={TextForStep2.sec3.start}
                 language="xml"
                 className={styles.highlighter}
                 wrapLines={true}
                 lineStyle={lineNumber => {
                   const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + 25;
+                  const localLineNumber = lineNumber + TextForStep2.sec23.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                     style.backgroundColor = '#505050';
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
                     style.backgroundColor = '#505050';
+                  }else if (this.props.modalClick &&
+                    !this.props.xmlflag3 &&
+                    (localLineNumber > TextForStep2.sec3.start - 1 && localLineNumber < TextForStep2.sec3.end + 1)) {
+                    style.backgroundColor = '#931131';
                   }
                   return style;
                 }}
@@ -266,13 +304,13 @@ class Step2 extends React.Component<Step2Props, any> {
               id="xml34"
               style={TextForStep2.sunburstModified}
               showLineNumbers="true"
-              startingLineNumber={36}
+              startingLineNumber={TextForStep2.sec34.start}
               language="xml"
               className={styles.highlighter}
               wrapLines={true}
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + 35;
+                const localLineNumber = lineNumber + TextForStep2.sec3.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                   style.backgroundColor = '#505050';
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -285,22 +323,26 @@ class Step2 extends React.Component<Step2Props, any> {
             >
               {TextForStep2.initialCodeString34}
             </SyntaxHighlighter>{/*text34*/}
-            <Link id="xmlflag4" onClick={this.props.xmlAction} to="/tutorial/step2/sub4">
+            <Link to="/tutorial/step2/sub4">
               <SyntaxHighlighter
                 id="xml4"
                 style={TextForStep2.sunburstModified}
                 showLineNumbers="true"
-                startingLineNumber={37}
+                startingLineNumber={TextForStep2.sec4.start}
                 language="xml"
                 className={styles.highlighter}
                 wrapLines={true}
                 lineStyle={lineNumber => {
                   const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + 36;
+                  const localLineNumber = lineNumber + TextForStep2.sec34.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                     style.backgroundColor = '#505050';
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
                     style.backgroundColor = '#505050';
+                  } else if (this.props.modalClick &&
+                    !this.props.xmlflag4 &&
+                    (localLineNumber > TextForStep2.sec4.start - 1 && localLineNumber < TextForStep2.sec4.end + 1)) {
+                    style.backgroundColor = '#931131';
                   }
                   return style;
                 }}
@@ -314,13 +356,13 @@ class Step2 extends React.Component<Step2Props, any> {
               id="xml45"
               style={TextForStep2.sunburstModified}
               showLineNumbers="true"
-              startingLineNumber={42}
+              startingLineNumber={TextForStep2.sec45.start}
               language="xml"
               className={styles.highlighter}
               wrapLines={true}
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + 41;
+                const localLineNumber = lineNumber + TextForStep2.sec4.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                   style.backgroundColor = '#505050';
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -333,22 +375,26 @@ class Step2 extends React.Component<Step2Props, any> {
             >
               {TextForStep2.initialCodeString45}
             </SyntaxHighlighter>{/*text45*/}
-            <Link id="xmlflag5" onClick={this.props.xmlAction} to="/tutorial/step2/sub5">
+            <Link to="/tutorial/step2/sub5">
               <SyntaxHighlighter
                 id="xml5"
                 style={TextForStep2.sunburstModified}
                 showLineNumbers="true"
-                startingLineNumber={44}
+                startingLineNumber={TextForStep2.sec5.start}
                 language="xml"
                 className={styles.highlighter}
                 wrapLines={true}
                 lineStyle={lineNumber => {
                   const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + 43;
+                  const localLineNumber = lineNumber + TextForStep2.sec45.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                     style.backgroundColor = '#505050';
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
                     style.backgroundColor = '#505050';
+                  } else if (this.props.modalClick &&
+                    !this.props.xmlflag5 &&
+                    (localLineNumber > TextForStep2.sec5.start - 1 && localLineNumber < TextForStep2.sec5.end + 1)) {
+                    style.backgroundColor = '#931131';
                   }
                   return style;
                 }}
@@ -362,13 +408,13 @@ class Step2 extends React.Component<Step2Props, any> {
               id="xml56"
               style={TextForStep2.sunburstModified}
               showLineNumbers="true"
-              startingLineNumber={45}
+              startingLineNumber={TextForStep2.sec56.start}
               language="xml"
               className={styles.highlighter}
               wrapLines={true}
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + 44;
+                const localLineNumber = lineNumber + TextForStep2.sec5.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                   style.backgroundColor = '#505050';
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -381,42 +427,48 @@ class Step2 extends React.Component<Step2Props, any> {
             >
               {TextForStep2.initialCodeString56}
             </SyntaxHighlighter>{/*text56*/}
-            <Link id="xmlflag6" onClick={this.props.xmlAction} to="/tutorial/step2/sub6">
+            <Link to="/tutorial/step2/sub6">
               <SyntaxHighlighter
                 id="xml6"
                 style={TextForStep2.sunburstModified}
                 showLineNumbers="true"
-                startingLineNumber={46}
+                startingLineNumber={TextForStep2.sec6.start}
                 language="xml"
                 className={styles.highlighter}
                 wrapLines={true}
                 lineStyle={lineNumber => {
                   const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + 45;
-                  if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
+                  const localLineNumber = lineNumber + TextForStep2.sec56.end;
+                  if (this.props.firstTaskCompleted && localLineNumber === 60 ) {
+                    style.backgroundColor = '#e8e8e8';
+                  } else if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                     style.backgroundColor = '#505050';
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
                     style.backgroundColor = '#505050';
+                  } else if (this.props.modalClick &&
+                    !this.props.xmlflag6 &&
+                    (localLineNumber > TextForStep2.sec6.start - 1 && localLineNumber < TextForStep2.sec6.end + 1)) {
+                    style.backgroundColor = '#931131';
                   }
                   return style;
                 }}
                 onMouseOver={this.setMouseOver}
                 onMouseOut={this.setMouseOut}
               >
-                {TextForStep2.initialCodeString6}
+                {this.props.firstTaskCompleted ? TextForStep2.initialCodeString6After : TextForStep2.initialCodeString6Before}
               </SyntaxHighlighter>{/*text6*/}
             </Link>
             <SyntaxHighlighter
               id="xmlEnd"
               style={TextForStep2.sunburstModified}
               showLineNumbers="true"
-              startingLineNumber={62}
+              startingLineNumber={TextForStep2.sec60.start}
               language="xml"
               className={styles.highlighter}
               wrapLines={true}
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + 61;
+                const localLineNumber = lineNumber + TextForStep2.sec6.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
                   style.backgroundColor = '#505050';
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
@@ -439,7 +491,6 @@ class Step2 extends React.Component<Step2Props, any> {
             </div>
           </div>
         </div>
-
       </div>
     );
   }
@@ -454,12 +505,14 @@ const mapStateToProps = createStructuredSelector({
   xmlflag4: xmlFlag4Selector(),
   xmlflag5: xmlFlag5Selector(),
   xmlflag6: xmlFlag6Selector(),
+  firstTaskCompleted: completedTaskSelector(),
+  modalClick: modalClickSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
-    xmlAction: (event) => { dispatch({ type: XML_CLICK, check: event.currentTarget.id}); },
+    xmlAction: () => { dispatch({ type: XML_CLICK, check: whichSection}); },
   };
 }
 

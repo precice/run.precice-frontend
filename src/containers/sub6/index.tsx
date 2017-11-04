@@ -6,11 +6,15 @@ import * as React from 'react';
 import * as styles from '../sub1/styles.scss';
 import { Tooltip } from 'react-tippy';
 
+import {
+  completedTaskSelector} from '../Tutorial/selectors';
+
 import {Link} from 'react-router-dom';
 // import * as styles from './styles.scss';
 // import * as TextForStep2 from './TextForStep2';
 
 interface Sub6Props {
+  firstTaskCompleted: boolean;
 }
 
 class Sub6 extends React.Component<Sub6Props, any> {
@@ -22,6 +26,8 @@ class Sub6 extends React.Component<Sub6Props, any> {
   public render() {
     return (
       <div>
+        {!this.props.firstTaskCompleted ?
+          <div>
         Last, we need to set up the way the two solver couple with each other.
         <br/><br/>
         <li>
@@ -155,13 +161,17 @@ class Sub6 extends React.Component<Sub6Props, any> {
           <span className={styles.highlight}>initial-relaxation value</span>: value for first underrelaxation. 0.1 is a robust choice.
         </li>
         <br/>
+        </div> :
+          <div>We change the initial-relaxation-value into 0.9, and see what will happen</div>
+        }
       </div>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
-
+const mapStateToProps = createStructuredSelector({
+  firstTaskCompleted: completedTaskSelector(),
+});
 function mapDispatchToProps(dispatch) {
   return {
     example: () => dispatch({type: EXAMPLE_ACTION}),

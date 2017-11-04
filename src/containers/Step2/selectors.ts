@@ -47,48 +47,54 @@ export const lineSelector = () => createSelector
     switch (pathname.split('/')[3]) {
       case 'sub1': {
         const lineIndex = {
-          start: 4,
-          end: 10,
+          start: TextForStep2.sec1.start - 1,
+          end: TextForStep2.sec1.end + 1,
+          section: 'xmlflag1',
         };
         return lineIndex;
     }
 
       case 'sub2': {
         const lineIndex = {
-          start: 11,
-          end: 21,
+          start: TextForStep2.sec2.start - 1,
+          end: TextForStep2.sec2.end + 1,
+          section: 'xmlflag2',
         };
         return lineIndex;
       }
 
       case 'sub3': {
         const lineIndex = {
-          start: 25,
-          end: 36,
+          start: TextForStep2.sec3.start - 1,
+          end: TextForStep2.sec3.end + 1,
+          section: 'xmlflag3',
         };
         return lineIndex;
       }
 
       case 'sub4': {
         const lineIndex = {
-          start: 36,
-          end: 42,
+          start: TextForStep2.sec4.start - 1,
+          end: TextForStep2.sec4.end + 1,
+          section: 'xmlflag4',
         };
         return lineIndex;
       }
 
       case 'sub5': {
         const lineIndex = {
-          start: 43,
-          end: 45,
+          start: TextForStep2.sec5.start - 1,
+          end: TextForStep2.sec5.end + 1,
+          section: 'xmlflag5',
         };
         return lineIndex;
       }
 
       case 'sub6': {
         const lineIndex = {
-          start: 45,
-          end: 62,
+          start: TextForStep2.sec6.start - 1,
+          end: TextForStep2.sec6.end + 1,
+          section: 'xmlflag6',
         };
         return lineIndex;
       }

@@ -18,7 +18,7 @@ class Sub1 extends React.Component<Sub1Props, any> {
     return (
       <div>
         We first need to set up the general setting of the interface.
-        <br/><br/>
+        <br/>
         <li>
           <span className={styles.highlight}>dimensions</span>
           : Specifies the number of dimensions of the problem. Can be either 2 or 3

@@ -84,12 +84,77 @@
       }
 
       .exp {
-        line-height: 1.5;
         font-family: Courier;
+        line-height: 1.5;
         margin: 10px;
       }
 
     }
+  }
+  .overlay {
+    background-color: rgba(0,0,0,0.5);
+    bottom: 0;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    .overlayButton {
+      color: white;
+      font-size: 50px;
+      left: 50%;
+      position: absolute;
+      top: 90%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+
+    .overlayLanding {
+      color: white;
+      font-size: 15px;
+      left: 50%;
+      position: absolute;
+      top: 5%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .overlayIntro {
+      color: white;
+      font-size: 15px;
+      left: 75%;
+      position: absolute;
+      top: 21%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .overlayXml {
+      color: white;
+      font-size: 15px;
+      left: 35%;
+      position: absolute;
+      top: 65%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .overlayExp {
+      color: white;
+      font-size: 15px;
+      left: 80%;
+      position: absolute;
+      top: 75%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
   }
 
 }

@@ -1,6 +1,16 @@
 import {createSelector} from 'reselect';
 import {locationSelector} from '../Router/selectors';
 
+const tutorialSubstateSelector = (state) => {
+  return state.get('tutorial');
+};
+export const completedTaskSelector = () => createSelector(
+  tutorialSubstateSelector,
+  (tutorialSubstate) => tutorialSubstate.get('firstTaskCompleted'));
+export const modalClickSelector = () => createSelector(
+  tutorialSubstateSelector,
+  (tutorialSubstate) => tutorialSubstate.get('modalClick'));
+
 export const pathnameSelector = () => createSelector
 (
   // This function returns the pathname
@@ -47,7 +57,7 @@ export const buttonLinksSelector = () => createSelector
       const index = stepArray.indexOf( pathname );
       const buttonLinks = {
         next: stepArray[index + 1],
-        current: pathname,
+        goback: stepArray[-1],
         previous: stepArray [index - 1],
       };
       if (index === 1) {
@@ -57,6 +67,8 @@ export const buttonLinksSelector = () => createSelector
         buttonLinks.previous = stepArray[0];
       } else if (index === 7) {
         buttonLinks.previous = stepArray[6];
+      } else if (index === 8) {
+        buttonLinks.goback = stepArray[6];
       }
 
       return buttonLinks;
