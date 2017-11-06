@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {chartDataSelector, domainXSelector, domainYSelector} from './selectors';
 import {VictoryScatter, VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, VictoryLabel} from 'victory';
-import './styles.scss';
+
 
 interface ConPlotProps {
   data: object[];
