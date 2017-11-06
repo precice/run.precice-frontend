@@ -1,0 +1,11 @@
+@import '../../sass/colors';
+
+
+.converge-plot {
+  background-color: $solver-background-color;
+  color: $primary-color;
+  display: flex;
+  flex: 1 1 1px;
+  order: 2;
+}
+

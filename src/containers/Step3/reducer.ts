@@ -7,9 +7,9 @@
 import { fromJS } from 'immutable';
 
 import {
-  INIT_CONSOLE, HID_CHECK3, ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER
+  INIT_CONSOLE, HID_CHECK3, ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE
 } from '../constants';
-import { Action } from 'redux';
+import { Action } from 'redux';true
 import { ConsoleId } from './index';
 
 
@@ -18,22 +18,10 @@ const initialState = fromJS({
     [ConsoleId.left]: null,
     [ConsoleId.right]: null,
   },
+  consoleOneActive: false,
+  consoleTwoActive: false,
 });
 
-export function chartDataReducer(state = { data: [ {x: 0, y: 0 } ], maxDt: 0 }, action) {
-  switch (action.type) {
-    case ADD_CHART_DATA:
-      return Object.assign({}, state, {
-        // data is array of objects
-        data: [ ...state.data, action.data ]  } );
-
-      case ADD_PROGRESS_MAX_ITER:
-      return Object.assign( {}, state, {maxDt: action.maxTimeSteps} );
-
-    default:
-      return state;
-  }
-}
 
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
@@ -43,6 +31,12 @@ export function step3Reducer(state = initialState, action: any) {
     case HID_CHECK3:
       return state
         .set('hidCheck', !action.check);
+    case CONSOLE_ONE_ACTIVE:
+      return state
+        .set('consoleOneActive', action.value);
+    case CONSOLE_TWO_ACTIVE:
+      return state
+        .set('consoleTwoActive', action.value);
     default:
       return state;
   }

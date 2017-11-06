@@ -19,3 +19,5 @@ export const ADD_CHART_DATA = 'actions/ADD_CHART_DATA';
 
 
 export const ADD_PROGRESS_MAX_ITER = 'actions/ADD_PROGRESS_MAX_ITER';
+export const CONSOLE_ONE_ACTIVE = 'actions/CONSOLE_ONE_ACTIVE';
+export const CONSOLE_TWO_ACTIVE = 'actions/CONSOLE_TWO_ACTIVE';

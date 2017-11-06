@@ -4,23 +4,21 @@ import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import * as styles from './styles.scss';
 import Console from 'react-console-component';
-import { hidCheckSelector, chartDataSelector} from './selectors';
+import { hidCheckSelector, consoleOneStateSelector, consoleTwoStateSelector } from './selectors';
+import ConPlot from '../ConvergencePlot';
 import { HID_CHECK3 } from '../constants';
-import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER } from '../constants';
+import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE} from '../constants';
 
-// VictoryChart is a wrapper
-import {VictoryScatter, VictoryChart, VictoryTheme} from 'victory';
+import store from '../../store';
 
-// TODO:
-// 1. How do I receive data from the server and add it to redux store?
 
 interface Step3Props {
   sendMsg: any;
   initConsole: any;
   hidAction: () => void;
   hidCheck: boolean;
-  // data is object array for Victory chart
-  data: object[];
+  consoleOneActive: boolean;
+  consoleTwoActive: boolean;
 }
 
 export enum ConsoleId {
@@ -30,7 +28,6 @@ export enum ConsoleId {
 
 
 class Step3 extends React.Component<Step3Props, any> {
-
   public render() {
     return (
       <div className={styles.subContainer}>
@@ -76,17 +73,18 @@ class Step3 extends React.Component<Step3Props, any> {
               promptLabel="$ "
             />
           </div>
-          <div className={styles.convergePlot}>
+          <div id="plot" className={styles.convergePlot}>
             <div className={styles.solHeader}>
-              <VictoryChart
-                theme={VictoryTheme.material}
-                domain={{}}
-              >
-                <VictoryScatter
-                  style={{ data: { fill: '#c43a31' } }}
-                  data={this.props.data}
-                />
-              </VictoryChart>
+              {(
+                () => {
+                  const one = this.props.consoleOneActive;
+                  const two = this.props.consoleTwoActive;
+                  if (one && two) {
+                    return <ConPlot/>;
+                  }
+                }
+              )()}
+
             </div>
           </div>
         </div>
@@ -95,10 +93,12 @@ class Step3 extends React.Component<Step3Props, any> {
     );
   }
 }
-
+// domain={{ x: [ 0, 2 ] , y: [ 0, 3] }}
 const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
-  data: chartDataSelector(),
+  consoleOneActive: consoleOneStateSelector(),
+  consoleTwoActive: consoleTwoStateSelector(),
+
 });
 
 function mapDispatchToProps(dispatch) {
@@ -114,15 +114,18 @@ export default connect<any, any, any>(
   mapDispatchToProps,
 )(Step3);
 
-  // Variables to hold global information for
-  // parsing inside consoleMiddleware
+// Variables to hold global information for
+// parsing inside consoleMiddleware
 let lastIt = 0;
 // lastDt = 1 reflects starting value of dt
 // in Calculix output
 let lastDt = 1;
-
 // See explanation below in consoleMiddleware
 let dtFlag = 1;
+
+// detect console activity
+let consoleOne = false;
+let consoleTwo = false;
 
 export const consoleMiddleware = store => next => action => {
 
@@ -134,6 +137,17 @@ export const consoleMiddleware = store => next => action => {
 
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
       const lines = action.data.split('\n');
+
+      if (!consoleOne && action.consoleId === 1) {
+        store.dispatch({type: CONSOLE_ONE_ACTIVE, value: true});
+        consoleOne = true;
+      }
+
+      if (!consoleTwo && action.consoleId === 2) {
+        store.dispatch({type: CONSOLE_TWO_ACTIVE, value: true});
+        consoleTwo = true;
+      }
+
       const itReg = /it\s(\d+)\sof\s\d+/;
       const dtReg = /dt#\s(\d+)\sof\s(\d+)/;
       // Adding our parsing logic here:
@@ -162,6 +176,7 @@ export const consoleMiddleware = store => next => action => {
               store.dispatch( {type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt} );
               dtFlag = 0;
             }
+            // TODO: Handle the last iteration
 
             // if current 'it' is less than
             // lastIt and 'dt' is greater than lastDt
@@ -190,5 +205,4 @@ export const consoleMiddleware = store => next => action => {
 
   return next(action);
 };
-
 
