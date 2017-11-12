@@ -1,15 +1,9 @@
 import {ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER} from '../constants';
-import {fromJS} from 'immutable';
+// import {fromJS} from 'immutable';
 
-const initialState = fromJS (
-      { data: [ {x: 0, y: 0 } ],
-        maxDt: 0, currDt : 0,
-        domainX: 5,
-        domainY: 5,
-      },
-);
-
-export function chartDataReducer(state = initialState, action) {
+// TODO: Handle totalTime update
+export function chartDataReducer(state = { data: [ {x: 0, y: 0 } ], maxDt: 0, currDt : 0, domainX: 5,
+  domainY: 5, totalTime: 0 }, action) {
   switch (action.type) {
     case ADD_CHART_DATA:
       // Check whether we need to update domain

@@ -8,6 +8,7 @@ import { hidCheckSelector, consoleOneStateSelector, consoleTwoStateSelector } fr
 import ConPlot from '../ConvergencePlot';
 import { HID_CHECK3 } from '../constants';
 import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE} from '../constants';
+import Modal from 'react-modal';
 
 import store from '../../store';
 
@@ -73,26 +74,23 @@ class Step3 extends React.Component<Step3Props, any> {
               promptLabel="$ "
             />
           </div>
-          <div id="plot" className={styles.convergePlot}>
-            <div className={styles.solHeader}>
-              {(
-                () => {
-                  const one = this.props.consoleOneActive;
-                  const two = this.props.consoleTwoActive;
-                  if (one && two) {
-                    return <ConPlot/>;
-                  }
-                }
-              )()}
-
-            </div>
-          </div>
         </div>
-
       </div>
     );
   }
 }
+/*
+ (
+ () => {
+ const one = this.props.consoleOneActive;
+ const two = this.props.consoleTwoActive;
+ if (one && two) {
+ return <ConPlot/>;
+ }
+ }
+ )()
+ */
+
 // domain={{ x: [ 0, 2 ] , y: [ 0, 3] }}
 const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
