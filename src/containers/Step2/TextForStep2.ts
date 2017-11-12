@@ -126,7 +126,7 @@ export const initialCodeString5 = `    <m2n:sockets from="SU2_CFD" to="Calculix"
 export const initialCodeString56 = ` `;
 export const initialCodeString6Before = `    <coupling-scheme:serial-implicit>
       <participants first="SU2_CFD" second="Calculix"/>
-      <max-time value="200"/>
+      <max-time value="160"/>
       <timestep-length value="3e-2" />
       <max-iterations value="50"/>
       <exchange data="Forces0" mesh="Calculix_Mesh" from="SU2_CFD" to="Calculix"/>
@@ -142,7 +142,7 @@ export const initialCodeString6Before = `    <coupling-scheme:serial-implicit>
     </coupling-scheme:serial-implicit>`;
 export const initialCodeString6After = `    <coupling-scheme:serial-implicit>
       <participants first="SU2_CFD" second="Calculix"/>
-      <max-time value="200"/>
+      <max-time value="160"/>
       <timestep-length value="3e-2" />
       <max-iterations value="50"/>
       <exchange data="Forces0" mesh="Calculix_Mesh" from="SU2_CFD" to="Calculix"/>

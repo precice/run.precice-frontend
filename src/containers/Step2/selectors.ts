@@ -6,6 +6,10 @@ const step2SubstateSelector = (state) => {
   return state.get('step2');
 };
 
+export const iveReadSelector = () => createSelector(
+  step2SubstateSelector,
+  (step2Substate) => step2Substate.get('iveRead'));
+
 export const hidCheckSelector = () => createSelector(
   step2SubstateSelector,
   (step2Substate) => step2Substate.get('hidCheck2'));

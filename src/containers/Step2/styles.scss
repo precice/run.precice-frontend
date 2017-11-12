@@ -56,7 +56,7 @@
       background-color: #000;
       flex: 1 0.8 auto;
       font-size: 12px;
-      overflow-y: scroll;
+      overflow-y: auto;
       padding: 1em 0.5em;
       width: 600px;
 
@@ -72,7 +72,7 @@
       display: inline-block;
       flex: 1 1 auto;
       margin-left: $margin-between;
-      overflow-y: scroll;
+      overflow-y: auto;
       width: 290px;
 
       .comment-header {
@@ -94,7 +94,6 @@
   .overlay {
     background-color: rgba(0,0,0,0.5);
     bottom: 0;
-    cursor: pointer;
     display: block;
     height: 100%;
     left: 0;
@@ -105,9 +104,13 @@
     z-index: 2;
 
     .overlayButton {
+      border: 5px solid white;
+      border-radius: 5px;
       color: white;
+      cursor: pointer;
       font-size: 50px;
       left: 50%;
+      padding: 5px;
       position: absolute;
       top: 90%;
       -ms-transform: translate(-50%, -50%);
@@ -116,11 +119,12 @@
 
 
     .overlayLanding {
+      border-bottom: 2px solid white;
       color: white;
-      font-size: 15px;
+      font-size: 20px;
       left: 50%;
       position: absolute;
-      top: 5%;
+      top: 7.5%;
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     }
@@ -128,11 +132,12 @@
     .overlayIntro {
       color: white;
       font-size: 15px;
-      left: 75%;
+      left: 85%;
       position: absolute;
       top: 21%;
       -ms-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
+      width: 200px;
     }
 
     .overlayXml {

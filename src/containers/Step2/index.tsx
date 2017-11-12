@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { HID_CHECK2, XML_CLICK } from '../constants';
+import { HID_CHECK2, XML_CLICK, IVE_READ } from '../constants';
+import { xmlBackgroundColor, xmlEmphasizeBackgroundColor} from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,8 @@ import {
   xmlFlag3Selector,
   xmlFlag4Selector,
   xmlFlag5Selector,
-  xmlFlag6Selector} from './selectors';
+  xmlFlag6Selector,
+  iveReadSelector} from './selectors';
 import {
   completedTaskSelector,
   modalClickSelector} from '../Tutorial/selectors';
@@ -31,6 +33,8 @@ interface Step2Props {
   hidCheck2: boolean;
   subStepTitle: string;
   firstTaskCompleted: boolean;
+  iveReadAction: () => void;
+  iveRead: boolean;
   modalClick: boolean;
   xmlAction: () => void;
   xmlflag1: boolean;
@@ -106,22 +110,25 @@ class Step2 extends React.Component<Step2Props, any> {
   }
   private closeOverlay() {
     document.getElementById('overlay').style.display = 'none';
+    this.props.iveReadAction();
   }
   private overlayButtonColorChange() {
     document.getElementById('overlayButton').style.color = 'gray';
+    document.getElementById('overlayButton').style.borderColor = 'gray';
   }
   private overlayButtonColorOriginal() {
     document.getElementById('overlayButton').style.color = 'white';
+    document.getElementById('overlayButton').style.borderColor = 'white';
   }
   public render() {
     return (
       <div onMouseOver={this.props.xmlAction} className={styles.subContainer}>
-        {!this.props.firstTaskCompleted ?
+        {!this.props.iveRead ?
         <div id="overlay" className={styles.overlay}>
           <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
-          <div className={styles.overlayIntro}>You can hide this box by clicking HIDE</div>
-          <div className={styles.overlayXml}>By clicking these lines, <br/>you can see explanation of the section you click on the left</div>
-          <div className={styles.overlayExp}>You can see explanation for each line.
+          <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
+          <div className={styles.overlayXml}>By clicking these lines, <br/>you can see explanation of the section you click on the right</div>
+          <div className={styles.overlayExp}>You can see explanation for each line here.
           Also, you can click on <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/> to get further information.</div>
           <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.overlayButtonColorChange} onMouseOut={this.overlayButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
         </div> :
@@ -149,7 +156,7 @@ class Step2 extends React.Component<Step2Props, any> {
           </div>
         </div>
         <div className={styles.interactContainer}>
-          <div className={styles.xml}>
+          <div id="ScrollableXmlContainer" className={styles.xml}>
             <SyntaxHighlighter
               id="xml0"
               style={TextForStep2.sunburstModified}
@@ -160,9 +167,9 @@ class Step2 extends React.Component<Step2Props, any> {
               lineStyle={lineNumber => {
                 const style = { display: 'block', backgroundColor: '' };
                 if (lineNumber > this.props.lineIndex.start && lineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (lineNumber > this.state.mouseOverLineIndex.start && lineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -184,9 +191,9 @@ class Step2 extends React.Component<Step2Props, any> {
                   const style = { display: 'block', backgroundColor: '' };
                   const localLineNumber = lineNumber + TextForStep2.sec01.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   }
                   return style;
                 }}
@@ -208,9 +215,9 @@ class Step2 extends React.Component<Step2Props, any> {
                 const style = { display: 'block', backgroundColor: '' };
                 const localLineNumber = lineNumber + TextForStep2.sec1.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -232,13 +239,13 @@ class Step2 extends React.Component<Step2Props, any> {
                   const style = { display: 'block', backgroundColor: '' };
                   const localLineNumber = lineNumber + TextForStep2.sec12.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (this.props.modalClick &&
                               !this.props.xmlflag2 &&
                           (localLineNumber > TextForStep2.sec2.start - 1 && localLineNumber < TextForStep2.sec2.end + 1)) {
-                    style.backgroundColor = '#931131';
+                    style.backgroundColor = xmlEmphasizeBackgroundColor;
                   }
                   return style;
                 }}
@@ -260,9 +267,9 @@ class Step2 extends React.Component<Step2Props, any> {
                 const style = { display: 'block', backgroundColor: '' };
                 const localLineNumber = lineNumber + TextForStep2.sec2.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -284,13 +291,13 @@ class Step2 extends React.Component<Step2Props, any> {
                   const style = { display: 'block', backgroundColor: '' };
                   const localLineNumber = lineNumber + TextForStep2.sec23.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   }else if (this.props.modalClick &&
                     !this.props.xmlflag3 &&
                     (localLineNumber > TextForStep2.sec3.start - 1 && localLineNumber < TextForStep2.sec3.end + 1)) {
-                    style.backgroundColor = '#931131';
+                    style.backgroundColor = xmlEmphasizeBackgroundColor;
                   }
                   return style;
                 }}
@@ -312,9 +319,9 @@ class Step2 extends React.Component<Step2Props, any> {
                 const style = { display: 'block', backgroundColor: '' };
                 const localLineNumber = lineNumber + TextForStep2.sec3.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -336,13 +343,13 @@ class Step2 extends React.Component<Step2Props, any> {
                   const style = { display: 'block', backgroundColor: '' };
                   const localLineNumber = lineNumber + TextForStep2.sec34.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (this.props.modalClick &&
                     !this.props.xmlflag4 &&
                     (localLineNumber > TextForStep2.sec4.start - 1 && localLineNumber < TextForStep2.sec4.end + 1)) {
-                    style.backgroundColor = '#931131';
+                    style.backgroundColor = xmlEmphasizeBackgroundColor;
                   }
                   return style;
                 }}
@@ -364,9 +371,9 @@ class Step2 extends React.Component<Step2Props, any> {
                 const style = { display: 'block', backgroundColor: '' };
                 const localLineNumber = lineNumber + TextForStep2.sec4.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -388,13 +395,13 @@ class Step2 extends React.Component<Step2Props, any> {
                   const style = { display: 'block', backgroundColor: '' };
                   const localLineNumber = lineNumber + TextForStep2.sec45.end;
                   if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (this.props.modalClick &&
                     !this.props.xmlflag5 &&
                     (localLineNumber > TextForStep2.sec5.start - 1 && localLineNumber < TextForStep2.sec5.end + 1)) {
-                    style.backgroundColor = '#931131';
+                    style.backgroundColor = xmlEmphasizeBackgroundColor;
                   }
                   return style;
                 }}
@@ -416,9 +423,9 @@ class Step2 extends React.Component<Step2Props, any> {
                 const style = { display: 'block', backgroundColor: '' };
                 const localLineNumber = lineNumber + TextForStep2.sec5.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -440,15 +447,15 @@ class Step2 extends React.Component<Step2Props, any> {
                   const style = { display: 'block', backgroundColor: '' };
                   const localLineNumber = lineNumber + TextForStep2.sec56.end;
                   if (this.props.firstTaskCompleted && localLineNumber === 60 ) {
-                    style.backgroundColor = '#e8e8e8';
+                    style.backgroundColor = xmlEmphasizeBackgroundColor;
                   } else if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = '#505050';
+                    style.backgroundColor = xmlBackgroundColor;
                   } else if (this.props.modalClick &&
                     !this.props.xmlflag6 &&
                     (localLineNumber > TextForStep2.sec6.start - 1 && localLineNumber < TextForStep2.sec6.end + 1)) {
-                    style.backgroundColor = '#931131';
+                    style.backgroundColor = xmlEmphasizeBackgroundColor;
                   }
                   return style;
                 }}
@@ -470,9 +477,9 @@ class Step2 extends React.Component<Step2Props, any> {
                 const style = { display: 'block', backgroundColor: '' };
                 const localLineNumber = lineNumber + TextForStep2.sec6.end;
                 if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = '#505050';
+                  style.backgroundColor = xmlBackgroundColor;
                 }
                 return style;
               }}
@@ -486,7 +493,7 @@ class Step2 extends React.Component<Step2Props, any> {
             <div className={styles.commentHeader}>
               {this.props.subStepTitle}
             </div>
-            <div className={styles.exp}>
+            <div  className={styles.exp}>
               {this.props.children}
             </div>
           </div>
@@ -507,12 +514,14 @@ const mapStateToProps = createStructuredSelector({
   xmlflag6: xmlFlag6Selector(),
   firstTaskCompleted: completedTaskSelector(),
   modalClick: modalClickSelector(),
+  iveRead: iveReadSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
     xmlAction: () => { dispatch({ type: XML_CLICK, check: whichSection}); },
+    iveReadAction: () => { dispatch({ type: IVE_READ}); },
   };
 }
 
