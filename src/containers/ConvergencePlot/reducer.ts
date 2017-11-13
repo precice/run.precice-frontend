@@ -3,7 +3,7 @@ import {ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER} from '../constants';
 
 // TODO: Handle totalTime update
 export function chartDataReducer(state = { data: [ {x: 0, y: 0 } ], maxDt: 0, currDt : 0, domainX: 5,
-  domainY: 5, totalTime: 0 }, action) {
+  domainY: 5 }, action) {
   switch (action.type) {
     case ADD_CHART_DATA:
       // Check whether we need to update domain

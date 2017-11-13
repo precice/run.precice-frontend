@@ -4,9 +4,10 @@ const step3SubstateSelector = (state) => {
   return state.get('step3');
 };
 
-export const hidCheckSelector = () => createSelector(
+export const hidCheckSelector = () => createSelector (
   step3SubstateSelector,
-  (step3Substate) => step3Substate.get('hidCheck'));
+  (step3Substate) =>
+    step3Substate.get('hidCheck'));
 
 
 export const consoleOneStateSelector = () => createSelector (
@@ -18,3 +19,9 @@ export const consoleTwoStateSelector = () => createSelector (
   step3SubstateSelector,
   (step3Substate) =>
     step3Substate.get('consoleTwoActive'));
+
+export const modalDisplaySelector = () => createSelector(
+  step3SubstateSelector,
+  (step3Substate) =>
+  step3Substate.get('showModal')
+);

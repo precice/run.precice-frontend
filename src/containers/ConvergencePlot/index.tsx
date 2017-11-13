@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {chartDataSelector, domainXSelector, domainYSelector, percentProgressSelector, totalTimeSelector} from './selectors';
+import {chartDataSelector, domainXSelector, domainYSelector, percentProgressSelector} from './selectors';
 import CircularProgressbar from 'react-circular-progressbar';
 import {VictoryScatter, VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, VictoryLabel} from 'victory';
 import * as styles from './styles.scss';
-
 
 interface ConPlotProps {
   data: object[];
   domainX: number;
   domainY: number;
   progressPercent: number;
-  totalTime: number;
 }
 
 class ConPlot extends React.Component<ConPlotProps, any> {
+
     public render() {
       return (
         <div id="popUpChart" className={styles.container}>
@@ -50,12 +49,14 @@ class ConPlot extends React.Component<ConPlotProps, any> {
           </div>
           <div className={styles.subContainer}>
 
-            <div id="progressBar" className={styles.progressBar}>
-              <CircularProgressbar percentage={this.props.progressPercent} />
+            <div className={styles.progressBar}>
+              <CircularProgressbar
+                percentage={this.props.progressPercent}
+              />
             </div>
 
-            <div id="totalTime" className={styles.totalTime}>
-                {this.props.totalTime}
+            <div className={styles.totalTime}>
+              {}
               </div>
           </div>
         </div>
@@ -69,10 +70,10 @@ const mapStateToProps = createStructuredSelector ({
   domainX: domainXSelector(),
   domainY: domainYSelector(),
   progressPercent: percentProgressSelector(),
-  totalTime: totalTimeSelector(),
 });
 
 function mapDispatchToProps( dispatch ) {
+  return {};
 }
 
 export default connect<any, any, any>(

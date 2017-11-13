@@ -22,17 +22,29 @@
       padding-top: 10px;
       text-transform: uppercase;
 
+
+      .modal-btn{
+        flex: 1 1 auto;
+        cursor: pointer;
+        text-align: center;
+        width: 10%;
+        order : 1;
+      }
+
       .title {
         flex: 1 1 auto;
         text-align: center;
         width: 80%;
+        order: 2;
       }
 
+
       .hide {
-        flex: 0 0 auto;
+        flex: 1 1 auto;
         cursor: pointer;
         text-align: center;
         width: 10%;
+        order: 3;
       }
     }
 
@@ -54,14 +66,6 @@
     display: flex;
     flex: 1 1 auto;
     order: 1;
-
-    .converge-plot {
-      background-color: $solver-background-color;
-      color: $primary-color;
-      display: flex;
-      flex: 1 1 1px;
-      order: 2;
-    }
 
     .sol-r,
     .sol-l {
