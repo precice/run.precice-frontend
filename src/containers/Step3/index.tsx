@@ -148,6 +148,8 @@ let dtFlag = 1;
 let consoleOne = false;
 let consoleTwo = false;
 
+let it;
+let dt;
 export const consoleMiddleware = store => next => action => {
 
   const consoleAction = action.type === 'socket/stdout' || action.type === 'socket/stderr' || action.type === 'socket/exit';
@@ -185,8 +187,8 @@ export const consoleMiddleware = store => next => action => {
             // matched number. Look up parenthesis in
             // javascript regex.
 
-            const it = parseInt( foundIt[1], 10 );
-            const dt = parseInt( foundDt[1], 10 );
+            it = parseInt( foundIt[1], 10 );
+            dt = parseInt( foundDt[1], 10 );
 
             // Multiple instances of dt === 1 and it === 1
             // We only want to update the state once
@@ -211,6 +213,8 @@ export const consoleMiddleware = store => next => action => {
       cons.log(...lines);
     } else if (action.type === 'socket/exit') {
       cons.log('returned with exit code ' + action.code);
+      // Hopefully the last value
+      // store.dispatch( { type: ADD_CHART_DATA, data: {x: dt, y: it} } );
       cons.return();
     }
 
