@@ -2,7 +2,7 @@ import {ADD_CHART_DATA, ADD_FINAL_TIME, ADD_PROGRESS_MAX_ITER} from '../constant
 import {fromJS} from 'immutable';
 
 const initialState = fromJS({
-  time: [1, 2, 3],
+  time: [],
   data: [ {x: 0, y: 0 } ],
   maxDt: 0,
   currDt : 0,

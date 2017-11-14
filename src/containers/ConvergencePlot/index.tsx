@@ -59,7 +59,20 @@ class ConPlot extends React.Component<ConPlotProps, any> {
             </div>
 
             <div className={styles.totalTime}>
-              {this.props.highScores}
+              <table>
+                <tr>
+                  <th>No.</th>
+                  <th>Time(s)</th>
+                </tr>
+              {
+                this.props.highScores.map( (listValue, index) => {
+                return <tr key={index}>
+                  <td>{index+1}</td>
+                  <td>{listValue}</td>
+                </tr>;
+              })
+              }
+              </table>
               </div>
           </div>
         </div>
