@@ -1,22 +1,30 @@
 import { connect } from 'react-redux';
-import { INIT_CONSOLE } from '../constants';
+import { CONSOLE_ADD_LINES, CONSOLE_TOGGLE_BUSY, CONSOLE_TOGGLE_LOCK_BOTTOM } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import * as styles from './styles.scss';
-import Console from 'react-console-component';
-import { hidCheckSelector} from './selectors';
+import { busySelector, hidCheckSelector, lockBottomSelector, logMessagesSelector } from './selectors';
 import { HID_CHECK3 } from '../constants';
+import ReduxConsole from '../../components/ReduxConsole/index';
+import { List } from 'immutable';
+import Checkbox from '../../components/Checkbox';
 
 interface Step3Props {
-  sendMsg: any;
-  initConsole: any;
+  runCmd: any;
+  toggleLockBottom: any;
   hidAction: () => void;
   hidCheck: boolean;
+  leftLogMessages: [string];
+  rightLogMessages: [string];
+  leftBusy: boolean;
+  rightBusy: boolean;
+  leftLockBottom: boolean;
+  rightLockBottom: boolean;
 }
 
 export enum ConsoleId {
-  left = 1,
-  right = 2,
+  left = 'LEFT_CONSOLE',
+  right = 'RIGHT_CONSOLE',
 }
 
 
@@ -51,25 +59,29 @@ class Step3 extends React.Component<Step3Props, any> {
         </div>
         <div className={styles.subsubContainer}>
           <div className={styles.solL}>
-            <Console
-              ref={(ref: Console) => this.props.initConsole(ConsoleId.left, ref)}
-              handler={(txt: string) => this.props.sendMsg(ConsoleId.left, txt)}
-              welcomeMessage={'Welcome to Terminal for CalculiX!'}
-              autofocus={true}
+            <ReduxConsole
+              handler={(txt: string) => { this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix'); }}
               promptLabel="$ "
+              busy={this.props.leftBusy}
+              logMessages={this.props.leftLogMessages}
+              lockBottom={this.props.leftLockBottom}
             />
+            <div onClick={() => {this.props.toggleLockBottom(ConsoleId.left, !this.props.leftLockBottom); }}>
+              <input type="checkbox" readOnly={true} checked={this.props.leftLockBottom} />&nbsp;
+              Scroll with output
+            </div>
           </div>
           <div className={styles.solR}>
-            <Console
-              ref={(ref) => this.props.initConsole(ConsoleId.right, ref)}
-              handler={(txt: string) => this.props.sendMsg(ConsoleId.right, txt)}
-              welcomeMessage={'Welcome to Terminal for SU2!'}
+            <ReduxConsole
+              handler={(txt: string) => { this.props.runCmd(ConsoleId.right, '~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg'); }}
               promptLabel="$ "
+              busy={this.props.rightBusy}
+              logMessages={this.props.rightLogMessages}
+              lockBottom={this.props.rightLockBottom}
             />
-          </div>
-          <div className={styles.convergePlot}>
-            <div className={styles.solHeader}>
-              convergence plot for coupling
+            <div onClick={() => {this.props.toggleLockBottom(ConsoleId.right, !this.props.rightLockBottom); }}>
+              <input type="checkbox" readOnly={true} checked={this.props.rightLockBottom} />&nbsp;
+              Scroll with output
             </div>
           </div>
         </div>
@@ -81,12 +93,21 @@ class Step3 extends React.Component<Step3Props, any> {
 
 const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
+  leftLogMessages: logMessagesSelector(ConsoleId.left),
+  rightLogMessages: logMessagesSelector(ConsoleId.right),
+  leftLockBottom: lockBottomSelector(ConsoleId.left),
+  rightLockBottom: lockBottomSelector(ConsoleId.right),
+  leftBusy: busySelector(ConsoleId.left),
+  rightBusy: busySelector(ConsoleId.right),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    initConsole: (consoleId: ConsoleId, console: Console) => dispatch({ type: INIT_CONSOLE, consoleId, console }),
-    sendMsg: (consoleId: ConsoleId, cmd: string) => dispatch({ type: 'socket/exec_cmd', consoleId, cmd }),
+    runCmd: (consoleId: ConsoleId, cmd: string) => {
+      dispatch({ type: 'socket/exec_cmd', consoleId, cmd });
+      dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
+      },
+    toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => { dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden}); },
   };
 }
@@ -101,22 +122,21 @@ export const consoleMiddleware = store => next => action => {
   const consoleAction = action.type === 'socket/stdout' || action.type === 'socket/stderr' || action.type === 'socket/exit';
 
   if (consoleAction) {
-    // replace with selector
-    const cons = store.getState().getIn(['step3', 'consoles', action.consoleId]);
 
-    if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
-      const lines = action.data.split('\n');
-      cons.log(...lines);
+    const { consoleId, data, type } = action;
+    if (type === 'socket/stdout' || type === 'socket/stderr') {
+      const lines = data.split('\n');
+      store.dispatch({type: CONSOLE_ADD_LINES, consoleId, lines});
     } else if (action.type === 'socket/exit') {
-      cons.log('returned with exit code ' + action.code);
-      cons.return();
+
+      store.dispatch({type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code]});
+      store.dispatch({type: CONSOLE_TOGGLE_BUSY, consoleId, value: false});
+
     }
 
-    cons.scrollToBottom();
   }
 
 
   return next(action);
 };
-
 

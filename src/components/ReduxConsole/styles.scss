@@ -1,0 +1,60 @@
+$terminal-background-color: black;
+$terminal-code-color: white;
+
+.logMessages {
+  flex: 0 1 1px;
+  white-space: pre;
+}
+
+.prompt {
+  flex: 0 0 auto;
+}
+
+.wrapper {
+  flex: 1 1 auto;
+  background-color: $terminal-background-color;
+  color: $terminal-code-color;
+  display: flex;
+  flex-direction: column;
+  font-family: Courier;
+  overflow: auto;
+  width:100%;
+
+}
+
+.cursor {
+  animation: cursor-animation 1s infinite;
+  outline: 0.1em solid $terminal-code-color;
+  outline-offset: -0.1em;
+}
+
+.bottomAnchor {
+  height: 1px;
+  flex: 0 0 auto;
+}
+
+@keyframes cursor-animation {
+
+  0% {
+    background: $terminal-code-color;
+    outline-color: $terminal-code-color;
+  }
+
+  50% {
+    background: $terminal-code-color;
+    outline-color: $terminal-code-color;
+
+  }
+
+  51% {
+    background: $terminal-background-color;
+    outline-color: $terminal-background-color;
+
+  }
+
+  100% {
+    background: $terminal-background-color;
+    outline-color: $terminal-background-color;
+
+  }
+}

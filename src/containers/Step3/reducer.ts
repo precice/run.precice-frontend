@@ -7,24 +7,47 @@
 import { fromJS } from 'immutable';
 
 import {
-  INIT_CONSOLE, HID_CHECK3,
+  CONSOLE_ADD_LINES,
+  CONSOLE_TOGGLE_BUSY,
+  CONSOLE_TOGGLE_LOCK_BOTTOM,
+  HID_CHECK3,
 } from '../constants';
-import { Action } from 'redux';
 import { ConsoleId } from './index';
 
 
 const initialState = fromJS({
   consoles: {
-    [ConsoleId.left]: null,
-    [ConsoleId.right]: null,
+    [ConsoleId.left]: {
+      logMessages: ['$ ccx_preCICE -i flap -precice-participant Calculix'],
+      lockBottom: true,
+      busy: false,
+    },
+    [ConsoleId.right]: {
+      logMessages: ['$ ~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg'],
+      lockBottom: true,
+      busy: false,
+    },
   },
 });
 
 function exampleReducer(state = initialState, action: any) {
   switch (action.type) {
-    case INIT_CONSOLE:
+    case CONSOLE_ADD_LINES: {
+      const { lines } = action;
+      return state.updateIn(['consoles', action.consoleId, 'logMessages'], (old) => {
+        if (old.size < 10000) {
+          return old.push(...lines);
+        } else {
+          return old.slice(lines.length).push(...lines);
+        }
+      });
+    }
+    case CONSOLE_TOGGLE_BUSY:
       return state
-        .setIn(['consoles', action.consoleId], action.console);
+        .setIn(['consoles', action.consoleId, 'busy'], action.value);
+    case CONSOLE_TOGGLE_LOCK_BOTTOM:
+      return state
+        .setIn(['consoles', action.consoleId, 'lockBottom'], action.value);
     case HID_CHECK3:
       return state
         .set('hidCheck', !action.check);

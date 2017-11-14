@@ -5,7 +5,6 @@
   flex: 1 1 auto;
   flex-direction: column;
   margin: 0 auto;
-  overflow-y: scroll;
   width: 100%;
 
   .exp-container {
@@ -51,27 +50,20 @@
   }
 
   .subsub-container {
-    display: flex;
     flex: 1 1 auto;
+    display: flex;
     order: 1;
-
-    .converge-plot {
-      background-color: $solver-background-color;
-      color: $primary-color;
-      display: flex;
-      flex: 1 1 1px;
-      order: 2;
-    }
 
     .sol-r,
     .sol-l {
-      background-color: $terminal-background-color;
-      color: $terminal-code-color;
-      flex: 1 1 1px;
-      font-family: Courier;
+
       margin-right: $margin-between;
-      overflow-y: scroll;
       padding: 0.5em;
+      flex: 1 1 10px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0; // tames flexbox weird behavior see https://stackoverflow.com/a/38224283/3200478
+
 
     }
 
