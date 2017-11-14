@@ -23,5 +23,4 @@ export const consoleTwoStateSelector = () => createSelector (
 export const modalDisplaySelector = () => createSelector(
   step3SubstateSelector,
   (step3Substate) =>
-  step3Substate.get('showModal')
-);
+  step3Substate.get('showModal'));

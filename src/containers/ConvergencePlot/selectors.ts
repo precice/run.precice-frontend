@@ -12,27 +12,24 @@ const chartDataSubstateSelector = (state) => {
 export const chartDataSelector = () => createSelector(
   chartDataSubstateSelector,
   (chartDataSubstate) => {
-    return chartDataSubstate.data;
+    const data = chartDataSubstate.get('data').toJSON();
+    return data;
   });
 
 export const domainXSelector = () => createSelector(
   chartDataSubstateSelector,
-  (chartDataSubstate) => {
-    return chartDataSubstate.domainX;
-  });
+  (chartDataSubstate) => chartDataSubstate.get('domainX'));
 
 export const domainYSelector = () => createSelector(
   chartDataSubstateSelector,
-  (chartDataSubstate) => {
-    return chartDataSubstate.domainX;
-  });
+  (chartDataSubstate) => chartDataSubstate.get('domainY'));
 
 // Returns percentage for progress bar
 export const percentProgressSelector = () => createSelector(
   chartDataSubstateSelector,
   (chartDataSubstate) => {
-    const currDt = chartDataSubstate.currDt;
-    const maxDt = chartDataSubstate.maxDt;
+    const currDt = chartDataSubstate.get('currDt');
+    const maxDt = chartDataSubstate.get('maxDt');
 
     if ( maxDt === 0 ) {
       return 0;

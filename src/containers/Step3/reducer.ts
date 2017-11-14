@@ -37,11 +37,11 @@ export function step3Reducer(state = initialState, action: any) {
 
     case CONSOLE_ONE_ACTIVE:
       return state
-        .set('consoleTwoActive', action.value);
+        .set('consoleOneActive', action.value);
 
     case CONSOLE_TWO_ACTIVE:
       return state.
-        set('consoleOneActive', action.value);
+        set('consoleTwoActive', action.value);
 
    case MODAL_DATA:
     return state

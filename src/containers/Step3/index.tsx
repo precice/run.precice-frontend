@@ -214,7 +214,7 @@ export const consoleMiddleware = store => next => action => {
     } else if (action.type === 'socket/exit') {
       cons.log('returned with exit code ' + action.code);
       // Hopefully the last value
-      // store.dispatch( { type: ADD_CHART_DATA, data: {x: dt, y: it} } );
+      store.dispatch( { type: ADD_CHART_DATA, data: {x: dt, y: it} } );
       cons.return();
     }
 

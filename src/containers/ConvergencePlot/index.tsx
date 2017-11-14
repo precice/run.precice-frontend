@@ -7,7 +7,7 @@ import {VictoryScatter, VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, Vi
 import * as styles from './styles.scss';
 
 interface ConPlotProps {
-  data: object[];
+  data: object [];
   domainX: number;
   domainY: number;
   progressPercent: number;
@@ -43,7 +43,6 @@ class ConPlot extends React.Component<ConPlotProps, any> {
           <VictoryScatter
             style={{data: {fill: '#c43a31'}}}
             data={this.props.data}
-
           />
         </VictoryChart>
           </div>
