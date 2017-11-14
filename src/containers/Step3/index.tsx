@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import store from '../../store';
-import {INIT_CONSOLE, MODAL_DATA} from '../constants';
+import {ADD_FINAL_TIME, INIT_CONSOLE, MODAL_DATA} from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import * as styles from './styles.scss';
@@ -11,6 +10,7 @@ import ConPlot from '../ConvergencePlot';
 import { HID_CHECK3 } from '../constants';
 import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE} from '../constants';
 import Modal = require('react-modal');
+import {debug} from "util";
 
 // TODO: Handle dispatch for last iteration
 // TODO: Store total simulation time.
@@ -173,6 +173,7 @@ export const consoleMiddleware = store => next => action => {
 
       const itReg = /it\s(\d+)\sof\s\d+/;
       const dtReg = /dt#\s(\d+)\sof\s(\d+)/;
+      const timeReg = /Global\s*runtime\s*=\s*(\d+)ms\s*\/\s*(\d+)s/;
       // Adding our parsing logic here:
 
       // We want the Calculix console
@@ -180,6 +181,15 @@ export const consoleMiddleware = store => next => action => {
       if (action.consoleId === 1) {
         for (const line of lines) {
           const foundIt = line.match(itReg);
+
+          // TODO: Don't check for time in every run
+          const foundTime = line.match(timeReg);
+          if (foundTime != null) {
+            // foundTIme[2] is time in seconds [1] in ms
+            const time = parseInt (foundTime[2], 10);
+            store.dispatch( {type: ADD_FINAL_TIME, data: time });
+
+          }
           if (foundIt != null) {
             const foundDt = line.match(dtReg);
 
@@ -215,6 +225,7 @@ export const consoleMiddleware = store => next => action => {
       cons.log('returned with exit code ' + action.code);
       // Hopefully the last value
       store.dispatch( { type: ADD_CHART_DATA, data: {x: dt, y: it} } );
+      debugger;
       cons.return();
     }
 
@@ -225,3 +236,4 @@ export const consoleMiddleware = store => next => action => {
   return next(action);
 };
 
+// /Global\sruntime\s*=\s*(\d+ms)\s*\/\s*(\d+s)/
