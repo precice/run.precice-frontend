@@ -18,6 +18,7 @@ import {
   xmlFlag4Selector,
   xmlFlag5Selector,
   xmlFlag6Selector} from '../Step2/selectors';
+import ScrollableXmlContainer from '../Step2/index';
 
 interface TutorialProps {
   percentage: number;

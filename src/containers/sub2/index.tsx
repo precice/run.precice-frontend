@@ -3,7 +3,7 @@ import {EXAMPLE_ACTION} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 
-import * as styles from '../sub1/styles.scss';
+import * as styles from '../sub2/styles.scss';
 import { Tooltip } from 'react-tippy';
 
 import {Link} from 'react-router-dom';

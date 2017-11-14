@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { HID_CHECK2, XML_CLICK, IVE_READ } from '../constants';
+import { HID_CHECK2, XML_CLICK, IVE_READ,  } from '../constants';
 import { xmlBackgroundColor, xmlEmphasizeBackgroundColor} from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
@@ -18,7 +18,8 @@ import {
   xmlFlag4Selector,
   xmlFlag5Selector,
   xmlFlag6Selector,
-  iveReadSelector} from './selectors';
+  iveReadSelector,
+  initialRelaxationValueSelector} from './selectors';
 import {
   completedTaskSelector,
   modalClickSelector} from '../Tutorial/selectors';
@@ -43,10 +44,10 @@ interface Step2Props {
   xmlflag4: boolean;
   xmlflag5: boolean;
   xmlflag6: boolean;
+  initialRelaxationValue: number;
 }
 
 let whichSection = '';
-
 class Step2 extends React.Component<Step2Props, any> {
   constructor(props: Step2Props) {
     super(props);
@@ -462,7 +463,7 @@ class Step2 extends React.Component<Step2Props, any> {
                 onMouseOver={this.setMouseOver}
                 onMouseOut={this.setMouseOut}
               >
-                {this.props.firstTaskCompleted ? TextForStep2.initialCodeString6After : TextForStep2.initialCodeString6Before}
+                {TextForStep2.initialCodeString6Begin + '"' + this.props.initialRelaxationValue.toString() + '"' + TextForStep2.initialCodeString6End}
               </SyntaxHighlighter>{/*text6*/}
             </Link>
             <SyntaxHighlighter
@@ -515,6 +516,7 @@ const mapStateToProps = createStructuredSelector({
   firstTaskCompleted: completedTaskSelector(),
   modalClick: modalClickSelector(),
   iveRead: iveReadSelector(),
+  initialRelaxationValue: initialRelaxationValueSelector(),
 });
 
 function mapDispatchToProps(dispatch) {

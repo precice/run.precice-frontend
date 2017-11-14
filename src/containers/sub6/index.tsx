@@ -1,13 +1,16 @@
 import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
+import {EXAMPLE_ACTION, INITIAL_RELAXATION_CHANGE} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 
-import * as styles from '../sub1/styles.scss';
+import * as styles from '../sub6/styles.scss';
 import { Tooltip } from 'react-tippy';
 
 import {
   completedTaskSelector} from '../Tutorial/selectors';
+
+import {
+  initialRelaxationValueSelector} from '../step2/selectors';
 
 import {Link} from 'react-router-dom';
 // import * as styles from './styles.scss';
@@ -15,6 +18,8 @@ import {Link} from 'react-router-dom';
 
 interface Sub6Props {
   firstTaskCompleted: boolean;
+  initialRelaxationValue: number;
+  initialRelaxationChangeAction: any;
 }
 
 class Sub6 extends React.Component<Sub6Props, any> {
@@ -176,24 +181,38 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         </div> :
-          <div>We change the initial-relaxation-value into 0.9, and see what will happen</div>
+          <div>
+            We change the initial-relaxation-value into 0.9, and see what will happen
+            <div className={styles.rangeSlider}>
+              <input
+                className={styles.rangeSliderRange}
+                id="myRange"
+                onChange={this.props.initialRelaxationChangeAction}
+                type="range"
+                min="0.1"
+                max="0.9"
+                step="0.1"
+              />
+                <span className={styles.rangeSliderValue}>{this.props.initialRelaxationValue.toString()}</span>
+            </div>
+          </div>
         }
       </div>
     );
   }
 }
-
 const mapStateToProps = createStructuredSelector({
   firstTaskCompleted: completedTaskSelector(),
+  initialRelaxationValue: initialRelaxationValueSelector(),
 });
 function mapDispatchToProps(dispatch) {
   return {
     example: () => dispatch({type: EXAMPLE_ACTION}),
+    initialRelaxationChangeAction: (event) => {dispatch({type: INITIAL_RELAXATION_CHANGE, check: (document.getElementById(event.currentTarget.id) as HTMLInputElement).value}); document.getElementById('ScrollableXmlContainer').scrollTop = 500; }, /*reducer in step 2*/
   };
 }
 
 export default connect < any, any, any > (
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Sub6);
-

@@ -124,7 +124,7 @@ export const initialCodeString45 = `
     <!-- Communication method, use TCP/IP sockets, change network to "ib0" on SuperMUC -->`
 export const initialCodeString5 = `    <m2n:sockets from="SU2_CFD" to="Calculix" exchange-directory="../" distribution-type="gather-scatter"/>`
 export const initialCodeString56 = ` `;
-export const initialCodeString6Before = `    <coupling-scheme:serial-implicit>
+export const initialCodeString6Begin = `    <coupling-scheme:serial-implicit>
       <participants first="SU2_CFD" second="Calculix"/>
       <max-time value="160"/>
       <timestep-length value="3e-2" />
@@ -137,23 +137,8 @@ export const initialCodeString6Before = `    <coupling-scheme:serial-implicit>
       <post-processing:aitken>
 	<!-- PostProc always done on the second participant -->
         <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
-        <initial-relaxation value="0.2"/>
-      </post-processing:aitken>
-    </coupling-scheme:serial-implicit>`;
-export const initialCodeString6After = `    <coupling-scheme:serial-implicit>
-      <participants first="SU2_CFD" second="Calculix"/>
-      <max-time value="160"/>
-      <timestep-length value="3e-2" />
-      <max-iterations value="50"/>
-      <exchange data="Forces0" mesh="Calculix_Mesh" from="SU2_CFD" to="Calculix"/>
-      <exchange data="DisplacementDeltas0" mesh="Calculix_Mesh" from="Calculix" to="SU2_CFD" />
-      <relative-convergence-measure limit="1e-1" data="DisplacementDeltas0" mesh="Calculix_Mesh"/>
-      <relative-convergence-measure limit="1e-1" data="Forces0" mesh="Calculix_Mesh"/>
-      <extrapolation-order value="2"/>
-      <post-processing:aitken>
-	<!-- PostProc always done on the second participant -->
-        <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
-        <initial-relaxation value="0.9"/>
+        <initial-relaxation value=`;
+export const initialCodeString6End = `/>
       </post-processing:aitken>
     </coupling-scheme:serial-implicit>`;
 export const initialCodeStringEnd = `
