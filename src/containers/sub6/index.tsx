@@ -10,7 +10,7 @@ import {
   completedTaskSelector} from '../Tutorial/selectors';
 
 import {
-  initialRelaxationValueSelector} from '../step2/selectors';
+  initialRelaxationValueSelector} from '../Step2/selectors';
 
 import {Link} from 'react-router-dom';
 // import * as styles from './styles.scss';
