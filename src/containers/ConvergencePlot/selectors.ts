@@ -40,8 +40,4 @@ export const percentProgressSelector = () => createSelector(
 
   });
 
-export const highScoreSelector = () => createSelector (
-  chartDataSubstateSelector,
-  (chartDataSubstate) => {
-    return chartDataSubstate.get('time').toJSON();
-  });
+

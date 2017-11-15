@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
-  chartDataSelector, domainXSelector, domainYSelector, highScoreSelector,
-  percentProgressSelector
+  chartDataSelector, domainXSelector, domainYSelector,
+  percentProgressSelector,
 } from './selectors';
 import CircularProgressbar from 'react-circular-progressbar';
 import {VictoryScatter, VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, VictoryLabel} from 'victory';
@@ -14,7 +14,6 @@ interface ConPlotProps {
   domainX: number;
   domainY: number;
   progressPercent: number;
-  highScores: number[];
 }
 
 class ConPlot extends React.Component<ConPlotProps, any> {
@@ -58,22 +57,6 @@ class ConPlot extends React.Component<ConPlotProps, any> {
               />
             </div>
 
-            <div className={styles.totalTime}>
-              <table>
-                <tr>
-                  <th>No.</th>
-                  <th>Time(s)</th>
-                </tr>
-              {
-                this.props.highScores.map( (listValue, index) => {
-                return <tr key={index}>
-                  <td>{index+1}</td>
-                  <td>{listValue}</td>
-                </tr>;
-              })
-              }
-              </table>
-              </div>
           </div>
         </div>
       );
@@ -86,7 +69,6 @@ const mapStateToProps = createStructuredSelector ({
   domainX: domainXSelector(),
   domainY: domainYSelector(),
   progressPercent: percentProgressSelector(),
-  highScores: highScoreSelector(),
 });
 
 function mapDispatchToProps( dispatch ) {

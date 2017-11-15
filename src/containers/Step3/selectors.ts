@@ -23,4 +23,22 @@ export const consoleTwoStateSelector = () => createSelector (
 export const modalDisplaySelector = () => createSelector(
   step3SubstateSelector,
   (step3Substate) =>
-  step3Substate.get('showModal'));
+  step3Substate.get('showPlotModal'));
+
+
+export const timeModalDisplaySelector = () => createSelector (
+  step3SubstateSelector,
+  (step3Substate) =>
+  step3Substate.get('showTimeModal'));
+
+
+export const simulationStateSelector = () => createSelector (
+  step3SubstateSelector,
+  (step3Substate) =>
+    step3Substate.get('isSimulationRunning'));
+
+export const highScoreSelector = () => createSelector (
+  step3SubstateSelector,
+  (step3Substate) => {
+    return step3Substate.get('finalTime');
+  });

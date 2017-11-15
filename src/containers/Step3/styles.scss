@@ -48,6 +48,33 @@
       }
     }
 
+    .time-modal {
+      top                        : 40px;
+      left                       : 40px;
+      right                      : 40px;
+      bottom                     : 40px;
+      height: 50px;
+      width: 50px;
+      border                     : 1px solid #ccc;
+      background                 : #fff;
+      overflow                   : auto;
+      WebkitOverflowScrolling    : touch;
+      borderRadius               : 4px;
+      outline                    : none;
+      padding                    : 20px;
+
+    }
+
+    .time-modal-overlay {
+      position          : fixed;
+      top               : 0;
+      left              : 0;
+      right             : 0;
+      bottom            : 0;
+      backgroundColor   : rgba(255, 255, 255, 0.75);
+
+    }
+
     .exp-content {
       line-height: 1.5;
       margin: 10px auto;
@@ -147,6 +174,47 @@
     /* stylelint-enable */
   }
 
+}
+
+@keyframes flashingtext{
+  from{color: red;}
+  to{color: black;}
+}
+
+.table-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  height: 80%;
+
+
+  .simulation-header{
+    font-size: xx-large;
+    padding-bottom: 1em;
+    animation-name: flashingtext;
+    animation-duration: 5s;
+  }
+
+  .time-table{
+
+    .table-caption{
+      font-size: larger;
+      text-align: center;
+      padding-bottom: 0.5em;
+    }
+
+    .red-row {
+      animation-name: flashingtext;
+      animation-duration: 5s;
+    }
+
+    width:30%;
+    height:60%;
+    text-align: center;
+    font-size: larger;
+    margin: 0 auto;
+  }
 }
 
 

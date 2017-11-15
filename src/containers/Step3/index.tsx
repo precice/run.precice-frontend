@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
-import {ADD_FINAL_TIME, INIT_CONSOLE, MODAL_DATA} from '../constants';
+import {ADD_FINAL_TIME, INIT_CONSOLE, IS_SIMULATION_RUNNING, PLOT_MODAL_DATA, TIME_MODAL_DATA} from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import * as styles from './styles.scss';
 import Console from 'react-console-component';
 import {
-  hidCheckSelector, consoleOneStateSelector, consoleTwoStateSelector, modalDisplaySelector} from './selectors';
+  hidCheckSelector, consoleOneStateSelector, consoleTwoStateSelector, modalDisplaySelector, highScoreSelector,
+  timeModalDisplaySelector,
+} from './selectors';
 import ConPlot from '../ConvergencePlot';
 import { HID_CHECK3 } from '../constants';
 import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE} from '../constants';
 import Modal = require('react-modal');
-import {debug} from "util";
 
 // TODO: Handle dispatch for last iteration
 // TODO: Store total simulation time.
@@ -25,10 +26,20 @@ interface Step3Props {
   hidCheck: boolean;
   consoleOneActive: boolean;
   consoleTwoActive: boolean;
-  showModal: boolean;
-  openModal: () => void;
-  closeModal: void;
+
+  showPlotModal: boolean;
+  openPlotModal: () => void;
+  closePlotModal: () => void;
+
+  showTimeModal: boolean;
+  closeTimeModal: () => void;
+  highScores: any;
+
 }
+//className={styles.timeModal}
+//overlayClassName={styles.timeModalOverlay}
+
+// TODO: Put styles for TimeModal in styles.scss
 
 export enum ConsoleId {
   left = 1,
@@ -37,22 +48,89 @@ export enum ConsoleId {
 
 // this.props.consoleOneActive && this.props.consoleTwoActive}
 class Step3 extends React.Component<Step3Props, any> {
+  constructor(props: Step3Props) {
+    super(props);
+    this.renderTable = this.renderTable.bind(this);
+  }
+
+  // Renders part of table
+  private renderTable(timeArr) {
+    const list = timeArr.toJSON();
+    // current time is lastItem
+    const lastItem = list[list.length - 1];
+    list.sort((a, b) => a - b);
+    const ind = list.indexOf(lastItem);
+    return list.map((listValue, index) => {
+      if (index === ind) {
+        return(
+          <tr key={index} className={styles.redRow}>
+          <td>{index + 1}</td>
+          <td>{listValue}</td>
+        </tr>);
+      } else {
+        return(
+          <tr key={index}>
+          <td>{index + 1}</td>
+          <td>{listValue}</td>
+        </tr>);
+      }
+    });
+  }
+
   public render() {
     return (
       <div className={styles.subContainer}>
         <Modal
-          isOpen={this.props.showModal}
+          isOpen={this.props.showPlotModal}
           shouldCloseOnOverlayClick={true}
-          onRequestClose={this.props.closeModal}
+          onRequestClose={this.props.closePlotModal}
         >
           <ConPlot/>
+
+        </Modal>
+
+        <Modal
+          isOpen={this.props.showTimeModal}
+          shouldCloseOnOverlayClick={true}
+          onRequestClose={this.props.closeTimeModal}
+          style={{
+            overlay: {
+
+            },
+          content: {
+            minWidth : '10vw',
+            minHeight : '20vh',
+            maxWidth: '80vw',
+            maxHeight: '80vw',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            margin: 'auto',
+          },
+          }
+          }
+        >
+          <div className={styles.tableDiv}>
+            <div className={styles.simulationHeader}>
+              Simulation Finished
+            </div>
+            <table className={styles.timeTable}>
+              <caption className={styles.tableCaption}>Highscore List</caption>
+              <tbody>
+              <tr>
+                <th> No.</th>
+                <th>Time (s)</th>
+              </tr>{this.renderTable(this.props.highScores)}
+                </tbody>
+            </table>
+          </div>
 
         </Modal>
 
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
-            <span onClick={this.props.openModal} className={styles.modalBtn}> Plot </span>
+            <span onClick={this.props.openPlotModal} className={styles.modalBtn}> Plot </span>
             <span className={styles.title}>what to do</span>
             <span onClick={this.props.hidAction} className={styles.hide}>{this.props.hidCheck ? 'expand' : 'hide'}</span>
           </div>
@@ -114,7 +192,9 @@ const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
   consoleOneActive: consoleOneStateSelector(),
   consoleTwoActive: consoleTwoStateSelector(),
-  showModal: modalDisplaySelector(),
+  showPlotModal: modalDisplaySelector(),
+  showTimeModal: timeModalDisplaySelector(),
+  highScores: highScoreSelector(),
 
 });
 
@@ -123,8 +203,9 @@ function mapDispatchToProps(dispatch) {
     initConsole: (consoleId: ConsoleId, console: Console) => dispatch({ type: INIT_CONSOLE, consoleId, console }),
     sendMsg: (consoleId: ConsoleId, cmd: string) => dispatch({ type: 'socket/exec_cmd', consoleId, cmd }),
     hidAction: () => { dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden}); },
-    openModal: () => {dispatch ({type: MODAL_DATA, value: true}); },
-    closeModal: () => {dispatch({type: MODAL_DATA, value: false}); },
+    openPlotModal: () => { dispatch ({type: PLOT_MODAL_DATA, value: true}); },
+    closePlotModal: () => { dispatch({type: PLOT_MODAL_DATA, value: false}); },
+    closeTimeModal: () => { dispatch({ type: TIME_MODAL_DATA, value: false }); },
   };
 }
 
@@ -177,19 +258,25 @@ export const consoleMiddleware = store => next => action => {
       // Adding our parsing logic here:
 
       // We want the Calculix console
-      // And we're assuming it's the first one
       if (action.consoleId === 1) {
         for (const line of lines) {
           const foundIt = line.match(itReg);
 
           // TODO: Don't check for time in every run
+
           const foundTime = line.match(timeReg);
           if (foundTime != null) {
             // foundTIme[2] is time in seconds [1] in ms
             const time = parseInt (foundTime[2], 10);
             store.dispatch( {type: ADD_FINAL_TIME, data: time });
 
+            // Finding "Global time" means simulation has ended
+            store.dispatch( {type: IS_SIMULATION_RUNNING, value: false});
+
+            // TODO: Does it make sense to do the last dispatch here?
+
           }
+
           if (foundIt != null) {
             const foundDt = line.match(dtReg);
 
@@ -205,9 +292,12 @@ export const consoleMiddleware = store => next => action => {
             // so we use dtFlag to make sure of that.
             if ( dtFlag === 1 && dt === 1 && it === 1 ) {
               const maxDt = parseInt( foundDt[2], 10 );
+              // This means simulation is running
+              store.dispatch( {type: IS_SIMULATION_RUNNING, value: true } );
               store.dispatch( {type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt} );
               dtFlag = 0;
             }
+
             if (dt > lastDt) {
               store.dispatch( {type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt} } );
               lastIt = it;
@@ -225,7 +315,6 @@ export const consoleMiddleware = store => next => action => {
       cons.log('returned with exit code ' + action.code);
       // Hopefully the last value
       store.dispatch( { type: ADD_CHART_DATA, data: {x: dt, y: it} } );
-      debugger;
       cons.return();
     }
 

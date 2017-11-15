@@ -1,8 +1,7 @@
-import {ADD_CHART_DATA, ADD_FINAL_TIME, ADD_PROGRESS_MAX_ITER} from '../constants';
+import {ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER} from '../constants';
 import {fromJS} from 'immutable';
 
 const initialState = fromJS({
-  time: [],
   data: [ {x: 0, y: 0 } ],
   maxDt: 0,
   currDt : 0,
@@ -31,10 +30,6 @@ export function chartDataReducer(state = initialState, action) {
     case ADD_PROGRESS_MAX_ITER:
       return state
         .set('maxDt', action.maxTimeSteps);
-
-    case ADD_FINAL_TIME:
-      return state
-        .update('time', time => time.push(action.data));
 
     default:
       return state;
