@@ -7,5 +7,7 @@ module.exports = require('./webpack.base')({
     // hot: true,
     port: 3000,
     noInfo: true,
+    // uncomment if you want to bind to 0.0.0.0
+    // disableHostCheck: true,
   }
 });

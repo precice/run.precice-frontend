@@ -7,7 +7,7 @@ import { busySelector, hidCheckSelector, lockBottomSelector, logMessagesSelector
 import { HID_CHECK3 } from '../constants';
 import ReduxConsole from '../../components/ReduxConsole/index';
 import { List } from 'immutable';
-import Checkbox from '../../components/Checkbox';
+
 
 interface Step3Props {
   runCmd: any;
