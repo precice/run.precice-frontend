@@ -3,6 +3,7 @@ import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
+import * as geometry from '../../static/geometry.png';
 
 interface Step1Props {
 }
@@ -13,17 +14,20 @@ class Step1 extends React.Component<Step1Props, undefined> {
     return (
       <div className={styles.tuInContainer}>
         <header className={styles.tuInHeader}>introduction</header>
-        <li className={styles.tuInContent}>In this tutorial, we will tutor you how to do a coupled fluid- structure
+        <li className={styles.tuInContent}>
+          In this tutorial, we will tutor you how to do a coupled fluid-structure
           interaction (FSI) simulation step by step with some interaction.
-          <div><br/>We model a compressible fluid flowing through a channel. In the channel, an elastic flap is fixed to the
-            floor. This flap oscillates due to the fluid pressure building up on its surface.
+          <div><br/>We model a fluid flowing through a channel.
+            A solid, elastic flap is fixed to the floor of this channel.
+            This flap oscillates due to the fluid pressure building up on its surface.
             The setup is shown schematically here:</div><br/>
-          <img src="/src/containers/Step1/geometry.png" className={styles.img}/><br/>
-          <div>Although this test case is two-dimensional, we use a three-dimensional simulation with a constant width
-            in y-direction. The fluid flow is simulated by solving the compressible Navier- Stokes equations for laminar
-            viscous flow. A constant velocity profile is assumed on the input on the left of the channel and on the
-            walls no-slip conditions are prescribed. More on the definition of the case and its parameters can be found in
-            <a href="https://www5.in.tum.de/pub/Rusch2016_BA.pdf" className={styles.link}> Rusch2016</a>.
+          <img src={geometry} className={styles.img}/><br/>
+          <div>This test case is two-dimensional, but because CalculiX is written for three-dimensional simulations,
+            we run a quasi-2D simulation with three dimensional meshes with only one cell in y-direction.
+            The fluid flow is simulated by solving the Euler equations with SU2,
+            and for the displacement of the flap we use the Finite Element solver CalculiX.
+            The flow is driven by a prescribed pressure difference from the inlet on the left to the outlet on the right.
+            On the walls and the surface of the flap Euler boundary conditions are set.
           </div>
         </li>
         <li className={styles.tuInContent}>We use two solvers: SU2 and CalculiX.

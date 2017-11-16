@@ -5,6 +5,7 @@
   flex: 1 1 auto;
   flex-direction: column;
   margin: 0 auto;
+  overflow-y: auto;
   width: 100%;
 
   .exp-container {
@@ -58,6 +59,7 @@
     .sol-l {
 
       margin-right: $margin-between;
+      overflow-y: auto;
       padding: 0.5em;
       flex: 1 1 10px;
       display: flex;

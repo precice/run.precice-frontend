@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
+import * as Dmytro from '../../static/Dmytro.jpg';
+import * as Felix from '../../static/Felix.jpg';
+import * as Hasan from '../../static/Hasan.jpg';
+import * as Jan from '../../static/Jan.jpg';
+import * as Kirill from '../../static/Kirill.jpg';
+import * as Pei from '../../static/Pei.jpg';
 
 interface LandPageProps {
 }
@@ -23,37 +29,37 @@ class LandingPage extends React.Component<LandPageProps, any> {
           </div>
           <div className={styles.imgGroup}>{/*photos*/}
             <div className={styles.imgContainer}>
-              <img src="src/components/LandingPage/Dmytro.jpg" className={styles.img}/>
+              <img src={Dmytro} className={styles.img}/>
               <div className={styles.subIntro}>
                 Dmytro Sashko
               </div>
             </div>
             <div className={styles.imgContainer}>
-              <img src="src/components/LandingPage/Felix.jpg" className={styles.img}/>
+              <img src={Felix} className={styles.img}/>
               <div className={styles.subIntro}>
                 Felix Lachenmaier
               </div>
             </div>
             <div className={styles.imgContainer}>
-              <img src="src/components/LandingPage/Hasan.jpg" className={styles.img}/>
+              <img src={Hasan} className={styles.img}/>
               <div className={styles.subIntro}>
                 Hasan Ashraf
               </div>
             </div>
             <div className={styles.imgContainer}>
-              <img src="src/components/LandingPage/Jan.jpg" className={styles.img}/>
+              <img src={Jan} className={styles.img}/>
               <div className={styles.subIntro}>
                 Jan Sültemeyer
               </div>
             </div>
             <div className={styles.imgContainer}>
-              <img src="src/components/LandingPage/Kirill.jpg" className={styles.img}/>
+              <img src={Kirill} className={styles.img}/>
               <div className={styles.subIntro}>
                 Kirill Martynov
               </div>
             </div>
             <div className={styles.imgContainer}>
-              <img src="src/components/LandingPage/Pei.jpg" className={styles.img}/>
+              <img src={Pei} className={styles.img}/>
               <div className={styles.subIntro}>
                 Pei-Hsuan Huang
               </div>

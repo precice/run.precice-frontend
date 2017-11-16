@@ -4,7 +4,7 @@ import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 
-import * as styles from '../sub1/styles.scss';
+import * as styles from '../sub5/styles.scss';
 import { Tooltip } from 'react-tippy';
 
 // import * as styles from './styles.scss';

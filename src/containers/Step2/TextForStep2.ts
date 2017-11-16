@@ -11,6 +11,72 @@ export const sub4 = 'behavior for CalculiX';
 export const sub5 = 'communication method';
 export const sub6 = 'coupling scheme';
 
+export const sec01 = {
+  start: 1,
+  total: 4,
+  end: 4,
+};
+export const sec1 = {
+  start: 5,
+  total: 5,
+  end: 9,
+};
+export const sec12 = {
+  start: 10,
+  total: 2,
+  end: 11,
+};
+export const sec2 = {
+  start: 12,
+  total: 9,
+  end: 20,
+};
+export const sec23 = {
+  start: 21,
+  total: 5,
+  end: 25,
+};
+export const sec3 = {
+  start: 26,
+  total: 10,
+  end: 35,
+};
+export const sec34 = {
+  start: 36,
+  total: 1,
+  end: 36,
+};
+export const sec4 = {
+  start: 37,
+  total: 6,
+  end: 42,
+};
+export const sec45 = {
+  start: 43,
+  total: 2,
+  end: 44,
+};
+export const sec5 = {
+  start: 45,
+  total: 1,
+  end: 45,
+};
+export const sec56 = {
+  start: 46,
+  total: 1,
+  end: 46,
+};
+export const sec6 = {
+  start: 47,
+  total: 16,
+  end: 62,
+};
+export const sec60 = {
+  start: 63,
+  total: 3,
+  end: 65,
+};
+
 export const initialCodeString0 = `<?xml version="1.0"?>
 
 <precice-configuration>
@@ -52,27 +118,29 @@ export const initialCodeString4 = `    <participant name="Calculix">
       <use-mesh name="Calculix_Mesh" provide="yes"/>
       <write-data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
       <read-data  name="Forces0"      mesh="Calculix_Mesh"/>
+      <watch-point mesh="Calculix_Mesh" name="point1" coordinate="-0.05;0.01;1">
     </participant>`
 export const initialCodeString45 = `
     <!-- Communication method, use TCP/IP sockets, change network to "ib0" on SuperMUC -->`
 export const initialCodeString5 = `    <m2n:sockets from="SU2_CFD" to="Calculix" exchange-directory="../" distribution-type="gather-scatter"/>`
 export const initialCodeString56 = ` `;
-export const initialCodeString6 = `    <coupling-scheme:serial-implicit>
+export const initialCodeString6Begin = `    <coupling-scheme:serial-implicit>
       <participants first="SU2_CFD" second="Calculix"/>
-      <max-time value="10000"/>
-      <timestep-length value="1e-4" />
+      <max-time value="160"/>
+      <timestep-length value="3e-2" />
       <max-iterations value="50"/>
       <exchange data="Forces0" mesh="Calculix_Mesh" from="SU2_CFD" to="Calculix"/>
       <exchange data="DisplacementDeltas0" mesh="Calculix_Mesh" from="Calculix" to="SU2_CFD" />
-      <relative-convergence-measure limit="1e-4" data="DisplacementDeltas0" mesh="Calculix_Mesh"/>
-      <relative-convergence-measure limit="1e-4" data="Forces0" mesh="Calculix_Mesh"/>
+      <relative-convergence-measure limit="1e-1" data="DisplacementDeltas0" mesh="Calculix_Mesh"/>
+      <relative-convergence-measure limit="1e-1" data="Forces0" mesh="Calculix_Mesh"/>
       <extrapolation-order value="2"/>
       <post-processing:aitken>
 	<!-- PostProc always done on the second participant -->
         <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
-        <initial-relaxation value="0.1"/>
+        <initial-relaxation value=`;
+export const initialCodeString6End = `/>
       </post-processing:aitken>
-    </coupling-scheme:serial-implicit>`
+    </coupling-scheme:serial-implicit>`;
 export const initialCodeStringEnd = `
   </solver-interface>
 </precice-configuration>`;
