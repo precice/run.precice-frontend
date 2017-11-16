@@ -24,12 +24,21 @@ class Step4 extends React.Component<Step4Props, any> {
       <div className={styles.subContainer}>
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
-            what to do
+            Visualization
+          </div>
+          <div className={styles.expContent}>
+          <div>
+            The SU2 output on the left provides visualization of horizontal velocity profile,
+            during right most bending of the flap, left most of the flap, and the condition of the flap on the last
+            iteration, after 4.6 seconds or 160 iterations.
+          </div>
+          <div>
+            We see that the flap is bending under the pressure that builds up on its surface and fluctuates accordingly,
+            demonstrating reasonable physical behaviour.
+          </div>
           </div>
         </div>
         <div className={styles.visialize}>
-          <div className={styles.visialHeader}>
-            Visualization<br/></div>
             <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
               <TabList className={styles.reactTabsTabList}>
                 <Tab className={this.state.tabIndex === 0 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Right Graph</Tab>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
-import * as preiceLogo from '../../static/Precice-logo.gif';
+import * as preiceLogo from '../../static/Precice-logo.png';
 
 interface RootProps {
   children: any;
@@ -14,8 +14,6 @@ class Root extends React.Component<RootProps, undefined> {
         <div className={styles.banner}>
           <Link to="/" className={styles.label}>{/*preCICE label*/}
             <img src={preiceLogo} className={styles.img}/>
-            <span className={styles.pre}>pre</span>
-            <span className={styles.cice}>CICE</span>
           </Link>{/*preCICE label*/}
         </div>
         {/*website banner*/}
