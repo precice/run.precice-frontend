@@ -35,7 +35,7 @@ function exampleReducer(state = initialState, action: any) {
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
       return state.updateIn(['consoles', action.consoleId, 'logMessages'], (old) => {
-        if (old.size < 10000) {
+        if (old.size < 5000) {
           return old.push(...lines);
         } else {
           return old.slice(lines.length).push(...lines);
