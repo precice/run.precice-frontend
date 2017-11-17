@@ -10,6 +10,13 @@ export const MODAL_CLICK = 'actions/MODAL_CLICK';
 export const FIRST_TASK_COMPLETED = 'actions/FIRST_TASK_COMPLETED';
 export const IVE_READ = 'actions/IVE_READ';
 export const INITIAL_RELAXATION_CHANGE = 'actions/INITIAL_RELAXATION_CHANGE';
-
 export const xmlBackgroundColor = '#505050';
 export const xmlEmphasizeBackgroundColor = '#8f4746';
+export const ADD_CHART_DATA = 'actions/ADD_CHART_DATA';
+export const ADD_PROGRESS_MAX_ITER = 'actions/ADD_PROGRESS_MAX_ITER';
+export const CONSOLE_ONE_ACTIVE = 'actions/CONSOLE_ONE_ACTIVE';
+export const CONSOLE_TWO_ACTIVE = 'actions/CONSOLE_TWO_ACTIVE';
+export const PLOT_MODAL_DATA = 'action/PLOT_MODAL_DATA';
+export const TIME_MODAL_DATA = 'action/TIME_MODAL_DATA';
+export const ADD_FINAL_TIME = 'action/ADD_FINAL_TIME';
+export const IS_SIMULATION_RUNNING = 'action/IS_SIMULATION_RUNNING';

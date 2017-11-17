@@ -15,8 +15,10 @@
     "immutable": "^4.0.0-rc.9",
     "normalize.css": "^7.0.0",
     "react": "^15.5.4",
+    "react-circular-progressbar": "^0.5.0",
     "react-dom": "^15.5.4",
     "react-hogan": "^0.1.1",
+    "react-modal": "^3.1.2",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
@@ -28,7 +30,8 @@
     "redux-socket.io": "^1.4.0",
     "reselect": "^3.0.1",
     "socket.io": "^2.0.3",
-    "socket.io-client": "^2.0.3"
+    "socket.io-client": "^2.0.3",
+    "victory": "^0.24.0"
   },
   "devDependencies": {
     "@types/node": "^7.0.31",

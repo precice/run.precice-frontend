@@ -1,0 +1,101 @@
+@import '../../sass/colors';
+
+
+.container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  margin: 0 auto;
+  max-height: 100%;
+
+  .converge-plot {
+    background-color: $solver-background-color;
+    color: $primary-color;
+    padding: 1em;
+    width: 60%;
+
+  }
+
+
+  .sub-container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 35%;
+    padding: 1em;
+
+    .progress-bar {
+      order: 1;
+      padding: 1em;
+      margin: auto;
+      height: 50%;
+    }
+  }
+}
+
+
+
+
+/*
+* react-circular-progressbar styles
+*
+* All of the styles in this file are optional and configurable!
+*/
+
+:global {
+  .CircularProgressbar {
+    /*
+     * This fixes an issue where the CircularProgressbar svg has
+     * 0 width inside a "display: flex" container, and thus not visible.
+     *
+     * If you're not using "display: flex", you can remove this style.
+     */
+    width: 100%;
+  }
+
+  .CircularProgressbar .CircularProgressbar-path {
+    stroke: #3e98c7;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease 0s;
+  }
+
+  .CircularProgressbar .CircularProgressbar-trail {
+    stroke: #d6d6d6;
+  }
+
+  .CircularProgressbar .CircularProgressbar-text {
+    fill: #3e98c7;
+    font-size: 20px;
+    dominant-baseline: middle;
+    text-anchor: middle;
+  }
+
+  .CircularProgressbar .CircularProgressbar-background {
+    fill: #d6d6d6;
+  }
+
+  /*
+   * Sample background styles. Use these with e.g.:
+   *
+   *   <CircularProgressbar
+   *     className="CircularProgressbar-inverted"
+   *     background
+   *     percentage={50}
+   *   />
+   */
+  .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {
+    fill: #3e98c7;
+  }
+
+  .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {
+    fill: #fff;
+  }
+
+  .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-path {
+    stroke: #fff;
+  }
+
+  .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
+    stroke: transparent;
+  }
+}
