@@ -30,7 +30,10 @@ module.exports = (options) => {
         // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
         {
           test: /\.tsx?$/,
-          loader: 'awesome-typescript-loader',
+          loaders: [
+            'babel-loader?presets[]=es2015', // necessary for uglifyjs see https://github.com/joeeames/WebpackFundamentalsCourse/issues/3#issuecomment-252950772
+            'awesome-typescript-loader'
+          ],
         },
 
         // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.

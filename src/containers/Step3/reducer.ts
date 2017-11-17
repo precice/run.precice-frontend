@@ -1,11 +1,15 @@
 import { fromJS } from 'immutable';
 import {
-  HID_CHECK3, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE,
-  PLOT_MODAL_DATA, TIME_MODAL_DATA, IS_SIMULATION_RUNNING, ADD_FINAL_TIME,
+  ADD_FINAL_TIME,
   CONSOLE_ADD_LINES,
+  CONSOLE_ONE_ACTIVE,
   CONSOLE_TOGGLE_BUSY,
   CONSOLE_TOGGLE_LOCK_BOTTOM,
+  CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
+  IS_SIMULATION_RUNNING,
+  PLOT_MODAL_DATA,
+  TIME_MODAL_DATA,
 } from '../constants';
 import { ConsoleId } from './index';
 
@@ -23,7 +27,7 @@ const initialState = fromJS({
     },
   },
 
-  finalTime: [ ],
+  finalTime: [],
   hidCheck: false,
   consoleOneActive: false,
   consoleTwoActive: false,
@@ -62,19 +66,17 @@ export function step3Reducer(state = initialState, action: any) {
         .set('consoleOneActive', action.value);
 
     case CONSOLE_TWO_ACTIVE:
-      return state.
-        set('consoleTwoActive', action.value);
+      return state.set('consoleTwoActive', action.value);
 
-   case PLOT_MODAL_DATA:
-    return state
-      .set('showPlotModal', action.value);
+    case PLOT_MODAL_DATA:
+      return state
+        .set('showPlotModal', action.value);
 
     case TIME_MODAL_DATA:
       return state
         .set('showTimeModal', action.value);
 
-    case IS_SIMULATION_RUNNING:
-
+    case IS_SIMULATION_RUNNING: {
       const preVal = state.get('isSimulationRunning');
 
       // TODO: Think of a better way to achieve the following
@@ -91,7 +93,7 @@ export function step3Reducer(state = initialState, action: any) {
         return state
           .set('isSimulationRunning', action.value);
       }
-
+    }
     case ADD_FINAL_TIME:
       return state
         .update('finalTime', finalTime => finalTime.push(action.data));
