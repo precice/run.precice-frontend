@@ -42,3 +42,19 @@ export const highScoreSelector = () => createSelector (
   (step3Substate) => {
     return step3Substate.get('finalTime');
   });
+
+export const logMessagesSelector = (consoleId) => createSelector(
+  step3SubstateSelector,
+  (substate) => substate.getIn(['consoles', consoleId, 'logMessages']),
+);
+
+
+export const lockBottomSelector = (consoleId) => createSelector(
+  step3SubstateSelector,
+  (substate) => substate.getIn(['consoles', consoleId, 'lockBottom']),
+);
+
+export const busySelector = (consoleId) => createSelector(
+  step3SubstateSelector,
+  (substate) => substate.getIn(['consoles', consoleId, 'busy']),
+);

@@ -1,27 +1,32 @@
-import { connect } from 'react-redux';
-import {ADD_FINAL_TIME, INIT_CONSOLE, IS_SIMULATION_RUNNING, PLOT_MODAL_DATA, TIME_MODAL_DATA} from '../constants';
-import { createStructuredSelector } from 'reselect';
-import * as React from 'react';
-import * as styles from './styles.scss';
-import Console from 'react-console-component';
-import {
-  hidCheckSelector, consoleOneStateSelector, consoleTwoStateSelector, modalDisplaySelector, highScoreSelector,
-  timeModalDisplaySelector,
-} from './selectors';
-import ConPlot from '../ConvergencePlot';
-import { HID_CHECK3 } from '../constants';
-import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE} from '../constants';
-import Modal = require('react-modal');
 
 // TODO: Handle dispatch for last iteration
 // TODO: Store total simulation time.
 // TODO: Automatically show modal when both consoles are active
 // TODO: How is "state" being shadowd in middleware
 // TODO: Why do selectors with substate.get() not work with Object.assign?
+=======
+
+
+import { connect } from 'react-redux';
+import {ADD_FINAL_TIME, INIT_CONSOLE, IS_SIMULATION_RUNNING, PLOT_MODAL_DATA, TIME_MODAL_DATA,  CONSOLE_ADD_LINES, CONSOLE_TOGGLE_BUSY, CONSOLE_TOGGLE_LOCK_BOTTOM} from '../constants';
+import { createStructuredSelector } from 'reselect';
+import * as React from 'react';
+import * as styles from './styles.scss';
+import Console from 'react-console-component';
+import {
+  hidCheckSelector, consoleOneStateSelector, consoleTwoStateSelector, modalDisplaySelector, highScoreSelector,
+  timeModalDisplaySelector, busySelector,  lockBottomSelector, logMessagesSelector
+} from './selectors';
+import ConPlot from '../ConvergencePlot';
+import { HID_CHECK3 } from '../constants';
+import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, CONSOLE_ONE_ACTIVE, CONSOLE_TWO_ACTIVE} from '../constants';
+import Modal = require('react-modal');
+import ReduxConsole from '../../components/ReduxConsole/index';
+
 
 interface Step3Props {
-  sendMsg: any;
-  initConsole: any;
+  runCmd: any;
+  toggleLockBottom: any;
   hidAction: () => void;
   hidCheck: boolean;
   consoleOneActive: boolean;
@@ -35,6 +40,12 @@ interface Step3Props {
   closeTimeModal: () => void;
   highScores: any;
 
+  leftLogMessages: [string];
+  rightLogMessages: [string];
+  leftBusy: boolean;
+  rightBusy: boolean;
+  leftLockBottom: boolean;
+  rightLockBottom: boolean;
 }
 //className={styles.timeModal}
 //overlayClassName={styles.timeModalOverlay}
@@ -42,8 +53,8 @@ interface Step3Props {
 // TODO: Put styles for TimeModal in styles.scss
 
 export enum ConsoleId {
-  left = 1,
-  right = 2,
+  left = 'LEFT_CONSOLE',
+  right = 'RIGHT_CONSOLE',
 }
 
 // this.props.consoleOneActive && this.props.consoleTwoActive}
@@ -154,21 +165,30 @@ class Step3 extends React.Component<Step3Props, any> {
         </div>
         <div className={styles.subsubContainer}>
           <div className={styles.solL}>
-            <Console
-              ref={(ref: Console) => this.props.initConsole(ConsoleId.left, ref)}
-              handler={(txt: string) => this.props.sendMsg(ConsoleId.left, txt)}
-              welcomeMessage={'Welcome to Terminal for CalculiX!'}
-              autofocus={true}
+            <ReduxConsole
+              handler={(txt: string) => { this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix'); }}
               promptLabel="$ "
+              busy={this.props.leftBusy}
+              logMessages={this.props.leftLogMessages}
+              lockBottom={this.props.leftLockBottom}
             />
+            <div onClick={() => {this.props.toggleLockBottom(ConsoleId.left, !this.props.leftLockBottom); }}>
+              <input type="checkbox" readOnly={true} checked={this.props.leftLockBottom} />&nbsp;
+              Scroll with output
+            </div>
           </div>
           <div className={styles.solR}>
-            <Console
-              ref={(ref) => this.props.initConsole(ConsoleId.right, ref)}
-              handler={(txt: string) => this.props.sendMsg(ConsoleId.right, txt)}
-              welcomeMessage={'Welcome to Terminal for SU2!'}
+            <ReduxConsole
+              handler={(txt: string) => { this.props.runCmd(ConsoleId.right, '~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg'); }}
               promptLabel="$ "
+              busy={this.props.rightBusy}
+              logMessages={this.props.rightLogMessages}
+              lockBottom={this.props.rightLockBottom}
             />
+            <div onClick={() => {this.props.toggleLockBottom(ConsoleId.right, !this.props.rightLockBottom); }}>
+              <input type="checkbox" readOnly={true} checked={this.props.rightLockBottom} />&nbsp;
+              Scroll with output
+            </div>
           </div>
         </div>
       </div>
@@ -195,13 +215,21 @@ const mapStateToProps = createStructuredSelector({
   showPlotModal: modalDisplaySelector(),
   showTimeModal: timeModalDisplaySelector(),
   highScores: highScoreSelector(),
-
+  leftLogMessages: logMessagesSelector(ConsoleId.left),
+  rightLogMessages: logMessagesSelector(ConsoleId.right),
+  leftLockBottom: lockBottomSelector(ConsoleId.left),
+  rightLockBottom: lockBottomSelector(ConsoleId.right),
+  leftBusy: busySelector(ConsoleId.left),
+  rightBusy: busySelector(ConsoleId.right),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    initConsole: (consoleId: ConsoleId, console: Console) => dispatch({ type: INIT_CONSOLE, consoleId, console }),
-    sendMsg: (consoleId: ConsoleId, cmd: string) => dispatch({ type: 'socket/exec_cmd', consoleId, cmd }),
+    runCmd: (consoleId: ConsoleId, cmd: string) => {
+      dispatch({ type: 'socket/exec_cmd', consoleId, cmd });
+      dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
+      },
+    toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => { dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden}); },
     openPlotModal: () => { dispatch ({type: PLOT_MODAL_DATA, value: true}); },
     closePlotModal: () => { dispatch({type: PLOT_MODAL_DATA, value: false}); },
@@ -236,8 +264,6 @@ export const consoleMiddleware = store => next => action => {
   const consoleAction = action.type === 'socket/stdout' || action.type === 'socket/stderr' || action.type === 'socket/exit';
 
   if (consoleAction) {
-    // replace with selector
-    const cons = store.getState().getIn(['step3', 'consoles', action.consoleId]);
 
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
       const lines = action.data.split('\n');
@@ -310,15 +336,15 @@ export const consoleMiddleware = store => next => action => {
         }
       }
 
-      cons.log(...lines);
+      store.dispatch({type: CONSOLE_ADD_LINES, consoleId, lines});
     } else if (action.type === 'socket/exit') {
-      cons.log('returned with exit code ' + action.code);
+    store.dispatch({type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code]});
+    store.dispatch({type: CONSOLE_TOGGLE_BUSY, consoleId, value: false});
       // Hopefully the last value
       store.dispatch( { type: ADD_CHART_DATA, data: {x: dt, y: it} } );
       cons.return();
     }
 
-    cons.scrollToBottom();
   }
 
 
