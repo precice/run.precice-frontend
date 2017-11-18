@@ -6,9 +6,9 @@ const step2SubstateSelector = (state) => {
   return state.get('step2');
 };
 
-export const iveReadSelector = () => createSelector(
+export const iveReadSelector = (whichStep) => createSelector(
   step2SubstateSelector,
-  (step2Substate) => step2Substate.get('iveRead'));
+  (step2Substate) => step2Substate.get('iveRead' + whichStep));
 
 export const initialRelaxationValueSelector = () => createSelector(
   step2SubstateSelector,

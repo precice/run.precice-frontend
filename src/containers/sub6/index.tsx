@@ -182,7 +182,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <br/>
         </div> :
           <div>
-            We change the initial-relaxation-value into 0.9, and see what will happen
+            We can change the initial-relaxation-value between 0.1 and 0.9. 0.9 will give us the fastest result.
             <div className={styles.rangeSlider}>
               <input
                 className={styles.rangeSliderRange}

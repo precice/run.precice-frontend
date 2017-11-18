@@ -19,6 +19,7 @@ import {
   IS_SIMULATION_RUNNING,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
+  IVE_READ,
 } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
@@ -37,7 +38,8 @@ import {
 import ConPlot from '../ConvergencePlot';
 import ReduxConsole from '../../components/ReduxConsole/index';
 import Modal = require('react-modal');
-
+import {
+  iveReadSelector} from '../Step2/selectors';
 
 interface Step3Props {
   runCmd: any;
@@ -61,6 +63,9 @@ interface Step3Props {
   rightBusy: boolean;
   leftLockBottom: boolean;
   rightLockBottom: boolean;
+
+  iveReadAction: () => void;
+  iveReadStep3: boolean;
 }
 // className={styles.timeModal}
 // overlayClassName={styles.timeModalOverlay}
@@ -77,6 +82,9 @@ class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
     this.renderTable = this.renderTable.bind(this);
+    this.closeOverlay = this.closeOverlay.bind(this);
+    this.ButtonColorChange = this.ButtonColorChange.bind(this);
+    this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
   }
 
   // Renders part of table
@@ -102,10 +110,31 @@ class Step3 extends React.Component<Step3Props, any> {
       }
     });
   }
+  private closeOverlay() {
+    document.getElementById('overlay3').style.display = 'none';
+    this.props.iveReadAction();
+  }
+  private ButtonColorChange(event) {
+    document.getElementById(event.currentTarget.id).style.color = 'gray';
+    document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
+  }
+  private ButtonColorOriginal(event) {
+    document.getElementById(event.currentTarget.id).style.color = 'white';
+    document.getElementById(event.currentTarget.id).style.borderColor = 'white';
+  }
 
   public render() {
     return (
       <div className={styles.subContainer}>
+        {!this.props.iveReadStep3 ?
+          <div id="overlay3" className={styles.overlay}>
+            <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
+            <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
+            <div className={styles.overlayPlot}>You can see the convergence plot <br/>by clicking PLOT</div>
+            <div className={styles.overlayExp}>These are consoles for simulation. By clicking $, the simulation will run.</div>
+              <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
+            </div> :
+            <div/>}
         <Modal
           isOpen={this.props.showPlotModal}
           shouldCloseOnOverlayClick={true}
@@ -155,11 +184,14 @@ class Step3 extends React.Component<Step3Props, any> {
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
-            <span onClick={this.props.openPlotModal} className={styles.modalBtn}> Plot </span>
+            <span id="plotButton" onClick={this.props.openPlotModal} className={styles.modalBtn} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Plot </span>
             <span className={styles.title}>what to do</span>
             <span
+              id="hideButton"
               onClick={this.props.hidAction}
               className={styles.hide}
+              onMouseOver={this.ButtonColorChange}
+              onMouseOut={this.ButtonColorOriginal}
             >
               {this.props.hidCheck ? 'expand' : 'hide'}
             </span>
@@ -252,6 +284,8 @@ const mapStateToProps = createStructuredSelector({
   rightLockBottom: lockBottomSelector(ConsoleId.right),
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
+  iveReadStep3: iveReadSelector('Step3'),
+
 });
 
 function mapDispatchToProps(dispatch) {
@@ -273,6 +307,7 @@ function mapDispatchToProps(dispatch) {
     closeTimeModal: () => {
       dispatch({ type: TIME_MODAL_DATA, value: false });
     },
+    iveReadAction: () => { dispatch({ type: IVE_READ, whichStep: 'Step3'}); },
   };
 }
 

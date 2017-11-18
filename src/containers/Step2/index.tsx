@@ -35,7 +35,7 @@ interface Step2Props {
   subStepTitle: string;
   firstTaskCompleted: boolean;
   iveReadAction: () => void;
-  iveRead: boolean;
+  iveReadStep2: boolean;
   modalClick: boolean;
   xmlAction: () => void;
   xmlflag1: boolean;
@@ -60,8 +60,8 @@ class Step2 extends React.Component<Step2Props, any> {
     this.setMouseOver = this.setMouseOver.bind(this);
     this.setMouseOut = this.setMouseOut.bind(this);
     this.closeOverlay = this.closeOverlay.bind(this);
-    this.overlayButtonColorChange = this.overlayButtonColorChange.bind(this);
-    this.overlayButtonColorOriginal = this.overlayButtonColorOriginal.bind(this);
+    this.ButtonColorChange = this.ButtonColorChange.bind(this);
+    this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
   }
   private setMouseOver(event) {
     switch (event.currentTarget.id) {
@@ -113,25 +113,25 @@ class Step2 extends React.Component<Step2Props, any> {
     document.getElementById('overlay').style.display = 'none';
     this.props.iveReadAction();
   }
-  private overlayButtonColorChange() {
-    document.getElementById('overlayButton').style.color = 'gray';
-    document.getElementById('overlayButton').style.borderColor = 'gray';
+  private ButtonColorChange(event) {
+    document.getElementById(event.currentTarget.id).style.color = 'gray';
+    document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
   }
-  private overlayButtonColorOriginal() {
-    document.getElementById('overlayButton').style.color = 'white';
-    document.getElementById('overlayButton').style.borderColor = 'white';
+  private ButtonColorOriginal(event) {
+    document.getElementById(event.currentTarget.id).style.color = 'white';
+    document.getElementById(event.currentTarget.id).style.borderColor = 'white';
   }
   public render() {
     return (
       <div onMouseOver={this.props.xmlAction} className={styles.subContainer}>
-        {!this.props.iveRead ?
+        {!this.props.iveReadStep2 ?
         <div id="overlay" className={styles.overlay}>
           <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
           <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
           <div className={styles.overlayXml}>By clicking these lines, <br/>you can see explanation of the section you click on the right</div>
           <div className={styles.overlayExp}>You can see explanation for each line here.
           Also, you can click on <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/> to get further information.</div>
-          <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.overlayButtonColorChange} onMouseOut={this.overlayButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
+          <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
         </div> :
           <div/>}
         <script>{whichSection = this.props.lineIndex.section}</script>
@@ -139,7 +139,7 @@ class Step2 extends React.Component<Step2Props, any> {
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span className={styles.title}>what to do</span>
-            <span onClick={this.props.hidAction} className={styles.hide}>{this.props.hidCheck2 ? 'expand' : 'hide'}
+            <span id="hideButton" onClick={this.props.hidAction} className={styles.hide} onMouseOver={this.ButtonColorChange}  onMouseOut={this.ButtonColorOriginal} >{this.props.hidCheck2 ? 'expand' : 'hide'}
             </span>
           </div>
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
@@ -515,7 +515,7 @@ const mapStateToProps = createStructuredSelector({
   xmlflag6: xmlFlag6Selector(),
   firstTaskCompleted: completedTaskSelector(),
   modalClick: modalClickSelector(),
-  iveRead: iveReadSelector(),
+  iveReadStep2: iveReadSelector('Step2'),
   initialRelaxationValue: initialRelaxationValueSelector(),
 });
 
@@ -523,7 +523,7 @@ function mapDispatchToProps(dispatch) {
   return {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
     xmlAction: () => { dispatch({ type: XML_CLICK, check: whichSection}); },
-    iveReadAction: () => { dispatch({ type: IVE_READ}); },
+    iveReadAction: () => { dispatch({ type: IVE_READ, whichStep: 'Step2'}); },
   };
 }
 

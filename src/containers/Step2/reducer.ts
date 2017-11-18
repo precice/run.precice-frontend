@@ -14,7 +14,8 @@ import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  iveRead: false,
+  iveReadStep2: false,
+  iveReadStep3: false,
   xmlflag1: false,
   xmlflag2: false,
   xmlflag3: false,
@@ -37,7 +38,7 @@ function step2Reducer(state = initialState, action: any) {
         .set('xmlflag2', true).set('xmlflag3', true).set('xmlflag4', true).set('xmlflag5', true).set('xmlflag6', true);
     case IVE_READ:
       return state
-        .set('iveRead', true);
+        .set('iveRead' + action.whichStep, true);
     case FIRST_TASK_COMPLETED:
       return state
         .set('initialRelaxationValue', 0.9);
