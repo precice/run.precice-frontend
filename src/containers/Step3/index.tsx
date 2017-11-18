@@ -17,6 +17,7 @@ import {
   CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
   IS_SIMULATION_RUNNING,
+  IS_SIMULATION_DONE,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
   IVE_READ,
@@ -417,6 +418,7 @@ export const consoleMiddleware = store => next => action => {
       store.dispatch({ type: ADD_CHART_DATA, data: { x: dt, y: it } });
       store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code] });
       store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
+      store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true});
     }
 
   }

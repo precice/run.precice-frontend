@@ -8,6 +8,7 @@ import {
   CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
   IS_SIMULATION_RUNNING,
+  IS_SIMULATION_DONE,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
 } from '../constants';
@@ -19,11 +20,13 @@ const initialState = fromJS({
       logMessages: ['$ ccx_preCICE -i flap -precice-participant Calculix'],
       lockBottom: true,
       busy: false,
+      done: false,
     },
     [ConsoleId.right]: {
       logMessages: ['$ ~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg'],
       lockBottom: true,
       busy: false,
+      done: false,
     },
   },
 
@@ -34,6 +37,7 @@ const initialState = fromJS({
   showPlotModal: false,
   showTimeModal: false,
   isSimulationRunning: false,
+  isSimulationDone: false,
 });
 
 // IS_SIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
@@ -75,6 +79,9 @@ export function step3Reducer(state = initialState, action: any) {
     case TIME_MODAL_DATA:
       return state
         .set('showTimeModal', action.value);
+    case IS_SIMULATION_DONE:
+      return state
+        .setIn(['consoles', action.consoleId, 'done'], action.value);
 
     case IS_SIMULATION_RUNNING: {
       const preVal = state.get('isSimulationRunning');

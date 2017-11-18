@@ -58,3 +58,8 @@ export const busySelector = (consoleId) => createSelector(
   step3SubstateSelector,
   (substate) => substate.getIn(['consoles', consoleId, 'busy']),
 );
+
+export const doneSelector = (consoleId) => createSelector(
+  step3SubstateSelector,
+  (substate) => substate.getIn(['consoles', consoleId, 'done']),
+);
