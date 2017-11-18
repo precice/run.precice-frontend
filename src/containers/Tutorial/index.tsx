@@ -18,6 +18,10 @@ import {
   xmlFlag4Selector,
   xmlFlag5Selector,
   xmlFlag6Selector} from '../Step2/selectors';
+import {
+  busySelector} from '../Step3/selectors';
+import {
+  ConsoleId} from '../Step3/index';
 import ScrollableXmlContainer from '../Step2/index';
 
 interface TutorialProps {
@@ -30,6 +34,9 @@ interface TutorialProps {
 
   modalClick: boolean;
   modalAction: () => void;
+
+  leftBusy: boolean;
+  rightBusy: boolean;
 
   xmlSkip: () => void;
   xmlAction: () => void;
@@ -68,18 +75,32 @@ class Tutorial extends React.Component<TutorialProps, any> {
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <span onClick={this.closeModal} className={styles.close}>&times;</span>
-              <h2>Oops, you forgot some parts ;-)</h2>
+              {
+                this.props.buttonLinks.next === '/tutorial/step3' ?
+                <h2>Oops, you forgot some parts ;-)</h2> :
+                <h2>Sorry, we can not let you go</h2>
+              }
             </div>
             <div className={styles.modalBody}>
-              <li hidden={this.props.xmlflag2}><Link onClick={this.closeModal} to="/tutorial/step2/sub2">{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
-              <li hidden={this.props.xmlflag3}><Link onClick={this.closeModal} to="/tutorial/step2/sub3">{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
-              <li hidden={this.props.xmlflag4}><Link onClick={this.closeModal} to="/tutorial/step2/sub4">{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
-              <li hidden={this.props.xmlflag5}><Link onClick={this.closeModal} to="/tutorial/step2/sub5">{TextForStep2.sub5} (line 44)</Link></li>
-              <li hidden={this.props.xmlflag6}><Link onClick={this.closeModal} to="/tutorial/step2/sub6">{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
-            </div>
-            {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
-            No, I want to skip those parts.
-            </Link>}
+              {
+                this.props.buttonLinks.next === '/tutorial/step3' ?
+                  <div>
+                  <li hidden={this.props.xmlflag2}><Link onClick={this.closeModal} to="/tutorial/step2/sub2">{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
+                  <li hidden={this.props.xmlflag3}><Link onClick={this.closeModal} to="/tutorial/step2/sub3">{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
+                <li hidden={this.props.xmlflag4}><Link onClick={this.closeModal} to="/tutorial/step2/sub4">{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
+                <li hidden={this.props.xmlflag5}><Link onClick={this.closeModal} to="/tutorial/step2/sub5">{TextForStep2.sub5} (line 44)</Link></li>
+                    <li hidden={this.props.xmlflag6}><Link onClick={this.closeModal} to="/tutorial/step2/sub6">{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
+                  </div> :
+                  <h2>The simulation is running, please be patient ;-)</h2>
+              }
+              </div>
+            {
+              this.props.buttonLinks.next === '/tutorial/step3' ?
+              <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
+                No, I want to skip those parts.
+              </Link> :
+              <div/>
+            }
           </div>{/*modal content*/}
         </div>{/*the modal*/}
         <ProgressBar percentage={this.props.percentage}/>
@@ -87,21 +108,24 @@ class Tutorial extends React.Component<TutorialProps, any> {
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
-            {this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
+            {
+              (this.props.buttonLinks.next === '/tutorial/step4' &&
+              ( this.props.leftBusy || this.props.rightBusy )) ?
+                this.props.buttonLinks.previous && <div onClick={this.openModal} className={styles.btnL}>BACK</div> :
+              this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
           <div className={styles.btnSubCon}>
             {this.props.buttonLinks.goback && <Link to={this.props.buttonLinks.goback} className={styles.btn}> GO BACK AND SEE THE CHANGE</Link>}
           </div>
           <div className={styles.btnSubCon}>
             {
-              (this.props.buttonLinks.next === '/tutorial/step3' &&
-              ( this.props.xmlflag2 === false ||
-                this.props.xmlflag3 === false ||
-                this.props.xmlflag4 === false ||
-                this.props.xmlflag5 === false ||
-                this.props.xmlflag6 === false )) ?
+              ((this.props.buttonLinks.next === '/tutorial/step3' &&
+               ( !this.props.xmlflag2 || !this.props.xmlflag3 || !this.props.xmlflag4 ||
+                 !this.props.xmlflag5 || !this.props.xmlflag6 )) ||
+               (this.props.buttonLinks.next === '/tutorial/step4' &&
+               ( this.props.leftBusy || this.props.rightBusy )) ?
                 this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-                this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>
+                this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)
             }
           </div>
         </div>
@@ -120,6 +144,9 @@ const mapStateToProps = createStructuredSelector({
   xmlflag4: xmlFlag4Selector(),
   xmlflag5: xmlFlag5Selector(),
   xmlflag6: xmlFlag6Selector(),
+
+  leftBusy: busySelector(ConsoleId.left),
+  rightBusy: busySelector(ConsoleId.right),
 });
 
 function mapDispatchToProps(dispatch) {
