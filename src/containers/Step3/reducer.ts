@@ -23,7 +23,7 @@ const initialState = fromJS({
       done: false,
     },
     [ConsoleId.right]: {
-      logMessages: ['$ ~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg'],
+      logMessages: ['$ SU2_CFD euler_config_coupled.cfg'],
       lockBottom: true,
       busy: false,
       done: false,

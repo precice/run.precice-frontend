@@ -211,7 +211,7 @@ class Step3 extends React.Component<Step3Props, any> {
             </p>
             For SU2, type in command:
             <p className={styles.expCommand}>
-              ~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg
+              SU2_CFD euler_config_coupled.cfg
             </p>
           </div>
         </div>
@@ -238,7 +238,7 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.solR}>
             <ReduxConsole
               handler={(txt: string) => {
-                this.props.runCmd(ConsoleId.right, '~/Solvers/SU2_fin/bin/SU2_CFD su2-config.cfg');
+                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg');
               }}
               promptLabel="$ "
               busy={this.props.rightBusy}
