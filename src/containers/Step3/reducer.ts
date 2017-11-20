@@ -1,14 +1,15 @@
-import { Collection, fromJS, List } from 'immutable';
+import { fromJS, List } from 'immutable';
 import {
   ADD_FINAL_TIME,
   CONSOLE_ADD_LINES,
+  CONSOLE_CLEAR,
   CONSOLE_ONE_ACTIVE,
   CONSOLE_TOGGLE_BUSY,
   CONSOLE_TOGGLE_LOCK_BOTTOM,
   CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
-  IS_SIMULATION_RUNNING,
   IS_SIMULATION_DONE,
+  IS_SIMULATION_RUNNING,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
 } from '../constants';
@@ -17,14 +18,14 @@ import { ConsoleId } from './index';
 const initialState = fromJS({
   consoles: {
     [ConsoleId.left]: {
-      logMessages: ['$ ccx_preCICE -i flap -precice-participant Calculix'],
+      logMessages: [],
       lockBottom: true,
       busy: false,
       done: false,
       oldChunks: [],
     },
     [ConsoleId.right]: {
-      logMessages: ['$ SU2_CFD euler_config_coupled.cfg'],
+      logMessages: [],
       lockBottom: true,
       busy: false,
       done: false,
@@ -46,6 +47,7 @@ const initialState = fromJS({
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
 const MSG_CHUNKSIZE = 1000;
+
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
     case CONSOLE_ADD_LINES: {
@@ -67,6 +69,11 @@ export function step3Reducer(state = initialState, action: any) {
       }
       return newState;
     }
+    case CONSOLE_CLEAR:
+      return state
+        .updateIn(['consoles', action.consoleId, 'logMessages'], () => fromJS([]))
+        .updateIn(['consoles', action.consoleId, 'oldChunks'], () => fromJS([]))
+        ;
     case CONSOLE_TOGGLE_BUSY:
       return state
         .setIn(['consoles', action.consoleId, 'busy'], action.value);

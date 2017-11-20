@@ -11,16 +11,17 @@ import {
   ADD_FINAL_TIME,
   ADD_PROGRESS_MAX_ITER,
   CONSOLE_ADD_LINES,
+  CONSOLE_CLEAR,
   CONSOLE_ONE_ACTIVE,
   CONSOLE_TOGGLE_BUSY,
   CONSOLE_TOGGLE_LOCK_BOTTOM,
   CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
-  IS_SIMULATION_RUNNING,
   IS_SIMULATION_DONE,
+  IS_SIMULATION_RUNNING,
+  IVE_READ,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
-  IVE_READ,
 } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
@@ -33,18 +34,20 @@ import {
   highScoreSelector,
   lockBottomSelector,
   logMessagesSelector,
-  modalDisplaySelector, oldChunksSelector,
+  modalDisplaySelector,
+  oldChunksSelector,
   timeModalDisplaySelector,
 } from './selectors';
 import ConPlot from '../ConvergencePlot';
 import ReduxConsole, { ConsoleChunk } from '../../components/ReduxConsole/index';
+import { iveReadSelector } from '../Step2/selectors';
 import Modal = require('react-modal');
-import {
-  iveReadSelector} from '../Step2/selectors';
 
 interface Step3Props {
+  dispatch: any;
   runCmd: any;
   toggleLockBottom: any;
+  clearConsole: any;
   hidAction: () => void;
   hidCheck: boolean;
   consoleOneActive: boolean;
@@ -70,6 +73,7 @@ interface Step3Props {
   iveReadAction: () => void;
   iveReadStep3: boolean;
 }
+
 // className={styles.timeModal}
 // overlayClassName={styles.timeModalOverlay}
 
@@ -113,14 +117,17 @@ class Step3 extends React.Component<Step3Props, any> {
       }
     });
   }
+
   private closeOverlay() {
     document.getElementById('overlay3').style.display = 'none';
     this.props.iveReadAction();
   }
+
   private ButtonColorChange(event) {
     document.getElementById(event.currentTarget.id).style.color = 'gray';
     document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
   }
+
   private ButtonColorOriginal(event) {
     document.getElementById(event.currentTarget.id).style.color = 'white';
     document.getElementById(event.currentTarget.id).style.borderColor = 'white';
@@ -132,12 +139,17 @@ class Step3 extends React.Component<Step3Props, any> {
         {!this.props.iveReadStep3 ?
           <div id="overlay3" className={styles.overlay}>
             <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
-            <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
+            <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span
+              className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
             <div className={styles.overlayPlot}>You can see the convergence plot <br/>by clicking PLOT</div>
-            <div className={styles.overlayExp}>These are consoles for simulation. By clicking $, the simulation will run.</div>
-              <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
-            </div> :
-            <div/>}
+            <div className={styles.overlayExp}>These are consoles for simulation. By clicking $, the simulation will
+              run.
+            </div>
+            <div id="overlayButton3" onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange}
+                 onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ
+            </div>
+          </div> :
+          <div/>}
         <Modal
           isOpen={this.props.showPlotModal}
           shouldCloseOnOverlayClick={true}
@@ -187,7 +199,8 @@ class Step3 extends React.Component<Step3Props, any> {
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
-            <span id="plotButton" onClick={this.props.openPlotModal} className={styles.modalBtn} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Plot </span>
+            <span id="plotButton" onClick={this.props.openPlotModal} className={styles.modalBtn}
+                  onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Plot </span>
             <span className={styles.title}>what to do</span>
             <span
               id="hideButton"
@@ -207,55 +220,88 @@ class Step3 extends React.Component<Step3Props, any> {
             The solver we start first will run until it needs to communicate with the other one and wait until it
             receives the required data.
             <br/>
-            For CalculiX, type in command:
+            For CalculiX, the command is on the left console:
             <p className={styles.expCommand}>
               ccx_preCICE -i flap -precice-participant Calculix
             </p>
-            For SU2, type in command:
+            For SU2, the command is on the right console:
             <p className={styles.expCommand}>
               SU2_CFD euler_config_coupled.cfg
             </p>
+            To run a command in a console, click on into the console and press enter.
           </div>
         </div>
         <div className={styles.subsubContainer}>
           <div className={styles.solL}>
             <ReduxConsole
               handler={(txt: string) => {
+                this.props.dispatch({
+                  type: CONSOLE_ADD_LINES,
+                  consoleId: ConsoleId.left,
+                  lines: ['$ ccx_preCICE -i flap -precice-participant Calculix']});
                 this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix');
               }}
-              promptLabel="$ "
+              promptLabel="$ ccx_preCICE -i flap -precice-participant Calculix"
               busy={this.props.leftBusy}
               logMessages={this.props.leftLogMessages}
               lockBottom={this.props.leftLockBottom}
               oldChunks={this.props.leftOldChunks}
             />
-            <div
-              onClick={() => {
-                this.props.toggleLockBottom(ConsoleId.left, !this.props.leftLockBottom);
-              }}
-            >
-              <input type="checkbox" readOnly={true} checked={this.props.leftLockBottom}/>&nbsp;
-              Scroll with output
+            <div>
+              <div
+                className={styles.belowConsoleElm}
+                onClick={() => {
+                  this.props.toggleLockBottom(ConsoleId.left, !this.props.leftLockBottom);
+                }}
+              >
+                <input type="checkbox" readOnly={true} checked={this.props.leftLockBottom}/>&nbsp;
+                Scroll with output
+              </div>
+              &nbsp;
+              <a
+                className={`${styles.belowConsoleElm} ${styles.link}`}
+                onClick={() => {
+                  this.props.clearConsole(ConsoleId.left);
+                }}
+              >
+                Clear Console
+              </a>
             </div>
           </div>
           <div className={styles.solR}>
             <ReduxConsole
               handler={(txt: string) => {
+                this.props.dispatch({
+                  type: CONSOLE_ADD_LINES,
+                  consoleId: ConsoleId.right,
+                  lines: ['$ SU2_CFD euler_config_coupled.cfg']});
                 this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg');
               }}
-              promptLabel="$ "
+              promptLabel="$ SU2_CFD euler_config_coupled.cfg"
               busy={this.props.rightBusy}
               logMessages={this.props.rightLogMessages}
               lockBottom={this.props.rightLockBottom}
               oldChunks={this.props.rightOldChunks}
             />
-            <div
-              onClick={() => {
-                this.props.toggleLockBottom(ConsoleId.right, !this.props.rightLockBottom);
-              }}
-            >
-              <input type="checkbox" readOnly={true} checked={this.props.rightLockBottom}/>&nbsp;
-              Scroll with output
+            <div>
+              <div
+                className={styles.belowConsoleElm}
+                onClick={() => {
+                  this.props.toggleLockBottom(ConsoleId.right, !this.props.rightLockBottom);
+                }}
+              >
+                <input type="checkbox" readOnly={true} checked={this.props.rightLockBottom}/>&nbsp;
+                Scroll with output
+              </div>
+              &nbsp;
+              <a
+                className={`${styles.belowConsoleElm} ${styles.link}`}
+                onClick={() => {
+                  this.props.clearConsole(ConsoleId.right);
+                }}
+              >
+                Clear Console
+              </a>
             </div>
           </div>
         </div>
@@ -263,6 +309,7 @@ class Step3 extends React.Component<Step3Props, any> {
     );
   }
 }
+
 /*
  (
  () => {
@@ -297,6 +344,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatch: (...args) => dispatch(...args),
     runCmd: (consoleId: ConsoleId, cmd: string) => {
       dispatch({ type: 'socket/exec_cmd', consoleId, cmd });
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
@@ -314,7 +362,12 @@ function mapDispatchToProps(dispatch) {
     closeTimeModal: () => {
       dispatch({ type: TIME_MODAL_DATA, value: false });
     },
-    iveReadAction: () => { dispatch({ type: IVE_READ, whichStep: 'Step3'}); },
+    iveReadAction: () => {
+      dispatch({ type: IVE_READ, whichStep: 'Step3' });
+    },
+    clearConsole: (consoleId: ConsoleId) => {
+      dispatch({ type: CONSOLE_CLEAR, consoleId });
+    },
   };
 }
 
@@ -424,7 +477,7 @@ export const consoleMiddleware = store => next => action => {
       store.dispatch({ type: ADD_CHART_DATA, data: { x: dt, y: it } });
       store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code] });
       store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
-      store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true});
+      store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true });
     }
 
   }
