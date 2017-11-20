@@ -22,7 +22,7 @@ const initialState = fromJS({
   xmlflag4: false,
   xmlflag5: false,
   xmlflag6: false,
-  initialRelaxationValue: 0.3,
+  initialRelaxationValue: 0.8,
 });
 
 function step2Reducer(state = initialState, action: any) {

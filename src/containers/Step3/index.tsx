@@ -40,7 +40,7 @@ import {
 } from './selectors';
 import ConPlot from '../ConvergencePlot';
 import ReduxConsole, { ConsoleChunk } from '../../components/ReduxConsole/index';
-import { iveReadSelector } from '../Step2/selectors';
+import { initialRelaxationValueSelector, iveReadSelector } from '../Step2/selectors';
 import Modal = require('react-modal');
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import * as calculix_1 from '../../static/calculix_1.png';
@@ -81,6 +81,8 @@ interface Step3Props {
 
   iveReadAction: () => void;
   iveReadStep3: boolean;
+
+  relax: number;
 }
 
 // className={styles.timeModal}
@@ -152,7 +154,7 @@ class Step3 extends React.Component<Step3Props, any> {
             <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
             <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
             <div className={styles.overlayPlot}>You can see the convergence plot by clicking PLOT <br/> and the explanation of the output by clicking OUTPUT_EXP</div>
-            <div className={styles.overlayExp}>These are consoles for simulation. By clicking $, the simulation will run.</div>
+            <div className={styles.overlayExp}>These are consoles for simulation. By pressing enter, the simulation will run.</div>
               <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
             </div> :
             <div/>}
@@ -267,7 +269,7 @@ class Step3 extends React.Component<Step3Props, any> {
                   type: CONSOLE_ADD_LINES,
                   consoleId: ConsoleId.left,
                   lines: ['$ ccx_preCICE -i flap -precice-participant Calculix']});
-                this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix');
+                this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix', this.props.relax);
               }}
               promptLabel="$ ccx_preCICE -i flap -precice-participant Calculix"
               busy={this.props.leftBusy}
@@ -303,7 +305,7 @@ class Step3 extends React.Component<Step3Props, any> {
                   type: CONSOLE_ADD_LINES,
                   consoleId: ConsoleId.right,
                   lines: ['$ SU2_CFD euler_config_coupled.cfg']});
-                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg');
+                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg', this.props.relax);
               }}
               promptLabel="$ SU2_CFD euler_config_coupled.cfg"
               busy={this.props.rightBusy}
@@ -367,14 +369,15 @@ const mapStateToProps = createStructuredSelector({
   leftOldChunks: oldChunksSelector(ConsoleId.left),
   rightOldChunks: oldChunksSelector(ConsoleId.right),
   iveReadStep3: iveReadSelector('Step3'),
+  relax: initialRelaxationValueSelector(),
 
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch: (...args) => dispatch(...args),
-    runCmd: (consoleId: ConsoleId, cmd: string) => {
-      dispatch({ type: 'socket/exec_cmd', consoleId, cmd });
+    runCmd: (consoleId: ConsoleId, cmd: string, relaxParam: number) => {
+      dispatch({ type: 'socket/exec_cmd', consoleId, cmd, relaxParam });
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
     },
     toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
