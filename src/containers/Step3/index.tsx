@@ -41,6 +41,15 @@ import ReduxConsole from '../../components/ReduxConsole/index';
 import Modal = require('react-modal');
 import {
   iveReadSelector} from '../Step2/selectors';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import * as calculix_1 from '../../static/calculix_1.png';
+import * as calculix_2 from '../../static/calculix_2.png';
+import * as calculix_3 from '../../static/calculix_3.png';
+import * as calculix_4 from '../../static/calculix_4.png';
+import * as SU2_1 from '../../static/SU2_1.png';
+import * as SU2_2 from '../../static/SU2_2.png';
+
+
 
 interface Step3Props {
   runCmd: any;
@@ -51,6 +60,7 @@ interface Step3Props {
   consoleTwoActive: boolean;
 
   showPlotModal: boolean;
+  plotOrOutput: number;
   openPlotModal: () => void;
   closePlotModal: () => void;
 
@@ -82,6 +92,7 @@ export enum ConsoleId {
 class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
+    this.state = { tabIndex: 0 };
     this.renderTable = this.renderTable.bind(this);
     this.closeOverlay = this.closeOverlay.bind(this);
     this.ButtonColorChange = this.ButtonColorChange.bind(this);
@@ -118,6 +129,7 @@ class Step3 extends React.Component<Step3Props, any> {
   private ButtonColorChange(event) {
     document.getElementById(event.currentTarget.id).style.color = 'gray';
     document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
+    this.setState({tabIndex: event.currentTarget.id === 'plotButton' ? 0 : 1});
   }
   private ButtonColorOriginal(event) {
     document.getElementById(event.currentTarget.id).style.color = 'white';
@@ -131,7 +143,7 @@ class Step3 extends React.Component<Step3Props, any> {
           <div id="overlay3" className={styles.overlay}>
             <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
             <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
-            <div className={styles.overlayPlot}>You can see the convergence plot <br/>by clicking PLOT</div>
+            <div className={styles.overlayPlot}>You can see the convergence plot by clicking PLOT <br/> and the explanation of the output by clicking OUTPUT_EXP</div>
             <div className={styles.overlayExp}>These are consoles for simulation. By clicking $, the simulation will run.</div>
               <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
             </div> :
@@ -141,7 +153,29 @@ class Step3 extends React.Component<Step3Props, any> {
           shouldCloseOnOverlayClick={true}
           onRequestClose={this.props.closePlotModal}
         >
-          <ConPlot/>
+          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({tabIndex})}>
+            <TabList className={styles.reactTabsTabList}>
+              <Tab className={this.state.tabIndex === 0 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Convergence Plot</Tab>
+              <Tab className={this.state.tabIndex === 1 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Output SU2</Tab>
+              <Tab className={this.state.tabIndex === 2 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Output Calculix</Tab>
+            </TabList>
+            <TabPanel
+              className={this.state.tabIndex === 0 ? styles.reactTabsTabPanelSelected : styles.reactTabsTabPanel}>
+              <ConPlot/>
+            </TabPanel>
+            <TabPanel
+              className={this.state.tabIndex === 1 ? styles.reactTabsTabPanelSelected : styles.reactTabsTabPanel}>
+              <img src={SU2_1} className={styles.graph}/>
+              <img src={SU2_2} className={styles.graph}/></TabPanel>
+            <TabPanel
+              className={this.state.tabIndex === 2 ? styles.reactTabsTabPanelSelected : styles.reactTabsTabPanel}>
+              <img src={calculix_1} className={styles.graph}/>
+              <img src={calculix_2} className={styles.graph}/>
+              <img src={calculix_3} className={styles.graph}/>
+              <img src={calculix_4} className={styles.graph}/>
+            </TabPanel>
+          </Tabs>
+
 
         </Modal>
 
@@ -186,6 +220,7 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span id="plotButton" onClick={this.props.openPlotModal} className={styles.modalBtn} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Plot </span>
+            <span id="outputButton" onClick={this.props.openPlotModal} className={styles.modalBtn} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Output_Exp</span>
             <span className={styles.title}>what to do</span>
             <span
               id="hideButton"
@@ -299,7 +334,7 @@ function mapDispatchToProps(dispatch) {
     hidAction: () => {
       dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden });
     },
-    openPlotModal: () => {
+    openPlotModal: (event) => {
       dispatch({ type: PLOT_MODAL_DATA, value: true });
     },
     closePlotModal: () => {
