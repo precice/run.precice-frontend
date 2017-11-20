@@ -2,12 +2,18 @@ import * as React from 'react';
 import { List } from 'immutable';
 import * as styles from './styles.scss';
 
+export interface ConsoleChunk {
+  key: string;
+  content: string;
+}
+
 interface ReduxConsoleProps {
   busy: boolean;
   logMessages: [string];
   handler(input: string): void;
   promptLabel?: string;
   lockBottom: boolean;
+  oldChunks: [ConsoleChunk];
 }
 
 
@@ -26,6 +32,7 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
 
     return (
       <div className={styles.wrapper}>
+        {this.props.oldChunks.map(oC => (<div className={styles.logMessages} key={oC.key}>{oC.content}</div>))}
         <div className={styles.logMessages}>{this.props.logMessages.join('\n')}</div>
         {!this.props.busy && (
           <div onClick={() => { this.props.handler('test'); }} className={styles.prompt}>

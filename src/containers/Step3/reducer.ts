@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { Collection, fromJS, List } from 'immutable';
 import {
   ADD_FINAL_TIME,
   CONSOLE_ADD_LINES,
@@ -21,12 +21,14 @@ const initialState = fromJS({
       lockBottom: true,
       busy: false,
       done: false,
+      oldChunks: [],
     },
     [ConsoleId.right]: {
       logMessages: ['$ SU2_CFD euler_config_coupled.cfg'],
       lockBottom: true,
       busy: false,
       done: false,
+      oldChunks: [],
     },
   },
 
@@ -43,17 +45,27 @@ const initialState = fromJS({
 // IS_SIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
+const MSG_CHUNKSIZE = 1000;
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
-      return state.updateIn(['consoles', action.consoleId, 'logMessages'], (old) => {
-        if (old.size < 5000) {
+      let newChunk = null;
+      const newState = state.updateIn(['consoles', action.consoleId, 'logMessages'], (old: List<string>) => {
+        if (old.size < MSG_CHUNKSIZE) {
           return old.push(...lines);
         } else {
-          return old.slice(lines.length).push(...lines);
+          newChunk = {
+            key: (Math.random() + '').substr(0, 10) + Date.now(),
+            content: old.slice(0, MSG_CHUNKSIZE).join('\n'),
+          };
+          return old.slice(MSG_CHUNKSIZE).push(...lines);
         }
       });
+      if (newChunk) {
+        return newState.updateIn(['consoles', action.consoleId, 'oldChunks'], (old) => old.push(newChunk));
+      }
+      return newState;
     }
     case CONSOLE_TOGGLE_BUSY:
       return state

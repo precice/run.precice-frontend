@@ -33,11 +33,11 @@ import {
   highScoreSelector,
   lockBottomSelector,
   logMessagesSelector,
-  modalDisplaySelector,
+  modalDisplaySelector, oldChunksSelector,
   timeModalDisplaySelector,
 } from './selectors';
 import ConPlot from '../ConvergencePlot';
-import ReduxConsole from '../../components/ReduxConsole/index';
+import ReduxConsole, { ConsoleChunk } from '../../components/ReduxConsole/index';
 import Modal = require('react-modal');
 import {
   iveReadSelector} from '../Step2/selectors';
@@ -64,6 +64,8 @@ interface Step3Props {
   rightBusy: boolean;
   leftLockBottom: boolean;
   rightLockBottom: boolean;
+  leftOldChunks: [ConsoleChunk];
+  rightOldChunks: [ConsoleChunk];
 
   iveReadAction: () => void;
   iveReadStep3: boolean;
@@ -225,6 +227,7 @@ class Step3 extends React.Component<Step3Props, any> {
               busy={this.props.leftBusy}
               logMessages={this.props.leftLogMessages}
               lockBottom={this.props.leftLockBottom}
+              oldChunks={this.props.leftOldChunks}
             />
             <div
               onClick={() => {
@@ -244,6 +247,7 @@ class Step3 extends React.Component<Step3Props, any> {
               busy={this.props.rightBusy}
               logMessages={this.props.rightLogMessages}
               lockBottom={this.props.rightLockBottom}
+              oldChunks={this.props.rightOldChunks}
             />
             <div
               onClick={() => {
@@ -285,6 +289,8 @@ const mapStateToProps = createStructuredSelector({
   rightLockBottom: lockBottomSelector(ConsoleId.right),
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
+  leftOldChunks: oldChunksSelector(ConsoleId.left),
+  rightOldChunks: oldChunksSelector(ConsoleId.right),
   iveReadStep3: iveReadSelector('Step3'),
 
 });
