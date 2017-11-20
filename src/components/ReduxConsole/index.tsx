@@ -19,11 +19,11 @@ interface ReduxConsoleProps {
 
 class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
 
-  private bottomAnchor: HTMLDivElement;
+  private node: HTMLDivElement;
 
   public componentDidUpdate(prevProps) {
     if (this.props.lockBottom) {
-      this.bottomAnchor.scrollIntoView();
+      this.node.scrollTop = this.node.scrollHeight;
     }
   }
 
@@ -31,16 +31,20 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
 
 
     return (
-      <div className={styles.wrapper}>
+      <div
+        className={styles.wrapper}
+        ref={(ref) => { this.node = ref; }}
+        tabIndex={-1}
+        onKeyDown={(e) => { if (e.keyCode === 13) { this.props.handler('test'); } }}
+      >
         {this.props.oldChunks.map(oC => (<div className={styles.logMessages} key={oC.key}>{oC.content}</div>))}
         <div className={styles.logMessages}>{this.props.logMessages.join('\n')}</div>
         {!this.props.busy && (
-          <div onClick={() => { this.props.handler('test'); }} className={styles.prompt}>
+          <div className={styles.prompt}>
             {this.props.promptLabel || '$'}
             <span className={styles.cursor}>&nbsp;</span>
           </div>
         )}
-        <div ref={(node) => { this.bottomAnchor = node; }} className={styles.bottomAnchor}>&nbsp;</div>
       </div>
     );
   }
