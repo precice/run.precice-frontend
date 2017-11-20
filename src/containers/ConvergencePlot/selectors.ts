@@ -35,7 +35,7 @@ export const percentProgressSelector = () => createSelector(
       return 0;
     } else {
       // Round to nearest integer - No fractional progress
-      return (Math.round ( (currDt * 100 / maxDt) * 100  ) ) ;
+      return (Math.round ( (currDt * 100 / maxDt)  ) ) ;
     }
 
   });
