@@ -381,6 +381,22 @@ function mapDispatchToProps(dispatch) {
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
       // clear plot when starting the simulation
       dispatch({ type: PLOT_DELETE_DATA });
+      // parsing inside consoleMiddleware
+      lastIt = 0;
+// lastDt = 1 reflects starting value of dt
+// in Calculix output
+      lastDt = 1;
+// See explanation below in consoleMiddleware
+      dtFlag = 1;
+
+// detect console activity
+// only dispatch action the
+// first time
+      consoleOne = false;
+      consoleTwo = false;
+
+      it = undefined;
+      dt = undefined;
     },
     toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => {
@@ -511,6 +527,7 @@ export const consoleMiddleware = store => next => action => {
       store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code] });
       store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
       store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true });
+      // Variables to hold global information for
     }
 
   }

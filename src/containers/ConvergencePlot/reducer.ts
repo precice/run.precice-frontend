@@ -34,7 +34,10 @@ export function chartDataReducer(state = initialState, action) {
     case PLOT_DELETE_DATA:
       return state
         .set('data', fromJS([ {x: 0, y: 0 } ]))
-        .set('currDt', 0);
+        .set('currDt', 0)
+        .set('maxDt', 0)
+        .set('domainX', 5)
+        .set('domainY', 5)
       ;
     default:
       return state;
