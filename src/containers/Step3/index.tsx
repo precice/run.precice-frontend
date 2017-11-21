@@ -153,9 +153,9 @@ class Step3 extends React.Component<Step3Props, any> {
           <div id="overlay3" className={styles.overlay}>
             <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
             <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
-            <div className={styles.overlayPlot}>You can see the convergence plot by clicking PLOT <br/> and the explanation of the output by clicking OUTPUT_EXP</div>
-            <div className={styles.overlayExp}>These are consoles for simulation. By pressing enter, the simulation will run.</div>
-              <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
+            <div className={styles.overlayPlot}>You can see a convergence graph by clicking PLOT while the simulation is running. <br/> Click on OUTPUT_EXP for more information about what the console output</div>
+            <div className={styles.overlayExp}>These are consoles for running the simulation. To start the two commands, click on the corresponding console und press enter.</div>
+              <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>CLOSE</div>
             </div> :
             <div/>}
         <Modal

@@ -17,7 +17,7 @@ class Sub1 extends React.Component<Sub1Props, any> {
   public render() {
     return (
       <div>
-        We first need to set up the general setting of the interface.
+        We first need to set up some general settings.
         <br/>
         <li>
           <span className={styles.highlight}>dimensions</span>

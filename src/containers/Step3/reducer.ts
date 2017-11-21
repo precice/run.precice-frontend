@@ -15,6 +15,8 @@ import {
 } from '../constants';
 import { ConsoleId } from './index';
 
+
+const cachedHs = localStorage.getItem('highscoreTimes');
 const initialState = fromJS({
   consoles: {
     [ConsoleId.left]: {
@@ -33,7 +35,7 @@ const initialState = fromJS({
     },
   },
 
-  finalTime: [],
+  finalTime: cachedHs ? JSON.parse(cachedHs) : [],
   hidCheck: false,
   consoleOneActive: false,
   consoleTwoActive: false,
@@ -120,10 +122,15 @@ export function step3Reducer(state = initialState, action: any) {
           .set('isSimulationRunning', action.value);
       }
     }
-    case ADD_FINAL_TIME:
+    case ADD_FINAL_TIME: {
+      const cached = localStorage.getItem('highscoreTimes');
+      localStorage.setItem(
+        'highscoreTimes',
+        JSON.stringify(cached ? JSON.parse(cached).push(action.data) : [action.data]),
+      );
       return state
         .update('finalTime', finalTime => finalTime.push(action.data));
-
+    }
     default:
       return state;
   }

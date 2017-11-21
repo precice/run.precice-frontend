@@ -128,10 +128,10 @@ class Step2 extends React.Component<Step2Props, any> {
         <div id="overlay" className={styles.overlay}>
           <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
           <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
-          <div className={styles.overlayXml}>By clicking these lines, <br/>you can see explanation of the section you click on the right</div>
-          <div className={styles.overlayExp}>You can see explanation for each line here.
+          <div className={styles.overlayXml}>By clicking on these lines, <br/>you can see an explanation of each section on the right</div>
+          <div className={styles.overlayExp}>You see the explanation for each section here.
           Also, you can click on <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/> to get further information.</div>
-          <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
+          <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>CLOSE</div>
         </div> :
           <div/>}
         <script>{whichSection = this.props.lineIndex.section}</script>
@@ -144,9 +144,9 @@ class Step2 extends React.Component<Step2Props, any> {
           </div>
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
             preCICE is set up via a precice-config.xml file. It contains most of the settings preCICE needs to run the
-            coupled simulation. However, we still need solvers specific configuartion file, that we will not discuss in this tutorial.
+            coupled simulation. Furthermore, we need solver specific configuartion files, that we will not discuss in this tutorial.
             <br/>
-            Click on the XML file, you will learn how to set up the configuration file.
+            Click on the XML code on the left to learn how to set up the configuration file.
             <br/>
             <li><Link to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1} (line 5 ~ 9)</Link></li>
             <li><Link to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
