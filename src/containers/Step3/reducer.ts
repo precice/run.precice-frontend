@@ -124,9 +124,11 @@ export function step3Reducer(state = initialState, action: any) {
     }
     case ADD_FINAL_TIME: {
       const cached = localStorage.getItem('highscoreTimes');
+      const newVal = cached ? JSON.parse(cached) : [];
+      newVal.push(action.data);
       localStorage.setItem(
         'highscoreTimes',
-        JSON.stringify(cached ? JSON.parse(cached).push(action.data) : [action.data]),
+        JSON.stringify(newVal),
       );
       return state
         .update('finalTime', finalTime => finalTime.push(action.data));

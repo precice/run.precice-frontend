@@ -1,4 +1,4 @@
-import {ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER} from '../constants';
+import { ADD_CHART_DATA, ADD_PROGRESS_MAX_ITER, PLOT_DELETE_DATA } from '../constants';
 import {fromJS} from 'immutable';
 
 const initialState = fromJS({
@@ -31,6 +31,11 @@ export function chartDataReducer(state = initialState, action) {
       return state
         .set('maxDt', action.maxTimeSteps);
 
+    case PLOT_DELETE_DATA:
+      return state
+        .set('data', fromJS([ {x: 0, y: 0 } ]))
+        .set('currDt', 0);
+      ;
     default:
       return state;
   }

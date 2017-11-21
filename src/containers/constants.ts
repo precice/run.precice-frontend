@@ -15,6 +15,7 @@ export const ADD_CHART_DATA = 'actions/ADD_CHART_DATA';
 export const ADD_PROGRESS_MAX_ITER = 'actions/ADD_PROGRESS_MAX_ITER';
 export const CONSOLE_ONE_ACTIVE = 'actions/CONSOLE_ONE_ACTIVE';
 export const CONSOLE_TWO_ACTIVE = 'actions/CONSOLE_TWO_ACTIVE';
+export const PLOT_DELETE_DATA = 'action/PLOT_DELETE_DATA';
 export const PLOT_MODAL_DATA = 'action/PLOT_MODAL_DATA';
 export const TIME_MODAL_DATA = 'action/TIME_MODAL_DATA';
 export const ADD_FINAL_TIME = 'action/ADD_FINAL_TIME';

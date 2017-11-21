@@ -19,7 +19,7 @@ import {
   HID_CHECK3,
   IS_SIMULATION_DONE,
   IS_SIMULATION_RUNNING,
-  IVE_READ,
+  IVE_READ, PLOT_DELETE_DATA,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
 } from '../constants';
@@ -379,6 +379,8 @@ function mapDispatchToProps(dispatch) {
     runCmd: (consoleId: ConsoleId, cmd: string, relaxParam: number) => {
       dispatch({ type: 'socket/exec_cmd', consoleId, cmd, relaxParam });
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
+      // clear plot when starting the simulation
+      dispatch({ type: PLOT_DELETE_DATA });
     },
     toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => {
