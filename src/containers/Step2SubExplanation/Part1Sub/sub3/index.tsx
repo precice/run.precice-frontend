@@ -1,23 +1,13 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
-import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
-
-import * as styles from '../sub3/styles.scss';
+import * as styles from '../../styles.scss';
 import { Tooltip } from 'react-tippy';
-
-import {Link} from 'react-router-dom';
-// import * as styles from './styles.scss';
-// import * as TextForStep2 from './TextForStep2';
+import * as conservativePlot from '../../../../static/conservative.png';
+import * as consistentPlot from '../../../../static/consistent.png';
 
 interface Sub3Props {
 }
+
 class Sub3 extends React.Component<Sub3Props, any> {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
   public render() {
     return (
       <div>
@@ -92,8 +82,8 @@ class Sub3 extends React.Component<Sub3Props, any> {
             html={(
               <div>
                 For quantities that are normalized (for example, pressure, which is force per unit area), we need a consistent mapping. This means that the value at coarse nodes is the same as the value at the corresponding fine node. See here for an example:
-              <br/>
-                <img  style={{ width: '300px' }} src="/src/containers/sub3/consistent.png"/>
+                <br/>
+                <img  style={{ width: '300px' }} src={consistentPlot}/>
               </div>
             )}
           >
@@ -107,8 +97,8 @@ class Sub3 extends React.Component<Sub3Props, any> {
             html={(
               <div>
                 When mapping between different grids (example, from a fine to a coarse grid0, the value at a coarse node is computed as an aggregation of the corresponding fine nodes, such that the total force on the coarse and fine grid is the same. This is required for quantities that are absolute (e.g. Force, Mass, etc.). An example can be seen here:
-              <br/>
-                  <img  style={{ width: '300px' }} src="/src/containers/sub3/conservative.png"/>
+                <br/>
+                <img  style={{ width: '300px' }} src={conservativePlot}/>
               </div>
             )}
           >
@@ -119,19 +109,19 @@ class Sub3 extends React.Component<Sub3Props, any> {
           <span className={styles.highlight}>mesh</span>: Timing of the mapping, i.e. when the mapping is computed.
           Can be <span className={styles.highlight}>initial</span>
           <Tooltip
-          trigger="click"
-          width="100"
-          title="Computed only once"
-        >
-          <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-        </Tooltip>, <span className={styles.highlight}>onadvance</span>, or <span className={styles.highlight}>ondemand</span>
+            trigger="click"
+            width="100"
+            title="Computed only once"
+          >
+            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
+          </Tooltip>, <span className={styles.highlight}>onadvance</span>, or <span className={styles.highlight}>ondemand</span>
           <Tooltip
-          trigger="click"
-          width="100"
-          title="Re-computed multiple times in case of changing coupling meshes"
-        >
-          <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-        </Tooltip>.
+            trigger="click"
+            width="100"
+            title="Re-computed multiple times in case of changing coupling meshes"
+          >
+            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
+          </Tooltip>.
 
         </li>
       </div>
@@ -139,16 +129,5 @@ class Sub3 extends React.Component<Sub3Props, any> {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
-  };
-}
-
-export default connect < any, any, any > (
-  mapStateToProps,
-  mapDispatchToProps
-)(Sub3);
+export default Sub3;
 

@@ -1,38 +1,14 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION, INITIAL_RELAXATION_CHANGE} from '../constants';
-import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
-
-import * as styles from '../sub6/styles.scss';
+import * as styles from '../../styles.scss';
 import { Tooltip } from 'react-tippy';
 
-import {
-  completedTaskSelector} from '../Tutorial/selectors';
-
-import {
-  initialRelaxationValueSelector} from '../Step2/selectors';
-
-import {Link} from 'react-router-dom';
-// import * as styles from './styles.scss';
-// import * as TextForStep2 from './TextForStep2';
-
 interface Sub6Props {
-  firstTaskCompleted: boolean;
-  initialRelaxationValue: number;
-  initialRelaxationChangeAction: any;
 }
 
 class Sub6 extends React.Component<Sub6Props, any> {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
   public render() {
     return (
       <div>
-        {!this.props.firstTaskCompleted ?
-          <div>
         Last, we need to set up the way the two solver couple with each other.
         <br/><br/>
         <li>
@@ -68,27 +44,27 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <li>
           <span className={styles.highlight}>max-iterations value</span>: Maximum number of implicit sub-iterations.
         </li>
-            <li>
-            We set the timestep-length and the number of timesteps to be the same as in the SU2 configuration.
-            This does not have to be the case. We could, for example, also do the coupling only every second iteration
-            by doubling the timestep length.
-            </li>
-            <br/><br/>
+        <li>
+          We set the timestep-length and the number of timesteps to be the same as in the SU2 configuration.
+          This does not have to be the case. We could, for example, also do the coupling only every second iteration
+          by doubling the timestep length.
+        </li>
+        <br/><br/>
         <li>
           <span className={styles.highlight}>exchange</span>: We also need to exchange data through this mesh between the two participants.
-        <Tooltip
-          trigger="click"
-          width="100"
-          interactive
-          html={(
-            <div>
-              Recall that, in the participant <span className={styles.highlight}>SU2_CFD</span>, we had mapped <span className={styles.highlight}>DisplacementDeltas0</span> from and <span className={styles.highlight}>Forces0</span> to the mesh <span className={styles.highlight}>Calculix_Mesh</span>.
-              Therefore we need data exchange. Please note that both participants must use this mesh with <span className={styles.highlight}>use-mesh</span>. Each dataset must be exchanged in the correct direction.
-            </div>
-          )}
-        >
-          <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-        </Tooltip>
+          <Tooltip
+            trigger="click"
+            width="100"
+            interactive
+            html={(
+              <div>
+                Recall that, in the participant <span className={styles.highlight}>SU2_CFD</span>, we had mapped <span className={styles.highlight}>DisplacementDeltas0</span> from and <span className={styles.highlight}>Forces0</span> to the mesh <span className={styles.highlight}>Calculix_Mesh</span>.
+                Therefore we need data exchange. Please note that both participants must use this mesh with <span className={styles.highlight}>use-mesh</span>. Each dataset must be exchanged in the correct direction.
+              </div>
+            )}
+          >
+            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
+          </Tooltip>
         </li>
         <li>
           <span className={styles.highlight}>data</span>: Dataset to be exchanged..
@@ -106,18 +82,18 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <li>
           <span className={styles.highlight}>relative-convergence-measure</span>: We further set convergence measures for the data sets, after which the implicit sub-iterations will be stopped.
           <Tooltip
-          trigger="click"
-          width="100"
-          interactive
-          html={(
-            <div>
-              <span className={styles.highlight}>relative-convergence-measure</span> simply means that convergence is achieved if <span className={styles.highlight}>|data - oldData|{'<'} limit * |data|</span>,
-              where all norms are L2 norms. The expression on the right-hand side is referred to as <span className={styles.highlight}>relative limit</span> in the preCICE logging output.
-            </div>
-          )}
-        >
-          <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-        </Tooltip>
+            trigger="click"
+            width="100"
+            interactive
+            html={(
+              <div>
+                <span className={styles.highlight}>relative-convergence-measure</span> simply means that convergence is achieved if <span className={styles.highlight}>|data - oldData|{'<'} limit * |data|</span>,
+                where all norms are L2 norms. The expression on the right-hand side is referred to as <span className={styles.highlight}>relative limit</span> in the preCICE logging output.
+              </div>
+            )}
+          >
+            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
+          </Tooltip>
         </li>
         <li>
           <span className={styles.highlight}>data</span>: Dataset to be measured.
@@ -145,16 +121,16 @@ class Sub6 extends React.Component<Sub6Props, any> {
           </Tooltip>
         </li>
         <br/>
-            <li>
-              The implicit coupling is solved via a fixed-point iteration.
-              Sometimes the convergence of fixed-point iteration can be slow,
-              especially when the interaction between the fluid and the structure is strong due to a high fluid/structure
-              density ration or incompressibility of the flow. Therefore, we need some post-processing.
-            </li>
-              <li>
+        <li>
+          The implicit coupling is solved via a fixed-point iteration.
+          Sometimes the convergence of fixed-point iteration can be slow,
+          especially when the interaction between the fluid and the structure is strong due to a high fluid/structure
+          density ration or incompressibility of the flow. Therefore, we need some post-processing.
+        </li>
+        <li>
           <span className={styles.highlight}>post-processing</span>:  In order to improve the convergence rate,
-                we use <span className={styles.highlight}>aitken</span> relaxation method which adapts the relaxation
-                factor in each iteration based on the previous iterations.
+          we use <span className={styles.highlight}>aitken</span> relaxation method which adapts the relaxation
+          factor in each iteration based on the previous iterations.
           <Tooltip
             trigger="click"
             width="100"
@@ -180,39 +156,10 @@ class Sub6 extends React.Component<Sub6Props, any> {
           <span className={styles.highlight}>initial-relaxation value</span>: value for first underrelaxation. 0.2 is a robust choice.
         </li>
         <br/>
-        </div> :
-          <div>
-            We can change the initial-relaxation-value between 0.1 and 0.9. 0.9 will give us the fastest result.
-            <div className={styles.rangeSlider}>
-              <input
-                className={styles.rangeSliderRange}
-                id="myRange"
-                onChange={this.props.initialRelaxationChangeAction}
-                type="range"
-                min="0.1"
-                max="0.9"
-                step="0.1"
-              />
-                <span className={styles.rangeSliderValue}>{this.props.initialRelaxationValue.toString()}</span>
-            </div>
-          </div>
-        }
       </div>
     );
   }
 }
-const mapStateToProps = createStructuredSelector({
-  firstTaskCompleted: completedTaskSelector(),
-  initialRelaxationValue: initialRelaxationValueSelector(),
-});
-function mapDispatchToProps(dispatch) {
-  return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
-    initialRelaxationChangeAction: (event) => {dispatch({type: INITIAL_RELAXATION_CHANGE, check: (document.getElementById(event.currentTarget.id) as HTMLInputElement).value}); document.getElementById('ScrollableXmlContainer').scrollTop = 500; }, /*reducer in step 2*/
-  };
-}
 
-export default connect < any, any, any > (
-  mapStateToProps,
-  mapDispatchToProps,
-)(Sub6);
+export default Sub6;
+

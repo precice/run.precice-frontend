@@ -1,24 +1,11 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
-import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
-
-import * as styles from '../sub2/styles.scss';
+import * as styles from '../../styles.scss';
 import { Tooltip } from 'react-tippy';
-
-import {Link} from 'react-router-dom';
-// import * as styles from './styles.scss';
-// import * as TextForStep2 from './TextForStep2';
 
 interface Sub2Props {
 }
 
 class Sub2 extends React.Component<Sub2Props, any> {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
   public render() {
     return (
       <div>
@@ -54,16 +41,5 @@ class Sub2 extends React.Component<Sub2Props, any> {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    example: () => dispatch({type: EXAMPLE_ACTION}),
-  };
-}
-
-export default connect < any, any, any > (
-  mapStateToProps,
-  mapDispatchToProps
-)(Sub2);
+export default Sub2;
 
