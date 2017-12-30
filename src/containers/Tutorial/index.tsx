@@ -1,28 +1,23 @@
 import {connect} from 'react-redux';
-import {XML_ALL_CLICK, XML_CLICK, FIRST_TASK_COMPLETED, MODAL_CLICK} from '../constants';
+import {XML_ALL_CLICK, XML_CLICK, FIRST_TASK_COMPLETED, MODAL_CLICK, BLOCKNUMBER_FLAG, PARTNUMBER_FLAG} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 import ProgressBar from '../Progress/index';
-import * as TextForStep2 from '../Step2/TextForStep2';
+import * as config1 from '../configurationFile/config1';
 import {
   buttonLinksSelector,
   percentageSelector,
   completedTaskSelector,
-  modalClickSelector} from './selectors';
-import {
-  xmlFlag1Selector,
-  xmlFlag2Selector,
-  xmlFlag3Selector,
-  xmlFlag4Selector,
-  xmlFlag5Selector,
-  xmlFlag6Selector} from '../Step2/selectors';
+  modalClickSelector,
+  partNumberSelector,
+  } from './selectors';
+import { xmlFlagSelector, blockNumberSelector} from '../Step2/selectors';
 import {
   busySelector} from '../Step3/selectors';
 import {
   ConsoleId} from '../Step3/index';
-import ScrollableXmlContainer from '../Step2/index';
 
 interface TutorialProps {
   percentage: number;
@@ -47,7 +42,13 @@ interface TutorialProps {
   xmlflag6: boolean;
   firstTaskCompleted: boolean;
   completeAction: () => void;
+
+  partNumber: number;
+  blockNumber: string;
+  blockNumberAction: () => void;
 }
+
+const initial1 = config1.initial;
 
 class Tutorial extends React.Component<TutorialProps, any> {
   constructor(props: TutorialProps) {
@@ -76,26 +77,41 @@ class Tutorial extends React.Component<TutorialProps, any> {
             <div className={styles.modalHeader}>
               <span onClick={this.closeModal} className={styles.close}>&times;</span>
               {
-                this.props.buttonLinks.next === '/tutorial/step3' ?
+                this.props.buttonLinks.next === '/tutorial/part1/step3' ?
                 <h2>Oops, you forgot some parts ;-)</h2> :
                 <h2>Sorry, we can not let you go</h2>
               }
             </div>
             <div className={styles.modalBody}>
               {
-                this.props.buttonLinks.next === '/tutorial/step3' ?
+                this.props.buttonLinks.next === '/tutorial/part1/step3' ?
                   <div>
-                  <li hidden={this.props.xmlflag2}><Link onClick={this.closeModal} to="/tutorial/step2/sub2">{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
-                  <li hidden={this.props.xmlflag3}><Link onClick={this.closeModal} to="/tutorial/step2/sub3">{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
-                <li hidden={this.props.xmlflag4}><Link onClick={this.closeModal} to="/tutorial/step2/sub4">{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
-                <li hidden={this.props.xmlflag5}><Link onClick={this.closeModal} to="/tutorial/step2/sub5">{TextForStep2.sub5} (line 44)</Link></li>
-                    <li hidden={this.props.xmlflag6}><Link onClick={this.closeModal} to="/tutorial/step2/sub6">{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
+                  <li hidden={this.props.xmlflag2}><div id="modallink2" onClick={this.props.blockNumberAction}>
+                      {eval('config' + this.props.partNumber + '.sub2')} (line 12 ~ 20)
+                    </div>
+                  </li>
+                  <li hidden={this.props.xmlflag3}><div id="modallink3" onClick={this.props.blockNumberAction}>
+                      {eval('config' + this.props.partNumber + '.sub3')} (line 26 ~ 35)
+                    </div>
+                  </li>
+                <li hidden={this.props.xmlflag4}><div id="modallink4" onClick={this.props.blockNumberAction}>
+                    {eval('config' + this.props.partNumber + '.sub4')} (line 37 ~ 40)
+                  </div>
+                </li>
+                <li hidden={this.props.xmlflag5}><div id="modallink5" onClick={this.props.blockNumberAction}>
+                    {eval('config' + this.props.partNumber + '.sub5')} (line 44)
+                  </div>
+                </li>
+                    <li hidden={this.props.xmlflag6}><div id="modallink6" onClick={this.props.blockNumberAction}>
+                        {eval('config' + this.props.partNumber + '.sub6')} (line 46 ~ 61)
+                      </div>
+                    </li>
                   </div> :
                   <h2>The simulation is running, please be patient ;-)</h2>
               }
               </div>
             {
-              this.props.buttonLinks.next === '/tutorial/step3' ?
+              this.props.buttonLinks.next === '/tutorial/part1/step3' ?
               <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
                 No, I want to skip those parts.
               </Link> :
@@ -104,12 +120,12 @@ class Tutorial extends React.Component<TutorialProps, any> {
           </div>{/*modal content*/}
         </div>{/*the modal*/}
         <ProgressBar percentage={this.props.percentage}/>
-        <div onLoad={(this.props.buttonLinks.goback === '/tutorial/step2/sub6') ? this.props.completeAction : null} className={styles.child}>{this.props.children}</div>
+        <div onLoad={(this.props.buttonLinks.goback === '/tutorial/part1/step2/sub6') ? this.props.completeAction : null} className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
             {
-              (this.props.buttonLinks.next === '/tutorial/step4' &&
+              (this.props.buttonLinks.next === '/tutorial/part1/step4' &&
               ( this.props.leftBusy || this.props.rightBusy )) ?
                 this.props.buttonLinks.previous && <div onClick={this.openModal} className={styles.btnL}>BACK</div> :
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
@@ -119,10 +135,10 @@ class Tutorial extends React.Component<TutorialProps, any> {
           </div>
           <div className={styles.btnSubCon}>
             {
-              ((this.props.buttonLinks.next === '/tutorial/step3' &&
+              ((this.props.buttonLinks.next === '/tutorial/part1/step3' &&
                ( !this.props.xmlflag2 || !this.props.xmlflag3 || !this.props.xmlflag4 ||
                  !this.props.xmlflag5 || !this.props.xmlflag6 )) ||
-               (this.props.buttonLinks.next === '/tutorial/step4' &&
+               (this.props.buttonLinks.next === '/tutorial/part1/step4' &&
                ( this.props.leftBusy || this.props.rightBusy )) ?
                 this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
                 this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)
@@ -139,22 +155,40 @@ const mapStateToProps = createStructuredSelector({
   buttonLinks: buttonLinksSelector(),
   firstTaskCompleted: completedTaskSelector(),
   modalClick: modalClickSelector(),
-  xmlflag2: xmlFlag2Selector(),
-  xmlflag3: xmlFlag3Selector(),
-  xmlflag4: xmlFlag4Selector(),
-  xmlflag5: xmlFlag5Selector(),
-  xmlflag6: xmlFlag6Selector(),
+  xmlflag2: xmlFlagSelector('xmlflag2'),
+  xmlflag3: xmlFlagSelector('xmlflag3'),
+  xmlflag4: xmlFlagSelector('xmlflag4'),
+  xmlflag5: xmlFlagSelector('xmlflag5'),
+  xmlflag6: xmlFlagSelector('xmlflag6'),
 
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
+  partNumber: partNumberSelector(),
+  blockNumber: blockNumberSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    completeAction: () => { dispatch({ type: FIRST_TASK_COMPLETED}); },
-    modalAction: () => { dispatch({ type: MODAL_CLICK}); },
-    xmlSkip: () => { dispatch({ type: XML_ALL_CLICK}); document.getElementById('myModal').style.display = 'none'; },
-    xmlAction: (event) => { dispatch({ type: XML_CLICK, check: event.currentTarget.id});  },
+    completeAction: () => {
+      dispatch({type: FIRST_TASK_COMPLETED});
+    },
+    modalAction: () => {
+      dispatch({type: MODAL_CLICK});
+    },
+    xmlSkip: () => {
+      dispatch({type: XML_ALL_CLICK});
+      document.getElementById('myModal').style.display = 'none';
+    },
+    xmlAction: (event) => {
+      dispatch({type: XML_CLICK, check: event.currentTarget.id});
+    },
+    blockNumberAction: (event) => {
+      dispatch({
+        type: BLOCKNUMBER_FLAG,
+        check: event.currentTarget.id.substring(9, 10),
+      });
+      document.getElementById('myModal').style.display = 'none';
+    },
   };
 }
 

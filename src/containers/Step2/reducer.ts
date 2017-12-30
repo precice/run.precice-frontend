@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2, XML_CLICK, XML_ALL_CLICK, IVE_READ, FIRST_TASK_COMPLETED, INITIAL_RELAXATION_CHANGE,
+  HID_CHECK2, XML_CLICK, XML_ALL_CLICK, IVE_READ, FIRST_TASK_COMPLETED, INITIAL_RELAXATION_CHANGE, BLOCKNUMBER_FLAG
 } from '../constants';
 import { Action } from 'redux';
 
@@ -23,6 +23,7 @@ const initialState = fromJS({
   xmlflag5: false,
   xmlflag6: false,
   initialRelaxationValue: 0.3,
+  blockNumber: '1',
 });
 
 function step2Reducer(state = initialState, action: any) {
@@ -45,6 +46,9 @@ function step2Reducer(state = initialState, action: any) {
     case INITIAL_RELAXATION_CHANGE:
       return state
         .set('initialRelaxationValue', action.check);
+    case BLOCKNUMBER_FLAG:
+      return state
+        .set('blockNumber', action.check);
     default:
       return state;
   }

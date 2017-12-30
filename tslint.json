@@ -18,7 +18,8 @@
     "member-ordering": false,
     "jsx-no-lambda": false,
     "arrow-parens": false,
-    "no-empty-interface": false
+    "no-empty-interface": false,
+    "no-eval": false
   }
 }
 

@@ -1,12 +1,22 @@
 import {createSelector} from 'reselect';
 import {locationSelector} from '../Router/selectors';
+import {TOTAL_PART} from '../constants';
 
 const tutorialSubstateSelector = (state) => {
   return state.get('tutorial');
 };
+
+export const partNumberSelector = () => createSelector(
+  pathnameSelector(),
+  (pathname) => {
+    return Number(pathname.split('/')[2].substring(4, 5));
+  },
+);
+
 export const completedTaskSelector = () => createSelector(
   tutorialSubstateSelector,
   (tutorialSubstate) => tutorialSubstate.get('firstTaskCompleted'));
+
 export const modalClickSelector = () => createSelector(
   tutorialSubstateSelector,
   (tutorialSubstate) => tutorialSubstate.get('modalClick'));
@@ -26,26 +36,21 @@ export const percentageSelector = () => createSelector
   // pathnameSelector returns lambda function
   pathnameSelector(),
   (pathname) => {
-    // extract step number from pathname for switch
-    switch ( pathname.split('/')[2] ) {
-      case 'step1':
-        return 2;
+    const partNumber = Number(pathname.split('/')[2].substring(4, 5));
+    const stepNumber = Number(pathname.split('/')[3].substring(4, 5));
+    const partSize = Number((100 / TOTAL_PART).toFixed(0));
+    const stepSize = Number((partSize / 3).toFixed(0));
 
-      case 'step2': {
-        return 34;
-      }
-
-      case 'step3':
-        return 67;
-
-      case 'step4':
-        return 100;
-
-      default:
-        return 2;
-
+    if (partNumber === TOTAL_PART && stepNumber === 4) {
+      return 100;
+    }else if (stepNumber === 1) {
+      return (partNumber - 1) * partSize + 2;
+    }else if (stepNumber === 4) {
+      return partNumber * partSize;
+    }else {
+      return (partNumber - 1) * partSize + (stepNumber - 1) * stepSize;
     }
-  },
+      },
 );
 
 export const buttonLinksSelector = () => createSelector
@@ -53,23 +58,22 @@ export const buttonLinksSelector = () => createSelector
   // Provide paths for buttons
   pathnameSelector(),
     ( pathname ) => {
-      const stepArray = ['/tutorial/step1', '/tutorial/step2/sub1', '/tutorial/step2/sub2', '/tutorial/step2/sub3', '/tutorial/step2/sub4', '/tutorial/step2/sub5', '/tutorial/step2/sub6', '/tutorial/step3', '/tutorial/step4'];
+      const stepArray = [
+        '/tutorial/part1/step1',
+        '/tutorial/part1/step2',
+        '/tutorial/part1/step3',
+        '/tutorial/part1/step4',
+        '/tutorial/part2/step1',
+        '/tutorial/part2/step2',
+        '/tutorial/part2/step3',
+        '/tutorial/part2/step4',
+      ];
       const index = stepArray.indexOf( pathname );
       const buttonLinks = {
         next: stepArray[index + 1],
         goback: stepArray[-1],
         previous: stepArray [index - 1],
       };
-      if (index === 1) {
-        buttonLinks.next = stepArray[7];
-      } else if (index === 2 || index === 3 || index === 4 || index === 5 || index === 6) {
-        buttonLinks.next = stepArray[7];
-        buttonLinks.previous = stepArray[0];
-      } else if (index === 7) {
-        buttonLinks.previous = stepArray[6];
-      } else if (index === 8) {
-        buttonLinks.goback = stepArray[6];
-      }
 
       return buttonLinks;
     },

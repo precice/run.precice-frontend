@@ -1,38 +1,27 @@
 import { connect } from 'react-redux';
-import { HID_CHECK2, XML_CLICK, IVE_READ,  } from '../constants';
-import { xmlBackgroundColor, xmlEmphasizeBackgroundColor} from '../constants';
+import { HID_CHECK2, XML_CLICK, IVE_READ, BLOCKNUMBER_FLAG} from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { sunburst } from 'react-syntax-highlighter/dist/styles/';
-import * as TextForStep2 from './TextForStep2';
+import * as config1 from '../configurationFile/config1';
+import * as config2 from '../configurationFile/config2';
+import XmlBlock from '../XmlBlock/index';
+import Step2SubExplanationBlock from '../Step2SubExplanationblock/index';
 import {
-  lineSelector,
-  titleSelector,
   hidCheckSelector,
-  xmlFlag1Selector,
-  xmlFlag2Selector,
-  xmlFlag3Selector,
-  xmlFlag4Selector,
-  xmlFlag5Selector,
-  xmlFlag6Selector,
+  xmlFlagSelector,
   iveReadSelector,
-  initialRelaxationValueSelector} from './selectors';
+  initialRelaxationValueSelector,
+  blockNumberSelector} from './selectors';
 import {
   completedTaskSelector,
-  modalClickSelector} from '../Tutorial/selectors';
+  modalClickSelector,
+  partNumberSelector} from '../Tutorial/selectors';
 
 interface Step2Props {
-  lineIndex: {
-    start: number,
-    end: number,
-    section: string,
-  };
   hidAction: () => void;
   hidCheck2: boolean;
-  subStepTitle: string;
   firstTaskCompleted: boolean;
   iveReadAction: () => void;
   iveReadStep2: boolean;
@@ -45,9 +34,18 @@ interface Step2Props {
   xmlflag5: boolean;
   xmlflag6: boolean;
   initialRelaxationValue: number;
+  partNumber: number;
+  blockNumber: string;
+  blockNumberAction: () => void;
 }
 
 let whichSection = '';
+let partNumber = 1;
+let blockNumber = '1';
+
+const initial1 = config1.initial;
+const initial2 = config2.initial;
+
 class Step2 extends React.Component<Step2Props, any> {
   constructor(props: Step2Props) {
     super(props);
@@ -57,57 +55,9 @@ class Step2 extends React.Component<Step2Props, any> {
         end: 1,
       },
     };
-    this.setMouseOver = this.setMouseOver.bind(this);
-    this.setMouseOut = this.setMouseOut.bind(this);
     this.closeOverlay = this.closeOverlay.bind(this);
     this.ButtonColorChange = this.ButtonColorChange.bind(this);
     this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
-  }
-  private setMouseOver(event) {
-    switch (event.currentTarget.id) {
-      case 'xml1': {
-        return this.setState({mouseOverLineIndex: {
-          start: TextForStep2.sec1.start - 1 ,
-          end: TextForStep2.sec1.end + 1,
-        }});
-      }
-      case 'xml2': {
-        return this.setState({mouseOverLineIndex: {
-          start: TextForStep2.sec2.start - 1,
-          end: TextForStep2.sec2.end + 1,
-        }});
-      }
-      case 'xml3': {
-        return this.setState({mouseOverLineIndex: {
-          start: TextForStep2.sec3.start - 1,
-          end: TextForStep2.sec3.end + 1,
-        }});
-      }
-      case 'xml4': {
-        return this.setState({mouseOverLineIndex: {
-          start: TextForStep2.sec4.start - 1,
-          end: TextForStep2.sec4.end + 1,
-        }});
-      }
-      case 'xml5': {
-        return this.setState({mouseOverLineIndex: {
-          start: TextForStep2.sec5.start - 1,
-          end: TextForStep2.sec5.end + 1,
-        }});
-      }
-      case 'xml6': {
-        return this.setState({mouseOverLineIndex: {
-          start: TextForStep2.sec6.start - 1,
-          end: TextForStep2.sec6.end + 1,
-        }});
-      }
-    }
-  }
-  private setMouseOut(event) {
-    this.setState({mouseOverLineIndex: {
-      start: 1,
-      end: 1,
-    }});
   }
   private closeOverlay() {
     document.getElementById('overlay').style.display = 'none';
@@ -134,7 +84,9 @@ class Step2 extends React.Component<Step2Props, any> {
           <div id="overlayButton"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
         </div> :
           <div/>}
-        <script>{whichSection = this.props.lineIndex.section}</script>
+        <script>{partNumber = this.props.partNumber}</script>
+        <script>{blockNumber = this.props.blockNumber}</script>
+        <script>{whichSection = 'xmlflag' + blockNumber}</script>
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
@@ -147,355 +99,20 @@ class Step2 extends React.Component<Step2Props, any> {
             coupled simulation. However, we still need solvers specific configuartion file, that we will not discuss in this tutorial.
             <br/>
             Click on the XML file, you will learn how to set up the configuration file.
-            <br/>
-            <li><Link to="/tutorial/step2/sub1" className={styles.link}>{TextForStep2.sub1} (line 5 ~ 9)</Link></li>
-            <li><Link to="/tutorial/step2/sub2" className={styles.link}>{TextForStep2.sub2} (line 12 ~ 20)</Link></li>
-            <li><Link to="/tutorial/step2/sub3" className={styles.link}>{TextForStep2.sub3} (line 26 ~ 35)</Link></li>
-            <li><Link to="/tutorial/step2/sub4" className={styles.link}>{TextForStep2.sub4} (line 37 ~ 40)</Link></li>
-            <li><Link to="/tutorial/step2/sub5" className={styles.link}>{TextForStep2.sub5} (line 44)</Link></li>
-            <li><Link to="/tutorial/step2/sub6" className={styles.link}>{TextForStep2.sub6} (line 46 ~ 61)</Link></li>
           </div>
         </div>
         <div className={styles.interactContainer}>
-          <div id="ScrollableXmlContainer" className={styles.xml}>
-            <SyntaxHighlighter
-              id="xml0"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                if (lineNumber > this.props.lineIndex.start && lineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (lineNumber > this.state.mouseOverLineIndex.start && lineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeString0}
-            </SyntaxHighlighter>{/*text01*/}
-            <Link to="/tutorial/step2/sub1">
-              <SyntaxHighlighter
-                id="xml1"
-                style={TextForStep2.sunburstModified}
-                showLineNumbers="true"
-                startingLineNumber={TextForStep2.sec1.start}
-                language="xml"
-                className={styles.highlighter}
-                wrapLines={true}
-                lineStyle={lineNumber => {
-                  const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + TextForStep2.sec01.end;
-                  if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  }
-                  return style;
-                }}
-                onMouseOver={this.setMouseOver}
-                onMouseOut={this.setMouseOut}
-              >
-              {TextForStep2.initialCodeString1}
-              </SyntaxHighlighter>{/*text1*/}
-            </Link>
-            <SyntaxHighlighter
-              id="xml12"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              startingLineNumber={TextForStep2.sec12.start}
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + TextForStep2.sec1.end;
-                if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeString12}
-            </SyntaxHighlighter>{/*text12*/}
-            <Link to="/tutorial/step2/sub2">
-              <SyntaxHighlighter
-                id="xml2"
-                style={TextForStep2.sunburstModified}
-                showLineNumbers="true"
-                startingLineNumber={TextForStep2.sec2.start}
-                language="xml"
-                className={styles.highlighter}
-                wrapLines={true}
-                lineStyle={lineNumber => {
-                  const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + TextForStep2.sec12.end;
-                  if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (this.props.modalClick &&
-                              !this.props.xmlflag2 &&
-                          (localLineNumber > TextForStep2.sec2.start - 1 && localLineNumber < TextForStep2.sec2.end + 1)) {
-                    style.backgroundColor = xmlEmphasizeBackgroundColor;
-                  }
-                  return style;
-                }}
-                onMouseOver={this.setMouseOver}
-                onMouseOut={this.setMouseOut}
-              >
-                {TextForStep2.initialCodeString2}
-              </SyntaxHighlighter>{/*text2*/}
-            </Link>
-            <SyntaxHighlighter
-              id="xml23"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              startingLineNumber={TextForStep2.sec23.start}
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + TextForStep2.sec2.end;
-                if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeString23}
-            </SyntaxHighlighter>{/*text23*/}
-            <Link to="/tutorial/step2/sub3">
-              <SyntaxHighlighter
-                id="xml3"
-                style={TextForStep2.sunburstModified}
-                showLineNumbers="true"
-                startingLineNumber={TextForStep2.sec3.start}
-                language="xml"
-                className={styles.highlighter}
-                wrapLines={true}
-                lineStyle={lineNumber => {
-                  const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + TextForStep2.sec23.end;
-                  if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  }else if (this.props.modalClick &&
-                    !this.props.xmlflag3 &&
-                    (localLineNumber > TextForStep2.sec3.start - 1 && localLineNumber < TextForStep2.sec3.end + 1)) {
-                    style.backgroundColor = xmlEmphasizeBackgroundColor;
-                  }
-                  return style;
-                }}
-                onMouseOver={this.setMouseOver}
-                onMouseOut={this.setMouseOut}
-              >
-                {TextForStep2.initialCodeString3}
-              </SyntaxHighlighter>{/*text3*/}
-            </Link>
-            <SyntaxHighlighter
-              id="xml34"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              startingLineNumber={TextForStep2.sec34.start}
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + TextForStep2.sec3.end;
-                if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeString34}
-            </SyntaxHighlighter>{/*text34*/}
-            <Link to="/tutorial/step2/sub4">
-              <SyntaxHighlighter
-                id="xml4"
-                style={TextForStep2.sunburstModified}
-                showLineNumbers="true"
-                startingLineNumber={TextForStep2.sec4.start}
-                language="xml"
-                className={styles.highlighter}
-                wrapLines={true}
-                lineStyle={lineNumber => {
-                  const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + TextForStep2.sec34.end;
-                  if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (this.props.modalClick &&
-                    !this.props.xmlflag4 &&
-                    (localLineNumber > TextForStep2.sec4.start - 1 && localLineNumber < TextForStep2.sec4.end + 1)) {
-                    style.backgroundColor = xmlEmphasizeBackgroundColor;
-                  }
-                  return style;
-                }}
-                onMouseOver={this.setMouseOver}
-                onMouseOut={this.setMouseOut}
-              >
-                {TextForStep2.initialCodeString4}
-              </SyntaxHighlighter>{/*text4*/}
-            </Link>
-            <SyntaxHighlighter
-              id="xml45"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              startingLineNumber={TextForStep2.sec45.start}
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + TextForStep2.sec4.end;
-                if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeString45}
-            </SyntaxHighlighter>{/*text45*/}
-            <Link to="/tutorial/step2/sub5">
-              <SyntaxHighlighter
-                id="xml5"
-                style={TextForStep2.sunburstModified}
-                showLineNumbers="true"
-                startingLineNumber={TextForStep2.sec5.start}
-                language="xml"
-                className={styles.highlighter}
-                wrapLines={true}
-                lineStyle={lineNumber => {
-                  const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + TextForStep2.sec45.end;
-                  if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (this.props.modalClick &&
-                    !this.props.xmlflag5 &&
-                    (localLineNumber > TextForStep2.sec5.start - 1 && localLineNumber < TextForStep2.sec5.end + 1)) {
-                    style.backgroundColor = xmlEmphasizeBackgroundColor;
-                  }
-                  return style;
-                }}
-                onMouseOver={this.setMouseOver}
-                onMouseOut={this.setMouseOut}
-              >
-                {TextForStep2.initialCodeString5}
-              </SyntaxHighlighter>{/*text5*/}
-            </Link>
-            <SyntaxHighlighter
-              id="xml56"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              startingLineNumber={TextForStep2.sec56.start}
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + TextForStep2.sec5.end;
-                if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeString56}
-            </SyntaxHighlighter>{/*text56*/}
-            <Link to="/tutorial/step2/sub6">
-              <SyntaxHighlighter
-                id="xml6"
-                style={TextForStep2.sunburstModified}
-                showLineNumbers="true"
-                startingLineNumber={TextForStep2.sec6.start}
-                language="xml"
-                className={styles.highlighter}
-                wrapLines={true}
-                lineStyle={lineNumber => {
-                  const style = { display: 'block', backgroundColor: '' };
-                  const localLineNumber = lineNumber + TextForStep2.sec56.end;
-                  if (this.props.firstTaskCompleted && localLineNumber === 60 ) {
-                    style.backgroundColor = xmlEmphasizeBackgroundColor;
-                  } else if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                    style.backgroundColor = xmlBackgroundColor;
-                  } else if (this.props.modalClick &&
-                    !this.props.xmlflag6 &&
-                    (localLineNumber > TextForStep2.sec6.start - 1 && localLineNumber < TextForStep2.sec6.end + 1)) {
-                    style.backgroundColor = xmlEmphasizeBackgroundColor;
-                  }
-                  return style;
-                }}
-                onMouseOver={this.setMouseOver}
-                onMouseOut={this.setMouseOut}
-              >
-                {TextForStep2.initialCodeString6Begin + '"' + this.props.initialRelaxationValue.toString() + '"' + TextForStep2.initialCodeString6End}
-              </SyntaxHighlighter>{/*text6*/}
-            </Link>
-            <SyntaxHighlighter
-              id="xmlEnd"
-              style={TextForStep2.sunburstModified}
-              showLineNumbers="true"
-              startingLineNumber={TextForStep2.sec60.start}
-              language="xml"
-              className={styles.highlighter}
-              wrapLines={true}
-              lineStyle={lineNumber => {
-                const style = { display: 'block', backgroundColor: '' };
-                const localLineNumber = lineNumber + TextForStep2.sec6.end;
-                if (localLineNumber > this.props.lineIndex.start && localLineNumber < this.props.lineIndex.end ) {
-                  style.backgroundColor = xmlBackgroundColor;
-                } else if (localLineNumber > this.state.mouseOverLineIndex.start && localLineNumber < this.state.mouseOverLineIndex.end) {
-                  style.backgroundColor = xmlBackgroundColor;
-                }
-                return style;
-              }}
-              onMouseOver={this.setMouseOver}
-              onMouseOut={this.setMouseOut}
-            >
-              {TextForStep2.initialCodeStringEnd}
-            </SyntaxHighlighter>{/*textend*/}
-          </div>{/*XML*/}
+          <XmlBlock
+            blockNumber={this.props.blockNumber}
+            partNumber={this.props.partNumber}
+            blockNumberAction={this.props.blockNumberAction}
+          />
           <div className={styles.commentContainer}>
             <div className={styles.commentHeader}>
-              {this.props.subStepTitle}
+              {eval('config' + this.props.partNumber + '.sub' + this.props.blockNumber)}
             </div>
             <div  className={styles.exp}>
-              {this.props.children}
+              <Step2SubExplanationBlock partNumber={this.props.partNumber} blockNumber={this.props.blockNumber}/>
             </div>
           </div>
         </div>
@@ -504,19 +121,19 @@ class Step2 extends React.Component<Step2Props, any> {
   }
 }
 const mapStateToProps = createStructuredSelector({
-  lineIndex: lineSelector(),
-  subStepTitle: titleSelector(),
   hidCheck2: hidCheckSelector(),
-  xmlflag1: xmlFlag1Selector(),
-  xmlflag2: xmlFlag2Selector(),
-  xmlflag3: xmlFlag3Selector(),
-  xmlflag4: xmlFlag4Selector(),
-  xmlflag5: xmlFlag5Selector(),
-  xmlflag6: xmlFlag6Selector(),
+  xmlflag1: xmlFlagSelector('xmlflag1'),
+  xmlflag2: xmlFlagSelector('xmlflag2'),
+  xmlflag3: xmlFlagSelector('xmlflag3'),
+  xmlflag4: xmlFlagSelector('xmlflag4'),
+  xmlflag5: xmlFlagSelector('xmlflag5'),
+  xmlflag6: xmlFlagSelector('xmlflag6'),
   firstTaskCompleted: completedTaskSelector(),
   modalClick: modalClickSelector(),
   iveReadStep2: iveReadSelector('Step2'),
   initialRelaxationValue: initialRelaxationValueSelector(),
+  partNumber: partNumberSelector(),
+  blockNumber: blockNumberSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -524,6 +141,7 @@ function mapDispatchToProps(dispatch) {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
     xmlAction: () => { dispatch({ type: XML_CLICK, check: whichSection}); },
     iveReadAction: () => { dispatch({ type: IVE_READ, whichStep: 'Step2'}); },
+    blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
   };
 }
 

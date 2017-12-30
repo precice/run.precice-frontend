@@ -7,7 +7,7 @@
 import { fromJS } from 'immutable';
 
 import {
-  FIRST_TASK_COMPLETED, MODAL_CLICK,
+  FIRST_TASK_COMPLETED, MODAL_CLICK, PARTNUMBER_FLAG,
 } from '../constants';
 import { Action } from 'redux';
 
@@ -15,6 +15,7 @@ import { Action } from 'redux';
 const initialState = fromJS({
   firstTaskCompleted: false,
   modalClick: false,
+  partNumber: 1,
 });
 
 function exampleReducer(state = initialState, action: Action) {

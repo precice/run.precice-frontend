@@ -19,6 +19,10 @@ export const TIME_MODAL_DATA = 'action/TIME_MODAL_DATA';
 export const ADD_FINAL_TIME = 'action/ADD_FINAL_TIME';
 export const IS_SIMULATION_RUNNING = 'action/IS_SIMULATION_RUNNING';
 export const IS_SIMULATION_DONE = 'action/IS_SIMULATION_DONE';
+export const BLOCKNUMBER_FLAG = 'action/BLOCKNUMBER_FLAG';
+export const PARTNUMBER_FLAG = 'action/PARTNUMBER_FLAG';
 
 export const xmlBackgroundColor = '#505050';
 export const xmlEmphasizeBackgroundColor = '#8f4746';
+
+export const TOTAL_PART = 2;
