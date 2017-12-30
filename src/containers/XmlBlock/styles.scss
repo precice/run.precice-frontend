@@ -1,0 +1,15 @@
+@import '../../sass/colors';
+
+.xml {
+  background-color: #000;
+  flex: 1 0.8 auto;
+  font-size: 12px;
+  overflow-y: auto;
+  padding: 1em 0.5em;
+  width: 600px;
+
+  .highlighter {
+    margin: 0;
+  }
+
+}
