@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { EXAMPLE_ACTION } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
-import * as styles from './styles.scss';
 import { Tooltip } from 'react-tippy';
 import Part1Sub from '../Step2SubExplanation/Part1Sub/index';
 import Part2Sub from '../Step2SubExplanation/Part2Sub/index';

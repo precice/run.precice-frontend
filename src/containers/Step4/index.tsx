@@ -1,24 +1,26 @@
 import {connect} from 'react-redux';
-import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
+import {createStructuredSelector} from 'reselect';
+import {
+  partNumberSelector,
+} from '../Tutorial/selectors';
+import {
+  doneSelector,
+} from '../Step3/selectors';
 import * as styles from './styles.scss';
 import * as rightGraph from '../../static/right.png';
 import * as leftGraph from '../../static/left.png';
 import * as lastGraph from '../../static/right.png';
 import * as displacementGraph from '../../static/displacement.png';
-import {FIRST_TASK_COMPLETED} from '../constants';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {
-  ConsoleId} from '../Step3/index';
-import {
-  doneSelector,
-} from '../Step3/selectors';
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {ConsoleId} from '../Step3/index';
+import WhatToDoBlock from '../WhatToDoBlock/index';
 
 interface Step4Props {
-  completeAction: () => void;
   leftDone: boolean;
   rightDone: boolean;
+  partNumber: number;
 }
 
 class Step4 extends React.Component<Step4Props, any> {
@@ -35,15 +37,7 @@ class Step4 extends React.Component<Step4Props, any> {
           </div>
           { (this.props.leftDone && this.props.rightDone) ?
             <div className={styles.expContent}>
-              <div>
-                The SU2 output on the left provides visualization of horizontal velocity profile,
-                during right most bending of the flap, left most of the flap, and the condition of the flap on the last
-                iteration, after 4.6 seconds or 160 iterations.
-              </div>
-              <div>
-                We see that the flap is bending under the pressure that builds up on its surface and fluctuates accordingly,
-                demonstrating reasonable physical behaviour.
-              </div>
+              <WhatToDoBlock stepNumber={4} partNumber={this.props.partNumber}/>
             </div> :
             <div className={styles.expContent}>
               The simulation is not yet done, therefore there is no result. Please click the back button, go back to
@@ -119,11 +113,9 @@ class Step4 extends React.Component<Step4Props, any> {
 const mapStateToProps = createStructuredSelector({
   leftDone: doneSelector(ConsoleId.left),
   rightDone: doneSelector(ConsoleId.right),
+  partNumber: partNumberSelector(),
 });
-function mapDispatchToProps(dispatch) {
-  return {
-    };
-}
+
 export default connect<any, any, any>(
   mapStateToProps,
 )(Step4);

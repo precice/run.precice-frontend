@@ -13,10 +13,6 @@ export const partNumberSelector = () => createSelector(
   },
 );
 
-export const completedTaskSelector = () => createSelector(
-  tutorialSubstateSelector,
-  (tutorialSubstate) => tutorialSubstate.get('firstTaskCompleted'));
-
 export const modalClickSelector = () => createSelector(
   tutorialSubstateSelector,
   (tutorialSubstate) => tutorialSubstate.get('modalClick'));
@@ -73,7 +69,6 @@ export const buttonLinksSelector = () => createSelector
       const index = stepArray.indexOf( pathname );
       const buttonLinks = {
         next: stepArray[index + 1],
-        goback: stepArray[-1],
         previous: stepArray [index - 1],
       };
 

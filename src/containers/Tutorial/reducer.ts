@@ -13,16 +13,12 @@ import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  firstTaskCompleted: false,
   modalClick: false,
   partNumber: 1,
 });
 
 function exampleReducer(state = initialState, action: Action) {
   switch (action.type) {
-    case FIRST_TASK_COMPLETED:
-      return state
-        .set('firstTaskCompleted', true);
     case MODAL_CLICK:
       return state
         .set('modalClick', true);

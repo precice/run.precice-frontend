@@ -4,8 +4,23 @@
 // TODO: How is "state" being shadowd in middleware
 // TODO: Why do selectors with substate.get() not work with Object.assign?
 
-
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import * as React from 'react';
+import {createStructuredSelector} from 'reselect';
+import {
+  busySelector,
+  consoleOneStateSelector,
+  consoleTwoStateSelector,
+  hidCheckSelector,
+  highScoreSelector,
+  lockBottomSelector,
+  logMessagesSelector,
+  modalDisplaySelector,
+  timeModalDisplaySelector,
+} from './selectors';
+import {
+  partNumberSelector,
+} from '../Tutorial/selectors';
 import {
   ADD_CHART_DATA,
   ADD_FINAL_TIME,
@@ -20,36 +35,19 @@ import {
   IS_SIMULATION_DONE,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
-  IVE_READ,
 } from '../constants';
-import { createStructuredSelector } from 'reselect';
-import * as React from 'react';
 import * as styles from './styles.scss';
-import {
-  busySelector,
-  consoleOneStateSelector,
-  consoleTwoStateSelector,
-  hidCheckSelector,
-  highScoreSelector,
-  lockBottomSelector,
-  logMessagesSelector,
-  modalDisplaySelector,
-  timeModalDisplaySelector,
-} from './selectors';
-import ConPlot from '../ConvergencePlot';
-import ReduxConsole from '../../components/ReduxConsole/index';
-import Modal = require('react-modal');
-import {
-  iveReadSelector} from '../Step2/selectors';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import * as calculix_1 from '../../static/calculix_1.png';
 import * as calculix_2 from '../../static/calculix_2.png';
 import * as calculix_3 from '../../static/calculix_3.png';
 import * as calculix_4 from '../../static/calculix_4.png';
 import * as SU2_1 from '../../static/SU2_1.png';
 import * as SU2_2 from '../../static/SU2_2.png';
-
-
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import ConPlot from '../ConvergencePlot';
+import ReduxConsole from '../../components/ReduxConsole/index';
+import WhatToDoBlock from '../WhatToDoBlock/index';
+import Modal = require('react-modal');
 
 interface Step3Props {
   runCmd: any;
@@ -75,8 +73,7 @@ interface Step3Props {
   leftLockBottom: boolean;
   rightLockBottom: boolean;
 
-  iveReadAction: () => void;
-  iveReadStep3: boolean;
+  partNumber: number;
 }
 // className={styles.timeModal}
 // overlayClassName={styles.timeModalOverlay}
@@ -94,7 +91,6 @@ class Step3 extends React.Component<Step3Props, any> {
     super(props);
     this.state = { tabIndex: 0 };
     this.renderTable = this.renderTable.bind(this);
-    this.closeOverlay = this.closeOverlay.bind(this);
     this.ButtonColorChange = this.ButtonColorChange.bind(this);
     this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
   }
@@ -122,10 +118,6 @@ class Step3 extends React.Component<Step3Props, any> {
       }
     });
   }
-  private closeOverlay() {
-    document.getElementById('overlay3').style.display = 'none';
-    this.props.iveReadAction();
-  }
   private ButtonColorChange(event) {
     document.getElementById(event.currentTarget.id).style.color = 'gray';
     document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
@@ -139,15 +131,6 @@ class Step3 extends React.Component<Step3Props, any> {
   public render() {
     return (
       <div className={styles.subContainer}>
-        {!this.props.iveReadStep3 ?
-          <div id="overlay3" className={styles.overlay}>
-            <div className={styles.overlayLanding}>This is a small guide on how to use the website</div>
-            <div className={styles.overlayIntro}>You can hide this box <br/> by clicking HIDE <span className="fa fa-long-arrow-right" style={{ fontSize: '18px' }}/></div>
-            <div className={styles.overlayPlot}>You can see the convergence plot by clicking PLOT <br/> and the explanation of the output by clicking OUTPUT_EXP</div>
-            <div className={styles.overlayExp}>These are consoles for simulation. By clicking $, the simulation will run.</div>
-              <div id="overlayButton3"onClick={this.closeOverlay} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal} className={styles.overlayButton}>I'VE READ</div>
-            </div> :
-            <div/>}
         <Modal
           isOpen={this.props.showPlotModal}
           shouldCloseOnOverlayClick={true}
@@ -233,21 +216,7 @@ class Step3 extends React.Component<Step3Props, any> {
             </span>
           </div>
           <div id="hideStep3" className={styles.expContent} hidden={this.props.hidCheck}>
-            After the setup is complete, we are ready to run the coupled simulation. We need to start two terminals,
-            one for each solver that we use.
-            <br/>
-            In each terminal we start a simulation, the order in which they are started is not important.
-            The solver we start first will run until it needs to communicate with the other one and wait until it
-            receives the required data.
-            <br/>
-            For CalculiX, type in command:
-            <p className={styles.expCommand}>
-              ccx_preCICE -i flap -precice-participant Calculix
-            </p>
-            For SU2, type in command:
-            <p className={styles.expCommand}>
-              SU2_CFD euler_config_coupled.cfg
-            </p>
+            <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
           </div>
         </div>
         <div className={styles.subsubContainer}>
@@ -320,8 +289,7 @@ const mapStateToProps = createStructuredSelector({
   rightLockBottom: lockBottomSelector(ConsoleId.right),
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
-  iveReadStep3: iveReadSelector('Step3'),
-
+  partNumber: partNumberSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -343,7 +311,6 @@ function mapDispatchToProps(dispatch) {
     closeTimeModal: () => {
       dispatch({ type: TIME_MODAL_DATA, value: false });
     },
-    iveReadAction: () => { dispatch({ type: IVE_READ, whichStep: 'Step3'}); },
   };
 }
 

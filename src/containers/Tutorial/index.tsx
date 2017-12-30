@@ -1,15 +1,15 @@
 import {connect} from 'react-redux';
-import {XML_ALL_CLICK, XML_CLICK, FIRST_TASK_COMPLETED, MODAL_CLICK, BLOCKNUMBER_FLAG, PARTNUMBER_FLAG} from '../constants';
+import {XML_ALL_CLICK, XML_CLICK, MODAL_CLICK, BLOCKNUMBER_FLAG, PARTNUMBER_FLAG} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 import ProgressBar from '../Progress/index';
 import * as config1 from '../configurationFile/config1';
+import * as config2 from '../configurationFile/config2';
 import {
   buttonLinksSelector,
   percentageSelector,
-  completedTaskSelector,
   modalClickSelector,
   partNumberSelector,
   } from './selectors';
@@ -23,7 +23,6 @@ interface TutorialProps {
   percentage: number;
   buttonLinks: {
     previous?: string,
-    goback: string,
     next?: string,
   };
 
@@ -40,8 +39,6 @@ interface TutorialProps {
   xmlflag4: boolean;
   xmlflag5: boolean;
   xmlflag6: boolean;
-  firstTaskCompleted: boolean;
-  completeAction: () => void;
 
   partNumber: number;
   blockNumber: string;
@@ -49,6 +46,8 @@ interface TutorialProps {
 }
 
 const initial1 = config1.initial;
+const initial2 = config2.initial;
+
 
 class Tutorial extends React.Component<TutorialProps, any> {
   constructor(props: TutorialProps) {
@@ -76,51 +75,44 @@ class Tutorial extends React.Component<TutorialProps, any> {
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <span onClick={this.closeModal} className={styles.close}>&times;</span>
-              {
-                this.props.buttonLinks.next === '/tutorial/part1/step3' ?
-                <h2>Oops, you forgot some parts ;-)</h2> :
-                <h2>Sorry, we can not let you go</h2>
-              }
+              <h2>Oops, you forgot some parts ;-)</h2>
             </div>
             <div className={styles.modalBody}>
-              {
-                this.props.buttonLinks.next === '/tutorial/part1/step3' ?
-                  <div>
-                  <li hidden={this.props.xmlflag2}><div id="modallink2" onClick={this.props.blockNumberAction}>
-                      {eval('config' + this.props.partNumber + '.sub2')} (line 12 ~ 20)
-                    </div>
-                  </li>
-                  <li hidden={this.props.xmlflag3}><div id="modallink3" onClick={this.props.blockNumberAction}>
-                      {eval('config' + this.props.partNumber + '.sub3')} (line 26 ~ 35)
-                    </div>
-                  </li>
-                <li hidden={this.props.xmlflag4}><div id="modallink4" onClick={this.props.blockNumberAction}>
+              <div>
+                <li hidden={this.props.xmlflag2}>
+                  <div id="modallink2" onClick={this.props.blockNumberAction}>
+                    {eval('config' + this.props.partNumber + '.sub2')} (line 12 ~ 20)
+                  </div>
+                </li>
+                <li hidden={this.props.xmlflag3}>
+                  <div id="modallink3" onClick={this.props.blockNumberAction}>
+                    {eval('config' + this.props.partNumber + '.sub3')} (line 26 ~ 35)
+                  </div>
+                </li>
+                <li hidden={this.props.xmlflag4}>
+                  <div id="modallink4" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub4')} (line 37 ~ 40)
                   </div>
                 </li>
-                <li hidden={this.props.xmlflag5}><div id="modallink5" onClick={this.props.blockNumberAction}>
+                <li hidden={this.props.xmlflag5}>
+                  <div id="modallink5" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub5')} (line 44)
                   </div>
                 </li>
-                    <li hidden={this.props.xmlflag6}><div id="modallink6" onClick={this.props.blockNumberAction}>
-                        {eval('config' + this.props.partNumber + '.sub6')} (line 46 ~ 61)
-                      </div>
-                    </li>
-                  </div> :
-                  <h2>The simulation is running, please be patient ;-)</h2>
-              }
+                <li hidden={this.props.xmlflag6}>
+                  <div id="modallink6" onClick={this.props.blockNumberAction}>
+                    {eval('config' + this.props.partNumber + '.sub6')} (line 46 ~ 61)
+                  </div>
+                </li>
               </div>
-            {
-              this.props.buttonLinks.next === '/tutorial/part1/step3' ?
-              <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
-                No, I want to skip those parts.
-              </Link> :
-              <div/>
-            }
+            </div>
+            {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
+              No, I want to skip those parts.
+            </Link>}
           </div>{/*modal content*/}
         </div>{/*the modal*/}
         <ProgressBar percentage={this.props.percentage}/>
-        <div onLoad={(this.props.buttonLinks.goback === '/tutorial/part1/step2/sub6') ? this.props.completeAction : null} className={styles.child}>{this.props.children}</div>
+        <div className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
@@ -129,9 +121,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
               ( this.props.leftBusy || this.props.rightBusy )) ?
                 this.props.buttonLinks.previous && <div onClick={this.openModal} className={styles.btnL}>BACK</div> :
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
-          </div>
-          <div className={styles.btnSubCon}>
-            {this.props.buttonLinks.goback && <Link to={this.props.buttonLinks.goback} className={styles.btn}> GO BACK AND SEE THE CHANGE</Link>}
           </div>
           <div className={styles.btnSubCon}>
             {
@@ -153,7 +142,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
 const mapStateToProps = createStructuredSelector({
   percentage: percentageSelector(),
   buttonLinks: buttonLinksSelector(),
-  firstTaskCompleted: completedTaskSelector(),
   modalClick: modalClickSelector(),
   xmlflag2: xmlFlagSelector('xmlflag2'),
   xmlflag3: xmlFlagSelector('xmlflag3'),
@@ -169,9 +157,6 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    completeAction: () => {
-      dispatch({type: FIRST_TASK_COMPLETED});
-    },
     modalAction: () => {
       dispatch({type: MODAL_CLICK});
     },
