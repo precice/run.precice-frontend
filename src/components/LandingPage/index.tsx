@@ -19,7 +19,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
         <div className={styles.landingPage}>{/*landing page with titles and start button*/}
           <div className={styles.intro}>Coupling tool for partitioned simulations<br />of multi-physics scenarios.</div>
           <div className={styles.subIntro}>Make Coupling Easy Again</div>
-          <div className={styles.btnContainer}><Link to="/tutorial/part1/step1" className={styles.btn}> Start The Tutorial
+          <div className={styles.btnContainer}><Link to="/tutorial/step1" className={styles.btn}> Start The Tutorial
             Now</Link></div>
         </div>
         {/*landing page with titles and start button*/}

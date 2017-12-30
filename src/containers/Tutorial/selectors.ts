@@ -36,21 +36,24 @@ export const percentageSelector = () => createSelector
   // pathnameSelector returns lambda function
   pathnameSelector(),
   (pathname) => {
-    const partNumber = Number(pathname.split('/')[2].substring(4, 5));
-    const stepNumber = Number(pathname.split('/')[3].substring(4, 5));
-    const partSize = Number((100 / TOTAL_PART).toFixed(0));
-    const stepSize = Number((partSize / 3).toFixed(0));
+    if (pathname.split('/')[2] === 'step1') {
+      return 2;
+    } else {
 
-    if (partNumber === TOTAL_PART && stepNumber === 4) {
-      return 100;
-    }else if (stepNumber === 1) {
-      return (partNumber - 1) * partSize + 2;
-    }else if (stepNumber === 4) {
-      return partNumber * partSize;
-    }else {
-      return (partNumber - 1) * partSize + (stepNumber - 1) * stepSize;
+      const partNumber = Number(pathname.split('/')[2].substring(4, 5));
+      const stepNumber = Number(pathname.split('/')[3].substring(4, 5));
+      const partSize = Number((100 / TOTAL_PART).toFixed(0));
+      const stepSize = Number((partSize / 3).toFixed(0));
+
+      if (partNumber === TOTAL_PART && stepNumber === 4) {
+        return 100;
+      } else if (stepNumber === 4) {
+        return partNumber * partSize;
+      } else {
+        return (partNumber - 1) * partSize + (stepNumber - 1) * stepSize;
+      }
     }
-      },
+  },
 );
 
 export const buttonLinksSelector = () => createSelector
@@ -59,11 +62,10 @@ export const buttonLinksSelector = () => createSelector
   pathnameSelector(),
     ( pathname ) => {
       const stepArray = [
-        '/tutorial/part1/step1',
+        '/tutorial/step1',
         '/tutorial/part1/step2',
         '/tutorial/part1/step3',
         '/tutorial/part1/step4',
-        '/tutorial/part2/step1',
         '/tutorial/part2/step2',
         '/tutorial/part2/step3',
         '/tutorial/part2/step4',

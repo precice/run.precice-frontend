@@ -45,13 +45,13 @@ const rootRouteRaw: RouteDefinition = {
       component: Tutorial,
       childRoutes: [
         {
+          path: '/step1',
+          component: Step1,
+        },
+        {
           path: '/part1',
           component: Part1,
           childRoutes: [
-            {
-              path: '/step1',
-              component: Step1,
-            },
             {
               path: '/step2',
               component: Step2,
@@ -70,10 +70,6 @@ const rootRouteRaw: RouteDefinition = {
           path: '/part2',
           component: Part2,
           childRoutes: [
-            {
-              path: '/step1',
-              component: Step1,
-            },
             {
               path: '/step2',
               component: Step2,
