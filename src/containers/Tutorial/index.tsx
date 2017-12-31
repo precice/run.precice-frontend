@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {XML_ALL_CLICK, XML_CLICK, MODAL_CLICK, BLOCKNUMBER_FLAG, PARTNUMBER_FLAG} from '../constants';
+import {XML_ALL_CLICK, MODAL_CLICK, BLOCKNUMBER_FLAG} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
@@ -13,7 +13,7 @@ import {
   modalClickSelector,
   partNumberSelector,
   } from './selectors';
-import { xmlFlagSelector, blockNumberSelector} from '../Step2/selectors';
+import { blockNumberSelector, xmlflagSelector} from '../Step2/selectors';
 import {
   busySelector} from '../Step3/selectors';
 import {
@@ -33,12 +33,10 @@ interface TutorialProps {
   rightBusy: boolean;
 
   xmlSkip: () => void;
-  xmlAction: () => void;
-  xmlflag2: boolean;
-  xmlflag3: boolean;
-  xmlflag4: boolean;
-  xmlflag5: boolean;
-  xmlflag6: boolean;
+  xmlflag: {
+    part1: boolean[];
+    part2: boolean[];
+  };
 
   partNumber: number;
   blockNumber: string;
@@ -48,6 +46,7 @@ interface TutorialProps {
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 
+let partNumber = 1;
 
 class Tutorial extends React.Component<TutorialProps, any> {
   constructor(props: TutorialProps) {
@@ -64,7 +63,8 @@ class Tutorial extends React.Component<TutorialProps, any> {
   public render() {
     return (
       <div className={styles.tutorialContainer}>
-        <div onMouseOver={this.props.modalAction} id="myModal" className={styles.modal}>
+        <script>{partNumber = this.props.partNumber}</script>
+        <div onLoad={this.props.modalAction} id="myModal" className={styles.modal}>
           {
             window.onclick = (event) => {
               if (event.target === document.getElementById('myModal')) {
@@ -79,27 +79,27 @@ class Tutorial extends React.Component<TutorialProps, any> {
             </div>
             <div className={styles.modalBody}>
               <div>
-                <li hidden={this.props.xmlflag2}>
+                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[1]')}>
                   <div id="modallink2" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub2')} (line 12 ~ 20)
                   </div>
                 </li>
-                <li hidden={this.props.xmlflag3}>
+                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[2]')}>
                   <div id="modallink3" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub3')} (line 26 ~ 35)
                   </div>
                 </li>
-                <li hidden={this.props.xmlflag4}>
+                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[3]')}>
                   <div id="modallink4" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub4')} (line 37 ~ 40)
                   </div>
                 </li>
-                <li hidden={this.props.xmlflag5}>
+                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[4]')}>
                   <div id="modallink5" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub5')} (line 44)
                   </div>
                 </li>
-                <li hidden={this.props.xmlflag6}>
+                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')}>
                   <div id="modallink6" onClick={this.props.blockNumberAction}>
                     {eval('config' + this.props.partNumber + '.sub6')} (line 46 ~ 61)
                   </div>
@@ -124,13 +124,18 @@ class Tutorial extends React.Component<TutorialProps, any> {
           </div>
           <div className={styles.btnSubCon}>
             {
-              ((this.props.buttonLinks.next === '/tutorial/part1/step3' &&
-               ( !this.props.xmlflag2 || !this.props.xmlflag3 || !this.props.xmlflag4 ||
-                 !this.props.xmlflag5 || !this.props.xmlflag6 )) ||
-               (this.props.buttonLinks.next === '/tutorial/part1/step4' &&
-               ( this.props.leftBusy || this.props.rightBusy )) ?
+              ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&
+              (
+              !eval('this.props.xmlflag.part' + this.props.partNumber + '[1]') ||
+              !eval('this.props.xmlflag.part' + this.props.partNumber + '[2]') ||
+              !eval('this.props.xmlflag.part' + this.props.partNumber + '[3]') ||
+              !eval('this.props.xmlflag.part' + this.props.partNumber + '[4]') ||
+              !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]') )) ||
+              (this.props.buttonLinks.next === '/tutorial/part1/step4' &&
+              ( this.props.leftBusy || this.props.rightBusy )) ?
                 this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-                this.props.buttonLinks.next && <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)
+                this.props.buttonLinks.next &&
+                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)
             }
           </div>
         </div>
@@ -143,12 +148,7 @@ const mapStateToProps = createStructuredSelector({
   percentage: percentageSelector(),
   buttonLinks: buttonLinksSelector(),
   modalClick: modalClickSelector(),
-  xmlflag2: xmlFlagSelector('xmlflag2'),
-  xmlflag3: xmlFlagSelector('xmlflag3'),
-  xmlflag4: xmlFlagSelector('xmlflag4'),
-  xmlflag5: xmlFlagSelector('xmlflag5'),
-  xmlflag6: xmlFlagSelector('xmlflag6'),
-
+  xmlflag: xmlflagSelector(),
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
   partNumber: partNumberSelector(),
@@ -161,11 +161,8 @@ function mapDispatchToProps(dispatch) {
       dispatch({type: MODAL_CLICK});
     },
     xmlSkip: () => {
-      dispatch({type: XML_ALL_CLICK});
+      dispatch({type: XML_ALL_CLICK, part: partNumber});
       document.getElementById('myModal').style.display = 'none';
-    },
-    xmlAction: (event) => {
-      dispatch({type: XML_CLICK, check: event.currentTarget.id});
     },
     blockNumberAction: (event) => {
       dispatch({

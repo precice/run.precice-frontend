@@ -11,10 +11,6 @@ export const blockNumberSelector = () => createSelector(
   step2SubstateSelector,
   (step2Substate) => step2Substate.get('blockNumber'));
 
-export const iveReadSelector = (whichStep) => createSelector(
-  step2SubstateSelector,
-  (step2Substate) => step2Substate.get('iveRead' + whichStep));
-
 export const initialRelaxationValueSelector = () => createSelector(
   step2SubstateSelector,
   (step2Substate) => step2Substate.get('initialRelaxationValue'));
@@ -23,6 +19,9 @@ export const hidCheckSelector = () => createSelector(
   step2SubstateSelector,
   (step2Substate) => step2Substate.get('hidCheck2'));
 
-export const xmlFlagSelector = (whichFlag) => createSelector(
+export const xmlflagSelector = () => createSelector(
   step2SubstateSelector,
-  (step2Substate) => step2Substate.get(whichFlag));
+  (step2Substate) => {
+    const xmlflag = step2Substate.getIn(['xmlflag']).toJS();
+    return xmlflag;
+  });

@@ -3,7 +3,7 @@ import * as React from 'react';
 import {createStructuredSelector} from 'reselect';
 import {
   hidCheckSelector,
-  xmlFlagSelector,
+  xmlflagSelector,
   initialRelaxationValueSelector,
   blockNumberSelector,
 } from './selectors';
@@ -13,8 +13,8 @@ import {
 } from '../Tutorial/selectors';
 import {
   HID_CHECK2,
-  XML_CLICK,
   BLOCKNUMBER_FLAG,
+  XML_VISIT,
 } from '../constants';
 import * as styles from './styles.scss';
 import * as config1 from '../configurationFile/config1';
@@ -27,13 +27,11 @@ interface Step2Props {
   hidAction: () => void;
   hidCheck2: boolean;
   modalClick: boolean;
-  xmlAction: () => void;
-  xmlflag1: boolean;
-  xmlflag2: boolean;
-  xmlflag3: boolean;
-  xmlflag4: boolean;
-  xmlflag5: boolean;
-  xmlflag6: boolean;
+  xmlVisitAction: () => void;
+  xmlflag: {
+    part1: boolean[];
+    part2: boolean[];
+  };
   initialRelaxationValue: number;
   partNumber: number;
   blockNumber: string;
@@ -69,7 +67,7 @@ class Step2 extends React.Component<Step2Props, any> {
   }
   public render() {
     return (
-      <div onMouseOver={this.props.xmlAction} className={styles.subContainer}>
+      <div onMouseOver={this.props.xmlVisitAction} className={styles.subContainer}>
         <script>{partNumber = this.props.partNumber}</script>
         <script>{blockNumber = this.props.blockNumber}</script>
         <script>{whichSection = 'xmlflag' + blockNumber}</script>
@@ -105,12 +103,7 @@ class Step2 extends React.Component<Step2Props, any> {
 }
 const mapStateToProps = createStructuredSelector({
   hidCheck2: hidCheckSelector(),
-  xmlflag1: xmlFlagSelector('xmlflag1'),
-  xmlflag2: xmlFlagSelector('xmlflag2'),
-  xmlflag3: xmlFlagSelector('xmlflag3'),
-  xmlflag4: xmlFlagSelector('xmlflag4'),
-  xmlflag5: xmlFlagSelector('xmlflag5'),
-  xmlflag6: xmlFlagSelector('xmlflag6'),
+  xmlflag: xmlflagSelector(),
   modalClick: modalClickSelector(),
   initialRelaxationValue: initialRelaxationValueSelector(),
   partNumber: partNumberSelector(),
@@ -120,7 +113,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
-    xmlAction: () => { dispatch({ type: XML_CLICK, check: whichSection}); },
+    xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber }); },
     blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
   };
 }

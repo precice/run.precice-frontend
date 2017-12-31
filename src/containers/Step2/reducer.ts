@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2, XML_CLICK, XML_ALL_CLICK, IVE_READ, INITIAL_RELAXATION_CHANGE, BLOCKNUMBER_FLAG
+  HID_CHECK2, XML_CLICK, XML_ALL_CLICK, IVE_READ, INITIAL_RELAXATION_CHANGE, BLOCKNUMBER_FLAG, XML_VISIT,
 } from '../constants';
 import { Action } from 'redux';
 
@@ -16,12 +16,10 @@ import { Action } from 'redux';
 const initialState = fromJS({
   iveReadStep2: false,
   iveReadStep3: false,
-  xmlflag1: false,
-  xmlflag2: false,
-  xmlflag3: false,
-  xmlflag4: false,
-  xmlflag5: false,
-  xmlflag6: false,
+  xmlflag: {
+    part1: [false, false, false, false, false, false],
+    part2: [false, false, false, false, false, false],
+  },
   initialRelaxationValue: 0.9,
   blockNumber: '1',
 });
@@ -31,12 +29,19 @@ function step2Reducer(state = initialState, action: any) {
     case HID_CHECK2:
       return state
         .set('hidCheck2', !action.check);
-    case XML_CLICK:
+    case XML_VISIT: {
+      const trueize = (x) => (x.splice(Number(action.block) - 1, 1, true));
       return state
-        .set(action.check, true);
+        .updateIn(['xmlflag', 'part' + action.part.toString()], trueize );
+    }
     case XML_ALL_CLICK:
       return state
-        .set('xmlflag2', true).set('xmlflag3', true).set('xmlflag4', true).set('xmlflag5', true).set('xmlflag6', true);
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(0, 1, true)) )
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(1, 1, true)) )
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(2, 1, true)) )
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(3, 1, true)) )
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(4, 1, true)) )
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(5, 1, true)) );
     case IVE_READ:
       return state
         .set('iveRead' + action.whichStep, true);
