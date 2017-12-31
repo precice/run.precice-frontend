@@ -89,7 +89,6 @@ export enum ConsoleId {
 class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
-    this.state = { tabIndex: 0 };
     this.renderTable = this.renderTable.bind(this);
     this.ButtonColorChange = this.ButtonColorChange.bind(this);
     this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
@@ -136,30 +135,7 @@ class Step3 extends React.Component<Step3Props, any> {
           shouldCloseOnOverlayClick={true}
           onRequestClose={this.props.closePlotModal}
         >
-          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({tabIndex})}>
-            <TabList className={styles.reactTabsTabList}>
-              <Tab className={this.state.tabIndex === 0 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Convergence Plot</Tab>
-              <Tab className={this.state.tabIndex === 1 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Output SU2</Tab>
-              <Tab className={this.state.tabIndex === 2 ? styles.reactTabsTabSelected : styles.reactTabsTab}>Output Calculix</Tab>
-            </TabList>
-            <TabPanel
-              className={this.state.tabIndex === 0 ? styles.reactTabsTabPanelSelected : styles.reactTabsTabPanel}>
-              <ConPlot/>
-            </TabPanel>
-            <TabPanel
-              className={this.state.tabIndex === 1 ? styles.reactTabsTabPanelSelected : styles.reactTabsTabPanel}>
-              <img src={SU2_1} className={styles.graph}/>
-              <img src={SU2_2} className={styles.graph}/></TabPanel>
-            <TabPanel
-              className={this.state.tabIndex === 2 ? styles.reactTabsTabPanelSelected : styles.reactTabsTabPanel}>
-              <img src={calculix_1} className={styles.graph}/>
-              <img src={calculix_2} className={styles.graph}/>
-              <img src={calculix_3} className={styles.graph}/>
-              <img src={calculix_4} className={styles.graph}/>
-            </TabPanel>
-          </Tabs>
-
-
+          <ConPlot/>
         </Modal>
 
         <Modal
@@ -202,8 +178,13 @@ class Step3 extends React.Component<Step3Props, any> {
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
-            <span id="plotButton" onClick={this.props.openPlotModal} className={styles.modalBtn} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Plot </span>
-            <span id="outputButton" onClick={this.props.openPlotModal} className={styles.modalBtn} onMouseOver={this.ButtonColorChange} onMouseOut={this.ButtonColorOriginal}> Output_Exp</span>
+            <span
+              id="plotButton"
+              onClick={this.props.openPlotModal}
+              className={styles.modalBtn}
+              onMouseOver={this.ButtonColorChange}
+              onMouseOut={this.ButtonColorOriginal}> Plot
+            </span>
             <span className={styles.title}>what to do</span>
             <span
               id="hideButton"
