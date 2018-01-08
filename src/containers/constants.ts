@@ -26,4 +26,4 @@ export const PARTNUMBER_FLAG = 'action/PARTNUMBER_FLAG';
 export const xmlBackgroundColor = '#505050';
 export const xmlEmphasizeBackgroundColor = '#8f4746';
 
-export const TOTAL_PART = 2;
+export const TOTAL_PART = 3;

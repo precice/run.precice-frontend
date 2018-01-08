@@ -120,7 +120,6 @@ class Step3 extends React.Component<Step3Props, any> {
   private ButtonColorChange(event) {
     document.getElementById(event.currentTarget.id).style.color = 'gray';
     document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
-    this.setState({tabIndex: event.currentTarget.id === 'plotButton' ? 0 : 1});
   }
   private ButtonColorOriginal(event) {
     document.getElementById(event.currentTarget.id).style.color = 'white';

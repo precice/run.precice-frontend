@@ -12,6 +12,8 @@ import Step3 from './containers/Step3';
 import Step4 from './containers/Step4';
 import Part1 from './containers/Part1';
 import Part2 from './containers/Part2';
+import Part3 from './containers/Part3';
+
 
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -69,6 +71,24 @@ const rootRouteRaw: RouteDefinition = {
         {
           path: '/part2',
           component: Part2,
+          childRoutes: [
+            {
+              path: '/step2',
+              component: Step2,
+            },
+            {
+              path: '/step3',
+              component: Step3,
+            },
+            {
+              path: '/step4',
+              component: Step4,
+            },
+          ],
+        },
+        {
+          path: '/part3',
+          component: Part3,
           childRoutes: [
             {
               path: '/step2',
