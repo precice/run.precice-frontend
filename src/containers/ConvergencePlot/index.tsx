@@ -33,7 +33,7 @@ class ConPlot extends React.Component<ConPlotProps, any> {
         >
           <VictoryAxis
             dependentAxis={true}
-            label="Iterations"
+            label="Coupling Iterations"
             fixLabelOverlap={true}
             axisLabelComponent={<VictoryLabel dy={-10} />}
           />

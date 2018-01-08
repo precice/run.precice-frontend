@@ -15,7 +15,7 @@ import {
   highScoreSelector,
   lockBottomSelector,
   logMessagesSelector,
-  modalDisplaySelector,
+  modalDisplaySelector, oldChunksSelector,
   timeModalDisplaySelector,
 } from './selectors';
 import {
@@ -26,13 +26,15 @@ import {
   ADD_FINAL_TIME,
   ADD_PROGRESS_MAX_ITER,
   CONSOLE_ADD_LINES,
+  CONSOLE_CLEAR,
   CONSOLE_ONE_ACTIVE,
   CONSOLE_TOGGLE_BUSY,
   CONSOLE_TOGGLE_LOCK_BOTTOM,
   CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
-  IS_SIMULATION_RUNNING,
   IS_SIMULATION_DONE,
+  IS_SIMULATION_RUNNING,
+  IVE_READ, PLOT_DELETE_DATA,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
 } from '../constants';
@@ -45,13 +47,16 @@ import * as SU2_1 from '../../static/SU2_1.png';
 import * as SU2_2 from '../../static/SU2_2.png';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import ConPlot from '../ConvergencePlot';
-import ReduxConsole from '../../components/ReduxConsole/index';
+import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxConsole/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
+import { initialRelaxationValueSelector } from '../Step2/selectors';
 import Modal = require('react-modal');
 
 interface Step3Props {
+  dispatch: any;
   runCmd: any;
   toggleLockBottom: any;
+  clearConsole: any;
   hidAction: () => void;
   hidCheck: boolean;
   consoleOneActive: boolean;
@@ -72,9 +77,13 @@ interface Step3Props {
   rightBusy: boolean;
   leftLockBottom: boolean;
   rightLockBottom: boolean;
+  leftOldChunks: [ConsoleChunk];
+  rightOldChunks: [ConsoleChunk];
+  relax: number;
 
   partNumber: number;
 }
+
 // className={styles.timeModal}
 // overlayClassName={styles.timeModalOverlay}
 
@@ -121,6 +130,7 @@ class Step3 extends React.Component<Step3Props, any> {
     document.getElementById(event.currentTarget.id).style.color = 'gray';
     document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
   }
+
   private ButtonColorOriginal(event) {
     document.getElementById(event.currentTarget.id).style.color = 'white';
     document.getElementById(event.currentTarget.id).style.borderColor = 'white';
@@ -182,7 +192,8 @@ class Step3 extends React.Component<Step3Props, any> {
               onClick={this.props.openPlotModal}
               className={styles.modalBtn}
               onMouseOver={this.ButtonColorChange}
-              onMouseOut={this.ButtonColorOriginal}> Plot
+              onMouseOut={this.ButtonColorOriginal}
+            > Plot
             </span>
             <span className={styles.title}>what to do</span>
             <span
@@ -203,39 +214,73 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.solL}>
             <ReduxConsole
               handler={(txt: string) => {
-                this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix');
+                this.props.dispatch({
+                  type: CONSOLE_ADD_LINES,
+                  consoleId: ConsoleId.left,
+                  lines: ['$ ccx_preCICE -i flap -precice-participant Calculix']});
+                this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix', this.props.relax);
               }}
-              promptLabel="$ "
+              promptLabel="$ ccx_preCICE -i flap -precice-participant Calculix"
               busy={this.props.leftBusy}
               logMessages={this.props.leftLogMessages}
               lockBottom={this.props.leftLockBottom}
+              oldChunks={this.props.leftOldChunks}
             />
-            <div
-              onClick={() => {
-                this.props.toggleLockBottom(ConsoleId.left, !this.props.leftLockBottom);
-              }}
-            >
-              <input type="checkbox" readOnly={true} checked={this.props.leftLockBottom}/>&nbsp;
-              Scroll with output
+            <div>
+              <div
+                className={styles.belowConsoleElm}
+                onClick={() => {
+                  this.props.toggleLockBottom(ConsoleId.left, !this.props.leftLockBottom);
+                }}
+              >
+                <input type="checkbox" readOnly={true} checked={this.props.leftLockBottom}/>&nbsp;
+                Scroll with output
+              </div>
+              &nbsp;
+              <a
+                className={`${styles.belowConsoleElm} ${styles.link}`}
+                onClick={() => {
+                  this.props.clearConsole(ConsoleId.left);
+                }}
+              >
+                Clear Console
+              </a>
             </div>
           </div>
           <div className={styles.solR}>
             <ReduxConsole
               handler={(txt: string) => {
-                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg');
+                this.props.dispatch({
+                  type: CONSOLE_ADD_LINES,
+                  consoleId: ConsoleId.right,
+                  lines: ['$ SU2_CFD euler_config_coupled.cfg']});
+                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg', this.props.relax);
               }}
-              promptLabel="$ "
+              promptLabel="$ SU2_CFD euler_config_coupled.cfg"
               busy={this.props.rightBusy}
               logMessages={this.props.rightLogMessages}
               lockBottom={this.props.rightLockBottom}
+              oldChunks={this.props.rightOldChunks}
             />
-            <div
-              onClick={() => {
-                this.props.toggleLockBottom(ConsoleId.right, !this.props.rightLockBottom);
-              }}
-            >
-              <input type="checkbox" readOnly={true} checked={this.props.rightLockBottom}/>&nbsp;
-              Scroll with output
+            <div>
+              <div
+                className={styles.belowConsoleElm}
+                onClick={() => {
+                  this.props.toggleLockBottom(ConsoleId.right, !this.props.rightLockBottom);
+                }}
+              >
+                <input type="checkbox" readOnly={true} checked={this.props.rightLockBottom}/>&nbsp;
+                Scroll with output
+              </div>
+              &nbsp;
+              <a
+                className={`${styles.belowConsoleElm} ${styles.link}`}
+                onClick={() => {
+                  this.props.clearConsole(ConsoleId.right);
+                }}
+              >
+                Clear Console
+              </a>
             </div>
           </div>
         </div>
@@ -243,6 +288,7 @@ class Step3 extends React.Component<Step3Props, any> {
     );
   }
 }
+
 /*
  (
  () => {
@@ -270,13 +316,35 @@ const mapStateToProps = createStructuredSelector({
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
   partNumber: partNumberSelector(),
+  leftOldChunks: oldChunksSelector(ConsoleId.left),
+  rightOldChunks: oldChunksSelector(ConsoleId.right),
+  relax: initialRelaxationValueSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    runCmd: (consoleId: ConsoleId, cmd: string) => {
-      dispatch({ type: 'socket/exec_cmd', consoleId, cmd });
+    dispatch: (...args) => dispatch(...args),
+    runCmd: (consoleId: ConsoleId, cmd: string, relaxParam: number) => {
+      dispatch({ type: 'socket/exec_cmd', consoleId, cmd, relaxParam });
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
+      // clear plot when starting the simulation
+      dispatch({ type: PLOT_DELETE_DATA });
+      // parsing inside consoleMiddleware
+      lastIt = 0;
+// lastDt = 1 reflects starting value of dt
+// in Calculix output
+      lastDt = 1;
+// See explanation below in consoleMiddleware
+      dtFlag = 1;
+
+// detect console activity
+// only dispatch action the
+// first time
+      consoleOne = false;
+      consoleTwo = false;
+
+      it = undefined;
+      dt = undefined;
     },
     toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => {
@@ -290,6 +358,9 @@ function mapDispatchToProps(dispatch) {
     },
     closeTimeModal: () => {
       dispatch({ type: TIME_MODAL_DATA, value: false });
+    },
+    clearConsole: (consoleId: ConsoleId) => {
+      dispatch({ type: CONSOLE_CLEAR, consoleId });
     },
   };
 }
@@ -400,7 +471,8 @@ export const consoleMiddleware = store => next => action => {
       store.dispatch({ type: ADD_CHART_DATA, data: { x: dt, y: it } });
       store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code] });
       store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
-      store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true});
+      store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true });
+      // Variables to hold global information for
     }
 
   }

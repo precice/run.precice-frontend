@@ -15,7 +15,7 @@ class Step1 extends React.Component<Step1Props, undefined> {
       <div className={styles.tuInContainer}>
         <header className={styles.tuInHeader}>introduction</header>
         <li className={styles.tuInContent}>
-          In this tutorial, we will tutor you how to do a coupled fluid-structure
+          In this tutorial, we show you how to do a coupled fluid-structure
           interaction (FSI) simulation step by step with some interaction.
           <div><br/>We model a fluid flowing through a channel.
             A solid, elastic flap is fixed to the floor of this channel.

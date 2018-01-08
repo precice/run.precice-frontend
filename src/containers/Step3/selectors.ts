@@ -59,6 +59,11 @@ export const busySelector = (consoleId) => createSelector(
   (substate) => substate.getIn(['consoles', consoleId, 'busy']),
 );
 
+export const oldChunksSelector = (consoleId) => createSelector(
+  step3SubstateSelector,
+  (substate) => substate.getIn(['consoles', consoleId, 'oldChunks']),
+);
+
 export const doneSelector = (consoleId) => createSelector(
   step3SubstateSelector,
   (substate) => substate.getIn(['consoles', consoleId, 'done']),

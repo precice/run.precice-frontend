@@ -119,7 +119,15 @@ module.exports = (options) => {
         },
         {
           test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,
-          loader: 'file-loader'
+          loader: [
+            'file-loader',
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                bypassOnDebug: true,
+              },
+            },
+          ],
         }
       ],
     },

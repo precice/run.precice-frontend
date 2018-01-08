@@ -1,36 +1,41 @@
-import { fromJS } from 'immutable';
+import { fromJS, List } from 'immutable';
 import {
   ADD_FINAL_TIME,
   CONSOLE_ADD_LINES,
+  CONSOLE_CLEAR,
   CONSOLE_ONE_ACTIVE,
   CONSOLE_TOGGLE_BUSY,
   CONSOLE_TOGGLE_LOCK_BOTTOM,
   CONSOLE_TWO_ACTIVE,
   HID_CHECK3,
-  IS_SIMULATION_RUNNING,
   IS_SIMULATION_DONE,
+  IS_SIMULATION_RUNNING,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
 } from '../constants';
 import { ConsoleId } from './index';
 
+
+const cachedHs = localStorage.getItem('highscoreTimes');
 const initialState = fromJS({
   consoles: {
     [ConsoleId.left]: {
-      logMessages: ['$ ccx_preCICE -i flap -precice-participant Calculix'],
+      logMessages: [],
       lockBottom: true,
       busy: false,
       done: false,
+      oldChunks: [],
     },
     [ConsoleId.right]: {
-      logMessages: ['$ SU2_CFD euler_config_coupled.cfg'],
+      logMessages: [],
       lockBottom: true,
       busy: false,
       done: false,
+      oldChunks: [],
     },
   },
 
-  finalTime: [],
+  finalTime: cachedHs ? JSON.parse(cachedHs) : [],
   hidCheck: false,
   consoleOneActive: false,
   consoleTwoActive: false,
@@ -43,18 +48,34 @@ const initialState = fromJS({
 // IS_SIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
+const MSG_CHUNKSIZE = 1000;
+
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
-      return state.updateIn(['consoles', action.consoleId, 'logMessages'], (old) => {
-        if (old.size < 5000) {
+      let newChunk = null;
+      const newState = state.updateIn(['consoles', action.consoleId, 'logMessages'], (old: List<string>) => {
+        if (old.size < MSG_CHUNKSIZE) {
           return old.push(...lines);
         } else {
-          return old.slice(lines.length).push(...lines);
+          newChunk = {
+            key: (Math.random() + '').substr(0, 10) + Date.now(),
+            content: old.slice(0, MSG_CHUNKSIZE).join('\n'),
+          };
+          return old.slice(MSG_CHUNKSIZE).push(...lines);
         }
       });
+      if (newChunk) {
+        return newState.updateIn(['consoles', action.consoleId, 'oldChunks'], (old) => old.push(newChunk));
+      }
+      return newState;
     }
+    case CONSOLE_CLEAR:
+      return state
+        .updateIn(['consoles', action.consoleId, 'logMessages'], () => fromJS([]))
+        .updateIn(['consoles', action.consoleId, 'oldChunks'], () => fromJS([]))
+        ;
     case CONSOLE_TOGGLE_BUSY:
       return state
         .setIn(['consoles', action.consoleId, 'busy'], action.value);
@@ -101,10 +122,17 @@ export function step3Reducer(state = initialState, action: any) {
           .set('isSimulationRunning', action.value);
       }
     }
-    case ADD_FINAL_TIME:
+    case ADD_FINAL_TIME: {
+      const cached = localStorage.getItem('highscoreTimes');
+      const newVal = cached ? JSON.parse(cached) : [];
+      newVal.push(action.data);
+      localStorage.setItem(
+        'highscoreTimes',
+        JSON.stringify(newVal),
+      );
       return state
         .update('finalTime', finalTime => finalTime.push(action.data));
-
+    }
     default:
       return state;
   }

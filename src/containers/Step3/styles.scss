@@ -118,63 +118,6 @@
     }
 
   }
-
-  // from the reat-console component
-  :global {
-
-    /* stylelint-disable */
-
-    $background-color: $terminal-background-color;
-    $prompt-color: $terminal-code-color;
-    $message-color: $terminal-code-color;
-    $cursor-color: $terminal-code-color;
-    $cursor-text-color: $terminal-code-color;
-
-    .react-console-container {
-      height: 100%;
-      cursor: text;
-      overflow: auto;
-      white-space: pre;
-      box-sizing: border-box;
-    }
-
-    div.react-console-focus span.react-console-cursor {
-      background: $cursor-color;
-      color: $cursor-text-color;
-    }
-
-    div.react-console-nofocus span.react-console-cursor {
-      background: none;
-      color: $prompt-color;
-      outline: 0.1em solid $cursor-color;
-      outline-offset: -0.1em;
-    }
-
-    div.react-console-focus span.react-console-cursor-idle {
-      animation: react-console-cursor-animation 1s infinite;
-    }
-
-    @keyframes:global(react-console-cursor-animation) {
-      0% {
-        background: $cursor-color;
-        color: $cursor-text-color;
-      }
-      50% {
-        background: $cursor-color;
-        color: $cursor-text-color;
-      }
-      51% {
-        background: none;
-        color: $prompt-color;
-      }
-      100% {
-        background: none;
-        color: $prompt-color;
-      }
-    }
-
-    /* stylelint-enable */
-  }
 }
 
 @keyframes flashingtext{
@@ -218,3 +161,16 @@
   }
 
 }
+
+.below-console-elm {
+  display: inline-block;
+
+  &.link {
+    color: blue;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+

@@ -15,5 +15,3 @@ class Part2Sub extends React.Component<Part2SubProps, any> {
 }
 
 export default Part2Sub;
-
-
