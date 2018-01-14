@@ -65,6 +65,15 @@ export const buttonLinksSelector = () => createSelector
         '/tutorial/part2/step2',
         '/tutorial/part2/step3',
         '/tutorial/part2/step4',
+        '/tutorial/part3/step2',
+        '/tutorial/part3/step3',
+        '/tutorial/part3/step4',
+        '/tutorial/part4/step2',
+        '/tutorial/part4/step3',
+        '/tutorial/part4/step4',
+        '/tutorial/part5/step2',
+        '/tutorial/part5/step3',
+        '/tutorial/part5/step4',
       ];
       const index = stepArray.indexOf( pathname );
       const buttonLinks = {

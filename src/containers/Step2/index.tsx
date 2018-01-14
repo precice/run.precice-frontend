@@ -19,6 +19,9 @@ import {
 import * as styles from './styles.scss';
 import * as config1 from '../configurationFile/config1';
 import * as config2 from '../configurationFile/config2';
+import * as config3 from '../configurationFile/config3';
+import * as config4 from '../configurationFile/config4';
+import * as config5 from '../configurationFile/config5';
 import XmlBlock from '../XmlBlock/index';
 import Step2SubExplanationBlock from '../Step2SubExplanationBlock/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
@@ -31,6 +34,9 @@ interface Step2Props {
   xmlflag: {
     part1: boolean[];
     part2: boolean[];
+    part3: boolean[];
+    part4: boolean[];
+    part5: boolean[];
   };
   initialRelaxationValue: number;
   partNumber: number;
@@ -44,6 +50,10 @@ let blockNumber = '1';
 
 const initial1 = config1.initial;
 const initial2 = config2.initial;
+const initial3 = config3.initial;
+const initial4 = config4.initial;
+const initial5 = config5.initial;
+
 
 class Step2 extends React.Component<Step2Props, any> {
   constructor(props: Step2Props) {

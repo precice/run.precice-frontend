@@ -19,6 +19,9 @@ const initialState = fromJS({
   xmlflag: {
     part1: [false, false, false, false, false, false],
     part2: [false, false, false, false, false, false],
+    part3: [false, false, false, false, false, false],
+    part4: [false, false, false, false, false, false],
+    part5: [false, false, true, true, true, true],
   },
   initialRelaxationValue: 0.9,
   blockNumber: '1',

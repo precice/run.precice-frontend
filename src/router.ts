@@ -13,6 +13,9 @@ import Step4 from './containers/Step4';
 import Part1 from './containers/Part1';
 import Part2 from './containers/Part2';
 import Part3 from './containers/Part3';
+import Part4 from './containers/Part4';
+import Part5 from './containers/Part5';
+
 
 
 
@@ -89,6 +92,42 @@ const rootRouteRaw: RouteDefinition = {
         {
           path: '/part3',
           component: Part3,
+          childRoutes: [
+            {
+              path: '/step2',
+              component: Step2,
+            },
+            {
+              path: '/step3',
+              component: Step3,
+            },
+            {
+              path: '/step4',
+              component: Step4,
+            },
+          ],
+        },
+        {
+          path: '/part4',
+          component: Part4,
+          childRoutes: [
+            {
+              path: '/step2',
+              component: Step2,
+            },
+            {
+              path: '/step3',
+              component: Step3,
+            },
+            {
+              path: '/step4',
+              component: Step4,
+            },
+          ],
+        },
+        {
+          path: '/part5',
+          component: Part5,
           childRoutes: [
             {
               path: '/step2',
