@@ -64,16 +64,6 @@ class Step2 extends React.Component<Step2Props, any> {
         end: 1,
       },
     };
-    this.ButtonColorChange = this.ButtonColorChange.bind(this);
-    this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
-  }
-  private ButtonColorChange(event) {
-    document.getElementById(event.currentTarget.id).style.color = 'gray';
-    document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
-  }
-  private ButtonColorOriginal(event) {
-    document.getElementById(event.currentTarget.id).style.color = 'white';
-    document.getElementById(event.currentTarget.id).style.borderColor = 'white';
   }
   public render() {
     return (
@@ -85,7 +75,8 @@ class Step2 extends React.Component<Step2Props, any> {
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span className={styles.title}>what to do</span>
-            <span id="hideButton" onClick={this.props.hidAction} className={styles.hide} onMouseOver={this.ButtonColorChange}  onMouseOut={this.ButtonColorOriginal} >{this.props.hidCheck2 ? 'expand' : 'hide'}
+            <span id="hideButton" onClick={this.props.hidAction} className={styles.hide}>
+              {this.props.hidCheck2 ? 'expand' : 'hide'}
             </span>
           </div>
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>

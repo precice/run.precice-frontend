@@ -99,8 +99,6 @@ class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
     this.renderTable = this.renderTable.bind(this);
-    this.ButtonColorChange = this.ButtonColorChange.bind(this);
-    this.ButtonColorOriginal = this.ButtonColorOriginal.bind(this);
   }
 
   // Renders part of table
@@ -126,27 +124,10 @@ class Step3 extends React.Component<Step3Props, any> {
       }
     });
   }
-  private ButtonColorChange(event) {
-    document.getElementById(event.currentTarget.id).style.color = 'gray';
-    document.getElementById(event.currentTarget.id).style.borderColor = 'gray';
-  }
-
-  private ButtonColorOriginal(event) {
-    document.getElementById(event.currentTarget.id).style.color = 'white';
-    document.getElementById(event.currentTarget.id).style.borderColor = 'white';
-  }
 
   public render() {
     return (
       <div className={styles.subContainer}>
-        <Modal
-          isOpen={this.props.showPlotModal}
-          shouldCloseOnOverlayClick={true}
-          onRequestClose={this.props.closePlotModal}
-        >
-          <ConPlot/>
-        </Modal>
-
         <Modal
           isOpen={this.props.showTimeModal}
           shouldCloseOnOverlayClick={true}
@@ -190,24 +171,20 @@ class Step3 extends React.Component<Step3Props, any> {
             <span
               id="plotButton"
               onClick={this.props.openPlotModal}
-              className={styles.modalBtn}
-              onMouseOver={this.ButtonColorChange}
-              onMouseOut={this.ButtonColorOriginal}
+              className={styles.plotBtn}
             > Plot
             </span>
-            <span className={styles.title}>what to do</span>
+            <span className={styles.title} onClick={this.props.closePlotModal}>what to do</span>
             <span
               id="hideButton"
               onClick={this.props.hidAction}
               className={styles.hide}
-              onMouseOver={this.ButtonColorChange}
-              onMouseOut={this.ButtonColorOriginal}
             >
               {this.props.hidCheck ? 'expand' : 'hide'}
             </span>
           </div>
           <div id="hideStep3" className={styles.expContent} hidden={this.props.hidCheck}>
-            <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
+            {this.props.showPlotModal ? <ConPlot/> : <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>}
           </div>
         </div>
         <div className={styles.subsubContainer}>

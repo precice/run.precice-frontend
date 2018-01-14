@@ -33,11 +33,16 @@
       border-radius: 10px;
       color: $emphasize-color;
       cursor: pointer;
-      height: 20px;
       letter-spacing: 1px;
       padding: 5px;
       text-align: center;
       touch-action: manipulation;
+    }
+    .btn:hover,
+    .btn:focus {
+      color: $btn-on-mouse-over;
+      border-color: $btn-on-mouse-over;
+      cursor: pointer;
     }
   }
 
@@ -47,6 +52,8 @@
     flex-direction: column;
     margin: 125px auto;
     width: 100%;
+    border-radius: $container-border-radius;
+
 
     .intro {
       color: $primary-color;

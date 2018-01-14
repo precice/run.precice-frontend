@@ -2,7 +2,7 @@
  * Created by hasan on 21.06.17.
  */
 import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
+import {TOTAL_PART} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
@@ -10,6 +10,7 @@ import * as styles from './styles.scss';
 
 interface ProgressProps {
   percentage: number;
+  partNumber: number;
 }
 
 class ProgressBar extends React.Component<ProgressProps, any> {

@@ -14,6 +14,7 @@
     display: inline-block;
     flex: 0 1 auto;
     margin-bottom: $margin-between;
+    border-radius: $container-border-radius;
 
     .exp-header {
       display: flex;
@@ -23,12 +24,21 @@
       text-transform: uppercase;
 
 
-      .modal-btn{
+      .plot-btn{
         flex: 1 1 auto;
         cursor: pointer;
         text-align: center;
         width: 10%;
         order : 1;
+        padding: 0 10px;
+      }
+      .plot-btn:hover {
+        color: $btn-on-mouse-over;
+        border-color: $btn-on-mouse-over;
+        cursor: pointer;
+      }
+      .plot-btn:focus {
+        border: 4px solid $primary-color;
       }
 
       .title {
@@ -36,6 +46,14 @@
         text-align: center;
         width: 80%;
         order: 2;
+      }
+      .title:hover {
+        color: $btn-on-mouse-over;
+        border-color: $btn-on-mouse-over;
+        cursor: pointer;
+      }
+      .title:focus {
+        border: 4px solid $primary-color;
       }
 
 
@@ -45,6 +63,14 @@
         text-align: center;
         width: 10%;
         order: 3;
+        padding: 0 10px;
+      }
+      .hide:hover {
+        color: $btn-on-mouse-over;
+        cursor: pointer;
+      }
+      .hide:focus {
+        border: 4px solid $primary-color;
       }
     }
 
@@ -104,6 +130,7 @@
       display: flex;
       flex-direction: column;
       min-width: 0; // tames flexbox weird behavior see https://stackoverflow.com/a/38224283/3200478
+      border-radius: $container-border-radius;
 
 
     }
