@@ -4,13 +4,13 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: row;
-  margin: 0 auto;
+  margin: auto;
   width: 100%;
 
   .exp-container {
     background-color: $explain-background-color;
     color: $primary-color;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     width: 380px;
     display: flex;
     flex-direction: column;

@@ -58,6 +58,7 @@
   .interact-container {
     display: flex;
     flex: 1 1 auto;
+    height: 10px;
 
     .comment-container {
       background-color: $solver-background-color;
