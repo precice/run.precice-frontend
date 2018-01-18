@@ -49,8 +49,7 @@
       max-width: 1000px;
 
       .link {
-        color: $primary-color;
-        font-style: italic;
+        color: $link-color;
       }
     }
   }
@@ -76,11 +75,12 @@
         line-height: 1.5;
         padding-top: 10px;
         text-align: center;
-        text-transform: uppercase;
+        text-transform: capitalize;
+        color: $header-color;
       }
 
       .exp {
-        font-family: Courier;
+        font-family: $body-font-family;
         line-height: 1.5;
         margin: 10px;
         padding: 20px;

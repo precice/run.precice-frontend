@@ -5,20 +5,20 @@
   flex: 1 1 auto;
   flex-direction: column;
   margin: 0 auto;
-  overflow-y: auto;
   width: 100%;
 
   .exp-container {
     background-color: $explain-background-color;
     color: $primary-color;
-    display: inline-block;
-    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
     margin-bottom: $margin-between;
     border-radius: $container-border-radius;
-    height:10px;
-    overflow-y: auto;
+
 
     .exp-header {
+      flex: 0 0 auto;
       display: flex;
       font-size: 20px;
       line-height: 1.5;
@@ -104,14 +104,17 @@
     }
 
     .exp-content {
+      flex: 1 1 auto;
       line-height: 1.5;
       margin: 10px auto;
       max-width: 1000px;
+      overflow-y: auto;
+      height:250px;
 
       .exp-command {
         background-color: $terminal-background-color;
         color: $terminal-code-color;
-        font-family: Courier;
+        font-family: $body-font-family;
         padding: 0.1em;
       }
     }
@@ -126,16 +129,14 @@
     .sol-r,
     .sol-l {
 
-      margin-right: $margin-between;
       overflow-y: auto;
-      padding: 0.5em;
       flex: 1 1 10px;
       display: flex;
       flex-direction: column;
       min-width: 0; // tames flexbox weird behavior see https://stackoverflow.com/a/38224283/3200478
-      border-radius: $container-border-radius;
-
-
+    }
+    .sol-l {
+      margin-right: $margin-between;
     }
 
     .sol-header {
@@ -196,9 +197,10 @@
   display: inline-block;
 
   &.link {
-    color: blue;
+    color: $link-color;
     &:hover {
-      text-decoration: underline;
+      color: $btn-on-mouse-over;
+      cursor: pointer;
     }
   }
 }

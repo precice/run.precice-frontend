@@ -325,7 +325,7 @@ function mapDispatchToProps(dispatch) {
     },
     toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => {
-      dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden });
+      dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden } );
     },
     openPlotModal: (event) => {
       dispatch({ type: PLOT_MODAL_DATA, value: true });

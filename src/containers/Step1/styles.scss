@@ -34,8 +34,10 @@
     }
 
     .link {
-      color: $primary-color;
-      font-style: italic;
+      color: $link-color;
+    }
+    .link:hover {
+      text-decoration: underline;
     }
   }
 }
