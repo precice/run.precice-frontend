@@ -15,6 +15,7 @@ import Part2 from './containers/Part2';
 import Part3 from './containers/Part3';
 import Part4 from './containers/Part4';
 import Part5 from './containers/Part5';
+import Final from './containers/Final';
 
 
 
@@ -144,6 +145,10 @@ const rootRouteRaw: RouteDefinition = {
           ],
         },
       ],
+    },
+    {
+      path: '/final',
+      component: Final,
     },
   ],
 };
