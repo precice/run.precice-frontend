@@ -25,7 +25,6 @@ class ConPlot extends React.Component<ConPlotProps, any> {
           <VictoryChart
             theme={VictoryTheme.grayscale}
             domain={{x: [0, this.props.domainX], y: [0, this.props.domainY]}}
-            padding={{left: 50, bottom: 40, top: 20, right: 20}}
             style={{
               data: {fill: 'red', opacity: 0.7},
               labels: {fontSize: 12},

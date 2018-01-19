@@ -6,15 +6,15 @@
   flex: 1 1 auto;
   flex-direction: row;
   margin: auto;
-  padding: 20px;
   max-width: 1000px;
   width: 700px;
+  height: 100%;
 
   .converge-plot {
     background-color: $solver-background-color;
     color: $primary-color;
-    padding: 1em;
-    border-radius: 10px;
+    padding: 0.5em;
+    border-radius: $container-border-radius;
     flex: 1 1 auto;
     width: 30px;
     align-self: stretch;
@@ -32,9 +32,8 @@
 
     .progress-bar {
       order: 1;
-      padding: 1em;
-      margin: auto;
-      height: 50%;
+      margin: 0 auto auto;
+      height: 100%;
     }
   }
 }
@@ -56,17 +55,17 @@
      *
      * If you're not using "display: flex", you can remove this style.
      */
-    width: 100%;
+  height: 100%;
   }
 
   .CircularProgressbar .CircularProgressbar-path {
-    stroke: $emphasize-color;
+    stroke: $scroll-bar-color;
     stroke-linecap: round;
     transition: stroke-dashoffset 0.5s ease 0s;
   }
 
   .CircularProgressbar .CircularProgressbar-trail {
-    stroke: $primary-color;
+    stroke: $background-color;
   }
 
   .CircularProgressbar .CircularProgressbar-text {
@@ -90,7 +89,7 @@
    *   />
    */
   .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {
-    fill: #3e98c7;
+    fill: $scroll-bar-color;
   }
 
   .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {
