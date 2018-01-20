@@ -51,13 +51,13 @@ const rootRouteRaw: RouteDefinition = {
       component: Tutorial,
       childRoutes: [
         {
-          path: '/step1',
-          component: Step1,
-        },
-        {
           path: '/part1',
           component: Part1,
           childRoutes: [
+            {
+              path: '/step1',
+              component: Step1,
+            },
             {
               path: '/step2',
               component: Step2,
@@ -77,6 +77,10 @@ const rootRouteRaw: RouteDefinition = {
           component: Part2,
           childRoutes: [
             {
+              path: '/step1',
+              component: Step1,
+            },
+            {
               path: '/step2',
               component: Step2,
             },
@@ -94,6 +98,10 @@ const rootRouteRaw: RouteDefinition = {
           path: '/part3',
           component: Part3,
           childRoutes: [
+            {
+              path: '/step1',
+              component: Step1,
+            },
             {
               path: '/step2',
               component: Step2,
@@ -113,6 +121,10 @@ const rootRouteRaw: RouteDefinition = {
           component: Part4,
           childRoutes: [
             {
+              path: '/step1',
+              component: Step1,
+            },
+            {
               path: '/step2',
               component: Step2,
             },
@@ -130,6 +142,10 @@ const rootRouteRaw: RouteDefinition = {
           path: '/part5',
           component: Part5,
           childRoutes: [
+            {
+              path: '/step1',
+              component: Step1,
+            },
             {
               path: '/step2',
               component: Step2,

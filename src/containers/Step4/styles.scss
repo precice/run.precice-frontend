@@ -39,7 +39,7 @@
     }
   }
 
-  .visialize {
+  .visualize {
     background-color: $solver-background-color;
     flex: 1 1 auto;
     margin-left: 10px;
@@ -48,8 +48,10 @@
     border-radius: $container-border-radius;
 
 
-    .visial-header {
+    .visual-header {
       color: $solver-text-color;
+      flex: 1 1 auto;
+      width: 10px;
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;

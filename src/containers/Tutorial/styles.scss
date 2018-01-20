@@ -19,7 +19,7 @@
       display: flex;
       flex: 1 1 auto;
       flex-direction: column;
-      margin: auto;
+      margin: 5px;
 
       .btn {
         align-self: center;
@@ -45,7 +45,7 @@
         text-align: center;
         touch-action: manipulation;
         background-color: $btn-background;
-
+        box-shadow: 2px 2px $btn-on-mouse-over;
       }
       .btn-r:hover,
       .btn-l:hover {
@@ -53,6 +53,7 @@
         border-color: $btn-on-mouse-over;
         cursor: pointer;
         background-color: $background-color;
+        box-shadow: 2px 2px $background-color;
       }
       .btn-l-disabled {
         align-self: flex-start;
@@ -79,6 +80,7 @@
         text-align: center;
         touch-action: manipulation;
         background-color: $btn-background;
+        box-shadow: 2px 2px $btn-on-mouse-over;
       }
       .btn-r-disabled {
         align-self: flex-end;
@@ -194,12 +196,14 @@
         text-align: center;
         touch-action: manipulation;
         background-color: $btn-background;
+        box-shadow: 2px 2px $btn-on-mouse-over;
 
       }
       .modal-btn:hover {
         color: $btn-on-mouse-over;
         border-color: $btn-on-mouse-over;
         background-color: $background-color;
+        box-shadow: 2px 2px $background-color;
       }
     }
 

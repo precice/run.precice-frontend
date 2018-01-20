@@ -40,6 +40,7 @@
       text-align: center;
       touch-action: manipulation;
       background-color: $btn-background;
+      box-shadow: 2px 2px $btn-on-mouse-over;
     }
     .btn:hover,
     .btn:focus {
@@ -47,6 +48,8 @@
       border-color: $btn-on-mouse-over;
       background-color: $background-color;
       cursor: pointer;
+      box-shadow: 2px 2px $background-color;
+
     }
   }
 
