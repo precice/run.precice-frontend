@@ -11,7 +11,9 @@ class Sub3 extends React.Component<Sub3Props, any> {
   public render() {
     return (
       <div>
-        Third, let us specify the behavior of SU2.
+        Now we declare the participants in our coupled simulation. Here we declare what data needs to be transferred
+        between the meshes used by the solvers and how to map the data from one mesh to another. We will transfer the data
+        vectors "Forces0" and "DisplacementDeltas0", defined above, between SU2 and CalculiX.
         <br/><br/>
         <li>
           <span className={styles.highlight}>participant</span>: Specifies one of the solvers using preCICE. Here we are
@@ -28,7 +30,7 @@ class Sub3 extends React.Component<Sub3Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>use-mesh from</span>: In our setup, SU2 uses "Calculix_Mesh" which is provided
+          <span className={styles.highlight}>use-mesh from</span>: In our setup, SU2 also uses "Calculix_Mesh" which is provided
           by CalculiX. We can specify this by using the "from" attribute.
         </li>
         <br/>

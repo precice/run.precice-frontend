@@ -18,8 +18,8 @@ class Sub5 extends React.Component<Sub5Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>m2n:sockets from</span>: Name of the first participant involved in communication.
-          This is the one that initiates the communication.
+          <span className={styles.highlight}>m2n:sockets from</span>: Name of the first participant involved in the communication.
+          The first participant initiates the communication.
           <Tooltip
             trigger="click"
             width="100"
@@ -45,7 +45,7 @@ class Sub5 extends React.Component<Sub5Props, any> {
         <br/>
         <li>
           <span className={styles.highlight}>m2n:sockets distribution-type</span>: If at least one participant runs serially then set this option to <span className={styles.highlight}>gather-scatter</span>.
-          <br/>If both participants run in parallel, communication is more efficient if you set the option to <span className={styles.highlight}>point-to-point</span>.
+          If both participants run in parallel, communication is more efficient if you set the option to <span className={styles.highlight}>point-to-point</span>.
         </li>
       </div>
     );

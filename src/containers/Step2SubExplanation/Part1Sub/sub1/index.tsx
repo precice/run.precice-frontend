@@ -13,8 +13,9 @@ class Sub1 extends React.Component<Sub1Props, any> {
         the participants, the meshes to be used, and the coupling scheme along with other aspects relevant to the simulation.
         <br/><br/>
         <li>
-          <span className={styles.highlight}>dimensions</span>
-          : Specifies the spatial dimensions of the problem. Can be either 2 or 3.
+          <span className={styles.highlight}>solver-interface dimensions</span>
+          : This attribute sets the spatial dimensions of the problem to be solved. Recall that we're performing a quasi-2D
+          simulation since the actual setup is 3D but we don't make use of the third dimension.
           <Tooltip
             trigger="click"
             width="100"
@@ -26,8 +27,8 @@ class Sub1 extends React.Component<Sub1Props, any> {
         <br/>
         <li>
           <span className={styles.highlight}>data:vector name</span>
-          : This defines the datasets to be used for the meshes in the simulation. The data type can be either
-          vector or scalar.
+          : This defines the datasets to be used for the meshes in the simulation. Here we define data vectors that we will
+          transfer between the two solvers.
         </li>
       </div>
     );
