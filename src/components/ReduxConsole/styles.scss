@@ -1,3 +1,5 @@
+@import '../../sass/colors';
+
 $terminal-background-color: black;
 $terminal-code-color: white;
 
@@ -19,15 +21,19 @@ $terminal-code-color: white;
   flex-direction: column;
   font-family: Courier;
   overflow: auto;
-  width:100%;
-
+  border-radius: $container-border-radius;
+  padding: 0.5em;
+  .cursor {
+    outline: 0.1em solid $terminal-code-color;
+    outline-offset: -0.1em;
+  }
+}
+.wrapper:focus {
+  .cursor {
+    animation: cursor-animation 1s infinite;
+  }
 }
 
-.cursor {
-  animation: cursor-animation 1s infinite;
-  outline: 0.1em solid $terminal-code-color;
-  outline-offset: -0.1em;
-}
 
 .bottomAnchor {
   height: 1px;

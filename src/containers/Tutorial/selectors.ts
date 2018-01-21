@@ -58,22 +58,27 @@ export const buttonLinksSelector = () => createSelector
   pathnameSelector(),
     ( pathname ) => {
       const stepArray = [
-        '/tutorial/step1',
+        '/tutorial/part1/step1',
         '/tutorial/part1/step2',
         '/tutorial/part1/step3',
         '/tutorial/part1/step4',
+        '/tutorial/part2/step1',
         '/tutorial/part2/step2',
         '/tutorial/part2/step3',
         '/tutorial/part2/step4',
+        '/tutorial/part3/step1',
         '/tutorial/part3/step2',
         '/tutorial/part3/step3',
         '/tutorial/part3/step4',
+        '/tutorial/part4/step1',
         '/tutorial/part4/step2',
         '/tutorial/part4/step3',
         '/tutorial/part4/step4',
+        '/tutorial/part5/step1',
         '/tutorial/part5/step2',
         '/tutorial/part5/step3',
         '/tutorial/part5/step4',
+        '/final',
       ];
       const index = stepArray.indexOf( pathname );
       const buttonLinks = {

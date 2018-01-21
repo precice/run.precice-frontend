@@ -1,0 +1,44 @@
+@import '../../sass/colors';
+
+
+.tu-in-container {
+  background: $explain-background-color;
+  flex: 1 1 auto;
+  margin: auto;
+  overflow-y: auto;
+  width: 100%;
+  border-radius: $container-border-radius;
+  height: 10px;
+
+
+  .tu-in-header {
+    color: $primary-color;
+    font-size: 20px;
+    line-height: 1.5;
+    padding-top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .tu-in-content {
+    color: $primary-color;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 10px 25px;
+    margin: auto;
+    max-width: 1000px;
+
+    .img {
+      display: block;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    .link {
+      color: $link-color;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+  }
+}

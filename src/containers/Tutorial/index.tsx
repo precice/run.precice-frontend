@@ -21,6 +21,8 @@ import {
   busySelector} from '../Step3/selectors';
 import {
   ConsoleId} from '../Step3/index';
+import { Tooltip } from 'react-tippy';
+
 
 interface TutorialProps {
   percentage: number;
@@ -80,52 +82,63 @@ class Tutorial extends React.Component<TutorialProps, any> {
           }
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
-              <span onClick={this.closeModal} className={styles.close}>&times;</span>
-              <h2>Oops, you forgot some parts ;-)</h2>
+              <div className={styles.subCon}/>
+              <div className={styles.subTitle}>
+                <h2>Oops, you forgot some parts</h2>
+              </div>
+              <div className={styles.subCon}>
+                <div onClick={this.closeModal} className={styles.close}>&times;</div>
+              </div>
             </div>
             <div className={styles.modalBody}>
               <div>
-                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[1]')}>
-                  <div id="modallink2" onClick={this.props.blockNumberAction}>
-                    {eval('config' + this.props.partNumber + '.sub2')} (line 12 ~ 20)
+                <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[1]')}>
+                  <div id="modallink2" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                    {eval('config' + this.props.partNumber + '.sub2')}
                   </div>
-                </li>
-                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[2]')}>
-                  <div id="modallink3" onClick={this.props.blockNumberAction}>
-                    {eval('config' + this.props.partNumber + '.sub3')} (line 26 ~ 35)
+                </div>
+                <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[2]')}>
+                  <div id="modallink3" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                    {eval('config' + this.props.partNumber + '.sub3')}
                   </div>
-                </li>
-                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[3]')}>
-                  <div id="modallink4" onClick={this.props.blockNumberAction}>
-                    {eval('config' + this.props.partNumber + '.sub4')} (line 37 ~ 40)
+                </div>
+                <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[3]')}>
+                  <div id="modallink4" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                    {eval('config' + this.props.partNumber + '.sub4')}
                   </div>
-                </li>
-                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[4]')}>
-                  <div id="modallink5" onClick={this.props.blockNumberAction}>
-                    {eval('config' + this.props.partNumber + '.sub5')} (line 44)
+                </div>
+                <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[4]')}>
+                  <div id="modallink5" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                    {eval('config' + this.props.partNumber + '.sub5')}
                   </div>
-                </li>
-                <li hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')}>
-                  <div id="modallink6" onClick={this.props.blockNumberAction}>
-                    {eval('config' + this.props.partNumber + '.sub6')} (line 46 ~ 61)
+                </div>
+                <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')}>
+                  <div id="modallink6" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                    {eval('config' + this.props.partNumber + '.sub6')}
                   </div>
-                </li>
+                </div>
               </div>
             </div>
-            {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalFooter}>
+            <div className={styles.modalFooter}>
+            {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalBtn}>
               No, I want to skip those parts.
             </Link>}
+            </div>
           </div>{/*modal content*/}
         </div>{/*the modal*/}
-        <ProgressBar percentage={this.props.percentage}/>
+        <ProgressBar percentage={this.props.percentage} partNumber={partNumber}/>
         <div className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
             {
-              (this.props.buttonLinks.next === '/tutorial/part1/step4' &&
+              (this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
               ( this.props.leftBusy || this.props.rightBusy )) ?
-                this.props.buttonLinks.previous && <div onClick={this.openModal} className={styles.btnL}>BACK</div> :
+                this.props.buttonLinks.previous && <div className={styles.btnLDisabled}><Tooltip
+                  width="100"
+                  title="Simulation is runnning"
+                ><span>BACK</span>
+                </Tooltip></div> :
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
           <div className={styles.btnSubCon}>
@@ -136,12 +149,18 @@ class Tutorial extends React.Component<TutorialProps, any> {
               !eval('this.props.xmlflag.part' + this.props.partNumber + '[2]') ||
               !eval('this.props.xmlflag.part' + this.props.partNumber + '[3]') ||
               !eval('this.props.xmlflag.part' + this.props.partNumber + '[4]') ||
-              !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]') )) ||
-              (this.props.buttonLinks.next === '/tutorial/part1/step4' &&
-              ( this.props.leftBusy || this.props.rightBusy )) ?
+              !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]') )) ?
                 this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-                this.props.buttonLinks.next &&
-                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)
+                ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
+                ( this.props.leftBusy || this.props.rightBusy )) ?
+                  this.props.buttonLinks.next &&
+                    <div className={styles.btnRDisabled}><Tooltip
+                      width="100"
+                      title="Simulation is runnning"
+                    ><span>NEXT</span>
+                    </Tooltip></div> :
+                  this.props.buttonLinks.next &&
+                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>))
             }
           </div>
         </div>

@@ -4,16 +4,18 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: row;
-  margin: 0 auto;
+  margin: auto;
   width: 100%;
 
   .exp-container {
     background-color: $explain-background-color;
     color: $primary-color;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     width: 380px;
     display: flex;
     flex-direction: column;
+    border-radius: $container-border-radius;
+
 
     .exp-header {
       color: $primary-color;
@@ -27,7 +29,7 @@
       line-height: 1.5;
       margin: 10px auto;
       max-width: 1000px;
-      padding: 0 10px;
+      padding: 0 20px;
       overflow-y: auto;
 
       .link {
@@ -37,15 +39,19 @@
     }
   }
 
-  .visialize {
+  .visualize {
     background-color: $solver-background-color;
     flex: 1 1 auto;
     margin-left: 10px;
     width: 800px;
     display: flex;
+    border-radius: $container-border-radius;
 
-    .visial-header {
+
+    .visual-header {
       color: $solver-text-color;
+      flex: 1 1 auto;
+      width: 10px;
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;

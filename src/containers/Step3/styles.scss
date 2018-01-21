@@ -5,17 +5,20 @@
   flex: 1 1 auto;
   flex-direction: column;
   margin: 0 auto;
-  overflow-y: auto;
   width: 100%;
 
   .exp-container {
     background-color: $explain-background-color;
     color: $primary-color;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     flex: 0 1 auto;
     margin-bottom: $margin-between;
+    border-radius: $container-border-radius;
+
 
     .exp-header {
+      flex: 0 0 auto;
       display: flex;
       font-size: 20px;
       line-height: 1.5;
@@ -23,12 +26,23 @@
       text-transform: uppercase;
 
 
-      .modal-btn{
+      .plot-btn{
         flex: 1 1 auto;
         cursor: pointer;
         text-align: center;
         width: 10%;
         order : 1;
+        padding: 0 10px;
+        text-shadow: 2px 2px $btn-on-mouse-over;
+      }
+      .plot-btn:hover {
+        color: $btn-on-mouse-over;
+        border-color: $btn-on-mouse-over;
+        text-shadow: 2px 2px $explain-background-color;
+        cursor: pointer;
+      }
+      .plot-btn:focus {
+        border: 4px solid $primary-color;
       }
 
       .title {
@@ -36,6 +50,16 @@
         text-align: center;
         width: 80%;
         order: 2;
+        text-shadow: 2px 2px $btn-on-mouse-over;
+      }
+      .title:hover {
+        color: $btn-on-mouse-over;
+        border-color: $btn-on-mouse-over;
+        text-shadow: 2px 2px $explain-background-color;
+        cursor: pointer;
+      }
+      .title:focus {
+        border: 4px solid $primary-color;
       }
 
 
@@ -45,6 +69,16 @@
         text-align: center;
         width: 10%;
         order: 3;
+        padding: 0 10px;
+        text-shadow: 2px 2px $btn-on-mouse-over;
+      }
+      .hide:hover {
+        color: $btn-on-mouse-over;
+        text-shadow: 2px 2px $explain-background-color;
+        cursor: pointer;
+      }
+      .hide:focus {
+        border: 4px solid $primary-color;
       }
     }
 
@@ -76,14 +110,18 @@
     }
 
     .exp-content {
+      flex: 1 1 auto;
       line-height: 1.5;
       margin: 10px auto;
       max-width: 1000px;
+      overflow-y: auto;
+      height:250px;
+      padding: 0 25px;
 
       .exp-command {
         background-color: $terminal-background-color;
         color: $terminal-code-color;
-        font-family: Courier;
+        font-family: $body-font-family;
         padding: 0.1em;
       }
     }
@@ -93,19 +131,17 @@
     flex: 1 1 auto;
     display: flex;
     order: 1;
+    height: 10px;
 
     .sol-r,
     .sol-l {
-
-      margin-right: $margin-between;
-      overflow-y: auto;
-      padding: 0.5em;
       flex: 1 1 10px;
       display: flex;
       flex-direction: column;
       min-width: 0; // tames flexbox weird behavior see https://stackoverflow.com/a/38224283/3200478
-
-
+    }
+    .sol-l {
+      margin-right: $margin-between;
     }
 
     .sol-header {
@@ -166,9 +202,10 @@
   display: inline-block;
 
   &.link {
-    color: blue;
+    color: $link-color;
     &:hover {
-      text-decoration: underline;
+      color: $btn-on-mouse-over;
+      cursor: pointer;
     }
   }
 }

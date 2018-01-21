@@ -2,20 +2,67 @@
 
 
 .progress {
-  background-color: $explain-background-color;
+  //background-color: $scroll-background-color;
   border-radius: 10px;
   flex: 0 0 auto;
   margin: 10px 10%;
   // match width to the steps
 
   .bar {
-    background-color: $emphasize-color;
+    background-color: $scroll-bar-color;
     border-radius: 10px;
     height: 20px;
     transition: width 0.5s;
   }
-
 }
 
+:global{
+  .ProgressSteps {
+    &-Step {
+      /* ... */
+      background: $scroll-background-color;
+      border: 4px solid $scroll-background-color;
+      border-radius: 50px;
+      float: left;
+      height: 20px;
+      width: 20px;
+      &-activated {
+        /* ... */
+        border: 4px solid $scroll-bar-color;
+        background: $scroll-bar-color;
+      }
+
+      &-deactivated {
+        /* ... */
+      }
+
+      &-current {
+        /* ... */
+        background: white;
+        border: 4px solid $scroll-bar-color;
+      }
+    }
+
+    &-Line {
+      /* ... */
+      background: $scroll-background-color;
+      float: left;
+      flex: 1 1 auto;
+      height: 6px;
+      position: relative;
+      top: 10px;
+      width: 20%;
+
+      &-activated {
+        /* ... */
+        background: $scroll-bar-color;
+      }
+
+      &-deactivated {
+        /* ... */
+      }
+    }
+  }
+}
 
 

@@ -7,6 +7,8 @@
   overflow-y: auto;
   padding: 1em 0.5em;
   width: 600px;
+  border-radius: $container-border-radius;
+
 
   .highlighter {
     margin: 0;

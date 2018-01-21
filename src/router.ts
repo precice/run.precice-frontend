@@ -15,6 +15,7 @@ import Part2 from './containers/Part2';
 import Part3 from './containers/Part3';
 import Part4 from './containers/Part4';
 import Part5 from './containers/Part5';
+import Final from './containers/Final';
 
 
 
@@ -50,13 +51,13 @@ const rootRouteRaw: RouteDefinition = {
       component: Tutorial,
       childRoutes: [
         {
-          path: '/step1',
-          component: Step1,
-        },
-        {
           path: '/part1',
           component: Part1,
           childRoutes: [
+            {
+              path: '/step1',
+              component: Step1,
+            },
             {
               path: '/step2',
               component: Step2,
@@ -76,6 +77,10 @@ const rootRouteRaw: RouteDefinition = {
           component: Part2,
           childRoutes: [
             {
+              path: '/step1',
+              component: Step1,
+            },
+            {
               path: '/step2',
               component: Step2,
             },
@@ -93,6 +98,10 @@ const rootRouteRaw: RouteDefinition = {
           path: '/part3',
           component: Part3,
           childRoutes: [
+            {
+              path: '/step1',
+              component: Step1,
+            },
             {
               path: '/step2',
               component: Step2,
@@ -112,6 +121,10 @@ const rootRouteRaw: RouteDefinition = {
           component: Part4,
           childRoutes: [
             {
+              path: '/step1',
+              component: Step1,
+            },
+            {
               path: '/step2',
               component: Step2,
             },
@@ -130,6 +143,10 @@ const rootRouteRaw: RouteDefinition = {
           component: Part5,
           childRoutes: [
             {
+              path: '/step1',
+              component: Step1,
+            },
+            {
               path: '/step2',
               component: Step2,
             },
@@ -144,6 +161,10 @@ const rootRouteRaw: RouteDefinition = {
           ],
         },
       ],
+    },
+    {
+      path: '/final',
+      component: Final,
     },
   ],
 };
