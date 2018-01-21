@@ -9,41 +9,51 @@ class Sub6 extends React.Component<Sub6Props, any> {
   public render() {
     return (
       <div>
-        Last, we need to set up the way the two solver couple with each other.
+        Before we go ahead and run the simulation, we need to configure one last thing: the coupling scheme.
         <br/><br/>
         <li>
           <span className={styles.highlight}>coupling-scheme</span>: Here we use <span className={styles.highlight}>serial-implicit</span>.
+          <span className={styles.highlight}> Serial</span> refers to the fact that the two solvers operate serially with
+          respect to each other - one waits for the other to finish its timestep. <span className={styles.highlight}> Implicit </span>
+          means that we sub-iterate between both solvers in every timestep until convergence.
           <Tooltip
             trigger="click"
             width="100"
             interactive
             html={(
               <div>
-                <span className={styles.highlight}>serial</span> refers to the fact that the two solvers operate serially with respect to each other - one waits for the other to finish its timestep.
-                <br/>A <span className={styles.highlight}>parallel</span> coupling-scheme would allow simultaneous computation of both solvers.
-                <br/><span className={styles.highlight}>implicit</span> means that we sub-iterate between both solvers in every timestep until convergence.
-                <br/>An <span className={styles.highlight}>explicit</span> scheme would let every solver only compute once and then already move on to the next timestep.
+                <br/>A <span className={styles.highlight}>parallel</span> coupling-scheme would allow simultaneous
+                computation.
+                <br/>An <span className={styles.highlight}>explicit</span> scheme would let every solver only compute
+                once and then already move on to the next timestep.
               </div>
             )}
           >
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
           </Tooltip>
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>first</span>: Name of the first participant(the one who leads the coupling).
+          <span className={styles.highlight}>first</span>: The participant who leads the coupling.
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>second</span>: Name of the second participant (the post-processing at the convergence measures are applied at the second participant)
+          <span className={styles.highlight}>second</span>: Name of the second participant. The post-processing at the
+          convergence measures are applied at the second participant.
         </li>
+        <br/>
         <li>
           <span className={styles.highlight}>max-time value</span>: Total simulation runtime.
         </li>
+        <br/>
         <li>
           <span className={styles.highlight}>timestep-length value</span>: Length of the maximum allowed coupling timestep.
         </li>
+        <br/>
         <li>
           <span className={styles.highlight}>max-iterations value</span>: Maximum number of implicit sub-iterations.
         </li>
+        <br/>
         <li>
           We set the timestep-length and the number of timesteps to be the same as in the SU2 configuration.
           This does not have to be the case. We could, for example, also do the coupling only every second iteration
@@ -51,7 +61,9 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/><br/>
         <li>
-          <span className={styles.highlight}>exchange</span>: We also need to exchange data through this mesh between the two participants.
+          <span className={styles.highlight}>exchange</span>: As discussed before, we mapped data between the SU2 mesh and
+          the CalculiX mesh. We need to exchange data through this mesh between the two participants.Please note that both
+          participants must use this mesh with use-mesh.
           <Tooltip
             trigger="click"
             width="100"

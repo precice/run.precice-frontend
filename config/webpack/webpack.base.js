@@ -31,7 +31,7 @@ module.exports = (options) => {
         {
           test: /\.tsx?$/,
           loaders: [
-            'babel-loader?presets[]=es2015', // necessary for uglifyjs see https://github.com/joeeames/WebpackFundamentalsCourse/issues/3#issuecomment-252950772
+           // 'babel-loader?presets[]=es2015', // necessary for uglifyjs see https://github.com/joeeames/WebpackFundamentalsCourse/issues/3#issuecomment-252950772
             'awesome-typescript-loader'
           ],
         },
@@ -120,13 +120,8 @@ module.exports = (options) => {
         {
           test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,
           loader: [
-            'file-loader',
-            {
-              loader: 'image-webpack-loader',
-              options: {
-                bypassOnDebug: true,
-              },
-            },
+             'file-loader',
+
           ],
         }
       ],
