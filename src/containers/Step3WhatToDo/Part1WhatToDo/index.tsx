@@ -9,18 +9,19 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
   public render() {
     return (
       <div>
-        After the setup is complete, we are ready to run the coupled simulation. We need to start two terminals,
-        one for each solver that we use.
+        Once we have configured preCICE, we are ready to start our first coupled simulation. To achieve this,
+        we will simultaneously run both SU2 and CalculiX. The easiest way to achieve this is to run
+        them in separate terminals. The order in which start our solvers does not matter.
+        The solver we start first will run until it needs to communicate with the other one and will then wait until
+        it receives the required data.
         <br/>
-        In each terminal we start a simulation, the order in which they are started is not important.
-        The solver we start first will run until it needs to communicate with the other one and wait until it
-        receives the required data.
         <br/>
-        For CalculiX, type in command:
+        We have already typed in the commands to start the two solvers in the terminals below.
+        For CalculiX, we use:
         <p className={styles.expCommand}>
           ccx_preCICE -i flap -precice-participant Calculix
         </p>
-        For SU2, type in command:
+        While for SU2, the command is:
         <p className={styles.expCommand}>
           SU2_CFD euler_config_coupled.cfg
         </p>

@@ -12,7 +12,10 @@ class Part2Sub extends React.Component<Part2SubProps, any> {
       <div className={styles.tuInContainer}>
         <div className={styles.tuInHeader}>part two</div>
         <div className={styles.tuInContent}>
-          Now we want to see the bar ocsillate, so we raise the time step.
+          The results from our first simulation seem promising. With twenty timesteps using an explicit coupling scheme,
+          we can already see the flap move. Increasing the number of timesteps should allow us to
+          see the flap oscillate. In this section of the tutorial, we will edit the preCICE configuration file to increase
+          the number of timesteps and see what results we get.
         </div>
       </div>
     );

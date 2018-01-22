@@ -10,7 +10,7 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
     return (
       <div>
         <div>
-          The SU2 output on the left provides visualization of horizontal velocity profile,
+          The SU2 output on the left provides visualization of the horizontal velocity profile,
           during right most bending of the flap, left most of the flap, and the condition of the flap on the last
           iteration, after 4.6 seconds or 160 iterations.
         </div>
