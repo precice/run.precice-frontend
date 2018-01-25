@@ -68,6 +68,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
   private closeModal() {
     document.getElementById('myModal').style.display = 'none';
   }
+
   public render() {
     return (
       <div className={styles.tutorialContainer}>
@@ -159,8 +160,10 @@ class Tutorial extends React.Component<TutorialProps, any> {
                       title="Simulation is runnning"
                     ><span>NEXT</span>
                     </Tooltip></div> :
-                  this.props.buttonLinks.next &&
-                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>))
+                  ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
+                  this.props.partNumber !== 1) ?
+                    <div/> : this.props.buttonLinks.next &&
+                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)))
             }
           </div>
         </div>
