@@ -20,7 +20,6 @@ class Sub2 extends React.Component<Sub2Props, any> {
           <span className={styles.highlight}>use-data name</span>
           : Specifies a previously-defined dataset that is assigned to this mesh
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(
