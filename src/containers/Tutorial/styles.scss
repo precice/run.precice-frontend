@@ -162,15 +162,17 @@
 
     .modal-body {
       padding: 20px 16px;
-      display: flex;
-      margin: auto;
-      width: 300px;
+      display: block;
+      margin: 10px 100px;
       background-color: $explain-background-color;
       border-radius: $container-border-radius;
 
 
       .modal-item {
+        margin: auto;
         padding: 5px;
+        text-align: center;
+        text-transform: uppercase;
       }
       .modal-item:hover {
         color: $btn-on-mouse-over;
@@ -211,7 +213,7 @@
 
   /* The Close Button */
   .close {
-    color: white;
+    color: $primary-color;
     display: flex;
     float: right;
     font-size: 28px;

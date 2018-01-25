@@ -17,7 +17,6 @@ class Sub5 extends React.Component<Sub5Props, any> {
         <li>
           <span className={styles.highlight}>from</span>: Name of the first participant involved in communication. This is the one that initiates communication.
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(

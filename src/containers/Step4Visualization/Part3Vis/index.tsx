@@ -8,10 +8,9 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
   public render() {
     return(
       <iframe
+        src="https://player.vimeo.com/video/252615946"
         width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/DSU7oAfyhTM?rel=0&amp;controls=0&amp;showinfo=0"
-      />
+        height="100%"/>
     );
   }
 }

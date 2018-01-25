@@ -18,7 +18,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           respect to each other - one waits for the other to finish its timestep.<span className={styles.highlight}>Explicit</span>
           means that we let every solver compute once and then move on to the next timestep.
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(
@@ -55,7 +54,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           CalculiX. We need to exchange this data through a mesh between the two participants. Please note that both
           participants must use the mesh with use-mesh.
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(

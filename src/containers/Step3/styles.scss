@@ -33,12 +33,10 @@
         width: 10%;
         order : 1;
         padding: 0 10px;
-        text-shadow: 2px 2px $btn-on-mouse-over;
       }
       .plot-btn:hover {
         color: $btn-on-mouse-over;
         border-color: $btn-on-mouse-over;
-        text-shadow: 2px 2px $explain-background-color;
         cursor: pointer;
       }
       .plot-btn:focus {
@@ -50,12 +48,10 @@
         text-align: center;
         width: 80%;
         order: 2;
-        text-shadow: 2px 2px $btn-on-mouse-over;
       }
       .title:hover {
         color: $btn-on-mouse-over;
         border-color: $btn-on-mouse-over;
-        text-shadow: 2px 2px $explain-background-color;
         cursor: pointer;
       }
       .title:focus {
@@ -70,11 +66,9 @@
         width: 10%;
         order: 3;
         padding: 0 10px;
-        text-shadow: 2px 2px $btn-on-mouse-over;
       }
       .hide:hover {
         color: $btn-on-mouse-over;
-        text-shadow: 2px 2px $explain-background-color;
         cursor: pointer;
       }
       .hide:focus {

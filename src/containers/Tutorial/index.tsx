@@ -121,7 +121,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
             </div>
             <div className={styles.modalFooter}>
             {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalBtn}>
-              No, I want to skip those parts.
+              I want to skip those parts.
             </Link>}
             </div>
           </div>{/*modal content*/}

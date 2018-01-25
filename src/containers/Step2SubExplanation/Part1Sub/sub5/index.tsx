@@ -21,7 +21,6 @@ class Sub5 extends React.Component<Sub5Props, any> {
           <span className={styles.highlight}>m2n:sockets from</span>: Name of the first participant involved in the communication.
           The first participant initiates the communication.
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(

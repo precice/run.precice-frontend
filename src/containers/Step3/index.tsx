@@ -180,7 +180,7 @@ class Step3 extends React.Component<Step3Props, any> {
               onClick={this.props.hidAction}
               className={styles.hide}
             >
-              {this.props.hidCheck ? 'expand' : 'hide'}
+              {this.props.hidCheck ? <i className="fa fa-chevron-down" aria-hidden="true"/> :<i className="fa fa-chevron-up" aria-hidden="true"/>}
             </span>
           </div>
           <div id="hideStep3" className={styles.expContent} hidden={this.props.hidCheck}>
