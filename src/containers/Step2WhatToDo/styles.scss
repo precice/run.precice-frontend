@@ -1,3 +1,11 @@
+@import '../../sass/colors';
+
 .highlight {
   margin: 0;
+}
+.link {
+  color: $link-color;
+  &:hover {
+    text-decoration: underline;
+  }
 }

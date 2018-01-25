@@ -6,3 +6,9 @@
   font-family: Courier;
   padding: 0.1em;
 }
+.link {
+  color: $link-color;
+  &:hover {
+    text-decoration: underline;
+  }
+}

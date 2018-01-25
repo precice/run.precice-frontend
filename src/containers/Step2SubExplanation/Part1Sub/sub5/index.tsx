@@ -11,7 +11,7 @@ class Sub5 extends React.Component<Sub5Props, any> {
       <div>
         Now that we have set up the two participants, we can define how the two solvers will communicate with each other.
         preCICE allows the participants to communicate over sockets or MPI.
-        See the <a href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a> for details.
+        See the <a href="https://github.com/precice/precice/wiki/XML-Reference" target="_blank" className={styles.link}>XML reference</a> for details.
         <br/><br/>
         <li>
           <span className={styles.highlight}>m2n:sockets</span>: Use sockets for communication.
