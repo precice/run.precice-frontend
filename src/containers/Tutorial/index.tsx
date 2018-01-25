@@ -31,8 +31,6 @@ interface TutorialProps {
     next?: string,
   };
 
-  modalClick: boolean;
-  modalAction: () => void;
 
   leftBusy: boolean;
   rightBusy: boolean;
@@ -73,7 +71,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
     return (
       <div className={styles.tutorialContainer}>
         <script>{partNumber = this.props.partNumber}</script>
-        <div onLoad={this.props.modalAction} id="myModal" className={styles.modal}>
+        <div id="myModal" className={styles.modal}>
           {
             window.onclick = (event) => {
               if (event.target === document.getElementById('myModal')) {
@@ -175,7 +173,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
 const mapStateToProps = createStructuredSelector({
   percentage: percentageSelector(),
   buttonLinks: buttonLinksSelector(),
-  modalClick: modalClickSelector(),
   xmlflag: xmlflagSelector(),
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
@@ -185,9 +182,6 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    modalAction: () => {
-      dispatch({type: MODAL_CLICK});
-    },
     xmlSkip: () => {
       dispatch({type: XML_ALL_CLICK, part: partNumber});
       document.getElementById('myModal').style.display = 'none';
