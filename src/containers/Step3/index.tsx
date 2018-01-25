@@ -51,6 +51,7 @@ import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxCons
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import { initialRelaxationValueSelector } from '../Step2/selectors';
 import Modal = require('react-modal');
+import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 
 interface Step3Props {
   dispatch: any;
@@ -101,6 +102,8 @@ class Step3 extends React.Component<Step3Props, any> {
     this.renderTable = this.renderTable.bind(this);
   }
 
+  private title: string;
+
   // Renders part of table
   private renderTable(timeArr) {
     const list = timeArr.toJSON();
@@ -123,6 +126,22 @@ class Step3 extends React.Component<Step3Props, any> {
           </tr>);
       }
     });
+  }
+
+  public componentWillMount() {
+    if (this.props.partNumber !== 1) {
+      this.title = 'plot';
+    } else {
+      this.title = 'what to do';
+    }
+  }
+
+  public componentWillReceiveProps(nextProps) {
+      if (nextProps.showPlotModal) {
+        this.title = 'plot';
+      } else {
+        this.title = 'what to do';
+    }
   }
 
   public render() {
@@ -167,14 +186,8 @@ class Step3 extends React.Component<Step3Props, any> {
 
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
-            <span className={styles.hide}/>
-            <span
-              id="plotButton"
-              onClick={this.props.openPlotModal}
-              className={styles.plotBtn}
-            > Plot
-            </span>
-            <span className={styles.title} onClick={this.props.closePlotModal}>what to do</span>
+            <span className={styles.dummy}/>
+            <span className={styles.title}>{this.title}</span>
             <span
               id="hideButton"
               onClick={this.props.hidAction}
@@ -183,8 +196,26 @@ class Step3 extends React.Component<Step3Props, any> {
               {this.props.hidCheck ? <i className="fa fa-chevron-down" aria-hidden="true"/> :<i className="fa fa-chevron-up" aria-hidden="true"/>}
             </span>
           </div>
-          <div id="hideStep3" className={styles.expContent} hidden={this.props.hidCheck}>
-            {this.props.showPlotModal ? <ConPlot/> : <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>}
+          <div id="hideStep3" hidden={this.props.hidCheck}>
+            {this.props.partNumber === 1 ?
+          <Tabs className={styles.expContentContainer}  defaultTab="vertical-tab-one" vertical >
+            <TabList className={styles.expContentList}>
+              <Tab className={styles.expContentTab} onClick={this.props.closePlotModal} tabFor="vertical-tab-one">TO DO</Tab>
+              <Tab className={styles.expContentTab} onClick={this.props.openPlotModal} tabFor="vertical-tab-two">PLOT</Tab>
+            </TabList>
+            <TabPanel className={styles.expContent} tabId="vertical-tab-one">
+              <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
+            </TabPanel>
+            <TabPanel className={styles.expContent} tabId="vertical-tab-two">
+              <ConPlot/>
+            </TabPanel>
+            <div className={styles.expContentDummy}/>
+          </Tabs> :
+            <div className={styles.expContentContainer}>
+              <div className={styles.expContent}>
+              <ConPlot/>
+              </div>
+            </div>}
           </div>
         </div>
         <div className={styles.subsubContainer}>

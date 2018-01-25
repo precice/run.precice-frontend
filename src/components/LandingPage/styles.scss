@@ -57,16 +57,16 @@
         background-color: orangered;
         box-shadow: 2px 2px transparentize($background-color, 0.5);
         transition: all 0.2s ease-out;
-        background: -moz-linear-gradient(left, orangered 0%, rgba(255, 138, 57, 0.64) 50%, orangered 99%, orangered 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, right top, color-stop(0%,orangered), color-stop(50%,rgba(255, 138, 57, 0.64)), color-stop(99%,orangered), color-stop(100%,orangered)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(left, orangered 0%,rgba(255, 138, 57, 0.64) 50%,orangered 99%,orangered 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(left, orangered 0%,rgba(255, 138, 57, 0.64) 50%,orangered 99%,orangered 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(left, orangered 0%,rgba(255, 138, 57, 0.64) 50%,orangered 99%,orangered 100%); /* IE10+ */
-        background: linear-gradient(to right, orangered 0%,rgba(255, 138, 57, 0.64) 50%,orangered 99%,orangered 100%); /* W3C */
+        background: -moz-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%, $btn-color 300%, $btn-color 70%, rgba(255, 138, 57, 0.64) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255, 138, 57, 0.64)), color-stop(30%,$btn-color), color-stop(70%,$btn-color), color-stop(100%,rgba(255, 138, 57, 0.64))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* IE10+ */
+        background: linear-gradient(to right, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* W3C */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 );
 
         &:before {
-          animation: shine 0.8s 0s linear infinite;
+          animation: shine 0.7s 0s linear infinite;
         }
       }
 
