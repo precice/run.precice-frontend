@@ -16,7 +16,6 @@ class Sub2 extends React.Component<Sub2Props, any> {
           <span className={styles.highlight}>mesh</span>
           : Specifies a surface mesh consisting of vertices. The mesh coordinates are defined by a simulation participant.
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(

@@ -2,13 +2,11 @@
 
 
 .tu-in-container {
-  background: $explain-background-color;
   flex: 1 1 auto;
   margin: auto;
   overflow-y: auto;
   width: 100%;
-  border-radius: $container-border-radius;
-  height: 10px;
+  height: 250px;
 
 
   .tu-in-header {
@@ -37,9 +35,9 @@
 
     .link {
       color: $link-color;
-    }
-    .link:hover {
-      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

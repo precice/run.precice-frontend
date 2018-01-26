@@ -17,7 +17,6 @@ class Sub1 extends React.Component<Sub1Props, any> {
           : This attribute sets the spatial dimensions of the problem to be solved. Recall that we're performing a quasi-2D
           simulation since the actual setup is 3D but we don't make use of the third dimension.
           <Tooltip
-            trigger="click"
             width="100"
             title="While the dimension has been set to 3 here, we are actually performing a quasi-2D simulation. This is so because CalculiX only deals with 3-D problems."
           >

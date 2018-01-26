@@ -11,13 +11,12 @@ class Sub5 extends React.Component<Sub5Props, any> {
       <div>
         Now, we can set the way to communicate the two solvers to each other.
         <br/><br/>
-        preCICE provides different options for communication (see the <a href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a>).
+        preCICE provides different options for communication (see the <a href="https://github.com/precice/precice/wiki/XML-Reference" target="_blank" className={styles.link}>XML reference</a>).
         Here, we use TCP/IP socket communication.
         <br/><br/>
         <li>
           <span className={styles.highlight}>from</span>: Name of the first participant involved in communication. This is the one that initiates communication.
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(

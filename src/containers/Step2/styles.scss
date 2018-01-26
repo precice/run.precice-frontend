@@ -36,12 +36,10 @@
         cursor: pointer;
         text-align: center;
         width: 10%;
-        text-shadow: 2px 2px $btn-on-mouse-over;
       }
       .hide:hover {
         color: $btn-on-mouse-over;
         cursor: pointer;
-        text-shadow: 2px 2px $explain-background-color;
 
       }
     }

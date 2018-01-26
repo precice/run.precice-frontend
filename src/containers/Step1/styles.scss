@@ -2,14 +2,65 @@
 
 
 .tu-in-container {
+  display: flex;
+  flex-direction: column;
   background: $explain-background-color;
   flex: 1 1 auto;
   margin: auto;
   overflow-y: auto;
   width: 100%;
   border-radius: $container-border-radius;
+  height: 10px;
+  padding: 10px 0;
 
+  .tu-in-proceed{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    margin: 0 auto;
+    .tu-in-proceed-component-group{
+      color: $primary-color;
+      flex: 1 1 auto;
+      margin: 0 auto;
+      font-size: 150px;
+      height: 150px;
+      display: flex;
+      flex-direction:row;
+      .tu-in-proceed-component1{
+        flex: 1 1 auto;
+        animation: shine 4s linear -0.5s infinite;
+      }
+      .tu-in-proceed-component2{
+        flex: 1 1 auto;
+        animation: shine 4s linear -0.25s infinite;
+      }
+      .tu-in-proceed-component3{
+        flex: 1 1 auto;
+        animation: shine 4s linear 0s infinite;
 
+      }
+
+    }
+
+    .tu-in-proceed-text{
+      color:$primary-color;
+      flex: 1 1 auto;
+      margin: 0 auto;
+      padding: 10px 0;
+      font-size: 20px;
+      height: 20px;
+      text-decoration: underline;
+
+    }
+
+    &:hover {
+      color: $btn-on-mouse-over;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+  }
   .tu-in-header {
     color: $primary-color;
     font-size: 20px;
@@ -40,4 +91,10 @@
       text-decoration: underline;
     }
   }
+}
+@keyframes shine {
+  0%   {color:$btn-on-mouse-over;}
+  10%  {color: #d1d1d1;}
+  20%  {color:$btn-on-mouse-over}
+  100% {color:$btn-on-mouse-over;}
 }

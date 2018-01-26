@@ -31,8 +31,6 @@ interface TutorialProps {
     next?: string,
   };
 
-  modalClick: boolean;
-  modalAction: () => void;
 
   leftBusy: boolean;
   rightBusy: boolean;
@@ -68,11 +66,12 @@ class Tutorial extends React.Component<TutorialProps, any> {
   private closeModal() {
     document.getElementById('myModal').style.display = 'none';
   }
+
   public render() {
     return (
       <div className={styles.tutorialContainer}>
         <script>{partNumber = this.props.partNumber}</script>
-        <div onLoad={this.props.modalAction} id="myModal" className={styles.modal}>
+        <div id="myModal" className={styles.modal}>
           {
             window.onclick = (event) => {
               if (event.target === document.getElementById('myModal')) {
@@ -121,7 +120,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
             </div>
             <div className={styles.modalFooter}>
             {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalBtn}>
-              No, I want to skip those parts.
+              I want to skip those parts.
             </Link>}
             </div>
           </div>{/*modal content*/}
@@ -159,8 +158,10 @@ class Tutorial extends React.Component<TutorialProps, any> {
                       title="Simulation is runnning"
                     ><span>NEXT</span>
                     </Tooltip></div> :
-                  this.props.buttonLinks.next &&
-                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>))
+                  ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
+                  this.props.partNumber !== 1) ?
+                    <div/> : this.props.buttonLinks.next &&
+                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)))
             }
           </div>
         </div>
@@ -172,7 +173,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
 const mapStateToProps = createStructuredSelector({
   percentage: percentageSelector(),
   buttonLinks: buttonLinksSelector(),
-  modalClick: modalClickSelector(),
   xmlflag: xmlflagSelector(),
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
@@ -182,9 +182,6 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    modalAction: () => {
-      dispatch({type: MODAL_CLICK});
-    },
     xmlSkip: () => {
       dispatch({type: XML_ALL_CLICK, part: partNumber});
       document.getElementById('myModal').style.display = 'none';

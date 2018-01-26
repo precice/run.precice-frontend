@@ -30,7 +30,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
         <li>
           <span className={styles.highlight}>write-data name</span>: Name of a previously-defined dataset that needs to be written
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(
@@ -45,7 +44,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
         <li>
           <span className={styles.highlight}>read-data name</span>: Name of a previously-defined dataset that needs to be read
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(
@@ -76,7 +74,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
         <li>
           <span className={styles.highlight}>constraint</span>: Mapping restriction. Can be either <span className={styles.highlight}>consistent</span>
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(
@@ -91,7 +88,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
           </Tooltip>
           or <span className={styles.highlight}>conservative</span>
           <Tooltip
-            trigger="click"
             width="100"
             interactive
             html={(
@@ -109,14 +105,12 @@ class Sub3 extends React.Component<Sub3Props, any> {
           <span className={styles.highlight}>mesh</span>: Timing of the mapping, i.e. when the mapping is computed.
           Can be <span className={styles.highlight}>initial</span>
           <Tooltip
-            trigger="click"
             width="100"
             title="Computed only once"
           >
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
           </Tooltip>, <span className={styles.highlight}>onadvance</span>, or <span className={styles.highlight}>ondemand</span>
           <Tooltip
-            trigger="click"
             width="100"
             title="Re-computed multiple times in case of changing coupling meshes"
           >

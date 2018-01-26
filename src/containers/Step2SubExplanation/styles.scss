@@ -1,5 +1,13 @@
+@import '../../sass/colors';
+
 .highlight {
   margin: 0;
   font-weight: bolder;
   text-decoration: underline;
+}
+.link {
+  color: $link-color;
+  &:hover {
+    text-decoration: underline;
+  }
 }

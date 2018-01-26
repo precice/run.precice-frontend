@@ -29,28 +29,86 @@
     display: inline-block;
     font-size: 20px;
     padding-top: 50px;
+    flex: 1 1 auto;
+
 
     .btn {
-      border: 4px solid $btn-color;
       border-radius: 10px;
-      color: $btn-color;
+      color: $btn-background;
       cursor: pointer;
+      text-decoration: bold;
       letter-spacing: 1px;
-      padding: 5px;
+      display: inline-block;
+      padding: 9px;
       text-align: center;
       touch-action: manipulation;
-      background-color: $btn-background;
-      box-shadow: 2px 2px $btn-on-mouse-over;
-    }
-    .btn:hover,
-    .btn:focus {
-      color: $btn-on-mouse-over;
-      border-color: $btn-on-mouse-over;
-      background-color: $background-color;
-      cursor: pointer;
-      box-shadow: 2px 2px $background-color;
+      background-color: $btn-color;
+      box-shadow: 3px 3px $btn-on-mouse-over;
+      transition: all 0.2s ease-in;
+      background: -moz-linear-gradient(left, $btn-color 0%, rgba(255, 138, 57, 0.64) 50%, $btn-color 99%, $btn-color 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,$btn-color), color-stop(50%,rgba(255, 138, 57, 0.64)), color-stop(99%,$btn-color), color-stop(100%,$btn-color)); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(left, $btn-color 0%,rgba(255, 138, 57, 0.64) 50%,$btn-color 99%,$btn-color 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(left, $btn-color 0%,rgba(255, 138, 57, 0.64) 50%,$btn-color 99%,$btn-color 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(left, $btn-color 0%,rgba(255, 138, 57, 0.64) 50%,$btn-color 99%,$btn-color 100%); /* IE10+ */
+      background: linear-gradient(to right, $btn-color 0%,rgba(255, 138, 57, 0.64) 50%,$btn-color 99%,$btn-color 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 );
 
+      &:hover,
+      &:focus {
+        cursor: pointer;
+        background-color: orangered;
+        box-shadow: 2px 2px transparentize($background-color, 0.5);
+        transition: all 0.2s ease-out;
+        background: -moz-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%, $btn-color 300%, $btn-color 70%, rgba(255, 138, 57, 0.64) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255, 138, 57, 0.64)), color-stop(30%,$btn-color), color-stop(70%,$btn-color), color-stop(100%,rgba(255, 138, 57, 0.64))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(left, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* IE10+ */
+        background: linear-gradient(to right, rgba(255, 138, 57, 0.64) 0%,$btn-color 30%,$btn-color 70%,rgba(255, 138, 57, 0.64) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 );
+
+        &:before {
+          animation: shine 0.7s 0s linear infinite;
+        }
+      }
+
+      &:active {
+        box-shadow: 0 0 0 0 transparent;
+        transition: box-shadow 0.2s ease-in;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        width: 10%;
+        height: 200%;
+        position: relative;
+        left: 0%;
+
+        opacity: 0;
+        background: white;
+        box-shadow: 0 0 15px 3px white;
+        transform: skewX(0deg);
+
+      }
     }
+    @keyframes shine {
+      from {
+        opacity: 0;
+        left: 0%;
+      }
+
+      50% {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+        left: 100%;
+      }
+    }
+
+
+
   }
 
   .team {

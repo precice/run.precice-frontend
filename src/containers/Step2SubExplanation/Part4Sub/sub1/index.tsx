@@ -15,7 +15,6 @@ class Sub1 extends React.Component<Sub1Props, any> {
           <span className={styles.highlight}>dimensions</span>
           : Specifies the number of dimensions of the problem. Can be either 2 or 3
           <Tooltip
-            trigger="click"
             width="100"
             title="preCICE does not fully support 1D solvers. For this example, however, we can treat our 1D solvers as 2D solvers by ignoring all the y-components."
           >

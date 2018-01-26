@@ -76,14 +76,15 @@ class Step2 extends React.Component<Step2Props, any> {
             <span className={styles.hide}/>
             <span className={styles.title}>what to do</span>
             <span id="hideButton" onClick={this.props.hidAction} className={styles.hide}>
-              {this.props.hidCheck2 ? 'expand' : 'hide'}
+              {this.props.hidCheck2 ? <i className="fa fa-chevron-down" aria-hidden="true"/> :<i className="fa fa-chevron-up" aria-hidden="true"/> }
             </span>
           </div>
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
             <WhatToDoBlock stepNumber={2} partNumber={this.props.partNumber}/>
           </div>
         </div>
-        <div className={styles.interactContainer}>
+        <div id="interact"
+             className={styles.interactContainer}>
           <XmlBlock
             blockNumber={this.props.blockNumber}
             partNumber={this.props.partNumber}
@@ -114,7 +115,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
-    xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber }); },
+    xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber });},
     blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
   };
 }

@@ -46,6 +46,7 @@
     width: 800px;
     display: flex;
     border-radius: $container-border-radius;
+    flex-direction: column;
 
 
     .visual-header {

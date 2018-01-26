@@ -1,3 +1,5 @@
+@import '../../sass/colors';
+
 .highlight {
   margin: 0;
 }
@@ -6,5 +8,11 @@
 
   .content-center {
     text-align: center;
+    }
+}
+.link {
+  color: $link-color;
+  &:hover {
+    text-decoration: underline;
   }
 }

@@ -13,7 +13,6 @@ import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  modalClick: false,
   partNumber: 1,
 });
 
