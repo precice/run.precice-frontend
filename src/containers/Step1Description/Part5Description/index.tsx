@@ -10,7 +10,8 @@ class Part5Sub extends React.Component<Part5SubProps, any> {
       <div className={styles.tuInContainer}>
         <div className={styles.tuInHeader}>part five</div>
         <div className={styles.tuInContent}>
-          Now we want to see the bar ocsillate, so we raise the time step.
+          For the previous four simulations we used a serial coupling scheme, whether explicit or implicit.
+          In a serial coupling scheme 
         </div>
       </div>
     );

@@ -124,7 +124,7 @@ export const initialCodeString5 = `    <m2n:sockets
 export const initialCodeString56 = ` `;
 export const initialCodeString6 = `    <coupling-scheme:serial-explicit>
       <participants first="SU2_CFD" second="Calculix"/>
-      <max-time value="20"/>
+      <max-timesteps value="20"/>
       <timestep-length value="1e-2" />
       <exchange
         data="Forces0" mesh="Calculix_Mesh" 

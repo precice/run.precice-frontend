@@ -36,7 +36,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
           <span className={styles.highlight}>second</span>: Name of the second participant (the post-processing at the convergence measures are applied at the second participant)
         </li>
         <li>
-          <span className={styles.highlight}>max-time value</span>: Total simulation runtime.
+          <span className={styles.highlight}>max-timesteps value</span>: Total simulation runtime.
         </li>
         <li>
           <span className={styles.highlight}>timestep-length value</span>: Length of the maximum allowed coupling timestep.

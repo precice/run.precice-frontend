@@ -12,7 +12,28 @@ class Part4Sub extends React.Component<Part4SubProps, any> {
       <div className={styles.tuInContainer}>
         <div className={styles.tuInHeader}>part four</div>
         <div className={styles.tuInContent}>
-          Now we want to see the bar ocsillate, so we raise the time step.
+          Now that we have a running simulation that converges, we can try a different post-processing method. While dynamic
+          underrelaxation may be sufficient for loosely coupled problems with minor instabilities, methods like this are
+          very likely to diverge for problems with strong instabilities/oscillations. In this case we can use a number
+          of fixed-point acceleration methods that improve stability and convergence speed. One such family of acceleration
+          methods is called Quasi-Newton post-processing methods in perCICE nomenclature.
+          <br/><br/>
+          In this section, we will try to use a Quasi-Newton post-processing method in order to improve the convergence rate.
+          There are three different types of fixed point acceleration methods available in preCICE:
+          <ul>
+            <li>
+              Anderson Acceleration
+            </li>
+            <li>
+              Generalized Broyden
+            </li>
+            <li>
+              Manifold Mapping
+            </li>
+          </ul>
+
+          Here we will use Anderson Acceleration since it is matrix free and has low computational costs.
+
         </div>
       </div>
     );

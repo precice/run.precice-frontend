@@ -15,7 +15,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <li>
           <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}>serial-explicit</span>
           coupling scheme.<span className={styles.highlight}> Serial</span> refers to the fact that the two solvers operate serially with
-          respect to each other - one waits for the other to finish its timestep.<span className={styles.highlight}>Explicit</span>
+          respect to each other - one waits for the other to finish its timestep.<span className={styles.highlight}>Explicit </span>
           means that we let every solver compute once and then move on to the next timestep.
           <Tooltip
             trigger="click"
@@ -39,7 +39,8 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>max-time value</span>: Maximum number of timesteps.
+          <span className={styles.highlight}>max-timesteps value</span>: Here we specify the maximum number of timesteps.
+          We will terminate our first simulation after only twenty timesteps.
         </li>
         <br/>
         <li>
