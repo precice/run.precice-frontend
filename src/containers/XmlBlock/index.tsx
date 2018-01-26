@@ -51,7 +51,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
   }
   public render() {
     return (
-      <div className={styles.xml}>
+      <div id="myXML"className={styles.xml}>
         <script>{lineIndex = [eval('config' + this.props.partNumber + '.sec' + this.props.blockNumber + '.start - 1'),
           eval('config' + this.props.partNumber + '.sec' + this.props.blockNumber + '.end + 1')]
         }}</script>

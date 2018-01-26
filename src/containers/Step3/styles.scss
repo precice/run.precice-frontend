@@ -107,7 +107,7 @@
     align-self: stretch;
     width: 100px;
     list-style-type: none;
-    border-right: 5px solid $primary-color;
+    border-right: 5px solid $background-color;
     .exp-content-tab {
       padding: 15px;
       &:hover,
@@ -123,8 +123,8 @@
 
       &[aria-selected="true"] {
         position: relative;
-        background-color: $primary-color;
-        color: $background-color;
+        background-color: $background-color;
+        color: $primary-color;
         border-radius: $container-border-radius 0 0 $container-border-radius;
       }
 

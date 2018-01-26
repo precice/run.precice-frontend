@@ -23,21 +23,21 @@
       color: $primary-color;
       flex: 1 1 auto;
       margin: 0 auto;
-      font-size: 200px;
-      height: 200px;
+      font-size: 150px;
+      height: 150px;
       display: flex;
       flex-direction:row;
       .tu-in-proceed-component1{
         flex: 1 1 auto;
-        animation: shine 1s linear -0.5s infinite;
+        animation: shine 4s linear -0.5s infinite;
       }
       .tu-in-proceed-component2{
         flex: 1 1 auto;
-        animation: shine 1s linear -0.25s infinite;
+        animation: shine 4s linear -0.25s infinite;
       }
       .tu-in-proceed-component3{
         flex: 1 1 auto;
-        animation: shine 1s linear 0s infinite;
+        animation: shine 4s linear 0s infinite;
 
       }
 
@@ -50,11 +50,14 @@
       padding: 10px 0;
       font-size: 20px;
       height: 20px;
+      text-decoration: underline;
+
     }
 
     &:hover {
       color: $btn-on-mouse-over;
       cursor: pointer;
+      text-decoration: none;
     }
 
   }
@@ -90,7 +93,8 @@
   }
 }
 @keyframes shine {
-  0%   {color:$primary-color;}
-  50%  {color:$btn-on-mouse-over;}
-  100% {color:$primary-color;}
+  0%   {color:$btn-on-mouse-over;}
+  10%  {color: #d1d1d1;}
+  20%  {color:$btn-on-mouse-over}
+  100% {color:$btn-on-mouse-over;}
 }
