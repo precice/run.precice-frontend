@@ -22,7 +22,12 @@
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
+      padding-bottom: 10px;
       text-transform: uppercase;
+      background-color: $explain-background-color;
+      border-radius: $container-border-radius;
+      margin: auto;
+
 
       .title {
         flex: 1 1 auto;
@@ -43,7 +48,9 @@
 
       }
     }
-
+    .exp-content-hide {
+      height: 10px;
+    }
     .exp-content {
       line-height: 1.5;
       margin: 10px auto;

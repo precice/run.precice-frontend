@@ -82,6 +82,7 @@ class Step2 extends React.Component<Step2Props, any> {
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
             <WhatToDoBlock stepNumber={2} partNumber={this.props.partNumber}/>
           </div>
+          <div className={styles.expContentHide} hidden={!this.props.hidCheck2}/>
         </div>
         <div id="interact"
              className={styles.interactContainer}>
