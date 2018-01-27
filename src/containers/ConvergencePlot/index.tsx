@@ -40,6 +40,14 @@ class ConPlot extends React.Component<ConPlotProps, any> {
             }
           }
           <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <div className={styles.subTitle}/>
+              <div className={styles.subCon}>
+                <div onClick={this.closeModal} className={styles.close}>
+                  <i className="fa fa-times-circle-o" aria-hidden="true"/>
+                </div>
+              </div>
+            </div>
             <div id="chart" className={styles.modalConvergePlot}>
               <VictoryChart
                 theme={VictoryTheme.grayscale}

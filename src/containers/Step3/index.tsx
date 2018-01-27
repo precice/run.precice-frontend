@@ -137,10 +137,13 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 
   public componentWillReceiveProps(nextProps) {
-      if (nextProps.showPlotModal) {
-        this.title = 'plot';
-      } else {
-        this.title = 'what to do';
+    if (nextProps.showPlotModal) {
+      this.title = 'plot';
+    } else {
+      this.title = 'what to do';
+    }
+    if (nextProps.showTimeModal) {
+      document.getElementById('myModal2').style.display = 'none';
     }
   }
 
@@ -152,7 +155,9 @@ class Step3 extends React.Component<Step3Props, any> {
           shouldCloseOnOverlayClick={true}
           onRequestClose={this.props.closeTimeModal}
           style={{
-            overlay: {},
+            overlay: {
+              backgroundColor: 'rgba(0,0,0,0.8)', /* Black w/ opacity */
+            },
             content: {
               minWidth: '10vw',
               minHeight: '20vh',
@@ -166,6 +171,14 @@ class Step3 extends React.Component<Step3Props, any> {
           }
           }
         >
+          <div className={styles.modalHeader}>
+            <div className={styles.subCon}/>
+            <div className={styles.subTitle}>
+            </div>
+            <div className={styles.subCon}>
+              <div onClick={this.props.closeTimeModal} className={styles.close}>&times;</div>
+            </div>
+          </div>
           <div className={styles.tableDiv}>
             <div className={styles.simulationHeader}>
               Simulation Finished
@@ -193,30 +206,31 @@ class Step3 extends React.Component<Step3Props, any> {
               onClick={this.props.hidAction}
               className={styles.hide}
             >
-              {this.props.hidCheck ? <i className="fa fa-chevron-down" aria-hidden="true"/> :<i className="fa fa-chevron-up" aria-hidden="true"/>}
+              {this.props.hidCheck ? <i className="fa fa-chevron-down" aria-hidden="true"/> : <i className="fa fa-chevron-up" aria-hidden="true"/>}
             </span>
           </div>
           <div id="hideStep3" hidden={this.props.hidCheck}>
             {this.props.partNumber === 1 ?
-          <Tabs className={styles.expContentContainer}  defaultTab="vertical-tab-one" vertical >
-            <TabList className={styles.expContentList}>
-              <Tab className={styles.expContentTab} onClick={this.props.closePlotModal} tabFor="vertical-tab-one">TO DO</Tab>
-              <Tab className={styles.expContentTab} onClick={this.props.openPlotModal} tabFor="vertical-tab-two">PLOT</Tab>
-            </TabList>
-            <TabPanel className={styles.expContent} tabId="vertical-tab-one">
-              <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
-            </TabPanel>
-            <TabPanel className={styles.expContent} tabId="vertical-tab-two">
-              <ConPlot/>
-            </TabPanel>
-            <div className={styles.expContentDummy}/>
-          </Tabs> :
-            <div className={styles.expContentContainer}>
-              <div className={styles.expContent}>
-              <ConPlot/>
-              </div>
-            </div>}
+              <div className={styles.expContentContainer}>
+                <TabList className={styles.expContentList}>
+                  <Tab className={styles.expContentTab} selected={!this.props.showPlotModal} onClick={this.props.closePlotModal} tabFor="tab-to-do">TO DO</Tab>
+                  <Tab className={styles.expContentTab} selected={this.props.showPlotModal} onClick={this.props.openPlotModal} tabFor="tab-plot">PLOT</Tab>
+                </TabList>
+                <TabPanel className={styles.expContent} selected={!this.props.showPlotModal} tabId="tab-to-do">
+                  <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
+                </TabPanel>
+                <TabPanel className={styles.expContent} selected={this.props.showPlotModal} tabId="tab-plot">
+                  <ConPlot/>
+                </TabPanel>
+                <div className={styles.expContentDummy}/>
+              </div> :
+              <div className={styles.expContentContainer}>
+                <div className={styles.expContent}>
+                  <ConPlot/>
+                </div>
+              </div>}
           </div>
+          <div className={styles.expContentHide} hidden={!this.props.hidCheck}/>
         </div>
         <div className={styles.subsubContainer}>
           <div className={styles.solL}>

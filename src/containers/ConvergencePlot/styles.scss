@@ -62,7 +62,6 @@
     -webkit-animation-duration: 0.4s;
     animation-duration: 0.4s;
     animation-name: slideIn;
-    background-color: $background-color;
     margin: auto;
     position: relative;
     top: 20%;
@@ -76,25 +75,23 @@
     .modal-converge-plot {
       background-color: $solver-background-color;
       color: $primary-color;
-      padding: 0.5em;
       border-radius: $container-border-radius;
       flex: 1 1 auto;
       width: 100%;
       align-self: stretch;
     }
     .modal-header {
-      padding: 2px;
       margin: auto;
-      text-align: center;
-      display: flex;
+      display: block;
       flex: 1 1 auto;
       .sub-title {
         display: flex;
-        width: 400px;
+        width: 625px;
       }
       .sub-con {
-        display: flex;
-        width: 100px;
+        display: block;
+        float: right;
+        margin-right: 0;
       }
 
     }
@@ -152,12 +149,11 @@
 
   /* The Close Button */
   .close {
-    color: $primary-color;
+    color: white;
     display: flex;
     float: right;
-    font-size: 28px;
+    font-size: 50px;
     font-weight: bold;
-    margin: auto
   }
 
   .close:hover,

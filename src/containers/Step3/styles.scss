@@ -23,8 +23,10 @@
       font-size: 20px;
       line-height: 1.5;
       padding-top: 10px;
+      padding-bottom: 10px;
       text-transform: uppercase;
-
+      background-color: $explain-background-color;
+      border-radius: $container-border-radius;
 
       .plot-btn{
         flex: 1 1 auto;
@@ -96,6 +98,10 @@
       bottom            : 0;
       backgroundColor   : rgba(255, 255, 255, 0.75);
 
+    }
+
+    .exp-content-hide {
+      height: 10px;
     }
 .exp-content-container {
   display: flex;
@@ -191,7 +197,39 @@
 
 @keyframes flashingtext{
   from{color: red;}
-  to{color: black;}
+  to{color: $btn-color;}
+}
+.modal-header {
+  padding: 2px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex: 1 1 auto;
+  .sub-title {
+    display: flex;
+    width: 400px;
+  }
+  .sub-con {
+    display: flex;
+    width: 100px;
+  }
+
+}
+/* The Close Button */
+.close {
+  color: $primary-color;
+  display: flex;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin: auto
+}
+
+.close:hover,
+.close:focus {
+  color: $btn-on-mouse-over;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .table-div{
@@ -207,6 +245,7 @@
     padding-bottom: 1em;
     animation-name: flashingtext;
     animation-duration: 5s;
+    color: $btn-color;
   }
 
   .time-table{
@@ -220,6 +259,7 @@
     .red-row {
       animation-name: flashingtext;
       animation-duration: 5s;
+      color: $btn-color;
     }
 
     width:30%;
