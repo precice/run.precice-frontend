@@ -11,68 +11,62 @@ class Sub3 extends React.Component<Sub3Props, any> {
   public render() {
     return (
       <div>
-        Third, let's speicify the behavior of SU2.
+        Now we declare the participants in our coupled simulation. Here we declare what data needs to be transferred
+        between the meshes used by the solvers and how to map the data from one mesh to another. We will transfer the data
+        vectors "Forces0" and "DisplacementDeltas0", defined above, between SU2 and CalculiX.
         <br/><br/>
         <li>
-          <span className={styles.highlight}>participant name</span>: Name of participant whose behavior we wish to specify.
+          <span className={styles.highlight}>participant</span>: Specifies one of the solvers using preCICE. Here we are
+          concerned with SU2.
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>use-mesh name</span>: Name of mesh that will be used by this participant.
-        </li>
-        <li>
-          <span className={styles.highlight}>provide</span>: Does this participant provide the mesh in its implementation?
-        </li>
-        <li>
-          <span className={styles.highlight}>from</span>: If the mesh is provided by another participant, specify the name here.
+          <span className={styles.highlight}>use-mesh</span>: Makes a mesh available to a participant. A solver can define its
+          own mesh as well as receive one from another participant. For SU2 we have both.
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>write-data name</span>: Name of a previously-defined dataset that needs to be written
-          <Tooltip
-            width="100"
-            interactive
-            html={(
-              <div>
-                the participant <span className={styles.highlight}>SU2_CFD</span> writes to the preCICE interface dataset <span className={styles.highlight}>Forces0</span>
-              </div>
-            )}
-          >
-            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-          </Tooltip>.
-        </li>
-        <li>
-          <span className={styles.highlight}>read-data name</span>: Name of a previously-defined dataset that needs to be read
-          <Tooltip
-            width="100"
-            interactive
-            html={(
-              <div>
-                <span className={styles.highlight}>SU2_CFD</span> needs to read from the preCICE interface dataset <span className={styles.highlight}>DisplacementDeltas0</span>
-              </div>
-            )}
-          >
-            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-          </Tooltip>.
-        </li>
-        <li>
-          <span className={styles.highlight}>mesh</span>: Name of mesh to / from which data needs to be written / read respectively.
+          <span className={styles.highlight}>use-mesh provide</span>: Since SU2 provides its own mesh, we set this attribute to "yes".
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>mapping:nearest-neighbor</span>: The mapping is done in a nearest neighbor manner.
+          <span className={styles.highlight}>use-mesh from</span>: In our setup, SU2 also uses "Calculix_Mesh" which is provided
+          by CalculiX. We can specify this by using the "from" attribute.
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>direction</span>: Specify the direction of mapping. Can be <span className={styles.highlight}>write</span> or <span className={styles.highlight}>read</span>
+          <span className={styles.highlight}>write-data</span>: This sets the data to be written by the participant to
+          preCICE. Here SU2 is writing to the preCICE interface dataset "Forces0".
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>from</span>: Name of source mesh.
+          <span className={styles.highlight}>read-data</span>: This sets the data to be read by the solver from preCICE.
+          Here SU2 needs to read "DisplacementDeltas0" from the preCICE interface.
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>to</span>: Name of destination mesh.
+          <span className={styles.highlight}>mapping:nearest-neighbor</span>: If you have been following the explanation,
+          you will know that SU2 writes "Forces0" to and reads "DisplacementDeltas0" from the preCICE interface. "DisplacementDeltas0"
+          is provided by Calculix while, looking ahead, Calculix needs "Forces0" from SU2. We define a nearest neighbor
+          mapping to enable this exchange of information between the meshes for the two solvers using this tag.
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>constraint</span>: Mapping restriction. Can be either <span className={styles.highlight}>consistent</span>
+          <span className={styles.highlight}>mapping:nearest-neighbor direction</span>: States the direction of mapping. Can be "write" or "read".
+        </li>
+        <br/>
+        <li>
+          <span className={styles.highlight}>mapping:nearest-neighbor from</span>: Name of source mesh.
+        </li>
+        <br/>
+        <li>
+          <span className={styles.highlight}>mapping:nearest-neighbor to</span>: Name of destination mesh.
+        </li>
+        <br/>
+        <li>
+          <span className={styles.highlight}>mapping:nearest-neighbor constraint</span>: Mapping restrictions are important when
+          the participants have different grids and we need to map between them.
+          The mapping can be either <span className={styles.highlight}>consistent</span>
           <Tooltip
             width="100"
             interactive
@@ -101,15 +95,11 @@ class Sub3 extends React.Component<Sub3Props, any> {
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
           </Tooltip>.
         </li>
+        <br/>
         <li>
-          <span className={styles.highlight}>mesh</span>: Timing of the mapping, i.e. when the mapping is computed.
-          Can be <span className={styles.highlight}>initial</span>
-          <Tooltip
-            width="100"
-            title="Computed only once"
-          >
-            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-          </Tooltip>, <span className={styles.highlight}>onadvance</span>, or <span className={styles.highlight}>ondemand</span>
+          <span className={styles.highlight}>mapping:nearest-neighbor timing</span>: Specifies when the mapping is computed. We
+          can do this in the beginning by setting this to <span className={styles.highlight}>initial</span>. Other options include
+          <span className={styles.highlight}>onadvance and </span>, or <span className={styles.highlight}>ondemand</span>
           <Tooltip
             width="100"
             title="Re-computed multiple times in case of changing coupling meshes"

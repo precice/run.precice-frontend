@@ -9,33 +9,34 @@ class Sub2 extends React.Component<Sub2Props, any> {
   public render() {
     return (
       <div>
-        Second, let's set up the mesh.
+        A vital part of specifying the solver-interface is to declare the meshes we will use. In our case we have two meshes,
+        one for SU2 and one for CalculiX.
         <br/><br/>
         <li>
-          <span className={styles.highlight}>mesh name</span>
-          : Specifies a unique name for the mesh.
-        </li>
-        <br/>
-        <li>
-          <span className={styles.highlight}>use-data name</span>
-          : Specifies a previously-defined dataset that is assigned to this mesh
+          <span className={styles.highlight}>mesh</span>
+          : Specifies a surface mesh consisting of vertices. The mesh coordinates are defined by a simulation participant.
           <Tooltip
             width="100"
             interactive
             html={(
               <div>
-                a surface mesh consisting of vertices and, optionally, edges and triangles (they are needed in special circumstances, for example when a nearest projection mapping is used).
-                <br/>The vertices carry data, specified in the <span className={styles.highlight}>use-data</span> tag.
+                Apart from the vertices, the mesh can optionally contain, edges and triangles.
+                The vertices carry data, specified in the <span className={styles.highlight}>use-data</span> tag.
                 <br/>The geometry data of the mesh can either be provided by a participant (see tag <span className={styles.highlight}>use-mesh</span> in the next part)
                 or by the <span className={styles.highlight}>geometry</span> tag (not used here).
               </div>
             )}
-            title="preCICE does not fully support 1D solvers. For this example, however, we can treat our 1D solvers as 2D solvers by ignoring all the y-components."
+            title="mesh_additional"
           >
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-          </Tooltip>.
+          </Tooltip>
         </li>
-      </div>
+        <br/>
+        <li>
+          <span className={styles.highlight}>use-data</span>
+          : Assigns a previously-defined dataset to the mesh.
+        </li>
+S      </div>
     );
   }
 }

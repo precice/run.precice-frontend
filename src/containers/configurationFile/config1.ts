@@ -5,12 +5,12 @@
 import * as React from 'react';
 export const initial = '';
 
-export const sub1 = 'interface';
-export const sub2 = 'mesh';
-export const sub3 = 'behavior for SU2';
-export const sub4 = 'behavior for CalculiX';
-export const sub5 = 'communication method';
-export const sub6 = 'coupling scheme';
+  export const sub1 = 'interface';
+  export const sub2 = 'mesh';
+  export const sub3 = 'SU2';
+  export const sub4 = 'CalculiX';
+  export const sub5 = 'communication method';
+  export const sub6 = 'coupling scheme';
 
 export const sec01 = {
   start: 1,
