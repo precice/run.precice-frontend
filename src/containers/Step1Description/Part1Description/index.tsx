@@ -13,10 +13,10 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         <div className={styles.tuInContent}>
           In this tutorial we will show you how to perform coupled fluid-structure
           interaction (FSI) simulations with preCICE. preCICE is a coupling library for partitioned multi-physics simulations
-          and is meant to couple existing solvers using a minimally invasive approach. The two solvers we will use are
-          <a href={'https://su2code.github.io/'}> SU2 </a>
-          and
-          <a href={'http://www.calculix.de/'}> CalculiX</a>.
+          and is meant to couple existing solvers using a minimally invasive approach. The two solvers we will use are<span> </span>
+          <a className={styles.link} target="_blank" href={'https://su2code.github.io/'}>SU2</a><span> </span>
+          and<span> </span>
+          <a className={styles.link} target="_blank" href={'http://www.calculix.de/'}>CalculiX</a>.
           We have split the tutorial into multiple parts. In each part, you will run the same simulation with different
           settings for preCICE.
           <br/>

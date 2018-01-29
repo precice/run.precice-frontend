@@ -36,6 +36,7 @@ class ConPlot extends React.Component<ConPlotProps, any> {
       <div id="popUpChart" className={styles.container}>
         <div className={styles.subContainer}>
           <div className={styles.progressBar}>
+            <div className={styles.safariBug}/>
             <CircularProgressbar
               percentage={this.props.progressPercent}
             />
@@ -123,6 +124,7 @@ class ConPlot extends React.Component<ConPlotProps, any> {
           </div>
           <div className={styles.subContainer}>
             <div className={styles.progressBar}>
+              <div className={styles.safariBug}/>
               <CircularProgressbar
                 percentage={this.props.progressPercent}
               />

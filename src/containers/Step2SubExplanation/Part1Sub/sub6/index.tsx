@@ -14,17 +14,19 @@ class Sub6 extends React.Component<Sub6Props, any> {
         the course of the tutorial.
         <br/><br/>
         <li>
-          <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}> serial-explicit </span>
-          coupling scheme.<span className={styles.highlight}> Serial </span>  refers to the fact that the two solvers operate serially with
-          respect to each other - one waits for the other to finish its time step.<span className={styles.highlight}> Explicit </span>
-          means that we let every solver compute once and then move on to the next timestep.
+          <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}>serial-explicit</span>
+          <span> </span>
+          coupling scheme. <span className={styles.highlight}>Serial</span>  refers to the fact that the two solvers operate serially with
+          respect to each other - one waits for the other to finish its time step. <span className={styles.highlight}>Explicit</span>
+          <span> </span>means that we let every solver compute once and then move on to the next timestep.
           <Tooltip
             width="100"
             interactive
             html={(
               <div>
-                A<span className={styles.highlight}> parallel </span>coupling-scheme would allow simultaneous
-                computation. An <span className={styles.highlight}> implicit </span> scheme would have meant that
+                A <span className={styles.highlight}>parallel
+              </span> coupling-scheme would allow simultaneous
+                computation. An <span className={styles.highlight}>implicit</span> scheme would have meant that
                 we sub-iterate between both solvers in every timestep until convergence.
               </div>
             )}
@@ -56,9 +58,9 @@ class Sub6 extends React.Component<Sub6Props, any> {
             interactive
             html={(
               <div>
-                Recall that in the participant <span className={styles.highlight}>SU2_CFD</span> we mapped
-                <span className={styles.highlight}> DisplacementDeltas0</span> from and <span className={styles.highlight}> Forces0 </span>
-                to the mesh <span className={styles.highlight}>Calculix_Mesh</span>.
+                Recall that in the participant <span className={styles.highlight}>SU2_CFD</span> we mapped<span> </span>
+                <span className={styles.highlight}>DisplacementDeltas0</span> from and <span className={styles.highlight}>Forces0</span>
+                <span> </span>to the mesh <span className={styles.highlight}>Calculix_Mesh</span>.
               </div>
             )}
           >
