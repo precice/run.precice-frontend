@@ -1,9 +1,3 @@
-// TODO: Handle dispatch for last iteration
-// TODO: Store total simulation time.
-// TODO: Automatically show modal when both consoles are active
-// TODO: How is "state" being shadowd in middleware
-// TODO: Why do selectors with substate.get() not work with Object.assign?
-
 import {connect} from 'react-redux';
 import * as React from 'react';
 import {createStructuredSelector} from 'reselect';
@@ -51,7 +45,6 @@ import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxCons
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import { initialRelaxationValueSelector } from '../Step2/selectors';
 import Modal = require('react-modal');
-import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 
 interface Step3Props {
   dispatch: any;
