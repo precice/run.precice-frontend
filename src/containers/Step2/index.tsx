@@ -4,7 +4,6 @@ import {createStructuredSelector} from 'reselect';
 import {
   hidCheckSelector,
   xmlflagSelector,
-  initialRelaxationValueSelector,
   blockNumberSelector,
 } from './selectors';
 import {
@@ -114,7 +113,6 @@ const mapStateToProps = createStructuredSelector({
   hidCheck2: hidCheckSelector(),
   xmlflag: xmlflagSelector(),
   modalClick: modalClickSelector(),
-  initialRelaxationValue: initialRelaxationValueSelector(),
   partNumber: partNumberSelector(),
   blockNumber: blockNumberSelector(),
 });
