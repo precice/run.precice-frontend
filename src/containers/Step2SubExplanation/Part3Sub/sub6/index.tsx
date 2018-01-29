@@ -32,7 +32,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
               <div>
                 <span className={styles.highlight}>relative-convergence-measure</span> simply means that convergence is
                 achieved if <span className={styles.highlight}>|data - oldData|{'<'} limit * |data|</span>,
-                where all norms are L2 norms. The expression on the right-hand side is referred to as
+                where all norms are L2 norms. The expression on the right-hand side is referred to as<span> </span>
                 <span className={styles.highlight}>relative limit</span> in the preCICE logging output.
               </div>
             )}
@@ -69,8 +69,8 @@ class Sub6 extends React.Component<Sub6Props, any> {
 
         <br/><br/>
         <li>
-          <span className={styles.highlight}>post-processing</span>: We're using the Adaptive <span className={styles.highlight}>Aitken </span>
-          Underrelaxation method to improve the convergence rate. We can specify the initial value of the relaxation factor
+          <span className={styles.highlight}>post-processing</span>: We're using the Adaptive <span className={styles.highlight}>Aitken</span>
+          <span> </span>Underrelaxation method to improve the convergence rate. We can specify the initial value of the relaxation factor
           and thereon, the method can adapt the relaxation factor in each iteration based on the previous iterations.
 
           <Tooltip
@@ -80,7 +80,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
               <div>
                 For more information on Aitken, click <a style={{color: 'white'}}href="http://onlinelibrary.wiley.com/doi/10.1002/nme.1620010306/abstract">here</a>.
                 preCICE offers a variety of methods for post-processing.
-                For details, please consult the <a style={{color: 'white'}}href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a>.
+                For details, please consult the <a className={styles.link} target="_blank" href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a>.
               </div>
             )}
           >

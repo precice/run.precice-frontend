@@ -119,7 +119,7 @@ export const initialCodeString4 = `    <participant name="Calculix">
 export const initialCodeString45 = ``;
 export const initialCodeString5 = `    <m2n:sockets
       from="SU2_CFD" to="Calculix"
-      exchange-directory="../" distribution-type="gather-scatter"/>`;
+      distribution-type="gather-scatter"/>`;
 export const initialCodeString56 =  ``;
 
 

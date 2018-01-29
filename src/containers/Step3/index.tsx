@@ -1,9 +1,3 @@
-// TODO: Handle dispatch for last iteration
-// TODO: Store total simulation time.
-// TODO: Automatically show modal when both consoles are active
-// TODO: How is "state" being shadowd in middleware
-// TODO: Why do selectors with substate.get() not work with Object.assign?
-
 import {connect} from 'react-redux';
 import * as React from 'react';
 import {createStructuredSelector} from 'reselect';
@@ -50,7 +44,6 @@ import ConPlot from '../ConvergencePlot';
 import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxConsole/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import Modal = require('react-modal');
-import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 
 interface Step3Props {
   dispatch: any;
@@ -100,8 +93,6 @@ class Step3 extends React.Component<Step3Props, any> {
     this.renderTable = this.renderTable.bind(this);
   }
 
-  private title: string;
-
   // Renders part of table
   private renderTable(timeArr) {
     const list = timeArr.toJSON();
@@ -127,22 +118,9 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 
   public componentWillMount() {
-    if (this.props.partNumber !== 1) {
-      this.title = 'plot';
-    } else {
-      this.title = 'what to do';
-    }
   }
 
   public componentWillReceiveProps(nextProps) {
-    if (nextProps.showPlotModal) {
-      this.title = 'plot';
-    } else {
-      this.title = 'what to do';
-    }
-    if (nextProps.showTimeModal) {
-      document.getElementById('myModal2').style.display = 'none';
-    }
   }
 
   public render() {
@@ -198,7 +176,7 @@ class Step3 extends React.Component<Step3Props, any> {
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.dummy}/>
-            <span className={styles.title}>{this.title}</span>
+            <span className={styles.title}/>
             <span
               id="hideButton"
               onClick={this.props.hidAction}

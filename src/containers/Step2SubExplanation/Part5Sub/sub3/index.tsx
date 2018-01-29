@@ -12,7 +12,7 @@ class Sub3 extends React.Component<Sub3Props, any> {
     return (
       <div>
         Now we declare the participants in our coupled simulation. Here we declare what data needs to be transferred
-        between the meshes used by the solvers and how to map the data from one mesh to another. We will transfer the data
+        between the meshes and how to map the data from one mesh to the other. We will transfer the data
         vectors "Forces0" and "DisplacementDeltas0", defined above, between SU2 and CalculiX.
         <br/><br/>
         <li>
@@ -21,8 +21,9 @@ class Sub3 extends React.Component<Sub3Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>use-mesh</span>: Makes a mesh available to a participant. A solver can define its
-          own mesh as well as receive one from another participant. For SU2 we have both.
+          <span className={styles.highlight}>use-mesh</span>: Makes a mesh available to a participant. Each solver
+          provides its own mesh and receives the other one.
+
         </li>
         <br/>
         <li>
@@ -48,7 +49,7 @@ class Sub3 extends React.Component<Sub3Props, any> {
           <span className={styles.highlight}>mapping:nearest-neighbor</span>: If you have been following the explanation,
           you will know that SU2 writes "Forces0" to and reads "DisplacementDeltas0" from the preCICE interface. "DisplacementDeltas0"
           is provided by Calculix while, looking ahead, Calculix needs "Forces0" from SU2. We define a nearest neighbor
-          mapping to enable this exchange of information between the meshes for the two solvers using this tag.
+          mapping to enable this exchange of information.
         </li>
         <br/>
         <li>
@@ -72,7 +73,8 @@ class Sub3 extends React.Component<Sub3Props, any> {
             interactive
             html={(
               <div>
-                For quantities that are normalized (for example, pressure, which is force per unit area), we need a consistent mapping. This means that the value at coarse nodes is the same as the value at the corresponding fine node. See here for an example:
+                For quantities that are normalized, for example pressure, we need a consistent mapping.
+                -This means that the value at coarse nodes is the same as the value at the corresponding fine node.
                 <br/>
                 <img  style={{ width: '300px' }} src={consistentPlot}/>
               </div>
@@ -86,7 +88,9 @@ class Sub3 extends React.Component<Sub3Props, any> {
             interactive
             html={(
               <div>
-                When mapping between different grids (example, from a fine to a coarse grid0, the value at a coarse node is computed as an aggregation of the corresponding fine nodes, such that the total force on the coarse and fine grid is the same. This is required for quantities that are absolute (e.g. Force, Mass, etc.). An example can be seen here:
+                When mapping between a coarse and a fine mesh, the value at a coarse node is computed as an aggregation
+                of the corresponding fine nodes, such that the total force on the coarse and fine grid is the same.
+                This is required for quantities that are absolute for example Force, Mass, etc.
                 <br/>
                 <img  style={{ width: '300px' }} src={conservativePlot}/>
               </div>
@@ -98,8 +102,8 @@ class Sub3 extends React.Component<Sub3Props, any> {
         <br/>
         <li>
           <span className={styles.highlight}>mapping:nearest-neighbor timing</span>: Specifies when the mapping is computed. We
-          can do this in the beginning by setting this to <span className={styles.highlight}>initial</span>. Other options include
-          <span className={styles.highlight}>onadvance and </span>, or <span className={styles.highlight}>ondemand</span>
+          can do this in the beginning by setting this to<span className={styles.highlight}> initial</span>. Other options include
+          <span className={styles.highlight}> onadvance </span>and<span className={styles.highlight}> ondemand</span>
           <Tooltip
             width="100"
             title="Re-computed multiple times in case of changing coupling meshes"

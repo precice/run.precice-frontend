@@ -13,18 +13,18 @@ class Sub6 extends React.Component<Sub6Props, any> {
         the coupling scheme can affect whether the simulation converges or not.
         <br/><br/>
         <li>
-          <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}>serial-explicit</span>
-          coupling scheme.<span className={styles.highlight}> Serial</span> refers to the fact that the two solvers operate serially with
-          respect to each other - one waits for the other to finish its timestep.<span className={styles.highlight}>Explicit </span>
+          <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}> serial-explicit </span>
+          coupling scheme.<span className={styles.highlight}> Serial </span> refers to the fact that the two solvers operate serially with
+          respect to each other - one waits for the other to finish its timestep.<span className={styles.highlight}> Explicit </span>
           means that we let every solver compute once and then move on to the next timestep.
           <Tooltip
             width="100"
             interactive
             html={(
               <div>
-                A <span className={styles.highlight}>parallel</span> coupling-scheme would allow simultaneous
-                computation. An <span className={styles.highlight}> implicit </span> scheme would have meant that
-                we sub-iterate between both solvers in every timestep until convergence.
+                A<span className={styles.highlight}> parallel </span> coupling-scheme would allow simultaneous
+                computation. An<span className={styles.highlight}> implicit </span> scheme would have meant that
+                we sub-iterate between both solvers in every time step until convergence.
               </div>
             )}
           >
@@ -33,7 +33,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>participants</span>: The "participants" tag defines the coupled participants.
+          <span className={styles.highlight}>participants</span>: This defines the coupled participants.
           The attribute "first" names the participant that leads the coupling.
         </li>
         <br/>
@@ -48,13 +48,9 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>max-iterations value</span>: Maximum number of implicit sub-iterations.
-        </li>
-        <br/>
-        <li>
           <span className={styles.highlight}>exchange</span>: As discussed before, we mapped data between SU2 and
           CalculiX. We need to exchange this data through a mesh between the two participants. Please note that both
-          participants must use the mesh with use-mesh.
+          participants must use the same mesh.
           <Tooltip
             width="100"
             interactive
@@ -71,7 +67,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>exchange data</span>: Dataset to be exchanged..
+          <span className={styles.highlight}>exchange data</span>: Dataset to be exchanged.
         </li>
         <br/>
         <li>

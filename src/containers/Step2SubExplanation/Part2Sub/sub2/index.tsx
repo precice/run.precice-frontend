@@ -9,7 +9,7 @@ class Sub2 extends React.Component<Sub2Props, any> {
   public render() {
     return (
       <div>
-        A vital part of specifying the solver-interface is to declare the meshes we will use. In our case we have two meshes,
+        Here we specify the names of the meshes. In our case we have two meshes,
         one for SU2 and one for CalculiX.
         <br/><br/>
         <li>

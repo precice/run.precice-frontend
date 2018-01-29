@@ -9,9 +9,9 @@ class Part4Sub extends React.Component<Part4SubProps, any> {
     return(
       <div className={styles.textStyle}>
         The xml file below has already been changed to use the Inverse Least-Squares method, IQN-ILS in preCICE,
-        as the post-processing step. With this post-processing step we reuse information from previous time steps
-        since that can potentially increase the speed of convergence. While we cannot present the details of the method
-        here, we can point you in the<a className={styles.link} href={'https://github.com/precice/precice/wiki/Quasi-Newton-Post-Processing-Methods'}> right direction</a>.
+        as the post-processing step. This method reuses information from previous time steps, which can increase the
+        speed of convergence. Details can be found<span> </span>
+        <a className={styles.link} target="_blank" href={'https://github.com/precice/precice/wiki/Quasi-Newton-Post-Processing-Methods'}>here</a>.
       </div>
     );
   }

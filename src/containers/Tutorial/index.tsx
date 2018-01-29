@@ -97,7 +97,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
             <div className={styles.modalHeader}>
               <div className={styles.subCon}/>
               <div className={styles.subTitle}>
-                <h2>Oops, you forgot some parts</h2>
+                <h2>You forgot some parts</h2>
               </div>
               <div className={styles.subCon}>
                 <div onClick={this.closeModal} className={styles.close}>&times;</div>

@@ -14,20 +14,30 @@ class Sub1 extends React.Component<Sub1Props, any> {
         <br/><br/>
         <li>
           <span className={styles.highlight}>solver-interface dimensions</span>
-          : This attribute sets the spatial dimensions of the problem to be solved. Recall that we're performing a quasi-2D
-          simulation since the actual setup is 3D but we don't make use of the third dimension.
+          : This attribute sets the spatial dimensions of the problem to be solved. This is 3 since we're performing a quasi-2D
+          simulation.
           <Tooltip
             width="100"
-            title="While the dimension has been set to 3 here, we are actually performing a quasi-2D simulation. This is so because CalculiX only deals with 3-D problems."
+            interactive
+            html={(
+              <div>
+                This could be confusing since the schematic in the introduction is 2D. The constraining factor is
+                CalculiX which only deals with 3D problems. The meshes are 3D but we don't make use of the
+                third dimension.
+              </div>
+            )}
+            title="mesh_additional"
           >
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-          </Tooltip>.
+          </Tooltip>
+
         </li>
+
         <br/>
         <li>
           <span className={styles.highlight}>data:vector name</span>
           : This defines the datasets to be used for the meshes in the simulation. Here we define data vectors that we will
-          transfer between the two solvers.
+          use to transfer between the two solvers.
         </li>
       </div>
     );

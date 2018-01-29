@@ -14,24 +14,20 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <br/><br/>
 
         <li>
-          <span className={styles.highlight}>post-processing: IQN-ILS </span>: Use Inverse Least Squares /
-          Anderson Acceleration for fixed-point
-          acceleration. Without going into the details, it solves a least-squares problem in order to update the Jacobian.
-          The method is matrix free and therefore leads to low computational costs.
+          <span className={styles.highlight}>post-processing: IQN-ILS</span>: Use Inverse Least Squares acceleration
+          for fixed-point acceleration.
         </li>
         <br/>
 
         <li>
-          <span className={styles.highlight}>preconditioner</span>: To improve the performance of a parallel or a multi
-          coupling scheme, a preconditioner can be applied. A residual-sum preconditioner scales post-processing
-          data by the sum of the residuals from the current time step.
+          <span className={styles.highlight}>preconditioner</span>: To improve the performance, a preconditioner can be
+          applied. A residual-sum preconditioner scales post-processing data in each time step.
         </li>
         <br/>
 
         <li>
-          <span className={styles.highlight}>filter</span>: Evidently,  for Inverse Least-Squares we have to solve a least-squares
-          problem. In order to maintain good conditioning in the least-squares system, we can use a filter to remove
-          linearly dependent columns.
+          <span className={styles.highlight}>filter</span>:  In order to maintain good conditioning in the least-squares
+          system, we can use a filter to remove linearly dependent columns.
         </li>
         <br/>
 
@@ -42,8 +38,9 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <br/>
 
         <li>
-          <span className={styles.highlight}>timesteps-reused</span>:  In Anderson Acceleration, we can reuse
-          data from old time steps to further speed up the convergence. This specifies the maximum number of reused time steps.
+          <span className={styles.highlight}>timesteps-reused</span>:  In Inverse Least-Squares acceleration, we can
+          reuse data from old time steps to further speed up the convergence. This specifies the maximum number of
+          reused time steps.
         </li>
 
       </div>
