@@ -18,7 +18,7 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         <br/>
         <br/>
         To make it more convenient, we have already typed in the commands to start the two solvers in the terminals below.
-        Go ahead and start the two solvers.
+        Go ahead and start them.
       </div>
     );
   }

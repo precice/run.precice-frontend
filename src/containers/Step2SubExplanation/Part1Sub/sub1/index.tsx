@@ -16,21 +16,22 @@ class Sub1 extends React.Component<Sub1Props, any> {
           <span className={styles.highlight}>solver-interface dimensions</span>
           : This attribute sets the spatial dimensions of the problem to be solved. This is 3 since we're performing a quasi-2D
           simulation.
+          <Tooltip
+            width="100"
+            interactive
+            html={(
+              <div>
+                This could be confusing since the schematic in the introduction is 2D. The constraining factor is
+                CalculiX which only deals with 3D problems. The meshes are 3D but we don't make use of the
+                third dimension.
+              </div>
+            )}
+            title="mesh_additional"
+          >
+            <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
+          </Tooltip>
+
         </li>
-        <Tooltip
-          width="100"
-          interactive
-          html={(
-            <div>
-              This might be a bit confusing since the schematic in the introduction is 2D. The constraining factor is
-              CalculiX which only deals with 3D problems. The meshes are 3D but we don't make use of the
-              third dimension.
-            </div>
-          )}
-          title="mesh_additional"
-        >
-          <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;
-        </Tooltip>
 
         <br/>
         <li>

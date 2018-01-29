@@ -21,8 +21,8 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
 
           While a first thought would be to reduce the timestep, instabilities induced by explicit coupling
           schemes usually cannot be cured through timestep reduction. In such cases we need to perform several
-          coupling iterations in each timestep until the solution at the interface of both our solvers converges. preCICE
-          allows us to do this by using an implicit coupling scheme.
+          sub-iterations or coupling iterations in each timestep until the solution at the interface of both our solvers
+          converges. preCICE allows us to do this by using an implicit coupling scheme.
 
           <br/><br/>
 
