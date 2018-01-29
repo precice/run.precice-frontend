@@ -50,6 +50,6 @@ const mapStateToProps = createStructuredSelector({
   buttonLinks: buttonLinksSelector(),
 });
 
-export default connect(
+export default connect<any,any,any>(
   mapStateToProps,
 )(Step1);

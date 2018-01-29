@@ -42,6 +42,7 @@ interface Step2Props {
   partNumber: number;
   blockNumber: string;
   blockNumberAction: () => void;
+  blockNumberInitial: () => void;
 }
 
 let whichSection = '';
@@ -65,6 +66,9 @@ class Step2 extends React.Component<Step2Props, any> {
       },
     };
   }
+  public componentWillMount() {
+    this.props.blockNumberInitial();
+}
   public render() {
     return (
       <div onMouseOver={this.props.xmlVisitAction} className={styles.subContainer}>
@@ -118,6 +122,7 @@ function mapDispatchToProps(dispatch) {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
     xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber });},
     blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
+    blockNumberInitial: () => { dispatch({ type: BLOCKNUMBER_FLAG, check: '1' }); },
   };
 }
 

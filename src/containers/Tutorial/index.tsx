@@ -22,6 +22,7 @@ import {
 import {
   ConsoleId} from '../Step3/index';
 import { Tooltip } from 'react-tippy';
+import {isNullOrUndefined, isUndefined} from "util";
 
 
 interface TutorialProps {
@@ -39,6 +40,9 @@ interface TutorialProps {
   xmlflag: {
     part1: boolean[];
     part2: boolean[];
+    part3: boolean[];
+    part4: boolean[];
+    part5: boolean[];
   };
 
   partNumber: number;
@@ -75,22 +79,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
 
     }
     document.getElementById('mouse' + mouseOn).hidden = false;
-  }
-  public componentWillReceiveProps(nextProps) {
-    const xmlflag = eval('nextProps.xmlflag.part' + this.props.partNumber);
-    const index = ['2', '3', '4', '5', '6'];
-    let highest = 2;
-    for (let i in index) {
-      document.getElementById('mouse' + index[i]).hidden = true;
-
-    }
-    for (let i in xmlflag) {
-      if (xmlflag[i] === false) {
-        highest = Number(i)+1;
-        document.getElementById('mouse' + highest).hidden = false;
-        break;
-      }
-    }
   }
 
   public render() {

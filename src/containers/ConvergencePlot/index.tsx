@@ -17,7 +17,7 @@ interface ConPlotProps {
 }
 
 class ConPlot extends React.Component<ConPlotProps, any> {
-  constructor(props: TutorialProps) {
+  constructor(props: ConPlotProps) {
     super(props);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
