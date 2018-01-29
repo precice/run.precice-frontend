@@ -42,6 +42,7 @@ interface Step2Props {
   partNumber: number;
   blockNumber: string;
   blockNumberAction: () => void;
+  blockNumberInitial: () => void;
 }
 
 let whichSection = '';
@@ -65,6 +66,11 @@ class Step2 extends React.Component<Step2Props, any> {
       },
     };
   }
+  public componentWillMount() {
+    if (this.props.partNumber !== 1) {
+      this.props.blockNumberInitial();
+    }
+}
   public render() {
     return (
       <div onMouseOver={this.props.xmlVisitAction} className={styles.subContainer}>
@@ -74,7 +80,7 @@ class Step2 extends React.Component<Step2Props, any> {
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
-            <span className={styles.title}>what to do</span>
+            <span className={styles.title}/>
             <span id="hideButton" onClick={this.props.hidAction} className={styles.hide}>
               {this.props.hidCheck2 ? <i className="fa fa-chevron-down" aria-hidden="true"/> :<i className="fa fa-chevron-up" aria-hidden="true"/> }
             </span>
@@ -118,6 +124,7 @@ function mapDispatchToProps(dispatch) {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
     xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber });},
     blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
+    blockNumberInitial: () => { dispatch({ type: BLOCKNUMBER_FLAG, check: '6' }); },
   };
 }
 
