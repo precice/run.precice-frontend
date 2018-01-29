@@ -13,9 +13,10 @@ class Final extends React.Component<FinalProps, any> {
         <div className={styles.landingPage}>{/*landing page with titles and start button*/}
           <div className={styles.intro}>Congratulations!</div>
           <div className={styles.subIntro}>
-            You finished all the tutorial.<br/>
-            If you want to download the tutorial and run it on your computer, <br/>
-            please go to the github repository.
+            You have finished the tutorial.<br/>
+            If you want to run it on your computer, <br/>
+            please go to the github repository, <br/>
+            and follow the instructions.
           </div>
           <div className={styles.btnContainer}><a href="https://github.com/precice/precice/wiki/FSI-tutorial" className={styles.btn}> preCICE github</a></div>
         </div>
