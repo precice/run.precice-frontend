@@ -10,7 +10,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
     return (
       <div>
         Before we go ahead and run the simulation, we need to configure one last thing: the coupling scheme. As you can imagine,
-        the coupling scheme can have affect whether the simulation converges or not.
+        the coupling scheme can affect whether the simulation converges or not.
         <br/><br/>
         <li>
           <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}>serial-explicit</span>

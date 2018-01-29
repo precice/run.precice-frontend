@@ -5,6 +5,9 @@
   font-weight: bolder;
   text-decoration: underline;
 }
+.italic{
+  font-style: italic;
+}
 .link {
   color: $link-color;
   &:hover {
