@@ -37,11 +37,7 @@ class Sub5 extends React.Component<Sub5Props, any> {
           <span className={styles.highlight}>m2n:sockets to</span>: Name of the second participant involved in communication.
         </li>
         <br/>
-        <li>
-          <span className={styles.highlight}>m2n:sockets exchange-directory</span>: Directory where connection information is exchanged.
-          By default, the directory of startup is chosen, and both solvers have to be started in the same directory.
-        </li>
-        <br/>
+
         <li>
           <span className={styles.highlight}>m2n:sockets distribution-type</span>: If at least one participant runs serially then set this option to <span className={styles.highlight}>gather-scatter</span>.
           If both participants run in parallel, communication is more efficient if you set the option to <span className={styles.highlight}>point-to-point</span>.
