@@ -67,7 +67,9 @@ class Step2 extends React.Component<Step2Props, any> {
     };
   }
   public componentWillMount() {
-    this.props.blockNumberInitial();
+    if (this.props.partNumber !== 1) {
+      this.props.blockNumberInitial();
+    }
 }
   public render() {
     return (
@@ -122,7 +124,7 @@ function mapDispatchToProps(dispatch) {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
     xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber });},
     blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
-    blockNumberInitial: () => { dispatch({ type: BLOCKNUMBER_FLAG, check: '1' }); },
+    blockNumberInitial: () => { dispatch({ type: BLOCKNUMBER_FLAG, check: '6' }); },
   };
 }
 

@@ -49,6 +49,11 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
       end: 1,
     }});
   }
+  public componentDidMount() {
+    if (this.props.partNumber !== 1) {
+      document.getElementById('myXML').scrollTop = document.getElementById('myXML').scrollHeight;
+    }
+  }
   public render() {
     return (
       <div id="myXML"className={styles.xml}>
