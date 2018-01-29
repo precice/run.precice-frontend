@@ -59,12 +59,38 @@ class Tutorial extends React.Component<TutorialProps, any> {
     super(props);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.setMouseOver = this.setMouseOver.bind(this);
   }
   private openModal() {
     document.getElementById('myModal').style.display = 'block';
   }
   private closeModal() {
     document.getElementById('myModal').style.display = 'none';
+  }
+  private setMouseOver(e) {
+    const mouseOn = e.currentTarget.id.substring(9, 10);
+    const index = ['2', '3', '4', '5', '6'];
+    for (let i in index) {
+      document.getElementById('mouse' + index[i]).hidden = true;
+
+    }
+    document.getElementById('mouse' + mouseOn).hidden = false;
+  }
+  public componentWillReceiveProps(nextProps) {
+    const xmlflag = eval('nextProps.xmlflag.part' + this.props.partNumber);
+    const index = ['2', '3', '4', '5', '6'];
+    let highest = 2;
+    for (let i in index) {
+      document.getElementById('mouse' + index[i]).hidden = true;
+
+    }
+    for (let i in xmlflag) {
+      if (xmlflag[i] === false) {
+        highest = Number(i)+1;
+        document.getElementById('mouse' + highest).hidden = false;
+        break;
+      }
+    }
   }
 
   public render() {
@@ -92,28 +118,33 @@ class Tutorial extends React.Component<TutorialProps, any> {
             <div className={styles.modalBody}>
               <div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[1]')}>
-                  <div id="modallink2" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink2" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub2')}
+                    <span id="mouse2" hidden={false}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[2]')}>
-                  <div id="modallink3" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink3" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub3')}
+                    <span id="mouse3" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[3]')}>
-                  <div id="modallink4" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink4" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub4')}
+                    <span id="mouse4" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[4]')}>
-                  <div id="modallink5" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink5" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub5')}
+                    <span id="mouse5" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')}>
-                  <div id="modallink6" onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink6" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub6')}
+                    <span id="mouse6" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
               </div>
@@ -195,6 +226,7 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
+
 
 export default connect<{}, {}, TutorialProps>(
   mapStateToProps,
