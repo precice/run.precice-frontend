@@ -25,7 +25,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
         {/*landing page with titles and start button*/}
         <div className={styles.team}>{/*the introduction for our team*/}
           <div className={styles.intro}>
-            Our Team
+            Team
           </div>
           <div className={styles.imgGroup}>{/*photos*/}
             <div className={styles.imgContainer}>
@@ -67,8 +67,8 @@ class LandingPage extends React.Component<LandPageProps, any> {
           </div>
           {/*photos of BGCE_CSE 2017*/}
           <div className={styles.subIntro}>{/*intros of BGCE_CSE 2017*/}
-            The tutorial website is designed by us.<br/>
-            We all study at Msc. Computational Science and Engineering, TUM now :-)
+            This website was developed as a part of our
+            <a className={styles.link} href={'http://www.bgce.de'}>BGCE</a> project.
           </div>
         </div>
         {/*the introduction for our team*/}

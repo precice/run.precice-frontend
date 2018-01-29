@@ -21,7 +21,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
           coupling scheme.
         </li>
         <br/>
-
+        {/*
       <li>
         <span className={styles.highlight}>participants</span>: The participants in our simulation. The attributes should
         be self-evident by this point.
@@ -47,7 +47,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
           last time steps to further speed up the convergence.
         </li>
         <br/>
-
+*/}
       </div>
     );
   }

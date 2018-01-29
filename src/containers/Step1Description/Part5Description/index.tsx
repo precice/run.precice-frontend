@@ -8,7 +8,7 @@ class Part5Sub extends React.Component<Part5SubProps, any> {
   public render() {
     return(
       <div className={styles.tuInContainer}>
-        <div className={styles.tuInHeader}>part five</div>
+        <div className={styles.tuInHeader}>part five: parallel coupling</div>
         <div className={styles.tuInContent}>
           For the previous four simulations we used a serial coupling scheme, whether explicit or implicit.
           In a serial coupling scheme, the solvers operate in a staggered fashion so that solver A uses the old

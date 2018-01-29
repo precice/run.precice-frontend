@@ -102,8 +102,6 @@ class Step3 extends React.Component<Step3Props, any> {
     this.renderTable = this.renderTable.bind(this);
   }
 
-  private title: string;
-
   // Renders part of table
   private renderTable(timeArr) {
     const list = timeArr.toJSON();
@@ -129,22 +127,9 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 
   public componentWillMount() {
-    if (this.props.partNumber !== 1) {
-      this.title = 'plot';
-    } else {
-      this.title = 'what to do';
-    }
   }
 
   public componentWillReceiveProps(nextProps) {
-    if (nextProps.showPlotModal) {
-      this.title = 'plot';
-    } else {
-      this.title = 'what to do';
-    }
-    if (nextProps.showTimeModal) {
-      document.getElementById('myModal2').style.display = 'none';
-    }
   }
 
   public render() {
@@ -200,7 +185,7 @@ class Step3 extends React.Component<Step3Props, any> {
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.dummy}/>
-            <span className={styles.title}>{this.title}</span>
+            <span className={styles.title}/>
             <span
               id="hideButton"
               onClick={this.props.hidAction}
