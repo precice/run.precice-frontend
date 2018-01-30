@@ -362,6 +362,7 @@ function mapDispatchToProps(dispatch) {
     clearConsole: (consoleId: ConsoleId) => {
       dispatch({ type: CONSOLE_CLEAR, consoleId });
     },
+
   };
 }
 
