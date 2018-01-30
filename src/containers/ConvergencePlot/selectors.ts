@@ -33,16 +33,11 @@ export const percentProgressSelector = () => createSelector(
 
     if ( maxDt === 0 ) {
       return 0;
-    } else {
+    } else if (Math.round ( (currDt * 100 / maxDt)  ) > 100) {
       // Use ceil instead of round - That seems to be giving some weird answers
-      return (Math.round ( (currDt * 100 / maxDt)  ) ) ;
-
-      // Fix percentage overshoot due to ceil
-      if (percentage <= 100) {
-        return percentage;
-      } else {
-          return 100;
-      }
+      return 100;
+    } else {
+      return Math.round ( (currDt * 100 / maxDt));
     }
 
   });
