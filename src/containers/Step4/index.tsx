@@ -41,7 +41,7 @@ class Step4 extends React.Component<Step4Props, any> {
           }
         </div>
         <div className={styles.visualize}>
-          { (this.props.leftDone && this.props.rightDone) ?
+          { (true) ?
             <Step4Visualization partNumber={this.props.partNumber}/> :
               <div className={styles.visualHeader}>Nothing to be shown</div>
           }
