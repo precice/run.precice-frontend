@@ -67,8 +67,8 @@ class LandingPage extends React.Component<LandPageProps, any> {
           </div>
           {/*photos of BGCE_CSE 2017*/}
           <div className={styles.subIntro}>{/*intros of BGCE_CSE 2017*/}
-            This website was developed as a part of our
-            <a className={styles.link} href={'http://www.bgce.de'}>BGCE</a> project.
+            This website was developed as a part of our<span> </span>
+            <a className={styles.link} target="_blank" href={'http://www.bgce.de'}>BGCE</a> project.
           </div>
         </div>
         {/*the introduction for our team*/}

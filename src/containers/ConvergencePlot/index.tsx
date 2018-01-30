@@ -8,7 +8,8 @@ import {
 import CircularProgressbar from 'react-circular-progressbar';
 import {VictoryScatter, VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, VictoryLabel} from 'victory';
 import * as styles from './styles.scss';
-import {partNumberSelector} from "../Tutorial/selectors";
+import {partNumberSelector} from '../Tutorial/selectors';
+import {PLOT_DELETE_DATA} from '../constants';
 
 interface ConPlotProps {
   data: object [];
@@ -16,6 +17,7 @@ interface ConPlotProps {
   domainY: number;
   progressPercent: number;
   partNumber: number;
+  initial: () => any;
 }
 
 class ConPlot extends React.Component<ConPlotProps, any> {
@@ -30,12 +32,16 @@ class ConPlot extends React.Component<ConPlotProps, any> {
   private closeModal() {
     document.getElementById('myModal2').style.display = 'none';
   }
+  public componentWillMount() {
+    this.props.initial();
+  }
   public render() {
     if (this.props.partNumber === 1 || this.props.partNumber === 2) {
       return (
       <div id="popUpChart" className={styles.container}>
         <div className={styles.subContainer}>
           <div className={styles.progressBar}>
+            <div className={styles.safariBug}/>
             <CircularProgressbar
               percentage={this.props.progressPercent}
             />
@@ -123,6 +129,7 @@ class ConPlot extends React.Component<ConPlotProps, any> {
           </div>
           <div className={styles.subContainer}>
             <div className={styles.progressBar}>
+              <div className={styles.safariBug}/>
               <CircularProgressbar
                 percentage={this.props.progressPercent}
               />
@@ -145,7 +152,11 @@ const mapStateToProps = createStructuredSelector ({
 });
 
 function mapDispatchToProps( dispatch ) {
-  return {};
+  return {
+    initial: () => {
+      dispatch({ type: PLOT_DELETE_DATA});
+    },
+  };
 }
 
 export default connect<any, any, any>(

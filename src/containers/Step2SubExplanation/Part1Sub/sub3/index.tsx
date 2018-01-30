@@ -74,8 +74,8 @@ class Sub3 extends React.Component<Sub3Props, any> {
             html={(
               <div>
                 For quantities that are normalized, for example pressure, we need a consistent mapping.
-                -This means that the value at coarse nodes is the same as the value at the corresponding fine node.
-                <br/>
+                This means that the value at coarse nodes is the same as the value at the corresponding fine node.
+                <br/><br/>
                 <img  style={{ width: '300px' }} src={consistentPlot}/>
               </div>
             )}
@@ -91,7 +91,7 @@ class Sub3 extends React.Component<Sub3Props, any> {
                 When mapping between a coarse and a fine mesh, the value at a coarse node is computed as an aggregation
                 of the corresponding fine nodes, such that the total force on the coarse and fine grid is the same.
                 This is required for quantities that are absolute for example Force, Mass, etc.
-                <br/>
+                <br/><br/>
                 <img  style={{ width: '300px' }} src={conservativePlot}/>
               </div>
             )}
@@ -102,8 +102,8 @@ class Sub3 extends React.Component<Sub3Props, any> {
         <br/>
         <li>
           <span className={styles.highlight}>mapping:nearest-neighbor timing</span>: Specifies when the mapping is computed. We
-          can do this in the beginning by setting this to<span className={styles.highlight}> initial</span>. Other options include
-          <span className={styles.highlight}> onadvance </span>and<span className={styles.highlight}> ondemand</span>
+          can do this in the beginning by setting this to <span className={styles.highlight}>initial</span>. Other options include<span> </span>
+          <span className={styles.highlight}>onadvance</span> and <span className={styles.highlight}>ondemand</span>
           <Tooltip
             width="100"
             title="Re-computed multiple times in case of changing coupling meshes"

@@ -5,7 +5,7 @@
   height: 100%;
 
   .landing-page {
-    margin: 250px auto;
+    margin: 200px auto;
     text-align: center;
     width: 100%;
 
@@ -22,13 +22,6 @@
       font-size: 25px;
       line-height: 1.5;
       padding-top: 20px;
-
-      .link {
-        color: $link-color;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
     }
 
   }
@@ -168,10 +161,16 @@
           padding-top: 20px;
           text-align: center;
           width: 100%;
+
         }
       }
     }
 
   }
 }
-
+.link {
+  color: $link-color;
+  &:hover {
+    text-decoration: underline;
+  }
+}

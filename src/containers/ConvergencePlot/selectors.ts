@@ -33,11 +33,12 @@ export const percentProgressSelector = () => createSelector(
 
     if ( maxDt === 0 ) {
       return 0;
+    } else if (Math.round ( (currDt * 100 / maxDt)  ) > 100) {
+      // Use ceil instead of round - That seems to be giving some weird answers
+      return 100;
     } else {
-      // Round to nearest integer - No fractional progress
-      return (Math.round ( (currDt * 100 / maxDt)  ) ) ;
+      return Math.round ( (currDt * 100 / maxDt));
     }
 
   });
-
 
