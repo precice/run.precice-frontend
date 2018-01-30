@@ -74,7 +74,7 @@ class Sub3 extends React.Component<Sub3Props, any> {
             html={(
               <div>
                 For quantities that are normalized, for example pressure, we need a consistent mapping.
-                -This means that the value at coarse nodes is the same as the value at the corresponding fine node.
+                This means that the value at coarse nodes is the same as the value at the corresponding fine node.
                 <br/><br/>
                 <img  style={{ width: '300px' }} src={consistentPlot}/>
               </div>
