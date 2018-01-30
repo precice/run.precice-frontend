@@ -118,6 +118,8 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 
   public componentWillMount() {
+    this.props.clearConsole(ConsoleId.right);
+    this.props.clearConsole(ConsoleId.left);
   }
 
   public componentWillReceiveProps(nextProps) {
@@ -132,7 +134,7 @@ class Step3 extends React.Component<Step3Props, any> {
           onRequestClose={this.props.closeTimeModal}
           style={{
             overlay: {
-              backgroundColor: 'rgba(0,0,0,0.8)', /* Black w/ opacity */
+              backgroundColor: 'rgba(0,0,0,0.8)',
             },
             content: {
               minWidth: '10vw',
@@ -143,6 +145,7 @@ class Step3 extends React.Component<Step3Props, any> {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               margin: 'auto',
+              backgroundColor: '#dddddd',
             },
           }
           }
@@ -158,7 +161,7 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.tableDiv}>
             <div className={styles.simulationHeader}>
               Simulation Finished
-            </div>
+            </div>{/*
             <table className={styles.timeTable}>
               <caption className={styles.tableCaption}>Highscore List</caption>
               <tbody>
@@ -168,7 +171,7 @@ class Step3 extends React.Component<Step3Props, any> {
               </tr>
               {this.renderTable(this.props.highScores)}
               </tbody>
-            </table>
+            </table>*/}
           </div>
 
         </Modal>
