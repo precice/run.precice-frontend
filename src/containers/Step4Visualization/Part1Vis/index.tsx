@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Player} from 'video-react';
 
 
 interface Part1SubProps {
