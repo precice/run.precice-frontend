@@ -11,9 +11,6 @@ export const blockNumberSelector = () => createSelector(
   step2SubstateSelector,
   (step2Substate) => step2Substate.get('blockNumber'));
 
-export const initialRelaxationValueSelector = () => createSelector(
-  step2SubstateSelector,
-  (step2Substate) => step2Substate.get('initialRelaxationValue'));
 
 export const hidCheckSelector = () => createSelector(
   step2SubstateSelector,

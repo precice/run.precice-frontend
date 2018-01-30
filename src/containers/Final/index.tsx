@@ -18,7 +18,7 @@ class Final extends React.Component<FinalProps, any> {
             please go to the github repository, <br/>
             and follow the instructions.
           </div>
-          <div className={styles.btnContainer}><a href="https://github.com/precice/precice/wiki/FSI-tutorial" className={styles.btn}> preCICE github</a></div>
+          <div className={styles.btnContainer}><a target="_blank" href="https://github.com/precice/precice/wiki/FSI-tutorial" className={styles.btn}> preCICE github</a></div>
         </div>
       </div>
     );

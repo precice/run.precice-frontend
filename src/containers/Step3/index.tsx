@@ -43,7 +43,6 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import ConPlot from '../ConvergencePlot';
 import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxConsole/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
-import { initialRelaxationValueSelector } from '../Step2/selectors';
 import Modal = require('react-modal');
 
 interface Step3Props {
@@ -73,7 +72,6 @@ interface Step3Props {
   rightLockBottom: boolean;
   leftOldChunks: [ConsoleChunk];
   rightOldChunks: [ConsoleChunk];
-  relax: number;
 
   partNumber: number;
 }
@@ -218,7 +216,7 @@ class Step3 extends React.Component<Step3Props, any> {
                   type: CONSOLE_ADD_LINES,
                   consoleId: ConsoleId.left,
                   lines: ['$ ccx_preCICE -i flap -precice-participant Calculix']});
-                this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix', this.props.relax);
+                this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix', this.props.partNumber);
               }}
               promptLabel="$ ccx_preCICE -i flap -precice-participant Calculix"
               busy={this.props.leftBusy}
@@ -254,7 +252,7 @@ class Step3 extends React.Component<Step3Props, any> {
                   type: CONSOLE_ADD_LINES,
                   consoleId: ConsoleId.right,
                   lines: ['$ SU2_CFD euler_config_coupled.cfg']});
-                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg', this.props.relax);
+                this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg', this.props.partNumber);
               }}
               promptLabel="$ SU2_CFD euler_config_coupled.cfg"
               busy={this.props.rightBusy}
@@ -318,14 +316,13 @@ const mapStateToProps = createStructuredSelector({
   partNumber: partNumberSelector(),
   leftOldChunks: oldChunksSelector(ConsoleId.left),
   rightOldChunks: oldChunksSelector(ConsoleId.right),
-  relax: initialRelaxationValueSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch: (...args) => dispatch(...args),
-    runCmd: (consoleId: ConsoleId, cmd: string, relaxParam: number) => {
-      dispatch({ type: 'socket/exec_cmd', consoleId, cmd, relaxParam });
+    runCmd: (consoleId: ConsoleId, cmd: string, partNumber: number) => {
+      dispatch({ type: 'socket/exec_cmd', consoleId, cmd, partNumber });
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
       // clear plot when starting the simulation
       dispatch({ type: PLOT_DELETE_DATA });
@@ -395,77 +392,11 @@ export const consoleMiddleware = store => next => action => {
 
     const { consoleId } = action;
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
-      const lines = action.data.split('\n');
-
-      if (!consoleOne && consoleId === ConsoleId.left) {
-        store.dispatch({ type: CONSOLE_ONE_ACTIVE, value: true });
-        consoleOne = true;
+      if (Array.isArray(action.consoleId)) {
+        action.consoleId.forEach((cId, ind) => stdout(store, cId, action.data[ind]));
+      } else {
+        stdout(store, action.consoleId, action.data);
       }
-
-      if (!consoleTwo && consoleId === ConsoleId.right) {
-        store.dispatch({ type: CONSOLE_TWO_ACTIVE, value: true });
-        consoleTwo = true;
-      }
-
-      const itReg = /it\s(\d+)\sof\s\d+/;
-      const dtReg = /dt#\s(\d+)\sof\s(\d+)/;
-      const timeReg = /Global\s*runtime\s*=\s*(\d+)ms\s*\/\s*(\d+)s/;
-      // Adding our parsing logic here:
-
-      // We want the Calculix console
-      if (consoleId === ConsoleId.left) {
-        for (const line of lines) {
-          const foundIt = line.match(itReg);
-
-          // TODO: Don't check for time in every run
-
-          const foundTime = line.match(timeReg);
-          if (foundTime != null) {
-            // foundTIme[2] is time in seconds [1] in ms
-            const time = parseInt(foundTime[2], 10);
-            store.dispatch({ type: ADD_FINAL_TIME, data: time });
-
-            // Finding "Global time" means simulation has ended
-            store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
-
-            // TODO: Does it make sense to do the last dispatch here?
-
-          }
-
-          if (foundIt != null) {
-            const foundDt = line.match(dtReg);
-
-            // foundIt[1] because that contains the
-            // matched number. Look up parenthesis in
-            // javascript regex.
-
-            it = parseInt(foundIt[1], 10);
-            dt = parseInt(foundDt[1], 10);
-
-            // Multiple instances of dt === 1 and it === 1
-            // We only want to update the state once
-            // so we use dtFlag to make sure of that.
-            if (dtFlag === 1 && dt === 1 && it === 1) {
-              const maxDt = parseInt(foundDt[2], 10);
-              // This means simulation is running
-              store.dispatch({ type: IS_SIMULATION_RUNNING, value: true });
-              store.dispatch({ type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt });
-              dtFlag = 0;
-            }
-
-            if (dt > lastDt) {
-              store.dispatch({ type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt } });
-              lastIt = it;
-              lastDt = dt;
-            } else {
-              lastIt = it;
-            }
-
-          }
-        }
-      }
-
-      store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines });
     } else if (action.type === 'socket/exit') {
       // Hopefully the last value
       store.dispatch({ type: ADD_CHART_DATA, data: { x: dt, y: it } });
@@ -480,5 +411,79 @@ export const consoleMiddleware = store => next => action => {
 
   return next(action);
 };
+
+function stdout(store, consoleId, data) {
+  const lines = data.split('\n');
+
+  if (!consoleOne && consoleId === ConsoleId.left) {
+    store.dispatch({ type: CONSOLE_ONE_ACTIVE, value: true });
+    consoleOne = true;
+  }
+
+  if (!consoleTwo && consoleId === ConsoleId.right) {
+    store.dispatch({ type: CONSOLE_TWO_ACTIVE, value: true });
+    consoleTwo = true;
+  }
+
+  const itReg = /it\s(\d+)\sof\s\d+/;
+  const dtReg = /dt#\s(\d+)\sof\s(\d+)/;
+  const timeReg = /Global\s*runtime\s*=\s*(\d+)ms\s*\/\s*(\d+)s/;
+  // Adding our parsing logic here:
+
+  // We want the Calculix console
+  if (consoleId === ConsoleId.left) {
+    for (const line of lines) {
+      const foundIt = line.match(itReg);
+
+      // TODO: Don't check for time in every run
+
+      const foundTime = line.match(timeReg);
+      if (foundTime != null) {
+        // foundTIme[2] is time in seconds [1] in ms
+        const time = parseInt(foundTime[2], 10);
+        store.dispatch({ type: ADD_FINAL_TIME, data: time });
+
+        // Finding "Global time" means simulation has ended
+        store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
+
+        // TODO: Does it make sense to do the last dispatch here?
+
+      }
+
+      if (foundIt != null) {
+        const foundDt = line.match(dtReg);
+
+        // foundIt[1] because that contains the
+        // matched number. Look up parenthesis in
+        // javascript regex.
+
+        it = parseInt(foundIt[1], 10);
+        dt = parseInt(foundDt[1], 10);
+
+        // Multiple instances of dt === 1 and it === 1
+        // We only want to update the state once
+        // so we use dtFlag to make sure of that.
+        if (dtFlag === 1 && dt === 1 && it === 1) {
+          const maxDt = parseInt(foundDt[2], 10);
+          // This means simulation is running
+          store.dispatch({ type: IS_SIMULATION_RUNNING, value: true });
+          store.dispatch({ type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt });
+          dtFlag = 0;
+        }
+
+        if (dt > lastDt) {
+          store.dispatch({ type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt } });
+          lastIt = it;
+          lastDt = dt;
+        } else {
+          lastIt = it;
+        }
+
+      }
+    }
+  }
+
+  store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines });
+}
 
 // /Global\sruntime\s*=\s*(\d+ms)\s*\/\s*(\d+s)/

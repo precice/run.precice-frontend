@@ -31,10 +31,12 @@
     padding: 1em;
     width: 10px;
     align-self: stretch;
-
+    .safari-bug {
+      width: 200px;
+      color: transparent;
+    }
 
     .progress-bar {
-      order: 1;
       margin: 0 auto auto;
       height: 100%;
     }
