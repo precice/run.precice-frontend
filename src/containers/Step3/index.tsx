@@ -31,6 +31,7 @@ import {
   IVE_READ, PLOT_DELETE_DATA,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
+  SIMULATION_CLEAR_DONE,
 } from '../constants';
 import * as styles from './styles.scss';
 import * as calculix_1 from '../../static/calculix_1.png';
@@ -72,6 +73,8 @@ interface Step3Props {
   rightLockBottom: boolean;
   leftOldChunks: [ConsoleChunk];
   rightOldChunks: [ConsoleChunk];
+
+  clearDone: any;
 
   partNumber: number;
 }
@@ -120,6 +123,8 @@ class Step3 extends React.Component<Step3Props, any> {
   public componentWillMount() {
     this.props.clearConsole(ConsoleId.right);
     this.props.clearConsole(ConsoleId.left);
+    this.props.clearDone(ConsoleId.right);
+    this.props.clearDone(ConsoleId.left);
   }
 
   public componentWillReceiveProps(nextProps) {
@@ -362,7 +367,9 @@ function mapDispatchToProps(dispatch) {
     clearConsole: (consoleId: ConsoleId) => {
       dispatch({ type: CONSOLE_CLEAR, consoleId });
     },
-
+    clearDone: (consoleId: ConsoleId) => {
+      dispatch({type: SIMULATION_CLEAR_DONE, consoleId});
+    },
   };
 }
 

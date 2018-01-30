@@ -24,6 +24,7 @@ export const IS_SIMULATION_RUNNING = 'action/IS_SIMULATION_RUNNING';
 export const IS_SIMULATION_DONE = 'action/IS_SIMULATION_DONE';
 export const BLOCKNUMBER_FLAG = 'action/BLOCKNUMBER_FLAG';
 export const PARTNUMBER_FLAG = 'action/PARTNUMBER_FLAG';
+export const SIMULATION_CLEAR_DONE = 'action/PARTNUMBER_FLAG';
 
 export const xmlBackgroundColor = '#505050';
 export const xmlEmphasizeBackgroundColor = '#8f4746';

@@ -12,6 +12,7 @@ import {
   IS_SIMULATION_RUNNING,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
+  SIMULATION_CLEAR_DONE,
 } from '../constants';
 import { ConsoleId } from './index';
 
@@ -132,6 +133,10 @@ export function step3Reducer(state = initialState, action: any) {
       );
       return state
         .update('finalTime', finalTime => finalTime.push(action.data));
+    }
+    case SIMULATION_CLEAR_DONE: {
+      return state
+        .setIn(['consoles', action.consoleId, 'done'], false);
     }
     default:
       return state;
