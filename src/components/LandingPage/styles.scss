@@ -174,3 +174,46 @@
     text-decoration: underline;
   }
 }
+
+
+.successStories {
+ margin: 0 auto;
+}
+
+.successStory {
+  border: 2px solid grey;
+  padding: 10px;
+  width: 30%;
+  flex: 0 0 auto;
+  display: inline-flex;
+  margin: 0 10px;
+  align-items: flex-start;
+  height: 100%;
+  flex-direction: row;
+  .img {
+    flex: 0 0 50px;
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .text {
+    margin-left: 20px;
+    flex: 1 1 1px;
+    font-size: 15px;
+  }
+}
+
+.name {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.quote {
+  font-style: italic;
+  text-align: center;
+  color: #333333;
+}
+
+.successH {
+  margin-bottom: 20px;
+}
