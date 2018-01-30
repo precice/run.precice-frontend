@@ -14,17 +14,15 @@
   padding: 10px 0;
 
   .tu-in-proceed{
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-    height: 50px;
     margin: 0 auto;
     .tu-in-proceed-component-group{
       color: $primary-color;
-      flex: 1 1 auto;
+      flex: 0 0 auto;
       margin: 0 auto;
       font-size: 100px;
-      height: 100px;
       display: flex;
       flex-direction:row;
       .tu-in-proceed-component1{
@@ -45,12 +43,11 @@
 
     .tu-in-proceed-text{
       color:$primary-color;
-      flex: 1 1 auto;
+      flex: 0 0 auto;
       margin: 0 auto;
       padding: 10px 0;
       font-size: 20px;
-      height: 20px;
-      text-decoration: underline;
+      font-weight: bold;
 
     }
 

@@ -19,6 +19,7 @@ class Final extends React.Component<FinalProps, any> {
             and follow the instructions.
           </div>
           <div className={styles.btnContainer}><a target="_blank" href="https://github.com/precice/precice/wiki/FSI-tutorial" className={styles.btn}> preCICE github</a></div>
+          <div className={styles.feedbackText}>We are curious about your feedback on this tutorial.<br /> Please help us to further improve the user experience by <a className={styles.feedbackLink} href="https://docs.google.com/forms/d/e/1FAIpQLSdEg4E2vXydfbRoQ3EzcfRyOGV0jHnLuZo6eIKW1a7B3v3tqg/viewform">filling out this feedback form</a></div>
         </div>
       </div>
     );
