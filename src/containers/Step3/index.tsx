@@ -118,6 +118,10 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 
   public componentWillMount() {
+    if (!this.props.leftBusy && !this.props.rightBusy) {
+      this.props.clearConsole(ConsoleId.left);
+      this.props.clearConsole(ConsoleId.right);
+    }
   }
 
   public componentWillReceiveProps(nextProps) {
