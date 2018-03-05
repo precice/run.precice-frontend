@@ -10,13 +10,10 @@ class Part2Sub extends React.Component<Part2SubProps, any> {
       <iframe
         width="100%"
         height="100%"
-        src="https://www.youtube.com/embed/Me7gnWpft1o?rel=0&amp;controls=0&amp;showinfo=0"
+        src="https://player.vimeo.com/video/258660147"
       />
-      //        "https://player.vimeo.com/video/252615896"
     );
   }
 }
 
 export default Part2Sub;
-
-

@@ -150,37 +150,32 @@ class Tutorial extends React.Component<TutorialProps, any> {
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
             {
-              (this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
-              ( this.props.leftBusy || this.props.rightBusy )) ?
-                this.props.buttonLinks.previous && <div className={styles.btnLDisabled}><Tooltip
-                  width="100"
-                  title="Simulation is runnning"
-                ><span>BACK</span>
-                </Tooltip></div> :
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
           <div className={styles.btnSubCon}>
             {
-              ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&
               (
-              !eval('this.props.xmlflag.part' + this.props.partNumber + '[1]') ||
-              !eval('this.props.xmlflag.part' + this.props.partNumber + '[2]') ||
-              !eval('this.props.xmlflag.part' + this.props.partNumber + '[3]') ||
-              !eval('this.props.xmlflag.part' + this.props.partNumber + '[4]') ||
-              !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]') )) ?
+                (this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&
+                  (
+                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[1]') ||
+                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[2]') ||
+                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[3]') ||
+                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[4]') ||
+                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')
+                  )
+                ) ?
                 this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-                ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
-                ( this.props.leftBusy || this.props.rightBusy )) ?
-                  this.props.buttonLinks.next &&
-                    <div className={styles.btnRDisabled}><Tooltip
-                      width="100"
-                      title="Simulation is runnning"
-                    ><span>NEXT</span>
-                    </Tooltip></div> :
-                  ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
-                  this.props.partNumber !== 1) ?
-                    <div/> : this.props.buttonLinks.next &&
-                <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)))
+                (
+                  (
+                    (this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
+                  this.props.partNumber !== 1
+                    ) ?
+                    <div/> :
+                      this.props.buttonLinks.next &&
+                      <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>
+                  )
+                )
+              )
             }
           </div>
         </div>
