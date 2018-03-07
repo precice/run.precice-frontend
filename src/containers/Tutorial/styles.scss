@@ -35,6 +35,20 @@
         background-color: $btn-background;
         box-shadow: 2px 2px $btn-on-mouse-over;
       }
+      .btn-l-disabled {
+        align-self: flex-start;
+        border: 4px solid $btn-on-mouse-over;
+        border-radius: 10px;
+        color: $btn-on-mouse-over;
+        background-color: $background-color;
+        cursor: pointer;
+        display: inline-block;
+        float: left;
+        letter-spacing: 1px;
+        padding: 5px;
+        text-align: center;
+        touch-action: manipulation;
+      }
       .btn-r:hover,
       .btn-l:hover {
         color: $btn-on-mouse-over;
@@ -55,6 +69,19 @@
         touch-action: manipulation;
         background-color: $btn-background;
         box-shadow: 2px 2px $btn-on-mouse-over;
+      }
+      .btn-r-disabled {
+        align-self: flex-end;
+        border: 4px solid $btn-on-mouse-over;
+        border-radius: 10px;
+        color: $btn-on-mouse-over;
+        background-color: $background-color;
+        display: inline-block;
+        float: right;
+        letter-spacing: 1px;
+        padding: 5px;
+        text-align: center;
+        touch-action: manipulation;
       }
     }
   }
