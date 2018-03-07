@@ -9,6 +9,7 @@ import {
 import './sass/global.scss';
 import { history, rootRoute, RouteDefinition } from './router';
 import { ConnectedRouter } from 'react-router-redux';
+import withTracker from './googleAnalytics';
 
 
 const RouteWithSubRoutes = (route: RouteDefinition) => {
@@ -21,7 +22,7 @@ const RouteWithSubRoutes = (route: RouteDefinition) => {
     </route.component>
   );
 
-  return <Route exact={!childRoutes} path={route.path} render={render}/>;
+  return <Route exact={!childRoutes} path={route.path} render={withTracker(render)}/>;
 };
 
 
