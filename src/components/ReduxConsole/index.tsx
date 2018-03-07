@@ -29,7 +29,6 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
 
   public render() {
 
-
     return (
       <div
         className={styles.wrapper}
@@ -37,7 +36,7 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
         tabIndex={-1}
         onKeyDown={(e) => { if (e.keyCode === 13) { this.props.handler('test'); } }}
       >
-        {this.props.oldChunks.map(oC => (<div className={styles.logMessages} key={oC.key}>{oC.content}</div>))}
+        {this.props.busy && this.props.oldChunks.map(oC => (<div className={styles.logMessages} key={oC.key}>{oC.content}</div>))}
         <div className={styles.logMessages}>{this.props.logMessages.join('\n')}</div>
         {!this.props.busy && (
           <div className={styles.prompt}>
