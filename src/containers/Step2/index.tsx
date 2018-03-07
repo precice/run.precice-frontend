@@ -81,7 +81,7 @@ class Step2 extends React.Component<Step2Props, any> {
             <span className={styles.hide}/>
             <span className={styles.title}/>
             <span id="hideButton" onClick={this.props.hidAction} className={styles.hide}>
-              {this.props.hidCheck2 ? <span>expand<i className="fa fa-chevron-down" aria-hidden="true"/></span> :<span>hide<i className="fa fa-chevron-up" aria-hidden="true"/></span> }
+              {this.props.hidCheck2 ? <span>expand<span> </span><i className="fa fa-chevron-down" aria-hidden="true"/></span> :<span>hide<span> </span><i className="fa fa-chevron-up" aria-hidden="true"/></span> }
             </span>
           </div>
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>

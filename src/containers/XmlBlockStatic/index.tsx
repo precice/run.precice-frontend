@@ -1,8 +1,4 @@
-import {connect} from 'react-redux';
-import {EXAMPLE_ACTION} from '../constants';
-import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
-import {Link} from 'react-router-dom';
 import * as styles from './styles.scss';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburstModified } from '../Step2/styleForSyntaxHighlighter';
@@ -19,6 +15,7 @@ interface XmlBlockStaticProps {
   partNumber: number;
 }
 
+// this part is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 const initial3 = config3.initial;
@@ -27,7 +24,7 @@ const initial5 = config5.initial;
 
 class XmlBlockStatic extends React.Component<XmlBlockStaticProps, any> {
   public render() {
-    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0){
+    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0) {
       return <div/>; } else {
     return (
         <SyntaxHighlighter

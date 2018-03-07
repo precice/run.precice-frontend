@@ -1,11 +1,5 @@
 @import '../../sass/colors';
 
-.exp-command {
-  background-color: $terminal-background-color;
-  color: $terminal-code-color;
-  font-family: Courier;
-  padding: 0.1em;
-}
 .link {
   color: $link-color;
   &:hover {

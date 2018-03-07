@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { EXAMPLE_ACTION } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Tooltip } from 'react-tippy';
@@ -35,13 +34,7 @@ class Step2SubExplanationBlock extends React.Component<Step2SubExplanationBlockP
 
 const mapStateToProps = createStructuredSelector({});
 
-function mapDispatchToProps(dispatch) {
-  return {
-  };
-}
-
 export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps,
 )(Step2SubExplanationBlock);
 

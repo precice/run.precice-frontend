@@ -13,27 +13,27 @@
   height: 10px;
   padding: 10px 0;
 
-  .tu-in-proceed{
+  .tu-in-proceed {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    .tu-in-proceed-component-group{
+    .tu-in-proceed-component-group {
       color: $primary-color;
       flex: 0 0 auto;
       margin: 0 auto;
       font-size: 100px;
       display: flex;
       flex-direction:row;
-      .tu-in-proceed-component1{
+      .tu-in-proceed-component1 {
         flex: 1 1 auto;
         animation: shine 4s linear -0.5s infinite;
       }
-      .tu-in-proceed-component2{
+      .tu-in-proceed-component2 {
         flex: 1 1 auto;
         animation: shine 4s linear -0.25s infinite;
       }
-      .tu-in-proceed-component3{
+      .tu-in-proceed-component3 {
         flex: 1 1 auto;
         animation: shine 4s linear 0s infinite;
 
@@ -41,7 +41,7 @@
 
     }
 
-    .tu-in-proceed-text{
+    .tu-in-proceed-text {
       color:$primary-color;
       flex: 0 0 auto;
       margin: 0 auto;
@@ -57,36 +57,6 @@
       text-decoration: none;
     }
 
-  }
-  .tu-in-header {
-    color: $primary-color;
-    font-size: 20px;
-    line-height: 1.5;
-    padding-top: 10px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .tu-in-content {
-    color: $primary-color;
-    font-size: 16px;
-    line-height: 1.5;
-    padding: 10px 25px;
-    margin: auto;
-    max-width: 1000px;
-
-    .img {
-      display: block;
-      height: 300px;
-      margin: 0 auto;
-    }
-
-    .link {
-      color: $link-color;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
   }
 }
 @keyframes shine {

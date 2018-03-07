@@ -34,12 +34,6 @@ import {
   SIMULATION_CLEAR_DONE,
 } from '../constants';
 import * as styles from './styles.scss';
-import * as calculix_1 from '../../static/calculix_1.png';
-import * as calculix_2 from '../../static/calculix_2.png';
-import * as calculix_3 from '../../static/calculix_3.png';
-import * as calculix_4 from '../../static/calculix_4.png';
-import * as SU2_1 from '../../static/SU2_1.png';
-import * as SU2_2 from '../../static/SU2_2.png';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import ConPlot from '../ConvergencePlot';
 import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxConsole/index';
@@ -57,7 +51,6 @@ interface Step3Props {
   consoleTwoActive: boolean;
 
   showPlotModal: boolean;
-  plotOrOutput: number;
   openPlotModal: () => void;
   closePlotModal: () => void;
 
@@ -93,34 +86,8 @@ export enum ConsoleId {
 class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
-    //this.renderTable = this.renderTable.bind(this);
   }
 
-  // Renders part of table
-  /*
-  private renderTable(timeArr) {
-    const list = timeArr.toJSON();
-    // current time is lastItem
-    const lastItem = list[list.length - 1];
-    list.sort((a, b) => a - b);
-    const ind = list.indexOf(lastItem);
-    return list.map((listValue, index) => {
-      if (index === ind) {
-        return (
-          <tr key={index} className={styles.redRow}>
-            <td>{index + 1}</td>
-            <td>{listValue}</td>
-          </tr>);
-      } else {
-        return (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{listValue}</td>
-          </tr>);
-      }
-    });
-  }
-*/
   public componentWillMount() {
     if (!this.props.leftBusy && !this.props.rightBusy) {
       this.props.clearConsole(ConsoleId.right);
@@ -128,9 +95,6 @@ class Step3 extends React.Component<Step3Props, any> {
       this.props.clearDone(ConsoleId.right);
       this.props.clearDone(ConsoleId.left);
     }
-  }
-
-  public componentWillReceiveProps(nextProps) {
   }
 
   public render() {
@@ -183,8 +147,8 @@ class Step3 extends React.Component<Step3Props, any> {
               onClick={this.props.hidAction}
               className={styles.hide}
             >
-              {this.props.hidCheck ? <span>expand<i className="fa fa-chevron-down" aria-hidden="true"/></span> :
-                <span>hide<i className="fa fa-chevron-up" aria-hidden="true"/></span>}
+              {this.props.hidCheck ? <span>expand<span> </span><i className="fa fa-chevron-down" aria-hidden="true"/></span> :
+                <span>hide<span> </span><i className="fa fa-chevron-up" aria-hidden="true"/></span>}
             </span>
           </div>
           <div id="hideStep3" hidden={this.props.hidCheck}>
@@ -289,19 +253,6 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 }
 
-/*
- (
- () => {
- const one = this.props.consoleOneActive;
- const two = this.props.consoleTwoActive;
- if (one && two) {
- return <ConPlot/>;
- }
- }
- )()
- */
-
-// domain={{ x: [ 0, 2 ] , y: [ 0, 3] }}
 const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
   consoleOneActive: consoleOneStateSelector(),

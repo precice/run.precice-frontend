@@ -16,8 +16,6 @@ import {
 } from '../constants';
 import { ConsoleId } from './index';
 
-
-const cachedHs = localStorage.getItem('highscoreTimes');
 const initialState = fromJS({
   consoles: {
     [ConsoleId.left]: {
@@ -124,13 +122,6 @@ export function step3Reducer(state = initialState, action: any) {
       }
     }
     case ADD_FINAL_TIME: {
-      /*const cached = localStorage.getItem('highscoreTimes');
-      const newVal = cached ? JSON.parse(cached) : [];
-      newVal.push(action.data);
-      localStorage.setItem(
-        'highscoreTimes',
-        JSON.stringify(newVal),
-      );*/
       return state
         .set('finalTime', action.data);
     }

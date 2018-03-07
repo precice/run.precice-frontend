@@ -27,30 +27,6 @@ export const pathnameSelector = () => createSelector
   },
 );
 
-export const percentageSelector = () => createSelector
-(
-  // pathnameSelector returns lambda function
-  pathnameSelector(),
-  (pathname) => {
-    if (pathname.split('/')[2] === 'step1') {
-      return 2;
-    } else {
-
-      const partNumber = Number(pathname.split('/')[2].substring(4, 5));
-      const stepNumber = Number(pathname.split('/')[3].substring(4, 5));
-      const partSize = Number((100 / TOTAL_PART).toFixed(0));
-      const stepSize = Number((partSize / 3).toFixed(0));
-
-      if (partNumber === TOTAL_PART && stepNumber === 4) {
-        return 100;
-      } else if (stepNumber === 4) {
-        return partNumber * partSize;
-      } else {
-        return (partNumber - 1) * partSize + (stepNumber - 1) * stepSize;
-      }
-    }
-  },
-);
 
 export const buttonLinksSelector = () => createSelector
 (

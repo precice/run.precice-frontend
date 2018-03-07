@@ -16,6 +16,7 @@ interface XmlBlockProps {
   blockNumberAction: () => void;
 }
 
+// this part is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 const initial3 = config3.initial;

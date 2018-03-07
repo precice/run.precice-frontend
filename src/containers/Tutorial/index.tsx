@@ -12,8 +12,6 @@ import * as config4 from '../configurationFile/config4';
 import * as config5 from '../configurationFile/config5';
 import {
   buttonLinksSelector,
-  percentageSelector,
-  modalClickSelector,
   partNumberSelector,
   } from './selectors';
 import { blockNumberSelector, xmlflagSelector} from '../Step2/selectors';
@@ -22,11 +20,9 @@ import {
 import {
   ConsoleId} from '../Step3/index';
 import { Tooltip } from 'react-tippy';
-import {isNullOrUndefined, isUndefined} from "util";
 
 
 interface TutorialProps {
-  percentage: number;
   buttonLinks: {
     previous?: string,
     next?: string,
@@ -50,6 +46,7 @@ interface TutorialProps {
   blockNumberAction: () => void;
 }
 
+// this part is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 const initial3 = config3.initial;
@@ -97,7 +94,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
             <div className={styles.modalHeader}>
               <div className={styles.subCon}/>
               <div className={styles.subTitle}>
-                <h2>You forgot some parts</h2>
+                You forgot some parts
               </div>
               <div className={styles.subCon}>
                 <div onClick={this.closeModal} className={styles.close}>&times;</div>
@@ -144,7 +141,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
             </div>
           </div>{/*modal content*/}
         </div>{/*the modal*/}
-        <ProgressBar percentage={this.props.percentage} partNumber={partNumber}/>
+        <ProgressBar partNumber={partNumber}/>
         <div className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
@@ -185,7 +182,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  percentage: percentageSelector(),
   buttonLinks: buttonLinksSelector(),
   xmlflag: xmlflagSelector(),
   leftBusy: busySelector(ConsoleId.left),
