@@ -63,7 +63,7 @@ interface Step3Props {
 
   showTimeModal: boolean;
   closeTimeModal: () => void;
-  highScores: any;
+  finalTime: number;
 
   leftLogMessages: [string];
   rightLogMessages: [string];
@@ -93,10 +93,11 @@ export enum ConsoleId {
 class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
-    this.renderTable = this.renderTable.bind(this);
+    //this.renderTable = this.renderTable.bind(this);
   }
 
   // Renders part of table
+  /*
   private renderTable(timeArr) {
     const list = timeArr.toJSON();
     // current time is lastItem
@@ -119,7 +120,7 @@ class Step3 extends React.Component<Step3Props, any> {
       }
     });
   }
-
+*/
   public componentWillMount() {
     if (!this.props.leftBusy && !this.props.rightBusy) {
       this.props.clearConsole(ConsoleId.right);
@@ -144,12 +145,11 @@ class Step3 extends React.Component<Step3Props, any> {
               backgroundColor: 'rgba(0,0,0,0.8)',
             },
             content: {
-              minWidth: '10vw',
-              minHeight: '20vh',
               maxWidth: '80vw',
               maxHeight: '80vw',
               top: '50%',
               left: '50%',
+              bottom: 'auto',
               transform: 'translate(-50%, -50%)',
               margin: 'auto',
               backgroundColor: '#dddddd',
@@ -160,25 +160,16 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.modalHeader}>
             <div className={styles.subCon}/>
             <div className={styles.subTitle}>
+              Simulation Finished
             </div>
             <div className={styles.subCon}>
               <div onClick={this.props.closeTimeModal} className={styles.close}>&times;</div>
             </div>
           </div>
           <div className={styles.tableDiv}>
-            <div className={styles.simulationHeader}>
-              Simulation Finished
-            </div>{/*
-            <table className={styles.timeTable}>
-              <caption className={styles.tableCaption}>Highscore List</caption>
-              <tbody>
-              <tr>
-                <th> No.</th>
-                <th>Time (s)</th>
-              </tr>
-              {this.renderTable(this.props.highScores)}
-              </tbody>
-            </table>*/}
+            <div className={styles.simulationText}>
+              Elapse Time: {this.props.finalTime} second
+            </div>
           </div>
 
         </Modal>
@@ -192,7 +183,8 @@ class Step3 extends React.Component<Step3Props, any> {
               onClick={this.props.hidAction}
               className={styles.hide}
             >
-              {this.props.hidCheck ? <i className="fa fa-chevron-down" aria-hidden="true"/> : <i className="fa fa-chevron-up" aria-hidden="true"/>}
+              {this.props.hidCheck ? <span>expand<i className="fa fa-chevron-down" aria-hidden="true"/></span> :
+                <span>hide<i className="fa fa-chevron-up" aria-hidden="true"/></span>}
             </span>
           </div>
           <div id="hideStep3" hidden={this.props.hidCheck}>
@@ -316,7 +308,7 @@ const mapStateToProps = createStructuredSelector({
   consoleTwoActive: consoleTwoStateSelector(),
   showPlotModal: modalDisplaySelector(),
   showTimeModal: timeModalDisplaySelector(),
-  highScores: highScoreSelector(),
+  finalTime: highScoreSelector(),
   leftLogMessages: logMessagesSelector(ConsoleId.left),
   rightLogMessages: logMessagesSelector(ConsoleId.right),
   leftLockBottom: lockBottomSelector(ConsoleId.left),

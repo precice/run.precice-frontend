@@ -8,8 +8,8 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
   public render() {
     return(
       <div>
-        We see that the flap is bending under the pressure that builds up on its surface and fluctuates accordingly,
-        demonstrating reasonable physical behaviour.
+        With implicit coupling, we are able to run a longer simulation without divergence, here we observed one full
+        oscilation of the flap.
       </div>
     );
   }

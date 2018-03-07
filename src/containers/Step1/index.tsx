@@ -3,8 +3,9 @@ import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
-import { buttonLinksSelector, partNumberSelector, } from '../Tutorial/selectors';
+import { buttonLinksSelector, partNumberSelector } from '../Tutorial/selectors';
 import Step1Description from '../Step1Description/index';
+import {PLOT_DELETE_DATA} from '../constants';
 
 interface Step1Props {
   partNumber: number;
@@ -12,11 +13,16 @@ interface Step1Props {
     previous?: string,
     next?: string,
   };
+  initial: () => any;
 }
 
 class Step1 extends React.Component<Step1Props, any> {
   constructor(props: Step1Props) {
     super(props);
+  }
+
+  public componentWillMount() {
+    this.props.initial();
   }
   public render() {
     return (
@@ -42,6 +48,14 @@ class Step1 extends React.Component<Step1Props, any> {
   }
 }
 
+function mapDispatchToProps( dispatch ) {
+  return {
+    initial: () => {
+      dispatch({ type: PLOT_DELETE_DATA});
+    },
+  };
+}
+
 const mapStateToProps = createStructuredSelector({
   partNumber: partNumberSelector(),
   buttonLinks: buttonLinksSelector(),
@@ -49,4 +63,5 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect<any,any,any>(
   mapStateToProps,
+  mapDispatchToProps,
 )(Step1);

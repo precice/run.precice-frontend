@@ -17,7 +17,6 @@ interface ConPlotProps {
   domainY: number;
   progressPercent: number;
   partNumber: number;
-  initial: () => any;
 }
 
 class ConPlot extends React.Component<ConPlotProps, any> {
@@ -31,9 +30,6 @@ class ConPlot extends React.Component<ConPlotProps, any> {
   }
   private closeModal() {
     document.getElementById('myModal2').style.display = 'none';
-  }
-  public componentWillMount() {
-    this.props.initial();
   }
   public render() {
     if (this.props.partNumber === 1 || this.props.partNumber === 2) {

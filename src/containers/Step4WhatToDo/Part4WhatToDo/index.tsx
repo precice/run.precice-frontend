@@ -8,8 +8,8 @@ class Part4Sub extends React.Component<Part4SubProps, any> {
   public render() {
     return(
       <div>
-        We see that the flap is bending under the pressure that builds up on its surface and fluctuates accordingly,
-        demonstrating reasonable physical behaviour.
+        By changing the coupling scheme to quasi-Newton, we reproduced similar result, and we are able to decrease the
+        running time of the simulation by ca. 10%.
       </div>
     );
   }

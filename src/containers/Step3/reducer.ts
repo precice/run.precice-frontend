@@ -36,7 +36,7 @@ const initialState = fromJS({
     },
   },
 
-  finalTime: cachedHs ? JSON.parse(cachedHs) : [],
+  finalTime: 0,
   hidCheck: false,
   consoleOneActive: false,
   consoleTwoActive: false,
@@ -124,15 +124,15 @@ export function step3Reducer(state = initialState, action: any) {
       }
     }
     case ADD_FINAL_TIME: {
-      const cached = localStorage.getItem('highscoreTimes');
+      /*const cached = localStorage.getItem('highscoreTimes');
       const newVal = cached ? JSON.parse(cached) : [];
       newVal.push(action.data);
       localStorage.setItem(
         'highscoreTimes',
         JSON.stringify(newVal),
-      );
+      );*/
       return state
-        .update('finalTime', finalTime => finalTime.push(action.data));
+        .set('finalTime', action.data);
     }
     case SIMULATION_CLEAR_DONE: {
       return state
