@@ -20,10 +20,10 @@ export const consoleTwoStateSelector = () => createSelector (
   (step3Substate) =>
     step3Substate.get('consoleTwoActive'));
 
-export const modalDisplaySelector = () => createSelector(
+export const plotDisplaySelector = () => createSelector(
   step3SubstateSelector,
   (step3Substate) =>
-  step3Substate.get('showPlotModal'));
+  step3Substate.get('showPlot'));
 
 
 export const timeModalDisplaySelector = () => createSelector (
@@ -32,12 +32,8 @@ export const timeModalDisplaySelector = () => createSelector (
   step3Substate.get('showTimeModal'));
 
 
-export const simulationStateSelector = () => createSelector (
-  step3SubstateSelector,
-  (step3Substate) =>
-    step3Substate.get('isSimulationRunning'));
 
-export const highScoreSelector = () => createSelector (
+export const finalTimeSelector = () => createSelector (
   step3SubstateSelector,
   (step3Substate) => {
     return step3Substate.get('finalTime');
@@ -64,7 +60,4 @@ export const oldChunksSelector = (consoleId) => createSelector(
   (substate) => substate.getIn(['consoles', consoleId, 'oldChunks']),
 );
 
-export const doneSelector = (consoleId) => createSelector(
-  step3SubstateSelector,
-  (substate) => substate.getIn(['consoles', consoleId, 'done']),
-);
+

@@ -38,7 +38,7 @@ const initialState = fromJS({
   hidCheck: false,
   consoleOneActive: false,
   consoleTwoActive: false,
-  showPlotModal: false,
+  showPlot: false,
   showTimeModal: false,
   isSimulationRunning: false,
   isSimulationDone: false,
@@ -94,7 +94,7 @@ export function step3Reducer(state = initialState, action: any) {
 
     case PLOT_MODAL_DATA:
       return state
-        .set('showPlotModal', action.value);
+        .set('showPlot', action.value);
 
     case TIME_MODAL_DATA:
       return state
@@ -110,7 +110,7 @@ export function step3Reducer(state = initialState, action: any) {
       if (preVal === false && action.value === true) {
 
         return state
-          .set('isSimulationRunning', action.value).set('showPlotModal', true);
+          .set('isSimulationRunning', action.value).set('showPlot', true);
       } else if (preVal === true && action.value === false) {
 
         return state

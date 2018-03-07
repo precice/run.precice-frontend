@@ -6,10 +6,10 @@ import {
   consoleOneStateSelector,
   consoleTwoStateSelector,
   hidCheckSelector,
-  highScoreSelector,
+  finalTimeSelector,
   lockBottomSelector,
   logMessagesSelector,
-  modalDisplaySelector, oldChunksSelector,
+  plotDisplaySelector, oldChunksSelector,
   timeModalDisplaySelector,
 } from './selectors';
 import {
@@ -28,7 +28,7 @@ import {
   HID_CHECK3,
   IS_SIMULATION_DONE,
   IS_SIMULATION_RUNNING,
-  IVE_READ, PLOT_DELETE_DATA,
+  PLOT_DELETE_DATA,
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
   SIMULATION_CLEAR_DONE,
@@ -50,9 +50,9 @@ interface Step3Props {
   consoleOneActive: boolean;
   consoleTwoActive: boolean;
 
-  showPlotModal: boolean;
-  openPlotModal: () => void;
-  closePlotModal: () => void;
+  showPlot: boolean;
+  openPlot: () => void;
+  closePlot: () => void;
 
   showTimeModal: boolean;
   closeTimeModal: () => void;
@@ -132,7 +132,7 @@ class Step3 extends React.Component<Step3Props, any> {
           </div>
           <div className={styles.tableDiv}>
             <div className={styles.simulationText}>
-              Elapse Time: {this.props.finalTime} second
+              Elapsed Time: {this.props.finalTime} s
             </div>
           </div>
 
@@ -155,13 +155,13 @@ class Step3 extends React.Component<Step3Props, any> {
             {this.props.partNumber === 1 ?
               <div className={styles.expContentContainer}>
                 <TabList className={styles.expContentList}>
-                  <Tab className={styles.expContentTab} selected={!this.props.showPlotModal} onClick={this.props.closePlotModal} tabFor="tab-to-do">TO DO</Tab>
-                  <Tab className={styles.expContentTab} selected={this.props.showPlotModal} onClick={this.props.openPlotModal} tabFor="tab-plot">PLOT</Tab>
+                  <Tab className={styles.expContentTab} selected={!this.props.showPlot} onClick={this.props.closePlot} tabFor="tab-to-do">TO DO</Tab>
+                  <Tab className={styles.expContentTab} selected={this.props.showPlot} onClick={this.props.openPlot} tabFor="tab-plot">PLOT</Tab>
                 </TabList>
-                <TabPanel className={styles.expContent} selected={!this.props.showPlotModal} tabId="tab-to-do">
+                <TabPanel className={styles.expContent} selected={!this.props.showPlot} tabId="tab-to-do">
                   <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
                 </TabPanel>
-                <TabPanel className={styles.expContent} selected={this.props.showPlotModal} tabId="tab-plot">
+                <TabPanel className={styles.expContent} selected={this.props.showPlot} tabId="tab-plot">
                   <ConPlot/>
                 </TabPanel>
                 <div className={styles.expContentDummy}/>
@@ -257,9 +257,9 @@ const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
   consoleOneActive: consoleOneStateSelector(),
   consoleTwoActive: consoleTwoStateSelector(),
-  showPlotModal: modalDisplaySelector(),
+  showPlot: plotDisplaySelector(),
   showTimeModal: timeModalDisplaySelector(),
-  finalTime: highScoreSelector(),
+  finalTime: finalTimeSelector(),
   leftLogMessages: logMessagesSelector(ConsoleId.left),
   rightLogMessages: logMessagesSelector(ConsoleId.right),
   leftLockBottom: lockBottomSelector(ConsoleId.left),
@@ -300,10 +300,10 @@ function mapDispatchToProps(dispatch) {
     hidAction: () => {
       dispatch({ type: HID_CHECK3, check: document.getElementById('hideStep3').hidden } );
     },
-    openPlotModal: (event) => {
+    openPlot: (event) => {
       dispatch({ type: PLOT_MODAL_DATA, value: true });
     },
-    closePlotModal: () => {
+    closePlot: () => {
       dispatch({ type: PLOT_MODAL_DATA, value: false });
     },
     closeTimeModal: () => {

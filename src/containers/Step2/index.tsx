@@ -48,6 +48,7 @@ let whichSection = '';
 let partNumber = 1;
 let blockNumber = '1';
 
+// this is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 const initial3 = config3.initial;

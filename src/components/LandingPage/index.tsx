@@ -33,29 +33,29 @@ class LandingPage extends React.Component<LandPageProps, any> {
           </div>
           <div className={styles.imgGroup}>{/*photos*/}
             {[{
-              img: Dmytro,
-              name: 'Dmytro Sashko',
+              imgP: Dmytro,
+              nameP: 'Dmytro Sashko',
             }, {
-              img: Felix,
-              name: 'Felix Lachenmaier',
+              imgP: Felix,
+              nameP: 'Felix Lachenmaier',
             }, {
-              img: Hasan,
-              name: 'Hasan Ashraf',
+              imgP: Hasan,
+              nameP: 'Hasan Ashraf',
             }, {
-              img: Jan,
-              name: 'Jan Sültemeyer',
+              imgP: Jan,
+              nameP: 'Jan Sültemeyer',
             }, {
-              img: Kirill,
-              name: 'Kirill Martynov',
+              imgP: Kirill,
+              nameP: 'Kirill Martynov',
             }, {
-              img: Pei,
-              name: 'Pei-Hsuan Huang',
-            }].map(({ img, name }) => {
+              imgP: Pei,
+              nameP: 'Pei-Hsuan Huang',
+            }].map(({ imgP, nameP }) => {
               return (
                 <div className={styles.imgContainer}>
-                  <img src={img} className={styles.img}/>
+                  <img src={imgP} className={styles.img}/>
                   <div className={styles.subIntro}>
-                    {name}
+                    {nameP}
                   </div>
                 </div>
               );

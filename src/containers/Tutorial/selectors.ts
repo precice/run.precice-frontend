@@ -1,6 +1,5 @@
 import {createSelector} from 'reselect';
 import {locationSelector} from '../Router/selectors';
-import {TOTAL_PART} from '../constants';
 
 const tutorialSubstateSelector = (state) => {
   return state.get('tutorial');
