@@ -49,7 +49,7 @@ const initialState = fromJS({
 // IS_SIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
-const MSG_CHUNKSIZE = 1000;
+const MSG_CHUNKSIZE = 200;
 
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
