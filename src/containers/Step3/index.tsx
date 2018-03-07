@@ -152,7 +152,7 @@ class Step3 extends React.Component<Step3Props, any> {
             </span>
           </div>
           <div id="hideStep3" hidden={this.props.hidCheck}>
-            {this.props.partNumber === 1 ?
+            {(this.props.partNumber === 1 || this.props.partNumber === 3) ?
               <div className={styles.expContentContainer}>
                 <TabList className={styles.expContentList}>
                   <Tab className={styles.expContentTab} selected={!this.props.showPlot} onClick={this.props.closePlot} tabFor="tab-to-do">TO DO</Tab>
