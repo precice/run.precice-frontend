@@ -7,13 +7,6 @@
   flex: 0 0 auto;
   margin: 10px 10%;
   // match width to the steps
-
-  .bar {
-    background-color: $scroll-bar-color;
-    border-radius: 10px;
-    height: 20px;
-    transition: width 0.5s;
-  }
 }
 
 :global{

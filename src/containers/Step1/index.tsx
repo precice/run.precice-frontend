@@ -61,7 +61,7 @@ const mapStateToProps = createStructuredSelector({
   buttonLinks: buttonLinksSelector(),
 });
 
-export default connect<any,any,any>(
+export default connect<any, any, any>(
   mapStateToProps,
   mapDispatchToProps,
 )(Step1);

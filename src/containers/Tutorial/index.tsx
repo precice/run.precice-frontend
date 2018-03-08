@@ -12,8 +12,6 @@ import * as config4 from '../configurationFile/config4';
 import * as config5 from '../configurationFile/config5';
 import {
   buttonLinksSelector,
-  percentageSelector,
-  modalClickSelector,
   partNumberSelector,
   } from './selectors';
 import { blockNumberSelector, xmlflagSelector} from '../Step2/selectors';
@@ -22,11 +20,9 @@ import {
 import {
   ConsoleId} from '../Step3/index';
 import { Tooltip } from 'react-tippy';
-import {isNullOrUndefined, isUndefined} from "util";
 
 
 interface TutorialProps {
-  percentage: number;
   buttonLinks: {
     previous?: string,
     next?: string,
@@ -50,6 +46,7 @@ interface TutorialProps {
   blockNumberAction: () => void;
 }
 
+// this part is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 const initial3 = config3.initial;
@@ -97,7 +94,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
             <div className={styles.modalHeader}>
               <div className={styles.subCon}/>
               <div className={styles.subTitle}>
-                <h2>You forgot some parts</h2>
+                You forgot some parts
               </div>
               <div className={styles.subCon}>
                 <div onClick={this.closeModal} className={styles.close}>&times;</div>
@@ -144,38 +141,43 @@ class Tutorial extends React.Component<TutorialProps, any> {
             </div>
           </div>{/*modal content*/}
         </div>{/*the modal*/}
-        <ProgressBar percentage={this.props.percentage} partNumber={partNumber}/>
+        <ProgressBar partNumber={partNumber}/>
         <div className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
             {
+              (this.props.buttonLinks.previous === '/tutorial/part' + (this.props.partNumber - 1).toString() + '/step4' &&
+              ( this.props.leftBusy || this.props.rightBusy )) ?
+                this.props.buttonLinks.previous && <div className={styles.btnLDisabled}><Tooltip
+                  width="100"
+                  title="Simulation is runnning"
+                ><span>BACK</span>
+                </Tooltip></div> :
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
           <div className={styles.btnSubCon}>
             {
-              (
-                (this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&
-                  (
+              ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&
+                (
                   !eval('this.props.xmlflag.part' + this.props.partNumber + '[1]') ||
                   !eval('this.props.xmlflag.part' + this.props.partNumber + '[2]') ||
                   !eval('this.props.xmlflag.part' + this.props.partNumber + '[3]') ||
                   !eval('this.props.xmlflag.part' + this.props.partNumber + '[4]') ||
-                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')
-                  )
-                ) ?
+                  !eval('this.props.xmlflag.part' + this.props.partNumber + '[5]') )) ?
                 this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-                (
-                  (
-                    (this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
-                  this.props.partNumber !== 1
-                    ) ?
-                    <div/> :
-                      this.props.buttonLinks.next &&
-                      <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>
-                  )
-                )
-              )
+                ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
+                ( this.props.leftBusy || this.props.rightBusy )) ?
+                  this.props.buttonLinks.next &&
+                  <div className={styles.btnRDisabled}><Tooltip
+                    width="100"
+                    title="Simulation is runnning"
+                  ><span>NEXT</span>
+                  </Tooltip></div> :
+                  ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
+                  this.props.partNumber !== 1) ?
+                    <div/> : this.props.buttonLinks.next &&
+                    <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)))
             }
           </div>
         </div>
@@ -185,7 +187,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  percentage: percentageSelector(),
   buttonLinks: buttonLinksSelector(),
   xmlflag: xmlflagSelector(),
   leftBusy: busySelector(ConsoleId.left),

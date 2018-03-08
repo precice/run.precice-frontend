@@ -9,7 +9,6 @@ import CircularProgressbar from 'react-circular-progressbar';
 import {VictoryScatter, VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, VictoryLabel} from 'victory';
 import * as styles from './styles.scss';
 import {partNumberSelector} from '../Tutorial/selectors';
-import {PLOT_DELETE_DATA} from '../constants';
 
 interface ConPlotProps {
   data: object [];
@@ -147,16 +146,8 @@ const mapStateToProps = createStructuredSelector ({
   partNumber: partNumberSelector(),
 });
 
-function mapDispatchToProps( dispatch ) {
-  return {
-    initial: () => {
-      dispatch({ type: PLOT_DELETE_DATA});
-    },
-  };
-}
 
 export default connect<any, any, any>(
   mapStateToProps,
-  mapDispatchToProps,
 )(ConPlot);
 

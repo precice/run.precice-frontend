@@ -3,7 +3,7 @@ import * as styles from './styles.scss';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburstModified } from '../Step2/styleForSyntaxHighlighter';
-import { xmlBackgroundColor, xmlEmphasizeBackgroundColor} from '../constants';
+import { xmlBackgroundColor} from '../constants';
 
 import * as config1 from '../configurationFile/config1';
 import * as config2 from '../configurationFile/config2';
@@ -20,6 +20,7 @@ interface XmlBlockDynamicProps {
   partNumber: number;
 }
 
+// this part is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
 const initial3 = config3.initial;

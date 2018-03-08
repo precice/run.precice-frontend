@@ -26,23 +26,6 @@
       background-color: $explain-background-color;
       border-radius: $container-border-radius;
 
-      .plot-btn{
-        flex: 1 1 auto;
-        cursor: pointer;
-        text-align: center;
-        width: 10%;
-        order : 1;
-        padding: 0 10px;
-      }
-      .plot-btn:hover {
-        color: $btn-on-mouse-over;
-        border-color: $btn-on-mouse-over;
-        cursor: pointer;
-      }
-      .plot-btn:focus {
-        border: 4px solid $primary-color;
-      }
-
       .title {
         flex: 1 1 auto;
         text-align: center;
@@ -58,44 +41,18 @@
       .hide {
         flex: 1 1 auto;
         cursor: pointer;
-        text-align: center;
+        text-align: right;
         width: 10%;
         padding: 0 10px;
+        color: $btn-on-mouse-over;
       }
       .hide:hover {
-        color: $btn-on-mouse-over;
+        color: silver;
         cursor: pointer;
       }
       .hide:focus {
         border: 4px solid $primary-color;
       }
-    }
-
-    .time-modal {
-      top                        : 40px;
-      left                       : 40px;
-      right                      : 40px;
-      bottom                     : 40px;
-      height: 50px;
-      width: 50px;
-      border                     : 1px solid #ccc;
-      background                 : #fff;
-      overflow                   : auto;
-      WebkitOverflowScrolling    : touch;
-      borderRadius               : 4px;
-      outline                    : none;
-      padding                    : 20px;
-
-    }
-
-    .time-modal-overlay {
-      position          : fixed;
-      top               : 0;
-      left              : 0;
-      right             : 0;
-      bottom            : 0;
-      backgroundColor   : rgba(255, 255, 255, 0.75);
-
     }
 
     .exp-content-hide {
@@ -153,12 +110,6 @@
     overflow-y: auto;
     padding: 0 25px;
 
-    .exp-command {
-      background-color: $terminal-background-color;
-      color: $terminal-code-color;
-      font-family: $body-font-family;
-      padding: 0.1em;
-    }
   }
 }
   }
@@ -178,15 +129,6 @@
     }
     .sol-l {
       margin-right: $margin-between;
-    }
-
-    .sol-header {
-      color: $solver-text-color;
-      font-size: 20px;
-      line-height: 1.5;
-      padding-top: 10px;
-      text-align: center;
-      text-transform: uppercase;
     }
 
   }

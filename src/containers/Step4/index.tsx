@@ -6,7 +6,6 @@ import {
 } from '../Tutorial/selectors';
 import * as styles from './styles.scss';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import {ConsoleId} from '../Step3/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import Step4Visualization from '../Step4Visualization/index';
 

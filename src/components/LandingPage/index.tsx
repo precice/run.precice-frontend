@@ -32,42 +32,34 @@ class LandingPage extends React.Component<LandPageProps, any> {
             Team
           </div>
           <div className={styles.imgGroup}>{/*photos*/}
-            <div className={styles.imgContainer}>
-              <img src={Dmytro} className={styles.img}/>
-              <div className={styles.subIntro}>
-                Dmytro Sashko
-              </div>
-            </div>
-            <div className={styles.imgContainer}>
-              <img src={Felix} className={styles.img}/>
-              <div className={styles.subIntro}>
-                Felix Lachenmaier
-              </div>
-            </div>
-            <div className={styles.imgContainer}>
-              <img src={Hasan} className={styles.img}/>
-              <div className={styles.subIntro}>
-                Hasan Ashraf
-              </div>
-            </div>
-            <div className={styles.imgContainer}>
-              <img src={Jan} className={styles.img}/>
-              <div className={styles.subIntro}>
-                Jan Sültemeyer
-              </div>
-            </div>
-            <div className={styles.imgContainer}>
-              <img src={Kirill} className={styles.img}/>
-              <div className={styles.subIntro}>
-                Kirill Martynov
-              </div>
-            </div>
-            <div className={styles.imgContainer}>
-              <img src={Pei} className={styles.img}/>
-              <div className={styles.subIntro}>
-                Pei-Hsuan Huang
-              </div>
-            </div>
+            {[{
+              imgP: Dmytro,
+              nameP: 'Dmytro Sashko',
+            }, {
+              imgP: Felix,
+              nameP: 'Felix Lachenmaier',
+            }, {
+              imgP: Hasan,
+              nameP: 'Hasan Ashraf',
+            }, {
+              imgP: Jan,
+              nameP: 'Jan Sültemeyer',
+            }, {
+              imgP: Kirill,
+              nameP: 'Kirill Martynov',
+            }, {
+              imgP: Pei,
+              nameP: 'Pei-Hsuan Huang',
+            }].map(({ imgP, nameP }) => {
+              return (
+                <div className={styles.imgContainer}>
+                  <img src={imgP} className={styles.img}/>
+                  <div className={styles.subIntro}>
+                    {nameP}
+                  </div>
+                </div>
+              );
+            })}
           </div>
           {/*photos of BGCE_CSE 2017*/}
           <div className={styles.subIntro}>{/*intros of BGCE_CSE 2017*/}
@@ -78,7 +70,8 @@ class LandingPage extends React.Component<LandPageProps, any> {
         {/*the introduction for our team*/}
 
         <div className={styles.successStories}>
-          <h3 className={styles.successH}>Voices of our customers</h3>
+          <div className={styles.intro}>Voices of our customers</div>
+          <div className={styles.storyGroups}>
           {[{
             name: 'Albert Einstein',
             text: 'Precice has always proven as a reliable choice for my coupled FSI simulations. It\'s so easy, it\'s so smart. I just love it',
@@ -102,6 +95,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
     );

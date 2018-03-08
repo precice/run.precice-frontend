@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2, XML_CLICK, XML_ALL_CLICK, IVE_READ, INITIAL_RELAXATION_CHANGE, BLOCKNUMBER_FLAG, XML_VISIT,
+  HID_CHECK2, XML_ALL_CLICK, INITIAL_RELAXATION_CHANGE, BLOCKNUMBER_FLAG, XML_VISIT,
 } from '../constants';
 import { Action } from 'redux';
 
@@ -45,9 +45,6 @@ function step2Reducer(state = initialState, action: any) {
         .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(3, 1, true)) )
         .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(4, 1, true)) )
         .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(5, 1, true)) );
-    case IVE_READ:
-      return state
-        .set('iveRead' + action.whichStep, true);
     case INITIAL_RELAXATION_CHANGE:
       return state
         .set('initialRelaxationValue', action.check);

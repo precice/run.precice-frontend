@@ -19,6 +19,9 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         <br/>
         To make it more convenient, we have already typed in the commands to start the two solvers in the terminals below.
         Go ahead and start them.
+        <br/>
+        <br/>
+        In the coresponding terminals, we now see SU2 and CalculiX specific outputs.
       </div>
     );
   }

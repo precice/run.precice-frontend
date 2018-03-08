@@ -8,7 +8,7 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
   public render() {
     return(
       <div>
-        Let's do the simulation
+        On the left plot, we can see the number of the sub-iterations of the implicit scheme in each timestep.
       </div>
     );
   }
