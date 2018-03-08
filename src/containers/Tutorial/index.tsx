@@ -55,6 +55,12 @@ const initial5 = config5.initial;
 
 let partNumber = 1;
 
+window.onclick = (event) => {
+  if (event.target === document.getElementById('myModal')) {
+    document.getElementById('myModal').style.display = 'none';
+  }
+}
+
 class Tutorial extends React.Component<TutorialProps, any> {
   constructor(props: TutorialProps) {
     super(props);
@@ -83,13 +89,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
       <div className={styles.tutorialContainer}>
         <script>{partNumber = this.props.partNumber}</script>
         <div id="myModal" className={styles.modal}>
-          {
-            window.onclick = (event) => {
-              if (event.target === document.getElementById('myModal')) {
-                document.getElementById('myModal').style.display = 'none';
-              }
-            }
-          }
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <div className={styles.subCon}/>
