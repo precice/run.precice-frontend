@@ -3,16 +3,16 @@
  */
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
-import {RouteComponentProps} from "react-router";
+import {RouteComponentProps} from 'react-router';
 
 ReactGA.initialize('UA-115298536-1', {
-  debug: true,
+  debug: false,
+  gaOptions: {
+    cookieDomain: 'auto',
+  },
 });
 
-
-// ga.initialize('UA-115298536-1');
-
-export default function withTracker(WrappedComponent, options = {}) {
+const withTracker = (WrappedComponent, options = {}) => {
   const trackPage = (page) => {
     ReactGA.set({
       page,
@@ -49,3 +49,4 @@ export default function withTracker(WrappedComponent, options = {}) {
   return HOC;
 };
 
+export default withTracker;
