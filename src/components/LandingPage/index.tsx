@@ -52,7 +52,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
               nameP: 'Pei-Hsuan Huang',
             }].map(({ imgP, nameP }) => {
               return (
-                <div className={styles.imgContainer}>
+                <div key={nameP} className={styles.imgContainer}>
                   <img src={imgP} className={styles.img}/>
                   <div className={styles.subIntro}>
                     {nameP}
@@ -86,7 +86,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
             img: bolt,
           }].map(({ name, text, img }) => {
             return (
-              <div className={styles.successStory}>
+              <div key={name} className={styles.successStory}>
                 <img className={styles.img} src={img}/>
                 <div className={styles.text}>
                   <div className={styles.name}>{name}</div>

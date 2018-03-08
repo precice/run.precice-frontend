@@ -155,8 +155,8 @@ class Step3 extends React.Component<Step3Props, any> {
             {(this.props.partNumber === 1 || this.props.partNumber === 3) ?
               <div className={styles.expContentContainer}>
                 <TabList className={styles.expContentList}>
-                  <Tab className={styles.expContentTab} selected={!this.props.showPlot} onClick={this.props.closePlot} tabFor="tab-to-do">TO DO</Tab>
-                  <Tab className={styles.expContentTab} selected={this.props.showPlot} onClick={this.props.openPlot} tabFor="tab-plot">PLOT</Tab>
+                  <Tab className={styles.expContentTab} selected={!this.props.showPlot} onClick={this.props.closePlot} tabfor="tab-to-do">TO DO</Tab>
+                  <Tab className={styles.expContentTab} selected={this.props.showPlot} onClick={this.props.openPlot} tabfor="tab-plot">PLOT</Tab>
                 </TabList>
                 <TabPanel className={styles.expContent} selected={!this.props.showPlot} tabId="tab-to-do">
                   <WhatToDoBlock stepNumber={3} partNumber={this.props.partNumber}/>
