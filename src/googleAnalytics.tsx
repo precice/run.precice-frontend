@@ -5,6 +5,10 @@ import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import {RouteComponentProps} from 'react-router';
 
+if (window.location.hostname === 'localhost' ) {
+  window ['ga-disable-UA-115298536-1'] = true;
+}
+
 ReactGA.initialize('UA-115298536-1', {
   debug: false,
   gaOptions: {
