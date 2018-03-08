@@ -22,7 +22,7 @@ const RouteWithSubRoutes = (route: RouteDefinition) => {
     </route.component>
   );
 
-  return <Route exact={!childRoutes} path={route.path} render={withTracker(render)}/>;
+  return <Route exact={!childRoutes} path={route.path} component={withTracker(render)}/>;
 };
 
 
