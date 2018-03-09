@@ -13,7 +13,7 @@ class Final extends React.Component<FinalProps, any> {
           <div className={styles.subIntro}>
             You have finished the tutorial.<br/>
             If you want to run it on your computer, <br/>
-            please go to the github repository, <br/>
+            please go to the github repository <br/>
             and follow the instructions.
           </div>
           <div className={styles.btnContainer}><a target="_blank" href="https://github.com/precice/precice/wiki/FSI-tutorial" className={styles.btn}> preCICE github</a></div>
