@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2, XML_ALL_CLICK, INITIAL_RELAXATION_CHANGE, BLOCKNUMBER_FLAG, XML_VISIT,
+  HID_CHECK2, XML_VISIT_ALL, INITIAL_RELAXATION_CHANGE, CHANGE_BLOCK_NUMBER, XML_VISIT,
 } from '../constants';
 import { Action } from 'redux';
 
@@ -37,20 +37,17 @@ function step2Reducer(state = initialState, action: any) {
       return state
         .updateIn(['xmlflag', 'part' + action.part.toString()], trueize );
     }
-    case XML_ALL_CLICK:
+    case XML_VISIT_ALL:
       return state
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(0, 1, true)) )
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(1, 1, true)) )
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(2, 1, true)) )
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(3, 1, true)) )
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(4, 1, true)) )
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => (x.splice(5, 1, true)) );
+        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => [true, true, true, true, true, true]);
     case INITIAL_RELAXATION_CHANGE:
       return state
         .set('initialRelaxationValue', action.check);
-    case BLOCKNUMBER_FLAG:
+    case CHANGE_BLOCK_NUMBER:
       return state
-        .set('blockNumber', action.check);
+        .set('blockNumber', action.blockNumber)
+        .updateIn(['xmlflag', 'part' + action.partNumber.toString()], (x) => x.splice(action.blockNumber, 1, true) )
+        ;
     default:
       return state;
   }

@@ -2,7 +2,7 @@ export const EXAMPLE_ACTION = 'actions/EXAMPLE_ACTION';
 export const HID_CHECK2 = 'actions/HID_CHECK2';
 export const HID_CHECK3 = 'actions/HID_CHECK3';
 export const XML_VISIT = 'actions/XML_VISIT';
-export const XML_ALL_CLICK = 'actions/XML_ALL_CLICK';
+export const XML_VISIT_ALL = 'actions/XML_ALL_CLICK';
 export const CONSOLE_ADD_LINES = 'actions/CONSOLE_ADD_LINES';
 export const CONSOLE_TOGGLE_BUSY = 'actions/CONSOLE_TOGGLE_BUSY';
 export const CONSOLE_TOGGLE_LOCK_BOTTOM = 'actions/CONSOLE_TOGGLE_LOCK_BOTTOM';
@@ -20,7 +20,7 @@ export const TIME_MODAL_DATA = 'action/TIME_MODAL_DATA';
 export const ADD_FINAL_TIME = 'action/ADD_FINAL_TIME';
 export const IS_SIMULATION_RUNNING = 'action/IS_SIMULATION_RUNNING';
 export const IS_SIMULATION_DONE = 'action/IS_SIMULATION_DONE';
-export const BLOCKNUMBER_FLAG = 'action/BLOCKNUMBER_FLAG';
+export const CHANGE_BLOCK_NUMBER = 'action/BLOCKNUMBER_FLAG';
 export const PARTNUMBER_FLAG = 'action/PARTNUMBER_FLAG';
 export const SIMULATION_CLEAR_DONE = 'action/PARTNUMBER_FLAG';
 

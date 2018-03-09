@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {XML_ALL_CLICK, MODAL_CLICK, BLOCKNUMBER_FLAG} from '../constants';
+import {XML_VISIT_ALL, MODAL_CLICK, CHANGE_BLOCK_NUMBER} from '../constants';
 import {createStructuredSelector} from 'reselect';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
@@ -32,7 +32,7 @@ interface TutorialProps {
   leftBusy: boolean;
   rightBusy: boolean;
 
-  xmlSkip: () => void;
+  xmlSkip: (partNumber: number) => void;
   xmlflag: {
     part1: boolean[];
     part2: boolean[];
@@ -42,8 +42,7 @@ interface TutorialProps {
   };
 
   partNumber: number;
-  blockNumber: string;
-  blockNumberAction: () => void;
+  changeBlockNumber: (partNumber: number, blockNumber: string) => void;
 }
 
 // this part is essential for eval
@@ -53,13 +52,11 @@ const initial3 = config3.initial;
 const initial4 = config4.initial;
 const initial5 = config5.initial;
 
-let partNumber = 1;
-
 window.onclick = (event) => {
   if (event.target === document.getElementById('myModal')) {
     document.getElementById('myModal').style.display = 'none';
   }
-}
+};
 
 class Tutorial extends React.Component<TutorialProps, any> {
   constructor(props: TutorialProps) {
@@ -87,7 +84,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
   public render() {
     return (
       <div className={styles.tutorialContainer}>
-        <script>{partNumber = this.props.partNumber}</script>
         <div id="myModal" className={styles.modal}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
@@ -102,31 +98,31 @@ class Tutorial extends React.Component<TutorialProps, any> {
             <div className={styles.modalBody}>
               <div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[1]')}>
-                  <div id="modallink2" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink2" onMouseOver={this.setMouseOver} onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '2'); }} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub2')}
                     <span id="mouse2" hidden={false}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[2]')}>
-                  <div id="modallink3" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink3" onMouseOver={this.setMouseOver} onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '3'); }} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub3')}
                     <span id="mouse3" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[3]')}>
-                  <div id="modallink4" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink4" onMouseOver={this.setMouseOver} onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '4'); }} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub4')}
                     <span id="mouse4" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[4]')}>
-                  <div id="modallink5" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink5" onMouseOver={this.setMouseOver} onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '5'); }} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub5')}
                     <span id="mouse5" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
                 </div>
                 <div hidden={eval('this.props.xmlflag.part' + this.props.partNumber + '[5]')}>
-                  <div id="modallink6" onMouseOver={this.setMouseOver} onClick={this.props.blockNumberAction} className={styles.modalItem}>
+                  <div id="modallink6" onMouseOver={this.setMouseOver} onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '6'); }} className={styles.modalItem}>
                     {eval('config' + this.props.partNumber + '.sub6')}
                     <span id="mouse6" hidden={true}> <i className="fa fa-mouse-pointer" aria-hidden="true"/></span>
                   </div>
@@ -134,13 +130,13 @@ class Tutorial extends React.Component<TutorialProps, any> {
               </div>
             </div>
             <div className={styles.modalFooter}>
-            {this.props.buttonLinks.next && <Link onClick={this.props.xmlSkip} to={this.props.buttonLinks.next} className={styles.modalBtn}>
+            {this.props.buttonLinks.next && <Link onClick={() => { this.props.xmlSkip(this.props.partNumber); }} to={this.props.buttonLinks.next} className={styles.modalBtn}>
               I want to skip those parts.
             </Link>}
             </div>
           </div>{/*modal content*/}
         </div>{/*the modal*/}
-        <ProgressBar partNumber={partNumber}/>
+        <ProgressBar partNumber={this.props.partNumber}/>
         <div className={styles.child}>{this.props.children}</div>
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
@@ -191,19 +187,19 @@ const mapStateToProps = createStructuredSelector({
   leftBusy: busySelector(ConsoleId.left),
   rightBusy: busySelector(ConsoleId.right),
   partNumber: partNumberSelector(),
-  blockNumber: blockNumberSelector(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    xmlSkip: () => {
-      dispatch({type: XML_ALL_CLICK, part: partNumber});
+    xmlSkip: (partNumber) => {
+      dispatch({type: XML_VISIT_ALL, part: partNumber});
       document.getElementById('myModal').style.display = 'none';
     },
-    blockNumberAction: (event) => {
+    changeBlockNumber: (partNumber, blockNumber) => {
       dispatch({
-        type: BLOCKNUMBER_FLAG,
-        check: event.currentTarget.id.substring(9, 10),
+        type: CHANGE_BLOCK_NUMBER,
+        partNumber,
+        blockNumber,
       });
       document.getElementById('myModal').style.display = 'none';
     },

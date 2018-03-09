@@ -13,7 +13,7 @@ import * as config5 from '../configurationFile/config5';
 interface XmlBlockProps {
   blockNumber: string;
   partNumber: number;
-  blockNumberAction: () => void;
+  changeBlockNumber: (partNumber: number, blockNumber: string) => void;
 }
 
 // this part is essential for eval
@@ -24,6 +24,7 @@ const initial4 = config4.initial;
 const initial5 = config5.initial;
 
 let lineIndex = [1, 1, 1];
+
 
 class XmlBlock extends React.Component<XmlBlockProps, any> {
   constructor(props: XmlBlockProps) {
@@ -50,10 +51,20 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
       end: 1,
     }});
   }
+
   public componentDidMount() {
-    if (this.props.partNumber !== 1) {
-      document.getElementById('myXML').scrollTop = document.getElementById('myXML').scrollHeight;
+    if (this.props.blockNumber !== '1') {
+      this.scrollToCurrentBlock();
     }
+  }
+
+  public componentDidUpdate(oldProps) {
+    if (oldProps.blockNumber !== this.props.blockNumber) {
+      this.scrollToCurrentBlock();
+    }
+  }
+  private scrollToCurrentBlock() {
+    document.getElementById('xml' + this.props.blockNumber).scrollIntoView();
   }
   public render() {
     return (
@@ -65,7 +76,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
-          onClick={this.props.blockNumberAction}
+          onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '1'); }}
           id="xml1"
         >
           <XmlBlockDynamic
@@ -81,7 +92,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
-          onClick={this.props.blockNumberAction}
+          onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '2'); }}
           id="xml2"
         >
           <XmlBlockDynamic
@@ -97,7 +108,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
-          onClick={this.props.blockNumberAction}
+          onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '3'); }}
           id="xml3"
         >
           <XmlBlockDynamic
@@ -113,7 +124,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
-          onClick={this.props.blockNumberAction}
+          onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '4'); }}
           id="xml4"
         >
           <XmlBlockDynamic
@@ -129,7 +140,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
-          onClick={this.props.blockNumberAction}
+          onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '5'); }}
           id="xml5"
         >
           <XmlBlockDynamic
@@ -145,7 +156,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
-          onClick={this.props.blockNumberAction}
+          onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '6'); }}
           id="xml6"
         >
           <XmlBlockDynamic

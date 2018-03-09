@@ -12,7 +12,7 @@ import {
 } from '../Tutorial/selectors';
 import {
   HID_CHECK2,
-  BLOCKNUMBER_FLAG,
+  CHANGE_BLOCK_NUMBER,
   XML_VISIT,
 } from '../constants';
 import * as styles from './styles.scss';
@@ -29,7 +29,6 @@ interface Step2Props {
   hidAction: () => void;
   hidCheck2: boolean;
   modalClick: boolean;
-  xmlVisitAction: () => void;
   xmlflag: {
     part1: boolean[];
     part2: boolean[];
@@ -40,13 +39,9 @@ interface Step2Props {
   initialRelaxationValue: number;
   partNumber: number;
   blockNumber: string;
-  blockNumberAction: () => void;
-  blockNumberInitial: () => void;
+  changeBlockNumber: (partNumber: number, blockNumber: string) => void;
 }
 
-let whichSection = '';
-let partNumber = 1;
-let blockNumber = '1';
 
 // this is essential for eval
 const initial1 = config1.initial;
@@ -66,23 +61,18 @@ class Step2 extends React.Component<Step2Props, any> {
       },
     };
   }
-  public componentWillMount() {
-    if (this.props.partNumber !== 1) {
-      this.props.blockNumberInitial();
-    }
-}
+
   public render() {
     return (
-      <div onMouseOver={this.props.xmlVisitAction} className={styles.subContainer}>
-        <script>{partNumber = this.props.partNumber}</script>
-        <script>{blockNumber = this.props.blockNumber}</script>
-        <script>{whichSection = 'xmlflag' + blockNumber}</script>
+      <div className={styles.subContainer}>
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
             <span className={styles.hide}/>
             <span className={styles.title}/>
             <span id="hideButton" onClick={this.props.hidAction} className={styles.hide}>
-              {this.props.hidCheck2 ? <span>expand<span> </span><i className="fa fa-chevron-down" aria-hidden="true"/></span> :<span>hide<span> </span><i className="fa fa-chevron-up" aria-hidden="true"/></span> }
+              {this.props.hidCheck2 ?
+                <span>expand <i className="fa fa-chevron-down" aria-hidden="true"/></span> :
+                <span>hide <i className="fa fa-chevron-up" aria-hidden="true"/></span> }
             </span>
           </div>
           <div id="hideStep2" className={styles.expContent} hidden={this.props.hidCheck2}>
@@ -90,12 +80,14 @@ class Step2 extends React.Component<Step2Props, any> {
           </div>
           <div className={styles.expContentHide} hidden={!this.props.hidCheck2}/>
         </div>
-        <div id="interact"
-             className={styles.interactContainer}>
+        <div
+          id="interact"
+          className={styles.interactContainer}
+        >
           <XmlBlock
             blockNumber={this.props.blockNumber}
             partNumber={this.props.partNumber}
-            blockNumberAction={this.props.blockNumberAction}
+            changeBlockNumber={this.props.changeBlockNumber}
           />
           <div className={styles.commentContainer}>
             <div className={styles.commentHeader}>
@@ -121,9 +113,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     hidAction: () => { dispatch({ type: HID_CHECK2, check: document.getElementById('hideStep2').hidden}); },
-    xmlVisitAction: () => { dispatch({ type: XML_VISIT, part: partNumber, block: blockNumber });},
-    blockNumberAction: (event) => { dispatch({ type: BLOCKNUMBER_FLAG, check: event.currentTarget.id.substring(3, 4)}); },
-    blockNumberInitial: () => { dispatch({ type: BLOCKNUMBER_FLAG, check: '6' }); },
+    changeBlockNumber: (partNumber, blockNumber) => { dispatch({ type: CHANGE_BLOCK_NUMBER, partNumber, blockNumber }); },
   };
 }
 

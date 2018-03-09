@@ -147,8 +147,8 @@ class Step3 extends React.Component<Step3Props, any> {
               onClick={this.props.hidAction}
               className={styles.hide}
             >
-              {this.props.hidCheck ? <span>expand<span> </span><i className="fa fa-chevron-down" aria-hidden="true"/></span> :
-                <span>hide<span> </span><i className="fa fa-chevron-up" aria-hidden="true"/></span>}
+              {this.props.hidCheck ? <span>expand <i className="fa fa-chevron-down" aria-hidden="true"/></span> :
+                <span>hide <i className="fa fa-chevron-up" aria-hidden="true"/></span>}
             </span>
           </div>
           <div id="hideStep3" hidden={this.props.hidCheck}>

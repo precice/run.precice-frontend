@@ -25,7 +25,7 @@ const withTracker = (WrappedComponent, options = {}) => {
     ReactGA.pageview(page);
   };
 
-  const HOC = class extends React.Component <RouteComponentProps<{}>, { } > {
+  const HOC = class extends React.Component <any, undefined > {
 
     constructor(props) {
       super(props);
