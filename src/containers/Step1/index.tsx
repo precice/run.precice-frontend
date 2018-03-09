@@ -34,8 +34,8 @@ class Step1 extends React.Component<Step1Props, any> {
   }
 
   public componentWillMount() {
-    this.props.initial();
     if (!this.props.leftBusy && !this.props.rightBusy) {
+      this.props.initial();
       this.props.clearConsole(ConsoleId.right);
       this.props.clearConsole(ConsoleId.left);
       this.props.clearDone(ConsoleId.right);
