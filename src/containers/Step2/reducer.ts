@@ -46,7 +46,7 @@ function step2Reducer(state = initialState, action: any) {
     case CHANGE_BLOCK_NUMBER:
       return state
         .set('blockNumber', action.blockNumber)
-        .updateIn(['xmlflag', 'part' + action.partNumber.toString()], (x) => x.splice(action.blockNumber, 1, true) )
+        .updateIn(['xmlflag', 'part' + action.partNumber.toString()], (x) => x.splice(parseInt(action.blockNumber, 10) - 1, 1, true) )
         ;
     default:
       return state;
