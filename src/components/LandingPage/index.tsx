@@ -70,7 +70,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
         {/*the introduction for our team*/}
 
         <div className={styles.successStories}>
-          <div className={styles.intro}>Voices of our customers</div>
+          <div className={styles.intro}>Voices of our users</div>
           <div className={styles.storyGroups}>
           {[{
             name: 'Albert Einstein',

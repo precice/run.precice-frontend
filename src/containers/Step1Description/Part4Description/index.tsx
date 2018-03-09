@@ -16,21 +16,8 @@ class Part4Sub extends React.Component<Part4SubProps, any> {
           In this case we can use a number of fixed-point acceleration methods that improve stability and convergence
           speed. One such family of acceleration methods is called Quasi-Newton post-processing methods.
           <br/><br/>
-          In this section, we will try to use a Quasi-Newton post-processing method in order to improve the convergence rate.
-          There are three different types of fixed point acceleration methods available in preCICE:
-          <ul>
-            <li>
-              Inverse Least-Squares (Anderson) Acceleration
-            </li>
-            <li>
-              Generalized Broyden
-            </li>
-            <li>
-              Manifold Mapping
-            </li>
-          </ul>
-
-          Here we will use Inverse Least-Squares acceleration -- it is matrix free and has low computational costs.
+          In this section, we will try to use Inverse Least-Squares acceleration, a Quasi-Newton post-processing method,
+          in order to improve the convergence rate of the simulation.
 
         </div>
       </div>

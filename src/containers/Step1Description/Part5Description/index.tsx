@@ -20,7 +20,15 @@ class Part5Sub extends React.Component<Part5SubProps, any> {
           <br/><br/>
           In a parallel coupling scheme, however, both solvers use values from
           the old time step to compute the new values in parallel. This way we can minimize the waiting time and
-          speed up our simulation. In this section we will use a parallel coupling scheme with Quasi Newton postprocessing
+          speed up our simulation. In this section we will use a
+          <a
+            className={styles.link}
+            target="_blank"
+            href={'https://www.researchgate.net/publication/301598918_preCICE_-_A_Fully_Parallel_Library_for_Multi-Physics_Surface_Coupling'}
+          >
+            <span> </span>parallel coupling <span> </span>
+          </a>
+          scheme with Quasi-Newton postprocessing
           in order to further decrease the simulation time.
         </div>
       </div>

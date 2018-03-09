@@ -4,8 +4,7 @@ import * as styles from '../styles.scss';
 
 interface Part1SubProps {
 }
-// TODO: Do we need to inform the users about the plot button on the top left?
-// TODO: Do we need to specify the commands to start the sovlers if they are in the terminals already?
+
 class Part1Sub extends React.Component<Part1SubProps, any> {
   public render() {
     return (
@@ -21,7 +20,8 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         Go ahead and start them.
         <br/>
         <br/>
-        In the coresponding terminals, we now see SU2 and CalculiX specific outputs.
+        Once you've started the simulation, you will be able to see SU2 and CalculiX specific output in the corresponding
+        terminals.
       </div>
     );
   }
