@@ -41,7 +41,22 @@
 
   .feedback-link {
     color: $link-color;
+    &:hover {
+      border-bottom: 1px solid $link-color;
+    }
   }
+  .github-link {
+    color: #248d45;
+    border-bottom: 2px dotted #248d45;
+    &:hover {
+      border-bottom: 1px solid #248d45;
+
+    }
+    .img {
+      height: 20px;
+    }
+  }
+
 
   .btn-container {
     display: inline-block;
