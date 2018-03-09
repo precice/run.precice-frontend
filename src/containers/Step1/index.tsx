@@ -4,8 +4,9 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 import { buttonLinksSelector, partNumberSelector } from '../Tutorial/selectors';
+import { busySelector } from '../Step3/selectors';
 import Step1Description from '../Step1Description/index';
-import {PLOT_DELETE_DATA} from '../constants';
+import {PLOT_DELETE_DATA, CONSOLE_CLEAR, SIMULATION_CLEAR_DONE} from '../constants';
 
 interface Step1Props {
   partNumber: number;
@@ -14,6 +15,17 @@ interface Step1Props {
     next?: string,
   };
   initial: () => any;
+
+  clearConsole: any;
+  clearDone: any;
+  leftBusy: boolean;
+  rightBusy: boolean;
+
+}
+
+export enum ConsoleId {
+  left = 'LEFT_CONSOLE',
+  right = 'RIGHT_CONSOLE',
 }
 
 class Step1 extends React.Component<Step1Props, any> {
@@ -23,6 +35,12 @@ class Step1 extends React.Component<Step1Props, any> {
 
   public componentWillMount() {
     this.props.initial();
+    if (!this.props.leftBusy && !this.props.rightBusy) {
+      this.props.clearConsole(ConsoleId.right);
+      this.props.clearConsole(ConsoleId.left);
+      this.props.clearDone(ConsoleId.right);
+      this.props.clearDone(ConsoleId.left);
+    }
   }
   public render() {
     return (
@@ -53,12 +71,20 @@ function mapDispatchToProps( dispatch ) {
     initial: () => {
       dispatch({ type: PLOT_DELETE_DATA});
     },
+    clearConsole: (consoleId: ConsoleId) => {
+      dispatch({ type: CONSOLE_CLEAR, consoleId });
+    },
+    clearDone: (consoleId: ConsoleId) => {
+      dispatch({type: SIMULATION_CLEAR_DONE, consoleId});
+    },
   };
 }
 
 const mapStateToProps = createStructuredSelector({
   partNumber: partNumberSelector(),
   buttonLinks: buttonLinksSelector(),
+  leftBusy: busySelector(ConsoleId.left),
+  rightBusy: busySelector(ConsoleId.right),
 });
 
 export default connect<any, any, any>(

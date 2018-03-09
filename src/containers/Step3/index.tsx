@@ -88,15 +88,6 @@ class Step3 extends React.Component<Step3Props, any> {
     super(props);
   }
 
-  public componentWillMount() {
-    if (!this.props.leftBusy && !this.props.rightBusy) {
-      this.props.clearConsole(ConsoleId.right);
-      this.props.clearConsole(ConsoleId.left);
-      this.props.clearDone(ConsoleId.right);
-      this.props.clearDone(ConsoleId.left);
-    }
-  }
-
   public render() {
     return (
       <div className={styles.subContainer}>
