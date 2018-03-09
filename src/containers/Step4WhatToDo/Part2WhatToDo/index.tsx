@@ -9,8 +9,8 @@ class Part2Sub extends React.Component<Part2SubProps, any> {
     return(
       <div>
         Again, we see that the flap is bending under the pressure of the fluid. However,
-        the deformation increases rapidly, the simulation diverges and produces unphysical results. The main reason for
-        this is that explicit coupling that doesn't impose any convergence requirement on the solvers.
+        the deformation increases rapidly, the simulation diverges and produces unphysical results. This is because
+        explicit coupling does not impose any convergence requirements on the solvers.
       </div>
     );
   }

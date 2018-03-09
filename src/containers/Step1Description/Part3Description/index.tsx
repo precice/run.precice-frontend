@@ -27,7 +27,7 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
           <br/><br/>
 
           Implicit coupling schemes are based on fixed-point iterations. To solve them in a robust and efficient manner,
-          preCICE provides underrelaxation strategies like adaptive Aitken and quasi-Newton solvers. In this section,
+          preCICE provides underrelaxation strategies like Adaptive Aitken and Quasi-Newton solvers. In this section,
           we will couple our solvers using an implicit coupling scheme with Aitken underrelaxation. In preCICE
           nomenclature we call this "post-processing".
         </div>

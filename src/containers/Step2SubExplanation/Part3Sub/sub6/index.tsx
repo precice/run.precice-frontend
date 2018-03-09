@@ -51,8 +51,8 @@ class Sub6 extends React.Component<Sub6Props, any> {
             interactive
             html={(
               <div>
-                For example, if <span className={styles.highlight}>value</span> is 2, then a second-order extrapolation
-                of the next timestep's initial guess is done from the current and the previous timestep results.
+                For example, if <span className={styles.highlight}>value</span> is 2 then a second-order extrapolation
+                of the next timestep's initial guess is computed from the current and the previous timestep results.
               </div>
             )}
           >
@@ -78,7 +78,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
             interactive
             html={(
               <div>
-                For more information on Aitken, click <a style={{color: 'white'}}href="http://onlinelibrary.wiley.com/doi/10.1002/nme.1620010306/abstract">here</a>.
                 preCICE offers a variety of methods for post-processing.
                 For details, please consult the <a className={styles.link} target="_blank" href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a>.
               </div>
