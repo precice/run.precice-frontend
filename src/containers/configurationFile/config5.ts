@@ -123,7 +123,7 @@ export const initialCodeString56 =  ``;
 
 
 export const initialCodeString6 = `    
-    <coupling-scheme:serial-implicit>
+    <coupling-scheme:parallel-implicit>
            <participants first="SU2_CFD" second="Calculix"/>
            <max-timesteps value="400"/>
            <timestep-length value="1e-2" />
@@ -152,7 +152,7 @@ export const initialCodeString6 = `
             <timesteps-reused value="10"/>
           </post-processing:IQN-ILS>      
             
-      </coupling-scheme:serial-implicit>`;
+      </coupling-scheme:parallel-implicit>`;
 
 export const initialCodeStringEnd = `
    </solver-interface>
