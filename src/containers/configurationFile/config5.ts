@@ -67,13 +67,13 @@ export const sec56 = {
 };
 export const sec6 = {
   start: 44,
-  total: 21,
-  end: 74,
+  total: 22,
+  end: 75,
 };
 export const secEnd = {
-  start: 75,
+  start: 76,
   total: 4,
-  end: 78,
+  end: 79,
 };
 
 export const initialCodeString01 = `<?xml version="1.0"?>
@@ -145,6 +145,7 @@ export const initialCodeString6 = `
            
           <post-processing:IQN-ILS>
             <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
+            <data name="Forces0" mesh="Calculix_Mesh"/>
             <preconditioner type="residual-sum"/>
             <filter type="QR1" limit="1e-6"/>
             <initial-relaxation value="0.5"/>

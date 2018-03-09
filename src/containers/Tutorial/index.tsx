@@ -1,8 +1,8 @@
-import {connect} from 'react-redux';
-import {XML_VISIT_ALL, MODAL_CLICK, CHANGE_BLOCK_NUMBER} from '../constants';
-import {createStructuredSelector} from 'reselect';
+import { connect } from 'react-redux';
+import { CHANGE_BLOCK_NUMBER, XML_VISIT_ALL } from '../constants';
+import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
 import ProgressBar from '../Progress/index';
 import * as config1 from '../configurationFile/config1';
@@ -10,15 +10,10 @@ import * as config2 from '../configurationFile/config2';
 import * as config3 from '../configurationFile/config3';
 import * as config4 from '../configurationFile/config4';
 import * as config5 from '../configurationFile/config5';
-import {
-  buttonLinksSelector,
-  partNumberSelector,
-  } from './selectors';
-import { blockNumberSelector, xmlflagSelector} from '../Step2/selectors';
-import {
-  busySelector} from '../Step3/selectors';
-import {
-  ConsoleId} from '../Step3/index';
+import { buttonLinksSelector, partNumberSelector, } from './selectors';
+import { xmlflagSelector } from '../Step2/selectors';
+import { busySelector } from '../Step3/selectors';
+import { ConsoleId } from '../Step3/index';
 import { Tooltip } from 'react-tippy';
 
 
@@ -170,9 +165,19 @@ class Tutorial extends React.Component<TutorialProps, any> {
                   ><span>NEXT</span>
                   </Tooltip></div> :
                   ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step2' &&
-                  this.props.partNumber !== 1) ?
+                    this.props.partNumber !== 1) ?
                     <div/> : this.props.buttonLinks.next &&
-                    <Link to={this.props.buttonLinks.next} className={styles.btnR}>NEXT</Link>)))
+                    <Link
+                      onClick={() => {
+                        if (this.props.buttonLinks.next.substr(-5) === 'step1') {
+                          this.props.changeBlockNumber(this.props.partNumber, '6');
+                        }
+                      }
+                      }
+                      to={this.props.buttonLinks.next}
+                      className={styles.btnR}
+                    >NEXT
+                    </Link>)))
             }
           </div>
         </div>
