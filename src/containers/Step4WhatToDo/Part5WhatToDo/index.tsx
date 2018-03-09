@@ -8,8 +8,8 @@ class Part5Sub extends React.Component<Part5SubProps, any> {
   public render() {
     return(
       <div>
-        By changing the coupling scheme to parallel quasi-Newton, we again reproduced similar result. This time we are
-        able to speedup the simulation by a factor of two.
+        While the results are qualitatively similar to our last simulation with a serial coupling scheme, using a parallel coupling
+        scheme has significantly reduced the runtime of the simulation.
       </div>
     );
   }
