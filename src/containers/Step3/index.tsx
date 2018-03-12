@@ -377,8 +377,8 @@ function stdout(store, consoleId, data) {
   const timeReg = /Global\s*runtime\s*=\s*(\d+)ms\s*\/\s*(\d+)s/;
   // Adding our parsing logic here:
 
-  // We want the Calculix console
-  if (consoleId === ConsoleId.left) {
+  // We want the SU2 console
+  if (consoleId === ConsoleId.right) {
     for (const line of lines) {
       const foundIt = line.match(itReg);
 
