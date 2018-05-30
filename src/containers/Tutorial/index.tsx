@@ -79,6 +79,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
   public render() {
     return (
       <div className={styles.tutorialContainer}>
+        {/* Controlling of the XML file view in the step2 */}
         <div id="myModal" className={styles.modal}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
@@ -131,8 +132,17 @@ class Tutorial extends React.Component<TutorialProps, any> {
             </div>
           </div>{/*modal content*/}
         </div>{/*the modal*/}
-        <ProgressBar partNumber={this.props.partNumber}/>
+        {/*End of controlling of the XML file view in the step2 */}
+        {/* Render progress bar if we in valid path*/ }
+        <div> 
+        { 
+        ( this.props.buttonLinks.previous || this.props.buttonLinks.next) ? 
+        <ProgressBar partNumber={this.props.partNumber}/> :
+        <div/> 
+        }
+        </div> 
         <div className={styles.child}>{this.props.children}</div>
+        {/* Button previous on all pages*/}
         <div className={styles.btnContainer}>
           {/* Remove buttons on first and last step */}
           <div className={styles.btnSubCon}>
@@ -146,6 +156,7 @@ class Tutorial extends React.Component<TutorialProps, any> {
                 </Tooltip></div> :
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
+          {/* Button next on almost all pages */}
           <div className={styles.btnSubCon}>
             {
               ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&

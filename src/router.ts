@@ -30,6 +30,7 @@ export const routerMiddlewareInstace = routerMiddleware(history);
 export interface RouteDefinition {
   path: string;
   component: any;
+  allowedNext?: string; 
   childRoutes?: RouteDefinition[];
 }
 
@@ -37,6 +38,7 @@ export interface RouteDefinition {
 const rootRouteRaw: RouteDefinition = {
   path: '',
   component: Root,
+  allowedNext: '/(|(tutorial)|final)',
   childRoutes: [
     {
       path: '/',
@@ -49,9 +51,11 @@ const rootRouteRaw: RouteDefinition = {
     {
       path: '/tutorial',
       component: Tutorial,
+      allowedNext: '/part([0-5])', 
       childRoutes: [
         {
           path: '/part1',
+          allowedNext: '/step([0-4])', 
           component: Part1,
           childRoutes: [
             {
@@ -74,7 +78,8 @@ const rootRouteRaw: RouteDefinition = {
         },
         {
           path: '/part2',
-          component: Part2,
+          allowedNext: '/step([0-4])', 
+          component: Part2, 
           childRoutes: [
             {
               path: '/step1',
@@ -97,6 +102,7 @@ const rootRouteRaw: RouteDefinition = {
         {
           path: '/part3',
           component: Part3,
+          allowedNext: '/step([0-4])', 
           childRoutes: [
             {
               path: '/step1',
@@ -119,6 +125,7 @@ const rootRouteRaw: RouteDefinition = {
         {
           path: '/part4',
           component: Part4,
+          allowedNext: '/step([0-4])', 
           childRoutes: [
             {
               path: '/step1',
@@ -141,6 +148,7 @@ const rootRouteRaw: RouteDefinition = {
         {
           path: '/part5',
           component: Part5,
+          allowedNext: '/step([0-4])', 
           childRoutes: [
             {
               path: '/step1',
@@ -176,6 +184,10 @@ function addPaths(route: RouteDefinition): RouteDefinition {
   if (route.childRoutes) {
     route.childRoutes = route.childRoutes.map((cR) => {
       cR.path = route.path + cR.path;
+      if ( cR.allowedNext ) 
+          cR.allowedNext = route.allowedNext + cR.allowedNext; 
+      else 
+          cR.allowedNext = route.allowedNext; 
       return addPaths(cR);
     });
   }

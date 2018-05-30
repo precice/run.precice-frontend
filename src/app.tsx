@@ -10,17 +10,31 @@ import './sass/global.scss';
 import { history, rootRoute, RouteDefinition } from './router';
 import { ConnectedRouter } from 'react-router-redux';
 import withTracker from './googleAnalytics';
+import NotFound from './containers/NotFound';
+
+var pathToRegexp = require('path-to-regexp');
 
 
 const RouteWithSubRoutes = (route: RouteDefinition) => {
   const childRoutes = route.childRoutes && route.childRoutes.map((cr, i) => <RouteWithSubRoutes key={i} {...cr}/>);
 
-  const render = (props: any) => (
-    // pass the sub-routes down to keep nesting
-    <route.component {...props}>
-      {childRoutes}
-    </route.component>
-  );
+  const render = (props: any) => { 
+
+    var keys = [];
+    var re = pathToRegexp(route.allowedNext, keys, { sensitive: false, strict: false, end: false } );
+    const match = re.exec( props.location.pathname );
+
+    if (!match) { 
+        return  (
+        <NotFound {...props}/> );
+    }
+    return (
+        // pass the sub-routes down to keep nesting
+        <route.component {...props}>
+        {childRoutes}
+        </route.component>
+    ); 
+  };
 
   return <Route exact={!childRoutes} path={route.path} component={withTracker(render)}/>;
 };

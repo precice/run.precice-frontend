@@ -61,6 +61,10 @@ export const buttonLinksSelector = () => createSelector
         previous: stepArray [index - 1],
       };
 
+      // we hit -1 index (path part was not found) 
+      if (index == -1)  
+          buttonLinks.next = undefined; 
+
       return buttonLinks;
     },
 );

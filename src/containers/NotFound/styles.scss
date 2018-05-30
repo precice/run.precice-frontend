@@ -1,0 +1,28 @@
+@import '../../sass/colors';
+
+.errorbox {
+    flex: 1 1 auto;
+    height: 100%;
+    display: flex;
+    margin: auto;
+    align-items: center; 
+    text-align: center; 
+
+    .error-items {
+
+        .error {
+            color: red;
+            font-size: 70px;
+            line-height: 1.5;
+        }
+
+
+        .info {
+            color: black;
+            font-size: 25px;
+            line-height: 1.5;
+        }
+    }
+
+}
+
