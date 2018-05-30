@@ -31,7 +31,7 @@ module.exports = (options) => {
         {
           test: /\.tsx?$/,
           loaders: [
-           // 'babel-loader?presets[]=es2015', // necessary for uglifyjs see https://github.com/joeeames/WebpackFundamentalsCourse/issues/3#issuecomment-252950772
+            'babel-loader?presets[]=es2015', // necessary for uglifyjs see https://github.com/joeeames/WebpackFundamentalsCourse/issues/3#issuecomment-252950772
             'awesome-typescript-loader'
           ],
         },
@@ -47,7 +47,6 @@ module.exports = (options) => {
           test: /^[^_].*scss$/,
           include: COMPONENTS_DIRS,
           loader: componentsCss.extract([
-
             {
               loader: 'typings-for-css-modules-loader',
               options: {
@@ -118,7 +117,7 @@ module.exports = (options) => {
 
         },
         {
-          test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*$|$)/,
+          test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|ico)(\?.*$|$)/,
           loader: [
              'file-loader',
 
@@ -130,7 +129,7 @@ module.exports = (options) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: 'src/index.html',
-        // favicon: 'app/favicon.png',
+        favicon: 'favicon.ico',
         minify: options.minifyIndexHtml,
         inject: true,
       }),

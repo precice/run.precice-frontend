@@ -51,10 +51,7 @@
       }
       .btn-r:hover,
       .btn-l:hover {
-        color: $btn-on-mouse-over;
-        border-color: $btn-on-mouse-over;
-        cursor: pointer;
-        background-color: $background-color;
+        background-color: rgb(211,211,211);
         box-shadow: 2px 2px $background-color;
       }
       .btn-r {

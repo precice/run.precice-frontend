@@ -23,7 +23,8 @@ a {
   .banner {
     box-sizing: border-box;
     color: $primary-color;
-    flex: 0 0 auto;
+    position: absolute; 
+    // flex: 0 0 auto;
     font-size: 25px;
     margin: 15px auto;
     max-height: 25px;
