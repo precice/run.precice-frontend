@@ -22,6 +22,16 @@
             font-size: 25px;
             line-height: 1.5;
         }
+
+        a:any-link {
+            color: blue;
+        }
+
+        /* WebKit browsers */
+        a:-webkit-any-link {
+            color: blue;
+        }
+
     }
 
 }
