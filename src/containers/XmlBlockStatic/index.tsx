@@ -35,6 +35,7 @@ class XmlBlockStatic extends React.Component<XmlBlockStaticProps, any> {
           className={styles.highlighter}
           wrapLines={true}
         >
+        {/* Display correpposnding part of the xml file */} 
           {eval('config' + this.props.partNumber.toString() + '.initialCodeString' + this.props.blockNumber)
           }
         </SyntaxHighlighter>

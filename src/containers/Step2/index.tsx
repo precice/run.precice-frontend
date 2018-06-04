@@ -89,6 +89,7 @@ class Step2 extends React.Component<Step2Props, any> {
             partNumber={this.props.partNumber}
             changeBlockNumber={this.props.changeBlockNumber}
           />
+          {/* Right side with the explanations of the xml block */}
           <div className={styles.commentContainer}>
             <div className={styles.commentHeader}>
               {eval('config' + this.props.partNumber + '.sub' + this.props.blockNumber)}

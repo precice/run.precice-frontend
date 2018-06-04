@@ -3,7 +3,7 @@ import * as styles from './styles.scss';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburstModified } from '../Step2/styleForSyntaxHighlighter';
-import { xmlBackgroundColor} from '../constants';
+import { xmlHoverBackground, xmlSelectedBackground } from '../constants';
 
 import * as config1 from '../configurationFile/config1';
 import * as config2 from '../configurationFile/config2';
@@ -30,7 +30,7 @@ const initial5 = config5.initial;
 
 class XmlBlockDynamic extends React.Component<XmlBlockDynamicProps, any> {
   public render() {
-    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0){
+    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0) {
       return <div/>; } else {
     return (
       <SyntaxHighlighter
@@ -43,14 +43,17 @@ class XmlBlockDynamic extends React.Component<XmlBlockDynamicProps, any> {
         lineStyle={lineNumber => {
           const style = { display: 'block', backgroundColor: '' };
           const localLineNumber = lineNumber + eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start') - 1;
+          {/* If the line number, that is selected does not match the range of this block, we display is as static */}
+          {/* or if we are hovering over that block */}
           if (localLineNumber > this.props.lineIndexStart && localLineNumber < this.props.lineIndexEnd ) {
-            style.backgroundColor = xmlBackgroundColor;
+            style.backgroundColor = xmlSelectedBackground;
           } else if (localLineNumber > this.props.mouseOverLineIndexStart && localLineNumber < this.props.mouseOverLineIndexEnd) {
-            style.backgroundColor = xmlBackgroundColor;
+            style.backgroundColor = xmlHoverBackground;
           }
           return style;
         }}
       >
+        {/* Display correpposnding part of the xml file */}
         {eval('config' + this.props.partNumber.toString() + '.initialCodeString' + this.props.blockNumber)}
       </SyntaxHighlighter>
     ); }

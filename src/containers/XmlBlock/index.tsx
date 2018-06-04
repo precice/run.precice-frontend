@@ -34,45 +34,62 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         start: 1,
         end: 1,
       },
+      hoverBlock: 1
     };
     this.setMouseOver = this.setMouseOver.bind(this);
     this.setMouseOut = this.setMouseOut.bind(this);
   }
 
   private setMouseOver(event) {
-    return this.setState({mouseOverLineIndex: {
-      start: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.start - 1') ,
-      end: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.end + 1'),
-    }});
+    if (!event.currentTarget.id) {
+        return this.setState({mouseOverLineIndex: {
+            start: 1,
+            end: 1, 
+        }, hoverBlock: undefined});
+    }
+    const hoverBlock = event.currentTarget.id.substring(3,4); 
+    if (hoverBlock != this.state.hoverBlock) { 
+        return this.setState({mouseOverLineIndex: {
+            start: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.start - 1') ,
+            end: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.end + 1'),
+        }, hoverBlock: hoverBlock });
+    }
   }
+
   private setMouseOut(event) {
-    this.setState({mouseOverLineIndex: {
-      start: 1,
-      end: 1,
-    }});
+
+  }
+
+  public componentWillReceiveProps(nextProps)
+  {
   }
 
   public componentDidMount() {
-    if (this.props.blockNumber !== '1') {
-      this.scrollToCurrentBlock();
-    }
+      if (this.props.blockNumber !== '1') { 
+        this.scrollToCurrentBlock(); 
+      }
   }
 
-  public componentDidUpdate(oldProps) {
-    if (oldProps.blockNumber !== this.props.blockNumber) {
-      this.scrollToCurrentBlock();
-    }
+  public componentDidUpdate(oldProps, prevState) {
+      if (oldProps.blockNumber !== this.props.blockNumber) {
+         this.scrollToCurrentBlock();
+     }
   }
+
   private scrollToCurrentBlock() {
-    document.getElementById('xml' + this.props.blockNumber).scrollIntoView();
+    document.getElementById('xml' + this.props.blockNumber).scrollIntoView({behavior: 'auto'});
   }
+
   public render() {
     return (
       <div id="myXML"className={styles.xml}>
+        {/* Evaluate current beginning and end of the currently selected block*/}
         <script>{lineIndex = [eval('config' + this.props.partNumber + '.sec' + this.props.blockNumber + '.start - 1'),
           eval('config' + this.props.partNumber + '.sec' + this.props.blockNumber + '.end + 1')]
         }}</script>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="01" partNumber={this.props.partNumber}/>
+        </div>
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
@@ -88,7 +105,9 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             partNumber={this.props.partNumber}
           />
         </div>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="12" partNumber={this.props.partNumber}/>
+        </div>
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
@@ -104,7 +123,9 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             partNumber={this.props.partNumber}
           />
         </div>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="23" partNumber={this.props.partNumber} />
+        </div>
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
@@ -120,7 +141,9 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             partNumber={this.props.partNumber}
           />
         </div>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="34" partNumber={this.props.partNumber} />
+        </div>
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
@@ -136,7 +159,9 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             partNumber={this.props.partNumber}
           />
         </div>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="45" partNumber={this.props.partNumber} />
+        </div>
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
@@ -152,7 +177,9 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             partNumber={this.props.partNumber}
           />
         </div>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="56" partNumber={this.props.partNumber} />
+        </div>
         <div
           onMouseOver={this.setMouseOver}
           onMouseOut={this.setMouseOut}
@@ -168,7 +195,9 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             partNumber={this.props.partNumber}
           />
         </div>
+        <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="End" partNumber={this.props.partNumber}/>
+        </div>
       </div>
     );
   }
