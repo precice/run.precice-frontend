@@ -9,6 +9,8 @@ npm install
 npm run start
 ```
 
+Now `webpack-dev-server` is running at http://localhost:3000/
+
 ## Developers
 
 ### Past
