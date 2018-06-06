@@ -24,7 +24,10 @@ export const CHANGE_BLOCK_NUMBER = 'action/BLOCKNUMBER_FLAG';
 export const PARTNUMBER_FLAG = 'action/PARTNUMBER_FLAG';
 export const SIMULATION_CLEAR_DONE = 'action/PARTNUMBER_FLAG';
 
-export const xmlSelectedBackground = '#404040';
-export const xmlHoverBackground = '#101010';
+//export const xmlSelectedBackground = '';
+export const xmlSelectedBackground = '#101010';
+export const xmlSeenHover='#1e321e'
+export const xmlHoverBackground = '#202020';
+export const xmlSeenColor = '#0f190f';
 
 export const TOTAL_PART = 5;

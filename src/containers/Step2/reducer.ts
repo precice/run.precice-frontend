@@ -14,8 +14,6 @@ import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  iveReadStep2: false,
-  iveReadStep3: false,
   xmlflag: {
     part1: [false, false, false, false, false, false],
     part2: [true, true, true, true, true, true],

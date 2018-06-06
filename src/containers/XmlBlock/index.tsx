@@ -14,6 +14,7 @@ interface XmlBlockProps {
   blockNumber: string;
   partNumber: number;
   changeBlockNumber: (partNumber: number, blockNumber: string) => void;
+  xmlFlag: boolean[];
 }
 
 // this part is essential for eval
@@ -37,7 +38,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
       hoverBlock: 1
     };
     this.setMouseOver = this.setMouseOver.bind(this);
-    this.setMouseOut = this.setMouseOut.bind(this);
   }
 
   private setMouseOver(event) {
@@ -54,14 +54,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             end: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.end + 1'),
         }, hoverBlock: hoverBlock });
     }
-  }
-
-  private setMouseOut(event) {
-
-  }
-
-  public componentWillReceiveProps(nextProps)
-  {
   }
 
   public componentDidMount() {
@@ -92,7 +84,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         </div>
         <div
           onMouseOver={this.setMouseOver}
-          onMouseOut={this.setMouseOut}
           onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '1'); }}
           id="xml1"
         >
@@ -103,6 +94,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             mouseOverLineIndexStart={this.state.mouseOverLineIndex.start}
             mouseOverLineIndexEnd={this.state.mouseOverLineIndex.end}
             partNumber={this.props.partNumber}
+            isSeen={this.props.xmlFlag[ 0 ]} 
           />
         </div>
         <div onMouseOver={this.setMouseOver}>
@@ -110,7 +102,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         </div>
         <div
           onMouseOver={this.setMouseOver}
-          onMouseOut={this.setMouseOut}
           onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '2'); }}
           id="xml2"
         >
@@ -121,6 +112,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             mouseOverLineIndexStart={this.state.mouseOverLineIndex.start}
             mouseOverLineIndexEnd={this.state.mouseOverLineIndex.end}
             partNumber={this.props.partNumber}
+            isSeen={this.props.xmlFlag[ 1 ]} 
           />
         </div>
         <div onMouseOver={this.setMouseOver}>
@@ -128,7 +120,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         </div>
         <div
           onMouseOver={this.setMouseOver}
-          onMouseOut={this.setMouseOut}
           onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '3'); }}
           id="xml3"
         >
@@ -139,6 +130,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             mouseOverLineIndexStart={this.state.mouseOverLineIndex.start}
             mouseOverLineIndexEnd={this.state.mouseOverLineIndex.end}
             partNumber={this.props.partNumber}
+            isSeen={this.props.xmlFlag[ 2 ]} 
           />
         </div>
         <div onMouseOver={this.setMouseOver}>
@@ -146,7 +138,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         </div>
         <div
           onMouseOver={this.setMouseOver}
-          onMouseOut={this.setMouseOut}
           onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '4'); }}
           id="xml4"
         >
@@ -157,6 +148,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             mouseOverLineIndexStart={this.state.mouseOverLineIndex.start}
             mouseOverLineIndexEnd={this.state.mouseOverLineIndex.end}
             partNumber={this.props.partNumber}
+            isSeen={this.props.xmlFlag[ 3 ]} 
           />
         </div>
         <div onMouseOver={this.setMouseOver}>
@@ -164,7 +156,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         </div>
         <div
           onMouseOver={this.setMouseOver}
-          onMouseOut={this.setMouseOut}
           onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '5'); }}
           id="xml5"
         >
@@ -175,6 +166,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             mouseOverLineIndexStart={this.state.mouseOverLineIndex.start}
             mouseOverLineIndexEnd={this.state.mouseOverLineIndex.end}
             partNumber={this.props.partNumber}
+            isSeen={this.props.xmlFlag[ 4 ]} 
           />
         </div>
         <div onMouseOver={this.setMouseOver}>
@@ -182,7 +174,6 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
         </div>
         <div
           onMouseOver={this.setMouseOver}
-          onMouseOut={this.setMouseOut}
           onClick={() => { this.props.changeBlockNumber(this.props.partNumber, '6'); }}
           id="xml6"
         >
@@ -193,6 +184,7 @@ class XmlBlock extends React.Component<XmlBlockProps, any> {
             mouseOverLineIndexStart={this.state.mouseOverLineIndex.start}
             mouseOverLineIndexEnd={this.state.mouseOverLineIndex.end}
             partNumber={this.props.partNumber}
+            isSeen={this.props.xmlFlag[ 5 ]} 
           />
         </div>
         <div onMouseOver={this.setMouseOver}>

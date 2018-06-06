@@ -24,23 +24,27 @@ const initial5 = config5.initial;
 
 class XmlBlockStatic extends React.Component<XmlBlockStaticProps, any> {
   public render() {
-    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0) {
-      return <div/>; } else {
-    return (
+    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0) 
+      return <div/>; 
+    else 
+        {
+          const content = eval('config' + this.props.partNumber.toString() + '.initialCodeString' + this.props.blockNumber)
+          if (content === "") 
+              return ( <p></p> );
+        else return (
         <SyntaxHighlighter
           style={sunburstModified}
-          showLineNumbers="true"
           startingLineNumber={eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start')}
           language="xml"
           className={styles.highlighter}
           wrapLines={true}
         >
         {/* Display correpposnding part of the xml file */} 
-          {eval('config' + this.props.partNumber.toString() + '.initialCodeString' + this.props.blockNumber)
-          }
+        { content } 
         </SyntaxHighlighter>
-    ); }
-  }
+        ); 
+        }
+    }
 }
 
 export default XmlBlockStatic;

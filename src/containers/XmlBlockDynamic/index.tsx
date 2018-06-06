@@ -3,7 +3,7 @@ import * as styles from './styles.scss';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburstModified } from '../Step2/styleForSyntaxHighlighter';
-import { xmlHoverBackground, xmlSelectedBackground } from '../constants';
+import { xmlHoverBackground, xmlSelectedBackground, xmlSeenColor, xmlSeenHover} from '../constants';
 
 import * as config1 from '../configurationFile/config1';
 import * as config2 from '../configurationFile/config2';
@@ -18,6 +18,7 @@ interface XmlBlockDynamicProps {
   mouseOverLineIndexStart: number;
   mouseOverLineIndexEnd: number;
   partNumber: number;
+  isSeen: boolean; 
 }
 
 // this part is essential for eval
@@ -32,30 +33,37 @@ class XmlBlockDynamic extends React.Component<XmlBlockDynamicProps, any> {
   public render() {
     if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0) {
       return <div/>; } else {
+        const secStart = eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start') - 1;
+        const secEnd =   eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.end') + 1;
+        const isSelected = ( (this.props.lineIndexStart == secStart ) && (this.props.lineIndexEnd == secEnd) )
+        const isHover = ( (this.props.mouseOverLineIndexStart == secStart ) && (this.props.mouseOverLineIndexEnd == secEnd) )
+        const xmlHover = this.props.isSeen? xmlSeenHover : xmlHoverBackground;
+
     return (
+      <div className={styles.hlcontainer} style={{backgroundColor: isSelected? xmlSelectedBackground : isHover? xmlHover :  this.props.isSeen? xmlSeenColor: ''}}> 
+        <div className={styles.hltag}> 
+          {
+            isSelected ? 
+            <i className="fa fa-eye" style={{fontSize: '24px', color: '#dddddd'}}></i> : 
+            this.props.isSeen ? 
+            <i className="fa fa-check-circle" style={{fontSize: '30px', color: 'green'}}></i>: 
+            <div/>
+          }
+          {/* <i className="fa fa-circle" style={{fontSize: '24px', color: 'green'}}></i> */}  
+        </div>
       <SyntaxHighlighter
         style={sunburstModified}
-        showLineNumbers="true"
+        customStyle={{padding: '0px 0px'}} 
         startingLineNumber={eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start')}
         language="xml"
         className={styles.highlighter}
         wrapLines={true}
-        lineStyle={lineNumber => {
-          const style = { display: 'block', backgroundColor: '' };
-          const localLineNumber = lineNumber + eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start') - 1;
-          {/* If the line number, that is selected does not match the range of this block, we display is as static */}
-          {/* or if we are hovering over that block */}
-          if (localLineNumber > this.props.lineIndexStart && localLineNumber < this.props.lineIndexEnd ) {
-            style.backgroundColor = xmlSelectedBackground;
-          } else if (localLineNumber > this.props.mouseOverLineIndexStart && localLineNumber < this.props.mouseOverLineIndexEnd) {
-            style.backgroundColor = xmlHoverBackground;
-          }
-          return style;
-        }}
+        lineStyle={{ display: 'block', backgroundColor: isSelected? xmlSelectedBackground : isHover ? xmlHover : this.props.isSeen? xmlSeenColor: ''}}
       >
         {/* Display correpposnding part of the xml file */}
         {eval('config' + this.props.partNumber.toString() + '.initialCodeString' + this.props.blockNumber)}
       </SyntaxHighlighter>
+    </div>
     ); }
   }
 }

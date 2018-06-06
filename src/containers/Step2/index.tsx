@@ -85,6 +85,7 @@ class Step2 extends React.Component<Step2Props, any> {
           className={styles.interactContainer}
         >
           <XmlBlock
+            xmlFlag = {this.props.xmlflag[ 'part' + String(this.props.partNumber) ]}
             blockNumber={this.props.blockNumber}
             partNumber={this.props.partNumber}
             changeBlockNumber={this.props.changeBlockNumber}
