@@ -1,0 +1,33 @@
+@import '../../sass/colors';
+
+.header-children {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: 0 20px;
+    overflow-y: auto;
+
+    .children-item {
+        a:any-link {
+            color: black;
+        }
+
+        /* WebKit browsers */
+        a:-webkit-any-link {
+            color: black;
+        }
+
+    }
+    .children-item:hover {
+        color: #2980b9;
+
+        a:any-link {
+            color: $link-color;
+        }
+        a:-webkit-any-link {
+            color: $link-color; 
+        }
+
+    }
+}
+
