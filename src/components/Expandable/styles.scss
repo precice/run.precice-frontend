@@ -1,6 +1,26 @@
 @import '../../sass/colors';
 
+.header {
+    font-size: 22px;
+    a:any-link {
+        color: black;
+    }
+    a:-webkit-any-link{
+        color: black;
+    }
+}
+
+.header:hover {
+    a:any-link {
+        color: $link-color;
+    }
+    a:-webkit-any-link {
+        color: $link-color;
+    }
+}
+
 .header-children {
+    font-size: 20px;
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
@@ -9,12 +29,12 @@
 
     .children-item {
         a:any-link {
-            color: black;
+            color: #303030;
         }
 
         /* WebKit browsers */
         a:-webkit-any-link {
-            color: black;
+            color: #303030;
         }
 
     }
@@ -25,7 +45,7 @@
             color: $link-color;
         }
         a:-webkit-any-link {
-            color: $link-color; 
+            color: $link-color;
         }
 
     }
