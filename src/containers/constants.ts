@@ -9,7 +9,6 @@ export const CONSOLE_TOGGLE_LOCK_BOTTOM = 'actions/CONSOLE_TOGGLE_LOCK_BOTTOM';
 export const CONSOLE_CLEAR = 'actions/CONSOLE_CLEAR';
 export const MODAL_CLICK = 'actions/MODAL_CLICK';
 export const FIRST_TASK_COMPLETED = 'actions/FIRST_TASK_COMPLETED';
-export const INITIAL_RELAXATION_CHANGE = 'actions/INITIAL_RELAXATION_CHANGE';
 export const ADD_CHART_DATA = 'actions/ADD_CHART_DATA';
 export const ADD_PROGRESS_MAX_ITER = 'actions/ADD_PROGRESS_MAX_ITER';
 export const CONSOLE_ONE_ACTIVE = 'actions/CONSOLE_ONE_ACTIVE';

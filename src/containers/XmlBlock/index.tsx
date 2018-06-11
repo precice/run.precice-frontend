@@ -17,6 +17,14 @@ interface XmlBlockProps {
   xmlFlag: boolean[];
 }
 
+interface XmlBlockState {
+  mouseOverLineIndex: {
+    start: number; 
+    end: number; 
+  }
+  hoverBlock: number; 
+}
+
 // this part is essential for eval
 const initial1 = config1.initial;
 const initial2 = config2.initial;
@@ -24,10 +32,10 @@ const initial3 = config3.initial;
 const initial4 = config4.initial;
 const initial5 = config5.initial;
 
-let lineIndex = [1, 1, 1];
+let lineIndex = [1, 1];
 
 
-class XmlBlock extends React.Component<XmlBlockProps, any> {
+class XmlBlock extends React.Component<XmlBlockProps, XmlBlockState> {
   constructor(props: XmlBlockProps) {
     super(props);
     this.state = {

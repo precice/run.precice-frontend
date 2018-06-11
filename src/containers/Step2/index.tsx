@@ -51,15 +51,9 @@ const initial4 = config4.initial;
 const initial5 = config5.initial;
 
 
-class Step2 extends React.Component<Step2Props, any> {
+class Step2 extends React.Component<Step2Props, undefined> {
   constructor(props: Step2Props) {
     super(props);
-    this.state = {
-      mouseOverLineIndex: {
-        start: 1,
-        end: 1,
-      },
-    };
   }
 
   public render() {
