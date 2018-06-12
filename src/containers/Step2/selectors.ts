@@ -1,7 +1,5 @@
 import {createSelector} from 'reselect';
 import {locationSelector} from '../Router/selectors';
-import * as config1 from '../configurationFile/config1';
-import * as config2 from '../configurationFile/config2';
 
 const step2SubstateSelector = (state) => {
   return state.get('step2');

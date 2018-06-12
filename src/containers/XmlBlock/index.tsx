@@ -4,11 +4,7 @@ import * as styles from './styles.scss';
 import XmlBlockStatic from '../XmlBlockStatic/index';
 import XmlBlockDynamic from '../XmlBlockDynamic/index';
 
-import * as config1 from '../configurationFile/config1';
-import * as config2 from '../configurationFile/config2';
-import * as config3 from '../configurationFile/config3';
-import * as config4 from '../configurationFile/config4';
-import * as config5 from '../configurationFile/config5';
+import { config } from '../configurationFile/global_config'; 
 
 interface XmlBlockProps {
   blockNumber: string;
@@ -25,15 +21,7 @@ interface XmlBlockState {
   hoverBlock: number; 
 }
 
-// this part is essential for eval
-const initial1 = config1.initial;
-const initial2 = config2.initial;
-const initial3 = config3.initial;
-const initial4 = config4.initial;
-const initial5 = config5.initial;
-
 let lineIndex = [1, 1];
-
 
 class XmlBlock extends React.Component<XmlBlockProps, XmlBlockState> {
   constructor(props: XmlBlockProps) {
@@ -58,8 +46,8 @@ class XmlBlock extends React.Component<XmlBlockProps, XmlBlockState> {
     const hoverBlock = event.currentTarget.id.substring(3,4); 
     if (hoverBlock != this.state.hoverBlock) { 
         return this.setState({mouseOverLineIndex: {
-            start: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.start - 1') ,
-            end: eval('config' + this.props.partNumber.toString() + '.sec' + event.currentTarget.id.substring(3, 4) + '.end + 1'),
+            start: config[this.props.partNumber - 1]['sec' + event.currentTarget.id.substring(3, 4)]['start'] - 1,
+            end: config[this.props.partNumber - 1]['sec' + event.currentTarget.id.substring(3, 4)]['end'] + 1,
         }, hoverBlock: hoverBlock });
     }
   }
@@ -84,9 +72,9 @@ class XmlBlock extends React.Component<XmlBlockProps, XmlBlockState> {
     return (
       <div id="myXML"className={styles.xml}>
         {/* Evaluate current beginning and end of the currently selected block*/}
-        <script>{lineIndex = [eval('config' + this.props.partNumber + '.sec' + this.props.blockNumber + '.start - 1'),
-          eval('config' + this.props.partNumber + '.sec' + this.props.blockNumber + '.end + 1')]
-        }}</script>
+        <script>{lineIndex =  [( config[this.props.partNumber - 1]['sec' + this.props.blockNumber]['start'] - 1),
+          (config[ this.props.partNumber - 1]['sec' + this.props.blockNumber]['end'] + 1) ] }
+        </script>
         <div onMouseOver={this.setMouseOver}>
         <XmlBlockStatic blockNumber="01" partNumber={this.props.partNumber}/>
         </div>
