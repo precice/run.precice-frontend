@@ -13,7 +13,6 @@ import {
 import {
   HID_CHECK2,
   CHANGE_BLOCK_NUMBER,
-  XML_VISIT,
 } from '../constants';
 import * as styles from './styles.scss';
 import { config } from '../configurationFile/global_config'; 

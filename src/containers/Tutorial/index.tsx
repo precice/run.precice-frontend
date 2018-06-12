@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { CHANGE_BLOCK_NUMBER, XML_VISIT_ALL } from '../constants';
+import { CHANGE_BLOCK_NUMBER } from '../constants';
 import { createStructuredSelector } from 'reselect';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -35,33 +35,9 @@ interface TutorialProps {
   changeBlockNumber: (partNumber: number, blockNumber: string) => void;
 }
 
-window.onclick = (event) => {
-  if (event.target === document.getElementById('myModal')) {
-    document.getElementById('myModal').style.display = 'none';
-  }
-};
-
 class Tutorial extends React.Component<TutorialProps, any> {
   constructor(props: TutorialProps) {
     super(props);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.setMouseOver = this.setMouseOver.bind(this);
-  }
-  private openModal() {
-    document.getElementById('myModal').style.display = 'block';
-  }
-  private closeModal() {
-    document.getElementById('myModal').style.display = 'none';
-  }
-  private setMouseOver(e) {
-    const mouseOn = e.currentTarget.id.substring(9, 10);
-    const index = ['2', '3', '4', '5', '6'];
-    for (let i in index) {
-      document.getElementById('mouse' + index[i]).hidden = true;
-
-    }
-    document.getElementById('mouse' + mouseOn).hidden = false;
   }
 
   public render() {
@@ -91,17 +67,12 @@ class Tutorial extends React.Component<TutorialProps, any> {
               this.props.buttonLinks.previous && <Link to={this.props.buttonLinks.previous} className={styles.btnL}>BACK</Link>}
           </div>
           {/* Button next on almost all pages */}
+          {/* If simulation is not running */} 
+          {/* And if we are not in the end of the curent part */} 
+          {/* If we go to the new part, we want to go the block number 6 */} 
           <div className={styles.btnSubCon}>
             {
-              ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step3' &&
-                (
-                  !this.props.xmlflag['part' + this.props.partNumber][1] ||
-                  !this.props.xmlflag['part' + this.props.partNumber][2] ||
-                  !this.props.xmlflag['part' + this.props.partNumber][3] ||
-                  !this.props.xmlflag['part' + this.props.partNumber][4] ||
-                  !this.props.xmlflag['part' + this.props.partNumber][5] )) ?
-                this.props.buttonLinks.next && <div onClick={this.openModal} className={styles.btnR}>NEXT</div> :
-                ((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
+              (((this.props.buttonLinks.next === '/tutorial/part' + this.props.partNumber.toString() + '/step4' &&
                 ( this.props.leftBusy || this.props.rightBusy )) ?
                   this.props.buttonLinks.next &&
                   <div className={styles.btnRDisabled}><Tooltip
@@ -141,17 +112,12 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    xmlSkip: (partNumber) => {
-      dispatch({type: XML_VISIT_ALL, part: partNumber});
-      document.getElementById('myModal').style.display = 'none';
-    },
     changeBlockNumber: (partNumber, blockNumber) => {
       dispatch({
         type: CHANGE_BLOCK_NUMBER,
         partNumber,
         blockNumber,
       });
-      document.getElementById('myModal').style.display = 'none';
     },
   };
 }

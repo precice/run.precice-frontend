@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2, XML_VISIT_ALL,  CHANGE_BLOCK_NUMBER, XML_VISIT,
+  HID_CHECK2, CHANGE_BLOCK_NUMBER, 
 } from '../constants';
 import { Action } from 'redux';
 
@@ -31,14 +31,6 @@ function step2Reducer(state = initialState, action: any) {
     case HID_CHECK2:
       return state
         .set('hidCheck2', !action.check);
-    case XML_VISIT: {
-      const trueize = (x) => (x.splice(Number(action.block) - 1, 1, true));
-      return state
-        .updateIn(['xmlflag', 'part' + action.part.toString()], trueize );
-    }
-    case XML_VISIT_ALL:
-      return state
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => [true, true, true, true, true, true]);
     case CHANGE_BLOCK_NUMBER:
       {/* Marking that block as visited */} 
       return state
