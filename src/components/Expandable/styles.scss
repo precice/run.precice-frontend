@@ -1,6 +1,8 @@
 @import '../../sass/colors';
 
 .header {
+    font-family: Sans-serif; 
+    font-weight: 500;
     font-size: 22px;
     a:any-link {
         color: black;
@@ -12,10 +14,10 @@
 
 .header:hover {
     a:any-link {
-        color: $link-color;
+        color: #0074c4;
     }
     a:-webkit-any-link {
-        color: $link-color;
+        color: #0074c4;
     }
 }
 

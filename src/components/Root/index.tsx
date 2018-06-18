@@ -29,7 +29,7 @@ const burgerStyles = {
   },
   bmMenu: {
     background: '#dddddd',
-    padding: '2.5em 1.5em 0',
+    padding: '1.5em 0.5em 0',
     fontSize: '1.15em',
     overflow: 'hidden'
   },
@@ -56,14 +56,13 @@ class Root extends React.Component<RootProps, undefined> {
   public render() {
     return (
       <div className={styles.container}>
-        <Menu styles={burgerStyles}>
+        <Menu styles={burgerStyles}
+              width={275}>
 
-        <div className={styles.label}>
-          <Link to="/" className={styles.label}>
-            <img src={preiceLogo} className={styles.img}/>
-          </Link>
-        </div>
         <div className={"menu-item"} style={{flex: "1 1 auto"}}>
+          <div>
+            <img src={preiceLogo} className={styles.img}/>
+          </div>
       <div className={styles.menu}>
       <ExpandableList header="Part 1. Introduction" partNumber={1}/>
       <ExpandableList header="Part 2. Longer simulation"  partNumber={2}/>
@@ -72,7 +71,6 @@ class Root extends React.Component<RootProps, undefined> {
       <ExpandableList header="Part 5: Parallel Coupling" partNumber={5} />
       </div>
       <div>
-        <div style={{textAlign: "center",fontSize: "24px"}}> Follow us on: </div>
       <div className={styles.mediaBar}>
         <div className={styles.mediaItem}> <a href="https://twitter.com/preCICE_org" target="_blank"> <i className="fa fa-twitter" style={{color: '#00aced'}}></i> </a> </div>
         <div className={styles.mediaItem}> <a href="https://github.com/precice/precice" target="_blank" style={{color: "black"}}> <i className="fa fa-github"></i> </a> </div>
