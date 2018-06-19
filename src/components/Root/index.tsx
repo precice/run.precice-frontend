@@ -16,7 +16,6 @@ class Root extends React.Component<RootProps, undefined> {
         <div className={styles.label}> 
            <img src={preiceLogo} className={styles.img}/>
         </div> 
-            {/* </Link>{/*preCICE label*/} 
         </div> 
         <div className={styles.child}>{this.props.children}</div>
       </div>
