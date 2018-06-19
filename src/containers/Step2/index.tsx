@@ -65,8 +65,10 @@ class Step2 extends React.Component<Step2Props, undefined> {
           id="interact"
           className={styles.interactContainer}
         >
+          {/* If we arrive to the page via table of content etc, they don't share info about seen xml parts. Otherwise they do, (since xml files are similar), */} 
+          {/* in all parts, but part 6. Modification below ensures consistent behaviour on common unseen parts  */} 
           <XmlBlock
-            xmlFlag = {this.props.xmlflag[ 'part' + String(this.props.partNumber) ]}
+            xmlFlag = { this.props.xmlflag['part1'] }
             blockNumber={this.props.blockNumber}
             partNumber={this.props.partNumber}
             changeBlockNumber={this.props.changeBlockNumber}

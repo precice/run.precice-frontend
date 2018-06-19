@@ -35,7 +35,9 @@ function step2Reducer(state = initialState, action: any) {
       {/* Marking that block as visited */} 
       return state
         .set('blockNumber', action.blockNumber)
-        .updateIn(['xmlflag', 'part' + action.partNumber.toString()], (x) => x.splice(parseInt(action.blockNumber, 10) - 1, 1, true) )
+        // since xml file is shared between the different parts (for now), for all but common part, we update only the common state. 
+        // see corresponding bit in Step2/index.tsx 
+        .updateIn(['xmlflag', 'part1' /* + action.partNumber.toString() */ ], (x) => x.splice(parseInt(action.blockNumber, 10) - 1, 1, true) )
         ;
     default:
       return state;

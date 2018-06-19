@@ -65,7 +65,7 @@ class XmlBlock extends React.Component<XmlBlockProps, XmlBlockState> {
   }
 
   private scrollToCurrentBlock() {
-    document.getElementById('xml' + this.props.blockNumber).scrollIntoView({behavior: 'auto'});
+    document.getElementById('xml' + this.props.blockNumber).scrollIntoView({behavior: 'auto', block: 'center'});
   }
 
   public render() {
