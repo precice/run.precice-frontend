@@ -3,13 +3,9 @@ import * as styles from './styles.scss';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { sunburstModified } from '../Step2/styleForSyntaxHighlighter';
-import { xmlBackgroundColor} from '../constants';
+import { xmlHoverBackground, xmlSelectedBackground, xmlSeenColor, xmlSeenHover} from '../constants';
 
-import * as config1 from '../configurationFile/config1';
-import * as config2 from '../configurationFile/config2';
-import * as config3 from '../configurationFile/config3';
-import * as config4 from '../configurationFile/config4';
-import * as config5 from '../configurationFile/config5';
+import { config } from '../configurationFile/global_config'; 
 
 interface XmlBlockDynamicProps {
   blockNumber: string;
@@ -18,41 +14,43 @@ interface XmlBlockDynamicProps {
   mouseOverLineIndexStart: number;
   mouseOverLineIndexEnd: number;
   partNumber: number;
+  isSeen: boolean; 
 }
-
-// this part is essential for eval
-const initial1 = config1.initial;
-const initial2 = config2.initial;
-const initial3 = config3.initial;
-const initial4 = config4.initial;
-const initial5 = config5.initial;
-
 
 class XmlBlockDynamic extends React.Component<XmlBlockDynamicProps, any> {
   public render() {
-    if (eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.total') === 0){
+    if (config[ this.props.partNumber - 1]['sec' + this.props.blockNumber].total === 0) {
       return <div/>; } else {
+        const secStart = config[ this.props.partNumber - 1]['sec' + this.props.blockNumber].start - 1;
+        const secEnd =   config[ this.props.partNumber - 1]['sec' + this.props.blockNumber].end + 1;
+        const isSelected = ( (this.props.lineIndexStart == secStart ) && (this.props.lineIndexEnd == secEnd) )
+        const isHover = ( (this.props.mouseOverLineIndexStart == secStart ) && (this.props.mouseOverLineIndexEnd == secEnd) )
+        const xmlHover = this.props.isSeen? xmlSeenHover : xmlHoverBackground;
+
     return (
+      <div className={styles.hlcontainer} style={{backgroundColor: isSelected? xmlSelectedBackground : isHover? xmlHover :  this.props.isSeen? xmlSeenColor: ''}}> 
+        <div className={styles.hltag}> 
+          {
+            isSelected ? 
+            <i className="fa fa-check-circle" style={{fontSize: '24px', color: '#dddddd', visibility: 'hidden'}}></i> : 
+            this.props.isSeen ? 
+            <i className="fa fa-check-circle" style={{fontSize: '30px', color: 'green'}}></i>: 
+            <div/>
+          }
+        </div>
       <SyntaxHighlighter
         style={sunburstModified}
-        showLineNumbers="true"
-        startingLineNumber={eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start')}
+        customStyle={{padding: '0px 0px'}} 
+        startingLineNumber={config[ this.props.partNumber - 1]['sec' + this.props.blockNumber].start}
         language="xml"
         className={styles.highlighter}
         wrapLines={true}
-        lineStyle={lineNumber => {
-          const style = { display: 'block', backgroundColor: '' };
-          const localLineNumber = lineNumber + eval('config' + this.props.partNumber.toString() + '.sec' + this.props.blockNumber + '.start') - 1;
-          if (localLineNumber > this.props.lineIndexStart && localLineNumber < this.props.lineIndexEnd ) {
-            style.backgroundColor = xmlBackgroundColor;
-          } else if (localLineNumber > this.props.mouseOverLineIndexStart && localLineNumber < this.props.mouseOverLineIndexEnd) {
-            style.backgroundColor = xmlBackgroundColor;
-          }
-          return style;
-        }}
+        lineStyle={{ display: 'block', backgroundColor: isSelected? xmlSelectedBackground : isHover ? xmlHover : this.props.isSeen? xmlSeenColor: ''}}
       >
-        {eval('config' + this.props.partNumber.toString() + '.initialCodeString' + this.props.blockNumber)}
+        {/* Display correpposnding part of the xml file */}
+        {config[ this.props.partNumber - 1]['initialCodeString' + this.props.blockNumber]}
       </SyntaxHighlighter>
+    </div>
     ); }
   }
 }

@@ -13,14 +13,9 @@ import {
 import {
   HID_CHECK2,
   CHANGE_BLOCK_NUMBER,
-  XML_VISIT,
 } from '../constants';
 import * as styles from './styles.scss';
-import * as config1 from '../configurationFile/config1';
-import * as config2 from '../configurationFile/config2';
-import * as config3 from '../configurationFile/config3';
-import * as config4 from '../configurationFile/config4';
-import * as config5 from '../configurationFile/config5';
+import { config } from '../configurationFile/global_config'; 
 import XmlBlock from '../XmlBlock/index';
 import Step2SubExplanationBlock from '../Step2SubExplanationBlock/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
@@ -43,23 +38,9 @@ interface Step2Props {
 }
 
 
-// this is essential for eval
-const initial1 = config1.initial;
-const initial2 = config2.initial;
-const initial3 = config3.initial;
-const initial4 = config4.initial;
-const initial5 = config5.initial;
-
-
-class Step2 extends React.Component<Step2Props, any> {
+class Step2 extends React.Component<Step2Props, undefined> {
   constructor(props: Step2Props) {
     super(props);
-    this.state = {
-      mouseOverLineIndex: {
-        start: 1,
-        end: 1,
-      },
-    };
   }
 
   public render() {
@@ -84,14 +65,18 @@ class Step2 extends React.Component<Step2Props, any> {
           id="interact"
           className={styles.interactContainer}
         >
+          {/* If we arrive to the page via table of content etc, they don't share info about seen xml parts. Otherwise they do, (since xml files are similar), */} 
+          {/* in all parts, but part 6. Modification below ensures consistent behaviour on common unseen parts  */} 
           <XmlBlock
+            xmlFlag = { this.props.xmlflag['part1'] }
             blockNumber={this.props.blockNumber}
             partNumber={this.props.partNumber}
             changeBlockNumber={this.props.changeBlockNumber}
           />
+          {/* Right side with the explanations of the xml block */}
           <div className={styles.commentContainer}>
             <div className={styles.commentHeader}>
-              {eval('config' + this.props.partNumber + '.sub' + this.props.blockNumber)}
+              { config[this.props.partNumber - 1]['sub' + this.props.blockNumber] }
             </div>
             <div  className={styles.exp}>
               <Step2SubExplanationBlock partNumber={this.props.partNumber} blockNumber={this.props.blockNumber}/>
