@@ -1,4 +1,5 @@
 # run.precice-frontend
+[![Build Status](https://travis-ci.com/precice/run.precice-frontend.svg?branch=master)](https://travis-ci.com/precice/run.precice-frontend) 
 
 Front-end of the web-based preCICE tutorial
 

@@ -13,5 +13,7 @@ install:
   - npm install 
 
 script: 
+# first build is needed, since webpack-typings-for-css-loader produces typings AFTER typescript-loader tries to load
+# them. as far as I researched there is no easy way to fix it. Second build succeeds, because of typings from the first build  
   - npm run build:production || true 
   - npm run build:production 
