@@ -89,6 +89,16 @@ a {
 
 }
 
+$icon-size: 35px;
+
+.gitter-svg {
+  background-image: url('../../static/gitter.svg'); 
+  background-size: $icon-size;
+  background-position: center; 
+  width: $icon-size;
+  height: $icon-size;
+}
+
 .img {
   height: 40px;
   width: 188px;
@@ -103,10 +113,10 @@ a {
   flex-direction: row;
   .media-item {
     margin:auto; 
-    font-size: 40px;
+    font-size: $icon-size;
   }
   img {
-    width: 40px;
-    height: 40px;
+    width: $icon-size;
+    height: $icon-size;
   }
 }
