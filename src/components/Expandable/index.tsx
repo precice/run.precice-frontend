@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom';
 import * as styles from './styles.scss';
+import * as PropTypes from 'prop-types';
 
 
 interface ExpandableListState{
@@ -13,12 +14,32 @@ interface ExpandableListProps{
 }
 
 class ExpandableList extends React.Component<ExpandableListProps, ExpandableListState> {
-  constructor(props)
+  constructor(props, context)
   {
-    super(props);
+    super(props, context);
     this.state = { isToggleOn: false };
     this.handleClick = this.handleClick.bind( this );
   }
+
+  context = { 
+    scrollArea: PropTypes.object 
+  }
+
+  static contextTypes = {
+    scrollArea: PropTypes.object 
+  }
+  
+  componentDidUpdate(prevProps, prevState, snapshot) 
+  {
+    // if update happens because of the button click 
+    if (prevState != this.state)  { 
+      this.context.scrollArea.refresh(); 
+      if (!this.state.isToggleOn) {
+        this.context.scrollArea.scrollYTo(10);
+      }
+    }
+  }
+
   handleClick() {
     this.setState( prevState => ({
       isToggleOn: !prevState.isToggleOn

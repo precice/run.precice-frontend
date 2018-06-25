@@ -42,7 +42,8 @@ const burgerStyles = {
   },
   bmItem: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    minHeight: '0'
   },
   bmMorphShape: {
     fill: '#373a47'
@@ -70,9 +71,9 @@ class Root extends React.Component<RootProps, undefined> {
 	 <ScrollArea 
 		horizontal={false}
 	  speed={0.6}
-	  verticalScrollBarStyle={{opacity: '0.5 !important'}}
+	  verticalScrollBarStyle={{opacity: '1'}}
 	>
-		<ExpandableList header="Introduction" partNumber={1}/>
+		<ExpandableList header="Introduction" partNumber={1} />
 		<ExpandableList header="Longer simulation"  partNumber={2}/>
 		<ExpandableList header="Implicit coupling" partNumber={3}/>
 		<ExpandableList header="Quasi-Newton post-processing"  partNumber={4}/>
