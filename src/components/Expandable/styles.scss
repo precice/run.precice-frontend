@@ -1,0 +1,56 @@
+@import '../../sass/colors';
+
+.header {
+    font-family: serif; 
+    font-weight: 500;
+    font-size: 22px;
+    a:any-link {
+        color: black;
+    }
+    a:-webkit-any-link{
+        color: black;
+    }
+    margin-top: 10px; 
+}
+
+.header:hover {
+    a:any-link {
+        color: #0074c4;
+    }
+    a:-webkit-any-link {
+        color: #0074c4;
+    }
+}
+
+.header-children {
+    font-size: 20px;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin: 0 20px;
+    overflow-y: auto;
+
+    .children-item {
+        a:any-link {
+            color: #303030;
+        }
+
+        /* WebKit browsers */
+        a:-webkit-any-link {
+            color: #303030;
+        }
+
+    }
+    .children-item:hover {
+        color: #2980b9;
+
+        a:any-link {
+            color: $link-color;
+        }
+        a:-webkit-any-link {
+            color: $link-color;
+        }
+
+    }
+}
+

@@ -14,7 +14,7 @@ class ProgressBar extends React.Component<ProgressProps, any> {
   public render() {
     return (
       <div className={styles.progress}>
-        <ProgressSteps steps={TOTAL_PART} current={this.props.partNumber} styling={false} />
+        <ProgressSteps steps={TOTAL_PART} current={this.props.partNumber} styling={false}/>
       </div>
     );
   }
