@@ -232,3 +232,23 @@
 
 }
 
+.privacy-notice {
+
+  background-color: $explain-background-color;
+
+  .intro {
+    color: $primary-color;
+    font-size: 45px;
+    line-height: 1.5;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  .sub-intro {
+    font-size: 20px;
+    line-height: 1.5;
+    padding: 0px 20px 20px;
+  }
+
+}
+

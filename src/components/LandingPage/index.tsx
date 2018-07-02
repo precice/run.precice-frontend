@@ -78,7 +78,7 @@ class LandingPage extends React.Component<LandPageProps, any> {
             img: einstein,
           }, {
             name: 'Donald Trump',
-            text: 'This coupling software is good. It is the best. Everythting else is fake news.',
+            text: 'This coupling software is good. It is the best. Everything else is fake news.',
             img: trump,
           }, {
             name: 'Usain Bolt',
@@ -97,6 +97,14 @@ class LandingPage extends React.Component<LandPageProps, any> {
           })}
           </div>
         </div>
+        <div className={styles.privacyNotice}>
+          <div className={styles.intro}>Privacy notice</div>
+          <div className={styles.subIntro}>
+          This website uses google analytics. It is a service, that collects and stores data about your usage of the website, such as time spent on the page, 
+          your operating system, your country, etc. We use this data solely to understand behaviour of our users and improve your experience of the website. 
+          Our usage of google analytis falls under its  <a className={styles.link} target="_blank" href={'https://www.google.com/analytics/terms/us.html'}>terms of service</a> 
+          </div> 
+        </div> 
       </div>
     );
   }

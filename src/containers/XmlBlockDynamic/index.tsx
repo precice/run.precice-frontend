@@ -31,8 +31,6 @@ class XmlBlockDynamic extends React.Component<XmlBlockDynamicProps, any> {
       <div className={styles.hlcontainer} style={{backgroundColor: isSelected? xmlSelectedBackground : isHover? xmlHover :  this.props.isSeen? xmlSeenColor: ''}}> 
         <div className={styles.hltag}> 
           {
-            isSelected ? 
-            <i className="fa fa-check-circle" style={{fontSize: '24px', color: '#dddddd', visibility: 'hidden'}}></i> : 
             this.props.isSeen ? 
             <i className="fa fa-check-circle" style={{fontSize: '30px', color: 'green'}}></i>: 
             <div/>

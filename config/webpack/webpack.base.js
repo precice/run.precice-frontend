@@ -2,6 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const staticFilesServer =
+  new CopyWebpackPlugin([{ from: './src/static/logs/', to: 'logs/' }]);
 
 const COMPONENTS_DIRS = [
   path.resolve(__dirname, '../../src/components'),
@@ -135,6 +138,7 @@ module.exports = (options) => {
       }),
       componentsCss,
       globalCss,
+      staticFilesServer
     ],
 
 

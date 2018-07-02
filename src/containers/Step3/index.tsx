@@ -89,6 +89,8 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 
   public render() {
+    const su2FileName = 'Part' + this.props.partNumber + '_Su2.log';
+    const calculixFileName = 'Part' + this.props.partNumber + '_Calculix.log';
     return (
       <div className={styles.subContainer}>
         <Modal
@@ -125,6 +127,10 @@ class Step3 extends React.Component<Step3Props, any> {
             <div className={styles.simulationText}>
               Elapsed Time: {this.props.finalTime} s
             </div>
+            <div className={styles.simulationSubtext}>
+              You can now download log files for <a href={'../../logs/Part' + this.props.partNumber + '/su2.log'} download={su2FileName}> SU2 </a>
+              and  <a href={'../../logs/Part' + this.props.partNumber + '/ccx.log'} download={calculixFileName} > CalculiX </a>
+          </div>
           </div>
 
         </Modal>
@@ -181,6 +187,13 @@ class Step3 extends React.Component<Step3Props, any> {
               lockBottom={this.props.leftLockBottom}
               oldChunks={this.props.leftOldChunks}
             />
+            <div> 
+              <div className={styles.belowConsoleElm}> 
+                *You can also download the <a href={'../../logs/Part' + this.props.partNumber + '/ccx.log'} download={calculixFileName} >log file</a> of this simulation
+            </div> 
+          </div> 
+            {/* Clear console is unused now */}
+            {/*
             <div>
               <div
                 className={styles.belowConsoleElm}
@@ -200,7 +213,7 @@ class Step3 extends React.Component<Step3Props, any> {
               >
                 Clear Console
               </a>
-            </div>
+              </div> */}
           </div>
           <div className={styles.solR}>
             <ReduxConsole
@@ -217,6 +230,12 @@ class Step3 extends React.Component<Step3Props, any> {
               lockBottom={this.props.rightLockBottom}
               oldChunks={this.props.rightOldChunks}
             />
+            <div> 
+              <div className={styles.belowConsoleElm}> 
+                *You can also download the <a href={'../../logs/Part' + this.props.partNumber + '/su2.log'} download={su2FileName} >log file</a> of this simulation
+            </div> 
+          </div> 
+            {/*
             <div>
               <div
                 className={styles.belowConsoleElm}
@@ -236,7 +255,7 @@ class Step3 extends React.Component<Step3Props, any> {
               >
                 Clear Console
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
