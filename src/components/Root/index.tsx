@@ -5,7 +5,6 @@ import * as preiceLogo from '../../static/Precice-logo.png';
 import * as preciceLogoCropped from '../../static/Precice-logo-cropped.png'
 import * as preciceCircle from '../../static/precice-circle.png'
 import * as rglogo from '../../static/RG_square_green.png'
-import Popup from "reactjs-popup"
 import {slide as Menu} from 'react-burger-menu'
 import ExpandableList from "../Expandable"
 import ScrollArea from 'react-scrollbar' 
