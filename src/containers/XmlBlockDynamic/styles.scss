@@ -1,5 +1,19 @@
 @import '../../sass/colors';
 
-.highlighter {
-  margin: 0;
+
+.hlcontainer {
+  cursor: pointer; 
+  display: flex; 
+    flex-direction: row; 
+
+  .hltag {
+    color: white; 
+    align-self: center; 
+
+  }
+
+  .highlighter {
+    margin: 0;
+  }
 }
+

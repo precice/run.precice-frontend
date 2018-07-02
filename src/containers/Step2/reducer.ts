@@ -8,16 +8,15 @@ import { fromJS } from 'immutable';
 
 
 import {
-  HID_CHECK2, XML_VISIT_ALL, INITIAL_RELAXATION_CHANGE, CHANGE_BLOCK_NUMBER, XML_VISIT,
+  HID_CHECK2, CHANGE_BLOCK_NUMBER, 
 } from '../constants';
 import { Action } from 'redux';
 
 
 const initialState = fromJS({
-  iveReadStep2: false,
-  iveReadStep3: false,
   xmlflag: {
-    part1: [false, false, false, false, false, false],
+    // We start from first block, so it is always "seen"  
+    part1: [true, false, false, false, false, false],
     part2: [true, true, true, true, true, true],
     part3: [true, true, true, true, true, true],
     part4: [true, true, true, true, true, true],
@@ -32,21 +31,13 @@ function step2Reducer(state = initialState, action: any) {
     case HID_CHECK2:
       return state
         .set('hidCheck2', !action.check);
-    case XML_VISIT: {
-      const trueize = (x) => (x.splice(Number(action.block) - 1, 1, true));
-      return state
-        .updateIn(['xmlflag', 'part' + action.part.toString()], trueize );
-    }
-    case XML_VISIT_ALL:
-      return state
-        .updateIn(['xmlflag', 'part' + action.part.toString()], (x) => [true, true, true, true, true, true]);
-    case INITIAL_RELAXATION_CHANGE:
-      return state
-        .set('initialRelaxationValue', action.check);
     case CHANGE_BLOCK_NUMBER:
+      {/* Marking that block as visited */} 
       return state
         .set('blockNumber', action.blockNumber)
-        .updateIn(['xmlflag', 'part' + action.partNumber.toString()], (x) => x.splice(parseInt(action.blockNumber, 10) - 1, 1, true) )
+        // since xml file is shared between the different parts (for now), for all but common part, we update only the common state. 
+        // see corresponding bit in Step2/index.tsx 
+        .updateIn(['xmlflag', 'part1' /* + action.partNumber.toString() */ ], (x) => x.splice(parseInt(action.blockNumber, 10) - 1, 1, true) )
         ;
     default:
       return state;

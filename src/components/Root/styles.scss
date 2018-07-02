@@ -23,7 +23,7 @@ a {
   .banner {
     box-sizing: border-box;
     color: $primary-color;
-    position: absolute; 
+    position: absolute;
     // flex: 0 0 auto;
     font-size: 25px;
     margin: 15px auto;
@@ -41,17 +41,47 @@ a {
     overflow-y: auto;
   }
 
-  .footer {
-    color: $primary-color;
-    flex: 0 0 auto;
-    margin: 5px auto;
-    text-align: center;
-    width: 100%;
-
-  }
-
 }
 
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  overflow: auto;
+  flex: 1 1 auto;
+}
+.menu-item {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 18px;
+    overflow: hidden;
+	text-align: center;
+    padding-top: 20px;
+    padding-left: 5px;
+	cursor: pointer;
+	border-bottom: 1px solid rgb(187, 187, 187);
+
+    a:any-link {
+        color: black;
+    }
+
+    /* WebKit browsers */
+    a:-webkit-any-link {
+        color: black;
+    }
+
+}
+.menu-item:hover {
+	color: #2980b9;
+
+    a:any-link {
+        color: $link-color;
+    }
+    a:-webkit-any-link {
+        color: $link-color;
+    }
+
+}
 
 
 .warn-bg {
@@ -59,22 +89,34 @@ a {
 
 }
 
-.label {
-  display: inline-block;
-  font-family: $label-font-family;
+$icon-size: 35px;
 
-  .pre {
-    color: black;
-    vertical-align: bottom;
-  }
-
-  .cice {
-    color: black;
-    vertical-align: bottom;
-  }
-
-  .img {
-    height: 40px;
-  }
+.gitter-svg {
+  background-image: url('../../static/gitter.svg'); 
+  background-size: $icon-size;
+  background-position: center; 
+  width: $icon-size;
+  height: $icon-size;
 }
 
+.img {
+  height: 40px;
+  width: 188px;
+  margin: auto; 
+  padding-bottom: 20px;
+}
+
+.media-bar {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  .media-item {
+    margin:auto; 
+    font-size: $icon-size;
+  }
+  img {
+    width: $icon-size;
+    height: $icon-size;
+  }
+}
