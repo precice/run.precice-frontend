@@ -75,7 +75,7 @@ class Root extends React.Component<RootProps, undefined> {
 		<ExpandableList header="Introduction" partNumber={1} />
 		<ExpandableList header="Longer simulation"  partNumber={2}/>
 		<ExpandableList header="Implicit coupling" partNumber={3}/>
-		<ExpandableList header="Quasi-Newton post-processing"  partNumber={4}/>
+		<ExpandableList header="Acceleration with Quasi-Newton"  partNumber={4}/>
 		<ExpandableList header="Parallel Coupling" partNumber={5} />
 	  </ScrollArea>
       </div>

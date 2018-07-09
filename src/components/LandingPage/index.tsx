@@ -100,9 +100,9 @@ class LandingPage extends React.Component<LandPageProps, any> {
         <div className={styles.privacyNotice}>
           <div className={styles.intro}>Privacy notice</div>
           <div className={styles.subIntro}>
-          This website uses google analytics. It is a service, that collects and stores data about your usage of the website, such as time spent on the page, 
-          your operating system, your country, etc. We use this data solely to understand behaviour of our users and improve your experience of the website. 
-          Our usage of google analytis falls under its  <a className={styles.link} target="_blank" href={'https://www.google.com/analytics/terms/us.html'}>terms of service</a> 
+          Like many other websites, this website uses google analytics. It is the service that collects and stores data about your usage of the website, such as time spent on the page, 
+          your operating system, your country, etc. We use this data solely to understand the behaviour of our users and improve your experience of the website. 
+          See also google analytics <a className={styles.link} target="_blank" href={'https://www.google.com/analytics/terms/us.html'}>terms of service</a> 
           </div> 
         </div> 
       </div>
