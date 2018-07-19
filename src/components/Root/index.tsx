@@ -81,6 +81,9 @@ class Root extends React.Component<RootProps, undefined> {
       </div>
       <div>
 	{/* Social icons */} 
+      <div className={styles.mediaBarHeader}> 
+      Check out our <a href="https://github.com/precice/precice/wiki" target="_blank"> wiki </a> and connect with us:
+      </div> 
       <div className={styles.mediaBar}>
         <div className={styles.mediaItem}> <a href="https://mailman.informatik.uni-stuttgart.de/mailman/listinfo/precice" target="_blank" style={{color: "black"}}> <i className="fa fa-envelope"></i> </a> </div>
         <div className={styles.mediaItem}> <a href="https://gitter.im/precice/Lobby" target="_blank"> <div className={styles.gitterSvg}> </div> </a> </div>
