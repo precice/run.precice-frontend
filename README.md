@@ -23,4 +23,4 @@ Now `webpack-dev-server` is running at http://localhost:3000/
 
 - [Dmytro Sashko](https://github.com/shkodm)
 
-This is a part of [BGCE](www.bgce.de) honours project.
+This is a part of [BGCE](http://www.bgce.de) honours project.
