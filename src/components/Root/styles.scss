@@ -119,3 +119,15 @@ $icon-size: 35px;
     height: $icon-size;
   }
 }
+
+.media-bar-header {
+  text-align: center; 
+  font-size: 22px;
+  padding: 10px;
+  color: #333333; 
+
+  a:any-link {
+      color: $link-color 
+  }
+
+}
