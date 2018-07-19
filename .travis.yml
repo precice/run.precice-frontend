@@ -37,8 +37,6 @@ deploy:
   provider: script
   skip_cleanup: true
   script: 
-    - |
-        scp -o  StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -qrP $PRECICE_PORT  build/. $PRECICE_USR@$PRECICE_VM:$TRAVIS_TEST_FOLDER \
-        ssh $PRECICE_USR@$PRECICE_VM "cp -r $TRAVIS_TEST_FOLDER/. $PRECICE_BUILD_FOLDER/" 
+        scp -o  StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -qrP $PRECICE_PORT  build/. $PRECICE_USR@$PRECICE_VM:$TRAVIS_TEST_FOLDER && ssh $PRECICE_USR@$PRECICE_VM "cp -r $TRAVIS_TEST_FOLDER/. $PRECICE_BU#ILD_FOLDER/"
   on:
     branch: master
