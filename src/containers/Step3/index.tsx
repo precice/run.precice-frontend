@@ -390,7 +390,6 @@ function stdout(store, consoleId, data) {
         if (foundTime != null) {
           // foundTIme[2] is time in seconds [1] in ms
           const time = parseInt(foundTime[2], 10);
-          console.log("Final time is " + String(time))
           store.dispatch({ type: ADD_FINAL_TIME, data: time });
           // Finding "Global time" means simulation has ended
           store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
@@ -410,7 +409,6 @@ function stdout(store, consoleId, data) {
         if ( dt > lastDt ) {
           store.dispatch({ type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt } });
         }
-        console.log("Dt is " + String(dt) + "\n It is " + String(it));
 
         store.dispatch({ type: CONSOLE_UPDATE_TIME, it, dt});
 
