@@ -13,6 +13,8 @@ import {
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
   SIMULATION_CLEAR_DONE,
+  CONSOLE_INIT_TIME,
+  CONSOLE_UPDATE_TIME,
 } from '../constants';
 import { ConsoleId } from './index';
 
@@ -42,15 +44,28 @@ const initialState = fromJS({
   showTimeModal: false,
   isSimulationRunning: false,
   isSimulationDone: false,
+  dt: 1,
+  it: 0,
 });
 
-// IS_SIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
+// ISSIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
 const MSG_CHUNKSIZE = 200;
 
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
+    case CONSOLE_UPDATE_TIME: {
+      const dt = state.get('dt');
+      if (action.dt > dt) {
+        return state.set('it', action.it).set('dt', action.dt);
+      } else {
+        return state.set('it', action.it);
+      }
+    }
+    case CONSOLE_INIT_TIME: {
+      return state.set('it', 0).set('dt', 1);
+    }
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
       let newChunk = null;

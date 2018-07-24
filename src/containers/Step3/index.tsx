@@ -32,6 +32,8 @@ import {
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
   SIMULATION_CLEAR_DONE,
+  CONSOLE_UPDATE_TIME,
+  CONSOLE_INIT_TIME,
 } from '../constants';
 import * as styles from './styles.scss';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
@@ -39,6 +41,7 @@ import ConPlot from '../ConvergencePlot';
 import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxConsole/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import Modal = require('react-modal');
+import { getIn } from 'immutable';
 
 interface Step3Props {
   dispatch: any;
@@ -289,22 +292,9 @@ function mapDispatchToProps(dispatch) {
       dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: true });
       // clear plot when starting the simulation
       dispatch({ type: PLOT_DELETE_DATA });
-      // parsing inside consoleMiddleware
-      lastIt = 0;
-// lastDt = 1 reflects starting value of dt
-// in Calculix output
-      lastDt = 1;
-// See explanation below in consoleMiddleware
-      dtFlag = 1;
-
-// detect console activity
-// only dispatch action the
-// first time
-      consoleOne = false;
-      consoleTwo = false;
-
-      it = undefined;
-      dt = undefined;
+      dispatch({ type: CONSOLE_ONE_ACTIVE, value: false });
+      dispatch({ type: CONSOLE_TWO_ACTIVE, value: false });
+      dispatch({ type: CONSOLE_INIT_TIME} );
     },
     toggleLockBottom: (consoleId: ConsoleId, value) => dispatch({ type: CONSOLE_TOGGLE_LOCK_BOTTOM, consoleId, value }),
     hidAction: () => {
@@ -333,23 +323,6 @@ export default connect<any, any, any>(
   mapDispatchToProps,
 )(Step3);
 
-// Variables to hold global information for
-// parsing inside consoleMiddleware
-let lastIt = 0;
-// lastDt = 1 reflects starting value of dt
-// in Calculix output
-let lastDt = 1;
-// See explanation below in consoleMiddleware
-let dtFlag = 1;
-
-// detect console activity
-// only dispatch action the
-// first time
-let consoleOne = false;
-let consoleTwo = false;
-
-let it;
-let dt;
 export const consoleMiddleware = store => next => action => {
 
   const consoleAction = action.type === 'socket/stdout' || action.type === 'socket/stderr' || action.type === 'socket/exit';
@@ -365,7 +338,7 @@ export const consoleMiddleware = store => next => action => {
       }
     } else if (action.type === 'socket/exit') {
       // Hopefully the last value
-      store.dispatch({ type: ADD_CHART_DATA, data: { x: dt, y: it } });
+      store.dispatch({ type: ADD_CHART_DATA, data: { x: store.getState().getIn(['step3', 'dt']), y: store.getState().getIn(['step3', 'it']) }});
       store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code] });
       store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
       store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true });
@@ -379,16 +352,20 @@ export const consoleMiddleware = store => next => action => {
 };
 
 function stdout(store, consoleId, data) {
+  const maxTimeStep = store.getState().getIn(['chartData', 'maxDt']);
   const lines = data.split('\n');
+// detect console activity
+// only dispatch action the
+// first time
+  const consoleOne: boolean  = store.getState().getIn(['step3', 'consoleOneActive']);
+  const consoleTwo: boolean  = store.getState().getIn(['step3', 'consoleTwoActive']);
 
   if (!consoleOne && consoleId === ConsoleId.left) {
     store.dispatch({ type: CONSOLE_ONE_ACTIVE, value: true });
-    consoleOne = true;
   }
 
   if (!consoleTwo && consoleId === ConsoleId.right) {
     store.dispatch({ type: CONSOLE_TWO_ACTIVE, value: true });
-    consoleTwo = true;
   }
 
   const itReg = /it\s(\d+)\sof\s\d+/;
@@ -399,52 +376,53 @@ function stdout(store, consoleId, data) {
   // We want the SU2 console
   if (consoleId === ConsoleId.right) {
     for (const line of lines) {
+
+      let it = store.getState().getIn(['step3', 'it']);
+      let dt = store.getState().getIn(['step3', 'dt']);
+
       const foundIt = line.match(itReg);
 
-      // TODO: Don't check for time in every run
+      // Check the global runtime once we are done with all the timesteps
+      if (( maxTimeStep !== 0 ) && ( dt >= maxTimeStep) ) {
+        // we want second capture of regex, since it is in seconds 
+        const  foundTime  = line.match(timeReg);
 
-      const foundTime = line.match(timeReg);
-      if (foundTime != null) {
-        // foundTIme[2] is time in seconds [1] in ms
-        const time = parseInt(foundTime[2], 10);
-        store.dispatch({ type: ADD_FINAL_TIME, data: time });
+        if (foundTime != null) {
+          // foundTIme[2] is time in seconds [1] in ms
+          const time = parseInt(foundTime[2], 10);
+          console.log("Final time is " + String(time))
+          store.dispatch({ type: ADD_FINAL_TIME, data: time });
+          // Finding "Global time" means simulation has ended
+          store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
+          // TODO: Does it make sense to do the last dispatch here?
 
-        // Finding "Global time" means simulation has ended
-        store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
-
-        // TODO: Does it make sense to do the last dispatch here?
-
+        }
       }
 
       if (foundIt != null) {
-        const foundDt = line.match(dtReg);
-
-        // foundIt[1] because that contains the
-        // matched number. Look up parenthesis in
-        // javascript regex.
-
-        it = parseInt(foundIt[1], 10);
+        // we one first capture since it contains the timestamp
+        const foundDt  = line.match(dtReg);
+        const lastDt = store.getState().getIn(['step3', 'dt']);
+        const lastIt = store.getState().getIn(['step3', 'it']);
         dt = parseInt(foundDt[1], 10);
+        it = parseInt(foundIt[1], 10);
+        // if we went to the next timestamps update the plot 
+        if ( dt > lastDt ) {
+          store.dispatch({ type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt } });
+        }
+        console.log("Dt is " + String(dt) + "\n It is " + String(it));
+
+        store.dispatch({ type: CONSOLE_UPDATE_TIME, it, dt});
 
         // Multiple instances of dt === 1 and it === 1
         // We only want to update the state once
         // so we use dtFlag to make sure of that.
-        if (dtFlag === 1 && dt === 1 && it === 1) {
+        if ((maxTimeStep === 0 ) && dt === 1 && it === 1) {
           const maxDt = parseInt(foundDt[2], 10);
           // This means simulation is running
           store.dispatch({ type: IS_SIMULATION_RUNNING, value: true });
           store.dispatch({ type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt });
-          dtFlag = 0;
         }
-
-        if (dt > lastDt) {
-          store.dispatch({ type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt } });
-          lastIt = it;
-          lastDt = dt;
-        } else {
-          lastIt = it;
-        }
-
       }
     }
   }
