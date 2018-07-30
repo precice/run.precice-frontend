@@ -21,11 +21,12 @@ export const CHANGE_BLOCK_NUMBER = 'action/BLOCKNUMBER_FLAG';
 export const PARTNUMBER_FLAG = 'action/PARTNUMBER_FLAG';
 export const SIMULATION_CLEAR_DONE = 'action/PARTNUMBER_FLAG';
 export const CONSOLE_UPDATE_TIME = 'actions/CONSOLE_UPDATE_TIME';
+export const TOGGLE_COUPLING = 'actions/TOGGLE_COUPLING';
 export const CONSOLE_INIT_TIME = 'actions/CONSOLE_INIT_TIME';
 
 //export const xmlSelectedBackground = '';
 export const xmlSelectedBackground = '#101010';
-export const xmlSeenHover='#1e321e'
+export const xmlSeenHover = '#1e321e'
 export const xmlHoverBackground = '#202020';
 export const xmlSeenColor = '#0f190f';
 

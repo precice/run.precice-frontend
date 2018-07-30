@@ -11,6 +11,9 @@ import {
   logMessagesSelector,
   plotDisplaySelector, oldChunksSelector,
   timeModalDisplaySelector,
+  isCouplingRunningSelector,
+  isSimulationRunningSelector,
+  isFirstDoneSelector,
 } from './selectors';
 import {
   partNumberSelector,
@@ -34,11 +37,12 @@ import {
   SIMULATION_CLEAR_DONE,
   CONSOLE_UPDATE_TIME,
   CONSOLE_INIT_TIME,
+  TOGGLE_COUPLING,
 } from '../constants';
 import * as styles from './styles.scss';
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ConPlot from '../ConvergencePlot';
-import { default as ReduxConsole, ConsoleChunk} from '../../components/ReduxConsole/index';
+import { default as ReduxConsole, ConsoleChunk } from '../../components/ReduxConsole/index';
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import Modal = require('react-modal');
 import { getIn } from 'immutable';
@@ -73,6 +77,9 @@ interface Step3Props {
   clearDone: any;
 
   partNumber: number;
+  isCouplingRunning: boolean;
+  isSimulationRunning: boolean;
+  isFirstDone: boolean;
 }
 
 // className={styles.timeModal}
@@ -118,7 +125,7 @@ class Step3 extends React.Component<Step3Props, any> {
           }
         >
           <div className={styles.modalHeader}>
-            <div className={styles.subCon}/>
+            <div className={styles.subCon} />
             <div className={styles.subTitle}>
               Simulation Finished
             </div>
@@ -133,22 +140,34 @@ class Step3 extends React.Component<Step3Props, any> {
             <div className={styles.simulationSubtext}>
               You can now download log files for <a href={'../../logs/Part' + this.props.partNumber + '/su2.log'} download={su2FileName}> SU2 </a>
               and  <a href={'../../logs/Part' + this.props.partNumber + '/ccx.log'} download={calculixFileName} > CalculiX </a>
-          </div>
+            </div>
           </div>
 
         </Modal>
 
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
-            <span className={styles.dummy}/>
-            <span className={styles.title}/>
+            <SimulationStatus isActive={this.props.isCouplingRunning}
+              isSimulationRunning={this.props.isSimulationRunning}
+              isFirstDone={this.props.isFirstDone}
+              onToggle={() => {
+                this.props.dispatch({
+                  type: 'socket/' + (this.props.isCouplingRunning ? 'pause_simulation' : 'resume_simulation'),
+                  partNumber: this.props.partNumber
+                });
+                this.props.dispatch({
+                  type: TOGGLE_COUPLING
+                });
+              }} />
+            <span className={styles.dummy} />
+            <span className={styles.title} />
             <span
               id="hideButton"
               onClick={this.props.hidAction}
               className={styles.hide}
             >
-              {this.props.hidCheck ? <span>expand <i className="fa fa-chevron-down" aria-hidden="true"/></span> :
-                <span>hide <i className="fa fa-chevron-up" aria-hidden="true"/></span>}
+              {this.props.hidCheck ? <span>expand <i className="fa fa-chevron-down" aria-hidden="true" /></span> :
+                <span>hide <i className="fa fa-chevron-up" aria-hidden="true" /></span>}
             </span>
           </div>
           <div id="hideStep3" hidden={this.props.hidCheck}>
@@ -181,7 +200,8 @@ class Step3 extends React.Component<Step3Props, any> {
                 this.props.dispatch({
                   type: CONSOLE_ADD_LINES,
                   consoleId: ConsoleId.left,
-                  lines: ['$ ccx_preCICE -i flap -precice-participant Calculix']});
+                  lines: ['$ ccx_preCICE -i flap -precice-participant Calculix']
+                });
                 this.props.runCmd(ConsoleId.left, 'ccx_preCICE -i flap -precice-participant Calculix', this.props.partNumber);
               }}
               promptLabel="$ ccx_preCICE -i flap -precice-participant Calculix"
@@ -224,7 +244,8 @@ class Step3 extends React.Component<Step3Props, any> {
                 this.props.dispatch({
                   type: CONSOLE_ADD_LINES,
                   consoleId: ConsoleId.right,
-                  lines: ['$ SU2_CFD euler_config_coupled.cfg']});
+                  lines: ['$ SU2_CFD euler_config_coupled.cfg']
+                });
                 this.props.runCmd(ConsoleId.right, 'SU2_CFD euler_config_coupled.cfg', this.props.partNumber);
               }}
               promptLabel="$ SU2_CFD euler_config_coupled.cfg"
@@ -266,6 +287,41 @@ class Step3 extends React.Component<Step3Props, any> {
   }
 }
 
+interface SimulationStatusProps {
+  onToggle: () => void;
+  isActive: boolean;
+  isSimulationRunning: boolean;
+  isFirstDone: boolean;
+}
+
+
+class SimulationStatus extends React.Component<SimulationStatusProps, null> {
+  constructor(props: SimulationStatusProps) {
+    super(props);
+    this.onToggle = this.onToggle.bind(this);
+  }
+
+  public onToggle() {
+    this.props.onToggle();
+  }
+
+  public render() {
+    return (
+      <div className={styles.simulationStatus} >
+        {
+          (this.props.isActive && this.props.isSimulationRunning) ?
+            <span> <i className="fa fa-play" style={{ width: '35px', color: 'green' }} onClick={this.onToggle} ></i> Simulation is running </span>
+            : this.props.isSimulationRunning ?
+              <span> <i className="fa fa-stop" style={{ width: '35px', color: 'red' }} onClick={this.onToggle} ></i> Simulation is stopped </span> :
+              this.props.isFirstDone ?
+                < span > <i className="fa fa-play" style={{ width: '35px', color: 'green', visibility: 'hidden' }} onClick={this.onToggle} ></i> Simulation not started   </span> :
+                <span> <i className="fa fa-stop" style={{ width: '35px', color: 'grey', visibility: 'hidden' }}  ></i> Simulation is finished </span>
+        }
+      </div>
+    );
+  }
+};
+
 const mapStateToProps = createStructuredSelector({
   hidCheck: hidCheckSelector(),
   consoleOneActive: consoleOneStateSelector(),
@@ -282,8 +338,10 @@ const mapStateToProps = createStructuredSelector({
   partNumber: partNumberSelector(),
   leftOldChunks: oldChunksSelector(ConsoleId.left),
   rightOldChunks: oldChunksSelector(ConsoleId.right),
+  isCouplingRunning: isCouplingRunningSelector(),
+  isSimulationRunning: isSimulationRunningSelector(),
+  isFirstDone: isFirstDoneSelector(),
 });
-
 function mapDispatchToProps(dispatch) {
   return {
     dispatch: (...args) => dispatch(...args),
@@ -393,6 +451,7 @@ function stdout(store, consoleId, data) {
           store.dispatch({ type: ADD_FINAL_TIME, data: time });
           // Finding "Global time" means simulation has ended
           store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
+          store.dispatch({ type: TOGGLE_COUPLING });
           // TODO: Does it make sense to do the last dispatch here?
 
         }

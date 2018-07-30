@@ -15,6 +15,7 @@ import {
   SIMULATION_CLEAR_DONE,
   CONSOLE_INIT_TIME,
   CONSOLE_UPDATE_TIME,
+  TOGGLE_COUPLING,
 } from '../constants';
 import { ConsoleId } from './index';
 
@@ -43,7 +44,7 @@ const initialState = fromJS({
   showPlot: false,
   showTimeModal: false,
   isSimulationRunning: false,
-  isSimulationDone: false,
+  isCouplingRunning: false,
   dt: 1,
   it: 0,
 });
@@ -118,6 +119,7 @@ export function step3Reducer(state = initialState, action: any) {
       return state
         .setIn(['consoles', action.consoleId, 'done'], action.value);
 
+    // TODO: Rewrite this parts
     case IS_SIMULATION_RUNNING: {
       const preVal = state.get('isSimulationRunning');
 
@@ -135,6 +137,10 @@ export function step3Reducer(state = initialState, action: any) {
         return state
           .set('isSimulationRunning', action.value);
       }
+    }
+    case TOGGLE_COUPLING: {
+      const prev = state.get('isCouplingRunning');
+      return state.set('isCouplingRunning', !prev);
     }
     case ADD_FINAL_TIME: {
       return state

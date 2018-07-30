@@ -29,7 +29,7 @@
       .title {
         flex: 1 1 auto;
         text-align: center;
-        width: 80%;
+        width: 60%;
       }
 
       .dummy {
@@ -53,11 +53,14 @@
       .hide:focus {
         border: 4px solid $primary-color;
       }
+
+
     }
 
     .exp-content-hide {
       height: 10px;
     }
+
 .exp-content-container {
   display: flex;
   flex: 1 1 auto;
@@ -209,3 +212,10 @@
 }
 
 
+
+.simulation-status {
+  cursor: pointer;
+  text-align: center;
+  text-transform: none;
+  color: $btn-on-mouse-over;
+}
