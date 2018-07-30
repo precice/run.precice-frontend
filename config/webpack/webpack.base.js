@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack'); 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -136,6 +137,9 @@ module.exports = (options) => {
         minify: options.minifyIndexHtml,
         inject: true,
       }),
+      new webpack.DefinePlugin({
+        'SIMULATION_SERVER': JSON.stringify(process.env.PRECICE_SIMULATION_SERVER)})
+      ,
       componentsCss,
       globalCss,
       staticFilesServer
