@@ -16,8 +16,9 @@ const burgerStyles = {
     height: '20px',
     left: '20px',
     top: '20px',
-	background: '#dddddd',
-	border: '5px solid #dddddd'
+    background: '#dddddd',
+    border: '5px solid #dddddd',
+    zIndex: '0' 
   },
   bmBurgerBars: {
     background: '#373a47'
