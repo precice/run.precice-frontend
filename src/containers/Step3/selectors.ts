@@ -67,8 +67,12 @@ export const isCouplingRunningSelector = () => createSelector(
 
 export const isSimulationRunningSelector = () => createSelector(
   step3SubstateSelector,
-  (step3Substate) => step3Substate.get('isSimulationRunning'));;
+  (step3Substate) => step3Substate.get('isSimulationRunning'));
 
 export const isFirstDoneSelector = () => createSelector(
   step3SubstateSelector,
-  (step3Substate) => !(step3Substate.getIn(['consoles', 'LEFT_CONSOLE', 'done']) || step3Substate.getIn(['consoles', 'RIGHT_CONSOLE', 'done'])));
+  (step3Substate) => (step3Substate.getIn(['consoles', 'LEFT_CONSOLE', 'done']) || step3Substate.getIn(['consoles', 'RIGHT_CONSOLE', 'done'])));
+
+export const isErroredSelector = () => createSelector(
+  step3SubstateSelector,
+  (step3Substate) => step3Substate.get('isErrored'));

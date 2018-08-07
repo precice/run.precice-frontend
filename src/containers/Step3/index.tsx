@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as React from 'react';
-import {createStructuredSelector} from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import {
   busySelector,
   consoleOneStateSelector,
@@ -14,6 +14,7 @@ import {
   isCouplingRunningSelector,
   isSimulationRunningSelector,
   isFirstDoneSelector,
+  isErroredSelector,
 } from './selectors';
 import {
   partNumberSelector,
@@ -38,6 +39,7 @@ import {
   CONSOLE_UPDATE_TIME,
   CONSOLE_INIT_TIME,
   TOGGLE_COUPLING,
+  SIMULATION_ERRORED,
 } from '../constants';
 import * as styles from './styles.scss';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -46,6 +48,7 @@ import { default as ReduxConsole, ConsoleChunk } from '../../components/ReduxCon
 import WhatToDoBlock from '../WhatToDoBlock/index';
 import Modal = require('react-modal');
 import { getIn } from 'immutable';
+import { Tooltip } from 'react-tippy';
 
 interface Step3Props {
   dispatch: any;
@@ -74,12 +77,13 @@ interface Step3Props {
   leftOldChunks: [ConsoleChunk];
   rightOldChunks: [ConsoleChunk];
 
-  clearDone: any;
+  clearDone: () => void;
 
   partNumber: number;
   isCouplingRunning: boolean;
   isSimulationRunning: boolean;
   isFirstDone: boolean;
+  isErrored: boolean;
 }
 
 // className={styles.timeModal}
@@ -96,6 +100,18 @@ export enum ConsoleId {
 class Step3 extends React.Component<Step3Props, any> {
   constructor(props: Step3Props) {
     super(props);
+    this.toggleCoupling = this.toggleCoupling.bind(this);
+  }
+
+  public toggleCoupling( toggleTo: boolean )
+  {
+    this.props.dispatch({
+      type: 'socket/' + (toggleTo ? 'resume_simulation' : 'pause_simulation'),
+      partNumber: this.props.partNumber
+    });
+    this.props.dispatch({
+      type: TOGGLE_COUPLING, value: toggleTo
+    });
   }
 
   public render() {
@@ -127,38 +143,37 @@ class Step3 extends React.Component<Step3Props, any> {
           <div className={styles.modalHeader}>
             <div className={styles.subCon} />
             <div className={styles.subTitle}>
-              Simulation Finished
+              { this.props.isErrored? "Simulation aborted" : "Simulation Finished" }
             </div>
             <div className={styles.subCon}>
               <div onClick={this.props.closeTimeModal} className={styles.close}>&times;</div>
             </div>
           </div>
           <div className={styles.tableDiv}>
+            { !this.props.isErrored &&
             <div className={styles.simulationText}>
               Elapsed Time: {this.props.finalTime} s
             </div>
+            }
             <div className={styles.simulationSubtext}>
               You can now download log files for <a href={'../../logs/Part' + this.props.partNumber + '/su2.log'} download={su2FileName}> SU2 </a>
               and  <a href={'../../logs/Part' + this.props.partNumber + '/ccx.log'} download={calculixFileName} > CalculiX </a>
             </div>
           </div>
-
         </Modal>
 
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
-            <SimulationStatus isActive={this.props.isCouplingRunning}
+            <SimulationStatus isCouplingRunning={this.props.isCouplingRunning}
               isSimulationRunning={this.props.isSimulationRunning}
               isFirstDone={this.props.isFirstDone}
-              onToggle={() => {
+              onToggle={ this.toggleCoupling }
+              abortSimulation={() => {
                 this.props.dispatch({
-                  type: 'socket/' + (this.props.isCouplingRunning ? 'pause_simulation' : 'resume_simulation'),
-                  partNumber: this.props.partNumber
+                  type: 'socket/abort_simulation'
                 });
-                this.props.dispatch({
-                  type: TOGGLE_COUPLING
-                });
-              }} />
+              }}
+            />
             <span className={styles.dummy} />
             <span className={styles.title} />
             <span
@@ -210,11 +225,11 @@ class Step3 extends React.Component<Step3Props, any> {
               lockBottom={this.props.leftLockBottom}
               oldChunks={this.props.leftOldChunks}
             />
-            <div> 
-              <div className={styles.belowConsoleElm}> 
+            <div>
+              <div className={styles.belowConsoleElm}>
                 *You can also download the <a href={'../../logs/Part' + this.props.partNumber + '/ccx.log'} download={calculixFileName} >log file</a> of this simulation
-            </div> 
-          </div> 
+            </div>
+          </div>
             {/* Clear console is unused now */}
             {/*
             <div>
@@ -288,35 +303,97 @@ class Step3 extends React.Component<Step3Props, any> {
 }
 
 interface SimulationStatusProps {
-  onToggle: () => void;
-  isActive: boolean;
+  onToggle: (toggleTo: boolean) => void;
+  abortSimulation: () => void;
+  isCouplingRunning: boolean;
   isSimulationRunning: boolean;
   isFirstDone: boolean;
 }
 
 
-class SimulationStatus extends React.Component<SimulationStatusProps, null> {
+enum StateEnum {
+  NotStarted = 0,
+  Waiting = 1,
+  Running = 2,
+  Stopped = 3,
+  Finished = 4
+};
+
+class SimulationStatus extends React.Component<SimulationStatusProps, { isStopped: boolean, State: StateEnum } > {
   constructor(props: SimulationStatusProps) {
     super(props);
     this.onToggle = this.onToggle.bind(this);
+    this.abortSim = this.abortSim.bind(this);
+    this.state = { isStopped: false, State: this.props.isSimulationRunning ? StateEnum.Waiting : StateEnum.NotStarted };
   }
 
-  public onToggle() {
-    this.props.onToggle();
+
+  private StateMsg = [ this.props.isFirstDone?  'Simulation is finished' : 'Simulation not started',
+                          'Waiting for a partner',
+                          'Simulation is running',
+                          'Simulation is stopped',
+                          'Simulation is finished'];
+
+  // NOTE: Ugliness below is the only relible way to display information. Otherwise it will break, due to sudden rerendering or toggling coupling
+  public componentDidUpdate(prevProps, prevState)
+  {
+    if ( this.state.State == StateEnum.NotStarted )  {
+      if (prevProps.isSimulationRunning == false && this.props.isSimulationRunning == true){
+        this.setState({ State: StateEnum.Waiting });
+      }
+    }
+    else if ( (prevProps.isCouplingRunning == false && this.props.isCouplingRunning == true)
+      || ( prevState.isStopped && !this.state.isStopped ) ) {
+      // if the state was not running
+      if (!this.state.isStopped) {
+        this.setState({ State: StateEnum.Running });
+      }
+    }
+    else if (prevProps.isCouplingRunning == true && this.props.isCouplingRunning == false) {
+      if (this.state.isStopped) {
+        this.setState({ State: StateEnum.Stopped });
+      }
+    }
+  }
+
+  public onToggle(e) {
+    console.log("Toggling the simulation");
+    e.preventDefault();
+    e.stopPropagation();
+    // toggle simulation
+    this.props.onToggle(this.state.isStopped);
+    this.setState((prevState, props) => { return { isStopped: !prevState.isStopped }; });
+  }
+
+  public abortSim() {
+    console.log("Aborting the simulation");
+    this.props.abortSimulation();
   }
 
   public render() {
+
+    const msg = this.StateMsg[ this.state.State ] ;
+    const style: React.CSSProperties  = { marginRight: '5px', fontSize: '15px',  width: '15px', cursor: 'pointer',  color: this.state.State == StateEnum.Running ? '#808080' : '#33a433' };
+    const visibility: React.CSSProperties =  { visibility: ( this.state.State === StateEnum.Running || this.state.State === StateEnum.Stopped ) ? 'visible' : 'hidden'};
+    const icon = this.state.State == StateEnum.Running ? "fa fa-pause" : "fa fa-play";
+    const tooltipMsg = this.state.State == StateEnum.Running ?
+                       "Pause the simulation and check the output" :
+                       "Resume the simulation";
     return (
       <div className={styles.simulationStatus} >
-        {
-          (this.props.isActive && this.props.isSimulationRunning) ?
-            <span> <i className="fa fa-play" style={{ width: '35px', color: 'green' }} onClick={this.onToggle} ></i> Simulation is running </span>
-            : this.props.isSimulationRunning ?
-              <span> <i className="fa fa-stop" style={{ width: '35px', color: 'red' }} onClick={this.onToggle} ></i> Simulation is stopped </span> :
-              this.props.isFirstDone ?
-                < span > <i className="fa fa-play" style={{ width: '35px', color: 'green', visibility: 'hidden' }} onClick={this.onToggle} ></i> Simulation not started   </span> :
-                <span> <i className="fa fa-stop" style={{ width: '35px', color: 'grey', visibility: 'hidden' }}  ></i> Simulation is finished </span>
-        }
+        <div>
+          {
+            <div style={{ fontSize: '0px' }}>
+              <span style={{fontSize: '15px', marginLeft :'10px' }}> {msg} </span>
+              <Tooltip width="100" title={ tooltipMsg }>
+                <i className={icon} style={{ ...style, ...visibility }} onClick={this.onToggle} />
+              </Tooltip>
+              <Tooltip width="100" title="Abort the simulation">
+                <i className="fa fa-step-forward" style={{ color: '#b33a3a', fontSize: "15px", width: '15x', cursor: 'pointer', ...visibility }} onClick={this.abortSim}/>
+              </Tooltip>
+            </div>
+          }
+        </div>
       </div>
     );
   }
@@ -341,6 +418,7 @@ const mapStateToProps = createStructuredSelector({
   isCouplingRunning: isCouplingRunningSelector(),
   isSimulationRunning: isSimulationRunningSelector(),
   isFirstDone: isFirstDoneSelector(),
+  isErrored: isErroredSelector(),
 });
 function mapDispatchToProps(dispatch) {
   return {
@@ -389,18 +467,38 @@ export const consoleMiddleware = store => next => action => {
 
     const { consoleId } = action;
     if (action.type === 'socket/stdout' || action.type === 'socket/stderr') {
+      // once we receive anything from the server toggle simulation to run
+      if (! store.getState().getIn(['step3', 'isSimulationRunning']) ) {
+        store.dispatch({ type: IS_SIMULATION_RUNNING, value: true});
+        // zeroing status in case of simulation restart
+        store.dispatch({ type: SIMULATION_ERRORED, value: false });
+      }
       if (Array.isArray(action.consoleId)) {
+        // it means coupling is running now
+        // NOTE: This should be set before call to stdout function (since it toggles coupling off, once simulaiton is finished)
+        if ( ! store.getState().getIn(['step3','isCouplingRunning']) ) {
+          console.log("Toggling coupling to true from the consoleMiddleware");
+          store.dispatch({ type: TOGGLE_COUPLING, value: true });
+        }
         action.consoleId.forEach((cId, ind) => stdout(store, cId, action.data[ind]));
       } else {
         stdout(store, action.consoleId, action.data);
       }
     } else if (action.type === 'socket/exit') {
-      // Hopefully the last value
-      store.dispatch({ type: ADD_CHART_DATA, data: { x: store.getState().getIn(['step3', 'dt']), y: store.getState().getIn(['step3', 'it']) }});
+      // Hopefully the last value, so we update all the states
+      store.dispatch({ type: ADD_CHART_DATA, data: { x: store.getState().getIn(['step3', 'dt']), y: store.getState().getIn(['step3', 'it']) } });
       store.dispatch({ type: CONSOLE_ADD_LINES, consoleId, lines: ['returned with exit code ' + action.code] });
-      store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
+      store.dispatch({ type: TIME_MODAL_DATA, value: true});
+      store.dispatch({ type: IS_SIMULATION_RUNNING, value: false } );
       store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true });
-      // Variables to hold global information for
+      // if one of consoles returns non-zero status, simulatio is aborted or errored
+      if (action.code != 0) {
+        console.log("Simulation errored!");
+        store.dispatch({ type: SIMULATION_ERRORED, value: true});
+      }
+      else console.log("Simulation suceeded!");
+      //NOTE:  this dispatch causes rerendering of step3
+      store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
     }
 
   }
@@ -441,43 +539,42 @@ function stdout(store, consoleId, data) {
       const foundIt = line.match(itReg);
 
       // Check the global runtime once we are done with all the timesteps
-      if (( maxTimeStep !== 0 ) && ( dt >= maxTimeStep) ) {
-        // we want second capture of regex, since it is in seconds 
-        const  foundTime  = line.match(timeReg);
+      if ((maxTimeStep !== 0) && (dt >= maxTimeStep)) {
+        // we want second capture of regex, since it is in seconds
+        const foundTime = line.match(timeReg);
 
         if (foundTime != null) {
           // foundTIme[2] is time in seconds [1] in ms
           const time = parseInt(foundTime[2], 10);
           store.dispatch({ type: ADD_FINAL_TIME, data: time });
-          // Finding "Global time" means simulation has ended
-          store.dispatch({ type: IS_SIMULATION_RUNNING, value: false });
-          store.dispatch({ type: TOGGLE_COUPLING });
-          // TODO: Does it make sense to do the last dispatch here?
-
+          // Finding "Global time" means coupling part of simulation has ended
+          console.log("Toogling coupling to false from the stdout");
+          store.dispatch({ type: TOGGLE_COUPLING, value: false });
         }
       }
 
       if (foundIt != null) {
         // we one first capture since it contains the timestamp
-        const foundDt  = line.match(dtReg);
+        const foundDt = line.match(dtReg);
         const lastDt = store.getState().getIn(['step3', 'dt']);
         const lastIt = store.getState().getIn(['step3', 'it']);
         dt = parseInt(foundDt[1], 10);
         it = parseInt(foundIt[1], 10);
-        // if we went to the next timestamps update the plot 
-        if ( dt > lastDt ) {
+        // if we went to the next timestamps update the plot
+        if (dt > lastDt) {
           store.dispatch({ type: ADD_CHART_DATA, data: { x: lastDt, y: lastIt } });
         }
 
-        store.dispatch({ type: CONSOLE_UPDATE_TIME, it, dt});
+        store.dispatch({ type: CONSOLE_UPDATE_TIME, it, dt });
 
         // Multiple instances of dt === 1 and it === 1
         // We only want to update the state once
         // so we use dtFlag to make sure of that.
-        if ((maxTimeStep === 0 ) && dt === 1 && it === 1) {
+        if ((maxTimeStep === 0) && dt === 1 && it === 1) {
           const maxDt = parseInt(foundDt[2], 10);
           // This means simulation is running
-          store.dispatch({ type: IS_SIMULATION_RUNNING, value: true });
+//          store.dispatch({ type: IS_SIMULATION_RUNNING, value: true });
+          store.dispatch({ type: PLOT_MODAL_DATA, value: true });
           store.dispatch({ type: ADD_PROGRESS_MAX_ITER, maxTimeSteps: maxDt });
         }
       }

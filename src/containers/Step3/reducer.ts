@@ -16,6 +16,7 @@ import {
   CONSOLE_INIT_TIME,
   CONSOLE_UPDATE_TIME,
   TOGGLE_COUPLING,
+  SIMULATION_ERRORED,
 } from '../constants';
 import { ConsoleId } from './index';
 
@@ -45,6 +46,7 @@ const initialState = fromJS({
   showTimeModal: false,
   isSimulationRunning: false,
   isCouplingRunning: false,
+  isErrored: false, 
   dt: 1,
   it: 0,
 });
@@ -119,28 +121,12 @@ export function step3Reducer(state = initialState, action: any) {
       return state
         .setIn(['consoles', action.consoleId, 'done'], action.value);
 
-    // TODO: Rewrite this parts
     case IS_SIMULATION_RUNNING: {
-      const preVal = state.get('isSimulationRunning');
-
-      // TODO: Think of a better way to achieve the following
-      if (preVal === false && action.value === true) {
-
-        return state
-          .set('isSimulationRunning', action.value).set('showPlot', true);
-      } else if (preVal === true && action.value === false) {
-
-        return state
-          .set('isSimulationRunning', action.value).set('showTimeModal', true);
-      } else {
-
-        return state
-          .set('isSimulationRunning', action.value);
-      }
+      return state.set('isSimulationRunning', action.value); 
     }
     case TOGGLE_COUPLING: {
-      const prev = state.get('isCouplingRunning');
-      return state.set('isCouplingRunning', !prev);
+      console.log(`Toggling coupling to ${action.value} from the reducers`); 
+      return state.set('isCouplingRunning', action.value);
     }
     case ADD_FINAL_TIME: {
       return state
@@ -149,6 +135,10 @@ export function step3Reducer(state = initialState, action: any) {
     case SIMULATION_CLEAR_DONE: {
       return state
         .setIn(['consoles', action.consoleId, 'done'], false);
+    }
+    case SIMULATION_ERRORED: {
+      return state.
+        set('isErrored', action.value); 
     }
     default:
       return state;

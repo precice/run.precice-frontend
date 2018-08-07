@@ -23,6 +23,7 @@ export const SIMULATION_CLEAR_DONE = 'action/PARTNUMBER_FLAG';
 export const CONSOLE_UPDATE_TIME = 'actions/CONSOLE_UPDATE_TIME';
 export const TOGGLE_COUPLING = 'actions/TOGGLE_COUPLING';
 export const CONSOLE_INIT_TIME = 'actions/CONSOLE_INIT_TIME';
+export const SIMULATION_ERRORED= 'actions/SIMULATION_ERRORED';
 
 //export const xmlSelectedBackground = '';
 export const xmlSelectedBackground = '#101010';
