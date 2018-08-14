@@ -54,7 +54,8 @@ const initialState = fromJS({
 // ISSIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
-const MSG_CHUNKSIZE = 200;
+// NOTE: MSG_CHUNKSIZE ideally should not be smaller than maximum messages send from the backend
+const MSG_CHUNKSIZE = 500;
 
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
@@ -71,16 +72,18 @@ export function step3Reducer(state = initialState, action: any) {
     }
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
+      const msg_length = lines.length;
       let newChunk = null;
       const newState = state.updateIn(['consoles', action.consoleId, 'logMessages'], (old: List<string>) => {
-        if (old.size < MSG_CHUNKSIZE) {
+        if (old.size + lines.length <= MSG_CHUNKSIZE) {
           return old.push(...lines);
         } else {
+          const extraLines = old.size + lines.length - MSG_CHUNKSIZE;
           newChunk = {
             key: (Math.random() + '').substr(0, 10) + Date.now(),
-            content: old.slice(0, MSG_CHUNKSIZE).join('\n'),
+            content: old.slice(0, extraLines).join('\n'),
           };
-          return old.slice(MSG_CHUNKSIZE).push(...lines);
+          return old.slice(extraLines).push(...lines);
         }
       });
       if (newChunk) {

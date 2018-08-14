@@ -22,7 +22,10 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
   private node: HTMLDivElement;
 
   public componentDidUpdate(prevProps) {
-    if (this.props.lockBottom) {
+
+    // scroll onyl if not on the bottom
+    const needScrolling = !( this.node.scrollHeight - this.node.scrollTop === this.node.clientHeight );
+    if (this.props.lockBottom && needScrolling) {
       this.node.scrollTop = this.node.scrollHeight;
     }
   }
@@ -50,4 +53,3 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
 }
 
 export default ReduxConsole;
-
