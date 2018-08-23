@@ -11,8 +11,9 @@ import * as io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
 import { consoleMiddleware } from './containers/Step3/index';
 
-const socket = io('http://localhost:3001');
-// const socket = io('http://131.159.36.247:3001');
+declare var SIMULATION_SERVER: string;
+
+const socket = io(SIMULATION_SERVER);
 
 const middlewares: Middleware[] = [
   routerMiddlewareInstace,

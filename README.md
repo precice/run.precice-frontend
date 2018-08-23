@@ -10,7 +10,10 @@ npm install
 npm run start
 ```
 
-Now `webpack-dev-server` is running at http://localhost:3000/
+Now `webpack-dev-server` is running at http://localhost:3000/ 
+
+In order to develop `Step3` (main simulation part) you would need to clone and set-up [backend](https://github.com/precice/run.precice-backend) as well.
+
 
 ## Developers
 
