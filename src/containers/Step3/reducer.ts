@@ -28,6 +28,7 @@ const initialState = fromJS({
       busy: false,
       done: false,
       oldChunks: [],
+      currentChunk: '',
     },
     [ConsoleId.right]: {
       logMessages: [],
@@ -35,6 +36,7 @@ const initialState = fromJS({
       busy: false,
       done: false,
       oldChunks: [],
+      currentChunk: '',
     },
   },
 
@@ -46,7 +48,7 @@ const initialState = fromJS({
   showTimeModal: false,
   isSimulationRunning: false,
   isCouplingRunning: false,
-  isErrored: false, 
+  isErrored: false,
   dt: 1,
   it: 0,
 });
@@ -54,8 +56,15 @@ const initialState = fromJS({
 // ISSIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
-// NOTE: MSG_CHUNKSIZE ideally should not be smaller than maximum messages send from the backend
 const MSG_CHUNKSIZE = 200;
+
+// NOTE: For fixed width terminals
+// let MAX_LINE_LENGTH =
+// {
+//   LEFT_CONSOLE: 0,
+//   RIGHT_CONSOLE: 0
+// };
+
 
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
@@ -72,34 +81,29 @@ export function step3Reducer(state = initialState, action: any) {
     }
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
-      console.log("Adding new lines"); 
       const msg_length = lines.length;
-      let newChunk = null;
+      let currentChunk = '';
+      // lines.forEach((item) => { if (item.length > MAX_LINE_LENGTH[action.consoleId]) {
+      //   MAX_LINE_LENGTH[action.consoleId] = item.length;
+      //   console.log(`Updating maximum line length to ${MAX_LINE_LENGTH[action.consoleId]} in ${action.consoleId}`);
+      // }} );
+      // check lines
       const newState = state.updateIn(['consoles', action.consoleId, 'logMessages'], (old: List<string>) => {
         if (old.size + lines.length <= MSG_CHUNKSIZE) {
+          currentChunk = old.push(...lines).join('\n');
           return old.push(...lines);
         } else {
           const extraLines = old.size + lines.length - MSG_CHUNKSIZE;
-          console.log(`Size of extra lines is ${extraLines}`); 
           // we need to truncate the received as well
-          if ( lines.length >= MSG_CHUNKSIZE) { 
-            newChunk = {
-              key: (Math.random() + '').substr(0, 10) + Date.now(),
-              content: old.push(lines.slice(0, extraLines - MSG_CHUNKSIZE)),
-            };
-            return List(lines.slice(lines.length - MSG_CHUNKSIZE)) ; 
+          if ( lines.length >= MSG_CHUNKSIZE) {
+            currentChunk =  List(lines.slice(lines.length - MSG_CHUNKSIZE)).join('\n');
+            return List(lines.slice(lines.length - MSG_CHUNKSIZE)) ;
           }
-          newChunk = {
-            key: (Math.random() + '').substr(0, 10) + Date.now(),
-            content: old.slice(0, extraLines).join('\n'),
-          };
+          currentChunk = old.slice(extraLines).push(...lines).join('\n');
           return old.slice(extraLines).push(...lines);
         }
       });
-      if (newChunk) {
-        return newState.updateIn(['consoles', action.consoleId, 'oldChunks'], (old) => old.push(newChunk));
-      }
-      return newState;
+      return newState.setIn(['consoles', action.consoleId, 'currentChunk'], currentChunk);
     }
     case CONSOLE_CLEAR:
       return state
@@ -135,10 +139,10 @@ export function step3Reducer(state = initialState, action: any) {
         .setIn(['consoles', action.consoleId, 'done'], action.value);
 
     case IS_SIMULATION_RUNNING: {
-      return state.set('isSimulationRunning', action.value); 
+      return state.set('isSimulationRunning', action.value);
     }
     case TOGGLE_COUPLING: {
-      console.log(`Toggling coupling to ${action.value} from the reducers`); 
+      //console.log(`Toggling coupling to ${action.value} from the reducers`);
       return state.set('isCouplingRunning', action.value);
     }
     case ADD_FINAL_TIME: {

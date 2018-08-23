@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import * as React from 'react';
+import { List } from 'immutable';
 import { createStructuredSelector } from 'reselect';
 import {
   busySelector,
@@ -15,6 +16,7 @@ import {
   isSimulationRunningSelector,
   isFirstDoneSelector,
   isErroredSelector,
+  currentChunkSelector,
 } from './selectors';
 import {
   partNumberSelector,
@@ -40,6 +42,7 @@ import {
   CONSOLE_INIT_TIME,
   TOGGLE_COUPLING,
   SIMULATION_ERRORED,
+  terminalWidth,
 } from '../constants';
 import * as styles from './styles.scss';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -68,14 +71,16 @@ interface Step3Props {
   closeTimeModal: () => void;
   finalTime: number;
 
-  leftLogMessages: [string];
-  rightLogMessages: [string];
+  leftLogMessages: List<string>;
+  rightLogMessages: List<string>;
   leftBusy: boolean;
   rightBusy: boolean;
   leftLockBottom: boolean;
   rightLockBottom: boolean;
-  leftOldChunks: [ConsoleChunk];
-  rightOldChunks: [ConsoleChunk];
+  leftOldChunks: List<ConsoleChunk>;
+  leftCurrentChunk: string;
+  rightOldChunks: List<ConsoleChunk>;
+  rightCurrentChunk: string
 
   clearDone: () => void;
 
@@ -224,6 +229,8 @@ class Step3 extends React.Component<Step3Props, any> {
               logMessages={this.props.leftLogMessages}
               lockBottom={this.props.leftLockBottom}
               oldChunks={this.props.leftOldChunks}
+              currentChunk={this.props.leftCurrentChunk}
+              termWidth={ terminalWidth[ ConsoleId.left ][ this.props.partNumber - 1] }
             />
             <div>
               <div className={styles.belowConsoleElm}>
@@ -268,12 +275,14 @@ class Step3 extends React.Component<Step3Props, any> {
               logMessages={this.props.rightLogMessages}
               lockBottom={this.props.rightLockBottom}
               oldChunks={this.props.rightOldChunks}
+              currentChunk={this.props.rightCurrentChunk}
+              termWidth={  terminalWidth[ ConsoleId.left ][ this.props.partNumber - 1] }
             />
-            <div> 
-              <div className={styles.belowConsoleElm}> 
+            <div>
+              <div className={styles.belowConsoleElm}>
                 *You can also download the <a href={'../../logs/Part' + this.props.partNumber + '/su2.log'} download={su2FileName} >log file</a> of this simulation
-            </div> 
-          </div> 
+            </div>
+          </div>
             {/*
             <div>
               <div
@@ -315,23 +324,23 @@ enum StateEnum {
   NotStarted = 0,
   Waiting = 1,
   Running = 2,
-  Stopped = 3,
+  Paused = 3,
   Finished = 4
 };
 
-class SimulationStatus extends React.Component<SimulationStatusProps, { isStopped: boolean, State: StateEnum } > {
+class SimulationStatus extends React.Component<SimulationStatusProps, { isPaused: boolean, State: StateEnum } > {
   constructor(props: SimulationStatusProps) {
     super(props);
     this.onToggle = this.onToggle.bind(this);
     this.abortSim = this.abortSim.bind(this);
-    this.state = { isStopped: false, State: this.props.isSimulationRunning ? StateEnum.Waiting : StateEnum.NotStarted };
+    this.state = { isPaused: false, State: this.props.isSimulationRunning ? StateEnum.Waiting : StateEnum.NotStarted };
   }
 
 
   private StateMsg = [ this.props.isFirstDone?  'Simulation is finished' : 'Simulation not started',
                           'Waiting for a partner',
                           'Simulation is running',
-                          'Simulation is stopped',
+                          'Simulation is paused',
                           'Simulation is finished'];
 
   // NOTE: Ugliness below is the only relible way to display information. Otherwise it will break, due to sudden rerendering or toggling coupling
@@ -343,30 +352,29 @@ class SimulationStatus extends React.Component<SimulationStatusProps, { isStoppe
       }
     }
     else if ( (prevProps.isCouplingRunning == false && this.props.isCouplingRunning == true)
-      || ( prevState.isStopped && !this.state.isStopped ) ) {
+      || ( prevState.isPaused && !this.state.isPaused ) ) {
       // if the state was not running
-      if (!this.state.isStopped) {
+      if (!this.state.isPaused ) {
         this.setState({ State: StateEnum.Running });
       }
     }
     else if (prevProps.isCouplingRunning == true && this.props.isCouplingRunning == false) {
-      if (this.state.isStopped) {
-        this.setState({ State: StateEnum.Stopped });
+      if (this.state.isPaused ) {
+        this.setState({ State: StateEnum.Paused });
       }
     }
   }
 
   public onToggle(e) {
-    console.log("Toggling the simulation");
+    //console.log("Toggling the simulation");
     e.preventDefault();
     e.stopPropagation();
     // toggle simulation
-    this.props.onToggle(this.state.isStopped);
-    this.setState((prevState, props) => { return { isStopped: !prevState.isStopped }; });
+    this.props.onToggle(this.state.isPaused);
+    this.setState((prevState, props) => { return { isPaused: !prevState.isPaused }; });
   }
 
   public abortSim() {
-    console.log("Aborting the simulation");
     this.props.abortSimulation();
   }
 
@@ -374,7 +382,7 @@ class SimulationStatus extends React.Component<SimulationStatusProps, { isStoppe
 
     const msg = this.StateMsg[ this.state.State ] ;
     const style: React.CSSProperties  = { marginRight: '5px', fontSize: '15px',  width: '15px', cursor: 'pointer',  color: this.state.State == StateEnum.Running ? '#808080' : '#33a433' };
-    const visibility: React.CSSProperties =  { visibility: ( this.state.State === StateEnum.Running || this.state.State === StateEnum.Stopped ) ? 'visible' : 'hidden'};
+    const visibility: React.CSSProperties =  { visibility: ( this.state.State === StateEnum.Running || this.state.State === StateEnum.Paused ) ? 'visible' : 'hidden'};
     const icon = this.state.State == StateEnum.Running ? "fa fa-pause" : "fa fa-play";
     const tooltipMsg = this.state.State == StateEnum.Running ?
                        "Pause the simulation and check the output" :
@@ -415,6 +423,8 @@ const mapStateToProps = createStructuredSelector({
   partNumber: partNumberSelector(),
   leftOldChunks: oldChunksSelector(ConsoleId.left),
   rightOldChunks: oldChunksSelector(ConsoleId.right),
+  leftCurrentChunk: currentChunkSelector(ConsoleId.left),
+  rightCurrentChunk: currentChunkSelector(ConsoleId.right),
   isCouplingRunning: isCouplingRunningSelector(),
   isSimulationRunning: isSimulationRunningSelector(),
   isFirstDone: isFirstDoneSelector(),
@@ -477,7 +487,7 @@ export const consoleMiddleware = store => next => action => {
         // it means coupling is running now
         // NOTE: This should be set before call to stdout function (since it toggles coupling off, once simulaiton is finished)
         if ( ! store.getState().getIn(['step3','isCouplingRunning']) ) {
-          console.log("Toggling coupling to true from the consoleMiddleware");
+          //console.log("Toggling coupling to true from the consoleMiddleware");
           store.dispatch({ type: TOGGLE_COUPLING, value: true });
         }
         action.consoleId.forEach((cId, ind) => stdout(store, cId, action.data[ind]));
@@ -491,12 +501,11 @@ export const consoleMiddleware = store => next => action => {
       store.dispatch({ type: TIME_MODAL_DATA, value: true});
       store.dispatch({ type: IS_SIMULATION_RUNNING, value: false } );
       store.dispatch({ type: IS_SIMULATION_DONE, consoleId, value: true });
-      // if one of consoles returns non-zero status, simulatio is aborted or errored
+      // if one of consoles returns non-zero status, simulatio is aborted or errored (and coupling obviously finished)
       if (action.code != 0) {
-        console.log("Simulation errored!");
         store.dispatch({ type: SIMULATION_ERRORED, value: true});
+        store.dispatch({ type: TOGGLE_COUPLING, value: false });
       }
-      else console.log("Simulation suceeded!");
       //NOTE:  this dispatch causes rerendering of step3
       store.dispatch({ type: CONSOLE_TOGGLE_BUSY, consoleId, value: false });
     }
@@ -548,7 +557,7 @@ function stdout(store, consoleId, data) {
           const time = parseInt(foundTime[2], 10);
           store.dispatch({ type: ADD_FINAL_TIME, data: time });
           // Finding "Global time" means coupling part of simulation has ended
-          console.log("Toogling coupling to false from the stdout");
+          //console.log("Toogling coupling to false from the stdout");
           store.dispatch({ type: TOGGLE_COUPLING, value: false });
         }
       }

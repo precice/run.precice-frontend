@@ -32,3 +32,10 @@ export const xmlHoverBackground = '#202020';
 export const xmlSeenColor = '#0f190f';
 
 export const TOTAL_PART = 5;
+
+
+export const terminalWidth =
+{
+  LEFT_CONSOLE: [149, 149, 181, 182, 182],
+  RIGHT_CONSOLE: [149, 149, 181, 182]
+}

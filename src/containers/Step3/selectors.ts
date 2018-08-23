@@ -76,3 +76,8 @@ export const isFirstDoneSelector = () => createSelector(
 export const isErroredSelector = () => createSelector(
   step3SubstateSelector,
   (step3Substate) => step3Substate.get('isErrored'));
+
+export const currentChunkSelector = (consoleId) => createSelector(
+  step3SubstateSelector,
+  (substate) => substate.getIn(['consoles', consoleId, 'currentChunk']),
+);
