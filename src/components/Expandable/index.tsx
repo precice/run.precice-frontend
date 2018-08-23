@@ -21,8 +21,8 @@ class ExpandableList extends React.Component<ExpandableListProps, ExpandableList
     this.handleClick = this.handleClick.bind( this );
   }
 
-  context = { 
-    scrollArea: PropTypes.object 
+  context:  {
+    scrollArea: any
   }
 
   static contextTypes = {
