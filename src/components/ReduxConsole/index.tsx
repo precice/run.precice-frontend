@@ -24,8 +24,7 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
   constructor(props:ReduxConsoleProps){
     super(props);
     this.onPress = this.onPress.bind(this);
-    console.log(this.props.logMessages);
-  }
+
 
   public onPress(e)
   {
@@ -35,12 +34,22 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
 
   private node: HTMLDivElement;
 
-  public componentDidUpdate(prevProps) {
+  public scrollToBottom()
+  {
     // scroll onyl if not on the bottom
     const needScrolling = !( this.node.scrollHeight - this.node.scrollTop === this.node.clientHeight );
     if (this.props.lockBottom && needScrolling) {
       this.node.scrollTop = this.node.scrollHeight;
     }
+  }
+
+  public componentDidUpdate(prevProps) {
+    this.scrollToBottom();
+  }
+
+  // scroll out immedeately in case of rerendering, this happens before browser updates the screen
+  public componentDidMount() {
+    this.scrollToBottom();
   }
 
   public render() {
