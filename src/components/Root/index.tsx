@@ -92,7 +92,7 @@ class Root extends React.Component<RootProps, undefined> {
       </div>
 	{/* Research icons */} 
       <div className={styles.mediaBar}>
-        <div className={styles.mediaItem}> <a href="https://github.com/precice/precice" target="_blank" style={{color: "black"}}> <i className="fa fa-github" style={{width: '35px'}}></i> </a> </div>
+        <div className={styles.mediaItem}> <a href="https://github.com/precice" target="_blank" style={{color: "black"}}> <i className="fa fa-github" style={{width: '35px'}}></i> </a> </div>
         <div className={styles.mediaItem}> <a href="https://www.researchgate.net/project/preCICE" target="_blank"> <img src={rglogo} /> </a> </div>
         <div className={styles.mediaItem}> <a href="https://www.precice.org/" target="_blank"> <img src={preciceCircle} /> </a> </div>
       </div>
