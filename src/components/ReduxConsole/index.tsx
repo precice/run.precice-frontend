@@ -24,6 +24,7 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
   constructor(props:ReduxConsoleProps){
     super(props);
     this.onPress = this.onPress.bind(this);
+  }
 
 
   public onPress(e)
