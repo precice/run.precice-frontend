@@ -142,7 +142,6 @@ export function step3Reducer(state = initialState, action: any) {
       return state.set('isSimulationRunning', action.value);
     }
     case TOGGLE_COUPLING: {
-      //console.log(`Toggling coupling to ${action.value} from the reducers`);
       return state.set('isCouplingRunning', action.value);
     }
     case ADD_FINAL_TIME: {

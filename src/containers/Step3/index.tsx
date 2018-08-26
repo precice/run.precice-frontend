@@ -366,7 +366,6 @@ class SimulationStatus extends React.Component<SimulationStatusProps, { isPaused
   }
 
   public onToggle(e) {
-    //console.log("Toggling the simulation");
     e.preventDefault();
     e.stopPropagation();
     // toggle simulation
@@ -487,7 +486,6 @@ export const consoleMiddleware = store => next => action => {
         // it means coupling is running now
         // NOTE: This should be set before call to stdout function (since it toggles coupling off, once simulaiton is finished)
         if ( ! store.getState().getIn(['step3','isCouplingRunning']) ) {
-          //console.log("Toggling coupling to true from the consoleMiddleware");
           store.dispatch({ type: TOGGLE_COUPLING, value: true });
         }
         action.consoleId.forEach((cId, ind) => stdout(store, cId, action.data[ind]));
@@ -557,7 +555,6 @@ function stdout(store, consoleId, data) {
           const time = parseInt(foundTime[2], 10);
           store.dispatch({ type: ADD_FINAL_TIME, data: time });
           // Finding "Global time" means coupling part of simulation has ended
-          //console.log("Toogling coupling to false from the stdout");
           store.dispatch({ type: TOGGLE_COUPLING, value: false });
         }
       }
