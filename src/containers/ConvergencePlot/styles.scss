@@ -18,9 +18,22 @@
     flex: 1 1 auto;
     width: 30px;
     align-self: stretch;
-    &:hover {
-      cursor: pointer;
+    position: relative;
+
+    .openChart {
+      color: #505050;
+      position: absolute;
+      left: 48%;
+      top: 48%;
+      font-size: 24px;
+      z-index: 1;
+
     }
+    .openChart:hover {
+      cursor: pointer;
+      color: grey;
+    }
+
   }
 
 
@@ -57,7 +70,7 @@
     position: fixed; /* Stay in place */
     top: 0;
     width: 100%; /* Full width */
-    z-index: 1; /* Sit on top */
+    z-index: 2; /* Sit on top */
   }
   /* Modal Content */
   .modal-content {
@@ -100,6 +113,7 @@
     }
 
   }
+
 
   /* The Close Button */
   .close {

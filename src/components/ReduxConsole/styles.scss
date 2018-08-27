@@ -4,13 +4,23 @@ $terminal-background-color: black;
 $terminal-code-color: white;
 
 .logMessages {
-  flex: 0 1 1px;
   white-space: pre;
 }
 
 .prompt {
   flex: 0 0 auto;
   white-space: pre;
+  .cursor {
+    outline: 0.1em solid $terminal-code-color;
+    outline-offset: -0.1em;
+  }
+}
+
+.prompt:focus {
+  outline: none;
+  .cursor {
+    animation: cursor-animation 1s infinite;
+  }
 }
 
 .wrapper {
@@ -23,15 +33,6 @@ $terminal-code-color: white;
   overflow: auto;
   border-radius: $container-border-radius;
   padding: 0.5em;
-  .cursor {
-    outline: 0.1em solid $terminal-code-color;
-    outline-offset: -0.1em;
-  }
-}
-.wrapper:focus {
-  .cursor {
-    animation: cursor-animation 1s infinite;
-  }
 }
 
 

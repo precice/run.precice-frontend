@@ -95,7 +95,8 @@ class ConPlot extends React.Component<ConPlotProps, any> {
             {/*modal content*/}
           </div>
           {/*the modal*/}
-          <div id="chart" onClick={this.openModal} className={styles.convergePlot}>
+          <div id="chart" className={styles.convergePlot}>
+            <div className={styles.openChart} onClick={this.openModal} > <i className="fa fa-search-plus" aria-hidden="true" /> </div>
             <VictoryChart
               theme={VictoryTheme.grayscale}
               domain={{x: [0, this.props.domainX], y: [0, this.props.domainY]}}

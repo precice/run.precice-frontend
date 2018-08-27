@@ -13,6 +13,10 @@ import {
   PLOT_MODAL_DATA,
   TIME_MODAL_DATA,
   SIMULATION_CLEAR_DONE,
+  CONSOLE_INIT_TIME,
+  CONSOLE_UPDATE_TIME,
+  TOGGLE_COUPLING,
+  SIMULATION_ERRORED,
 } from '../constants';
 import { ConsoleId } from './index';
 
@@ -24,6 +28,7 @@ const initialState = fromJS({
       busy: false,
       done: false,
       oldChunks: [],
+      currentChunk: '',
     },
     [ConsoleId.right]: {
       logMessages: [],
@@ -31,6 +36,7 @@ const initialState = fromJS({
       busy: false,
       done: false,
       oldChunks: [],
+      currentChunk: '',
     },
   },
 
@@ -41,34 +47,63 @@ const initialState = fromJS({
   showPlot: false,
   showTimeModal: false,
   isSimulationRunning: false,
-  isSimulationDone: false,
+  isCouplingRunning: false,
+  isErrored: false,
+  dt: 1,
+  it: 0,
 });
 
-// IS_SIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
+// ISSIMULATION_RUNNING IS IMPORTANT PRIMARILY BECAUSE
 // WE CHANGE MULTIPLE FIELDS IN THE STATE
 
 const MSG_CHUNKSIZE = 200;
 
+// NOTE: For fixed width terminals
+// let MAX_LINE_LENGTH =
+// {
+//   LEFT_CONSOLE: 0,
+//   RIGHT_CONSOLE: 0
+// };
+
+
 export function step3Reducer(state = initialState, action: any) {
   switch (action.type) {
+    case CONSOLE_UPDATE_TIME: {
+      const dt = state.get('dt');
+      if (action.dt > dt) {
+        return state.set('it', action.it).set('dt', action.dt);
+      } else {
+        return state.set('it', action.it);
+      }
+    }
+    case CONSOLE_INIT_TIME: {
+      return state.set('it', 0).set('dt', 1);
+    }
     case CONSOLE_ADD_LINES: {
       const { lines } = action;
-      let newChunk = null;
+      const msg_length = lines.length;
+      let currentChunk = '';
+      // lines.forEach((item) => { if (item.length > MAX_LINE_LENGTH[action.consoleId]) {
+      //   MAX_LINE_LENGTH[action.consoleId] = item.length;
+      //   console.log(`Updating maximum line length to ${MAX_LINE_LENGTH[action.consoleId]} in ${action.consoleId}`);
+      // }} );
+      // check lines
       const newState = state.updateIn(['consoles', action.consoleId, 'logMessages'], (old: List<string>) => {
-        if (old.size < MSG_CHUNKSIZE) {
+        if (old.size + lines.length <= MSG_CHUNKSIZE) {
+          currentChunk = old.push(...lines).join('\n');
           return old.push(...lines);
         } else {
-          newChunk = {
-            key: (Math.random() + '').substr(0, 10) + Date.now(),
-            content: old.slice(0, MSG_CHUNKSIZE).join('\n'),
-          };
-          return old.slice(MSG_CHUNKSIZE).push(...lines);
+          const extraLines = old.size + lines.length - MSG_CHUNKSIZE;
+          // we need to truncate the received as well
+          if ( lines.length >= MSG_CHUNKSIZE) {
+            currentChunk =  List(lines.slice(lines.length - MSG_CHUNKSIZE)).join('\n');
+            return List(lines.slice(lines.length - MSG_CHUNKSIZE)) ;
+          }
+          currentChunk = old.slice(extraLines).push(...lines).join('\n');
+          return old.slice(extraLines).push(...lines);
         }
       });
-      if (newChunk) {
-        return newState.updateIn(['consoles', action.consoleId, 'oldChunks'], (old) => old.push(newChunk));
-      }
-      return newState;
+      return newState.setIn(['consoles', action.consoleId, 'currentChunk'], currentChunk);
     }
     case CONSOLE_CLEAR:
       return state
@@ -104,22 +139,10 @@ export function step3Reducer(state = initialState, action: any) {
         .setIn(['consoles', action.consoleId, 'done'], action.value);
 
     case IS_SIMULATION_RUNNING: {
-      const preVal = state.get('isSimulationRunning');
-
-      // TODO: Think of a better way to achieve the following
-      if (preVal === false && action.value === true) {
-
-        return state
-          .set('isSimulationRunning', action.value).set('showPlot', true);
-      } else if (preVal === true && action.value === false) {
-
-        return state
-          .set('isSimulationRunning', action.value).set('showTimeModal', true);
-      } else {
-
-        return state
-          .set('isSimulationRunning', action.value);
-      }
+      return state.set('isSimulationRunning', action.value);
+    }
+    case TOGGLE_COUPLING: {
+      return state.set('isCouplingRunning', action.value);
     }
     case ADD_FINAL_TIME: {
       return state
@@ -128,6 +151,10 @@ export function step3Reducer(state = initialState, action: any) {
     case SIMULATION_CLEAR_DONE: {
       return state
         .setIn(['consoles', action.consoleId, 'done'], false);
+    }
+    case SIMULATION_ERRORED: {
+      return state.
+        set('isErrored', action.value); 
     }
     default:
       return state;

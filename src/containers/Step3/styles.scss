@@ -29,12 +29,12 @@
       .title {
         flex: 1 1 auto;
         text-align: center;
-        width: 80%;
+        width: 60%;
       }
 
       .dummy {
         flex: 1 1 auto;
-        width: 10%;
+     //   width: 10%;
         padding: 0 10px;
       }
 
@@ -53,11 +53,14 @@
       .hide:focus {
         border: 4px solid $primary-color;
       }
+
+
     }
 
     .exp-content-hide {
       height: 10px;
     }
+
 .exp-content-container {
   display: flex;
   flex: 1 1 auto;
@@ -209,3 +212,12 @@
 }
 
 
+
+.simulation-status {
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  text-transform: none;
+  color: $btn-on-mouse-over;
+}
