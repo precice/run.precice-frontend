@@ -15,7 +15,7 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         <br/>
         <br/>
         To make it more convenient, we have already typed in the commands to start the two solvers in the terminals below.
-        Go ahead and start them.
+        Just click on the corresponding terminal and press <span style={{fontStyle: "italic"}}> Return </span> key to start the solver.
         <br/>
         <br/>
         Once you've started the simulation, you will be able to see SU2 and CalculiX specific output in the corresponding
