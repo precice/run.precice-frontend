@@ -58,13 +58,13 @@ class ReduxConsole extends React.PureComponent<ReduxConsoleProps, undefined> {
       <div
         className={styles.wrapper}
         ref={(ref) => { this.node = ref; }}
+        tabIndex={!this.props.busy ? -1 : 0}
+        onKeyDown={!this.props.busy? this.onPress : null}
       >
         { (this.props.logMessages.size !== 0) &&
         <div className={styles.logMessages} style={{width: this.props.termWidth + "ch"}}> { this.props.logMessages.join('\n') } </div> }
         { !this.props.busy && (
-          <div className={styles.prompt}
-            onKeyDown={this.onPress}
-            tabIndex={-1}>
+          <div className={styles.prompt}>
             {this.props.promptLabel || '$'}
             <span className={styles.cursor}>&nbsp;</span>
           </div>

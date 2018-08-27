@@ -10,18 +10,8 @@ $terminal-code-color: white;
 .prompt {
   flex: 0 0 auto;
   white-space: pre;
-  .cursor {
-    outline: 0.1em solid $terminal-code-color;
-    outline-offset: -0.1em;
-  }
 }
 
-.prompt:focus {
-  outline: none;
-  .cursor {
-    animation: cursor-animation 1s infinite;
-  }
-}
 
 .wrapper {
   flex: 1 1 auto;
@@ -33,6 +23,16 @@ $terminal-code-color: white;
   overflow: auto;
   border-radius: $container-border-radius;
   padding: 0.5em;
+  .cursor {
+    outline: 0.1em solid $terminal-code-color;
+    outline-offset: -0.1em;
+  }
+  &:focus {
+    .cursor {
+      animation: cursor-animation 1s infinite;
+    }
+    outline: none;
+  }
 }
 
 
