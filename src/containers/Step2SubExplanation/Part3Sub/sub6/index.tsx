@@ -79,7 +79,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
             html={(
               <div>
                 preCICE offers a variety of methods for post-processing.
-                For details, please consult the <a className={styles.link} target="_blank" href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a>.
+                For details, please consult the <a className={styles.link} target="_blank" href="https://github.com/precice/precice/wiki/Post-Processing-Configuration">wiki page</a>.
               </div>
             )}
           >
