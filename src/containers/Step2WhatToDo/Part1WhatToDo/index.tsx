@@ -18,7 +18,7 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         through the tutorial. Below, you can find the configuration file. The file has been split into sections.
         For each section, we have provided details on the respective settings to help you get
         acquainted with preCICE.
-        Take your time to click through it.
+        Take your time to click through it. For more extensive information refer to corresponding <a className={styles.link} target="_blank" href="https://github.com/precice/precice/wiki/Basic-Configuration">wiki page</a>.
       </div>
     );
   }
