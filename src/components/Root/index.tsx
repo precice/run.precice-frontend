@@ -15,7 +15,7 @@ const burgerStyles = {
     width: '26px',
     height: '20px',
     left: '20px',
-    top: '20px',
+    top: '2%',
     background: '#dddddd',
     border: '5px solid #dddddd',
     zIndex: '0' 
