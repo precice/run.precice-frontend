@@ -4,8 +4,8 @@
 Front-end of the web-based preCICE tutorial
 
 ## Development 
-```bash
-git clone https://github.com/precice/run.precice-frontend
+```
+git clone https://github.com/precice/run.precice-frontend && cd run.precice-frontend
 npm install
 npm run start
 ```
