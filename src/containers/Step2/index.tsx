@@ -48,8 +48,6 @@ class Step2 extends React.Component<Step2Props, undefined> {
       <div className={styles.subContainer}>
         <div className={styles.expContainer}>
           <div className={styles.expHeader}>
-            <span className={styles.hide}/>
-            <span className={styles.title}/>
             <span id="hideButton" onClick={this.props.hidAction} className={styles.hide}>
               {this.props.hidCheck2 ?
                 <span>expand <i className="fa fa-chevron-down" aria-hidden="true"/></span> :

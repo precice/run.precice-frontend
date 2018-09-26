@@ -179,8 +179,6 @@ class Step3 extends React.Component<Step3Props, any> {
                 });
               }}
             />
-            <span className={styles.dummy} />
-            <span className={styles.title} />
             <span
               id="hideButton"
               onClick={this.props.hidAction}

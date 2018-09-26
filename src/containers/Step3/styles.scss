@@ -26,23 +26,10 @@
       background-color: $explain-background-color;
       border-radius: $container-border-radius;
 
-      .title {
-        flex: 1 1 auto;
-        text-align: center;
-        width: 60%;
-      }
-
-      .dummy {
-        flex: 1 1 auto;
-     //   width: 10%;
-        padding: 0 10px;
-      }
-
       .hide {
         flex: 1 1 auto;
         cursor: pointer;
         text-align: right;
-        width: 10%;
         padding: 0 10px;
         color: $btn-on-mouse-over;
       }

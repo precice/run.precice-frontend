@@ -26,18 +26,12 @@
       border-radius: $container-border-radius;
       margin: auto;
 
-      .title {
-        flex: 1 1 auto;
-        text-align: center;
-        width: 80%;
-      }
 
       .hide {
         flex: 1 1 auto;
         padding: 0 10px;
         cursor: pointer;
         text-align: right;
-        width: 5%;
         color: $btn-on-mouse-over;
       }
 
