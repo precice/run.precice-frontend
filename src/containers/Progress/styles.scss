@@ -4,16 +4,29 @@
 .progress {
   //background-color: $scroll-background-color;
   border-radius: 10px;
-  flex: 0 0 auto;
-  margin: 10px 10%;
-  padding-bottom: 2%; 
+  margin: 10px 15%;
   padding-top: 0.5%;
-  padding-left: 4%; 
+  padding-left: 10px;
   // match width to the steps
 }
 
 :global{
   .ProgressSteps {
+
+    display: flex;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+    }
+    // NOTE: Change it, once you have different number of steps.
+    // this is only sane way to go
+    & > div:nth-child(5) {
+      width: 25px;
+      flex-grow: 0;
+    }
+
     &-Step {
       /* ... */
       background: $scroll-background-color;
@@ -48,12 +61,10 @@
     &-Line {
       /* ... */
       background: $scroll-background-color;
-      float: left;
-      flex: 1 1 auto;
       height: 6px;
       position: relative;
       top: 12px;
-      width: 20%;
+      flex: 1 1 auto;
 
       &-activated {
         /* ... */
