@@ -121,7 +121,7 @@ export const config2 = {
  initialCodeString45 : ``,
  initialCodeString5 : `    <m2n:sockets
       from="SU2_CFD" to="Calculix"
-      distribution-type="gather-scatter"/>`,
+      />`,
  initialCodeString56 : ` `,
  initialCodeString6 : `    <coupling-scheme:serial-explicit>
       <participants first="SU2_CFD" second="Calculix"/>
