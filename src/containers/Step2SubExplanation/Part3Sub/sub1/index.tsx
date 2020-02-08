@@ -18,7 +18,6 @@ class Sub1 extends React.Component<Sub1Props, any> {
           simulation.
         </li>
         <Tooltip
-          width="100"
           interactive
           html={(
             <div>

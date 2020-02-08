@@ -20,7 +20,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           respect to each other - one waits for the other to finish its time step. <span className={styles.highlight}>Explicit</span>
           <span> </span>means that we let every solver compute once and then move on to the next timestep.
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
@@ -54,7 +53,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           CalculiX. We need to exchange this data through a mesh between the two participants. Please note that both
           participants must use the same mesh.
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
@@ -97,7 +95,6 @@ export default Sub6;
  <span className={styles.highlight}>relative-convergence-measure</span>: We further set convergence measures for the data sets, after which the implicit sub-iterations will be stopped.
  <Tooltip
  trigger="click"
- width="100"
  interactive
  html={(
  <div>
@@ -126,7 +123,6 @@ export default Sub6;
  <span className={styles.highlight}>extrapolation-order value</span>: Specifies the number of previous timesteps from which the initial guess for the next timestep is constructed.
  <Tooltip
  trigger="click"
- width="100"
  interactive
  html={(
  <div>
@@ -150,7 +146,6 @@ export default Sub6;
  factor in each iteration based on the previous iterations.
  <Tooltip
  trigger="click"
- width="100"
  interactive
  html={(
  <div>

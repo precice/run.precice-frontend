@@ -60,7 +60,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
               (this.props.buttonLinks.previous === '/tutorial/part' + (this.props.partNumber - 1).toString() + '/step4' &&
               ( this.props.leftBusy || this.props.rightBusy )) ?
                 this.props.buttonLinks.previous && <div className={styles.btnLDisabled}><Tooltip
-                  width="100"
                   title="Simulation is runnning"
                 ><span>BACK</span>
                 </Tooltip></div> :
@@ -76,7 +75,6 @@ class Tutorial extends React.Component<TutorialProps, any> {
                 ( this.props.leftBusy || this.props.rightBusy )) ?
                   this.props.buttonLinks.next &&
                   <div className={styles.btnRDisabled}><Tooltip
-                    width="100"
                     title="Simulation is runnning"
                   ><span>NEXT</span>
                   </Tooltip></div> :

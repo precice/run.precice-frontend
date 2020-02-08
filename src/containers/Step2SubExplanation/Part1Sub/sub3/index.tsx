@@ -69,7 +69,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
           the participants have different grids and we need to map between them.
           The mapping can be either <span className={styles.highlight}>consistent</span>
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
@@ -84,7 +83,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
           </Tooltip>
           or <span className={styles.highlight}>conservative</span>
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
@@ -105,7 +103,6 @@ class Sub3 extends React.Component<Sub3Props, any> {
           can do this in the beginning by setting this to <span className={styles.highlight}>initial</span>. Other options include<span> </span>
           <span className={styles.highlight}>onadvance</span> and <span className={styles.highlight}>ondemand</span>
           <Tooltip
-            width="100"
             title="Re-computed multiple times in case of changing coupling meshes"
           >
             <span className="fa fa-question-circle" style={{ fontSize: '18px' }}/>&nbsp;

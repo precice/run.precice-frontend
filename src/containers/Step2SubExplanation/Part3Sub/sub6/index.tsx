@@ -26,7 +26,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           guessed, by the "limit" tag.
 
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
@@ -47,7 +46,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           from which the initial guess for the next time step is constructed.
 
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
@@ -74,7 +72,6 @@ class Sub6 extends React.Component<Sub6Props, any> {
           and thereon, the method can adapt the relaxation factor in each iteration based on the previous iterations.
 
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>

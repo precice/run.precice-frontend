@@ -390,10 +390,10 @@ class SimulationStatus extends React.Component<SimulationStatusProps, { isPaused
           {
             <div style={{ fontSize: '0px' }}>
               <span style={{fontSize: '15px', marginLeft :'10px' }}> {msg} </span>
-              <Tooltip width="100" title={ tooltipMsg }>
+              <Tooltip title={ tooltipMsg }>
                 <i className={icon} style={{ ...style, ...visibility }} onClick={this.onToggle} />
               </Tooltip>
-              <Tooltip width="100" title="Abort the simulation">
+              <Tooltip title="Abort the simulation">
                 <i className="fa fa-step-forward" style={{ color: '#b33a3a', fontSize: "15px", width: '15x', cursor: 'pointer', ...visibility }} onClick={this.abortSim}/>
               </Tooltip>
             </div>

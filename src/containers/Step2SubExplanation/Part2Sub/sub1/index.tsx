@@ -17,7 +17,6 @@ class Sub1 extends React.Component<Sub1Props, any> {
           : This attribute sets the spatial dimensions of the problem to be solved. This is 3 since we're performing a quasi-2D
           simulation.
           <Tooltip
-            width="100"
             interactive
             html={(
               <div>
