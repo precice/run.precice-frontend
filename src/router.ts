@@ -1,4 +1,3 @@
-import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
 
 
@@ -17,11 +16,11 @@ import Part4 from './containers/Part4';
 import Part5 from './containers/Part5';
 import Final from './containers/Final';
 
-
+const createBrowserHistory = require('history').createBrowserHistory;
 
 
 // Create a history of your choosing (we're using a browser history in this case)
-export const history = createHistory();
+export const history = createBrowserHistory()
 
 // Build the middleware for intercepting and dispatching navigation actions
 export const routerMiddlewareInstace = routerMiddleware(history);
