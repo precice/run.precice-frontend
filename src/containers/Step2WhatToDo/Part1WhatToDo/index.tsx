@@ -14,7 +14,7 @@ class Part1Sub extends React.Component<Part1SubProps, any> {
         <br/>
         <br/>
         For the first simulation, we will couple SU2 and CalculiX using a serial explicit / conventional staggered
-        coupling scheme and set the maximum number of timesteps to twenty. This fact will become significant as you go
+        coupling scheme and set the maximum number of time windows to twenty. This fact will become significant as you go
         through the tutorial. Below, you can find the configuration file. The file has been split into sections.
         For each section, we have provided details on the respective settings to help you get
         acquainted with preCICE.

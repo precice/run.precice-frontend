@@ -9,8 +9,8 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
     return(
       <div>
         As mentioned in introduction to this section, an implicit coupling scheme leads to several
-        sub-iterations between the solvers in each time step. In order to show this, we have included a plot that depicts
-        the number of coupling iterations in each time step.
+        sub-iterations between the solvers in each time window. In order to show this, we have included a plot that depicts
+        the number of coupling iterations in each time window.
       </div>
     );
   }

@@ -8,7 +8,7 @@ class Part4Sub extends React.Component<Part4SubProps, any> {
   public render() {
     return(
       <div>
-        As you can see, changing the post-processing method to Quasi-Newton gives similar results as the last section. This is
+        As you can see, changing the acceleration method to Quasi-Newton gives similar results as the last section. This is
         in line with what we would've predicted before running the simulation.
       </div>
     );

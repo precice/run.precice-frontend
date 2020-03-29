@@ -17,8 +17,8 @@ class Sub6 extends React.Component<Sub6Props, any> {
           <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}>serial-explicit</span>
           <span> </span>
           coupling scheme. <span className={styles.highlight}>Serial</span>  refers to the fact that the two solvers operate serially with
-          respect to each other - one waits for the other to finish its time step. <span className={styles.highlight}>Explicit</span>
-          <span> </span>means that we let every solver compute once and then move on to the next timestep.
+          respect to each other - one waits for the other to finish its time window. <span className={styles.highlight}>Explicit</span>
+          <span> </span>means that we let every solver compute once and then move on to the next time window.
           <Tooltip
             interactive
             html={(
@@ -26,7 +26,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
                 A <span className={styles.highlight}>parallel
               </span> coupling-scheme would allow simultaneous
                 computation. An <span className={styles.highlight}>implicit</span> scheme would have meant that
-                we sub-iterate between both solvers in every timestep until convergence.
+                we sub-iterate between both solvers in every time window until convergence.
               </div>
             )}
           >
@@ -40,12 +40,12 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>max-timesteps value</span>: Here we specify the maximum number of timesteps.
-          We will terminate our first simulation after only twenty timesteps.
+          <span className={styles.highlight}>max-time-windows value</span>: Here we specify the maximum number of time windows (i.e. coupling time steps).
+          We will terminate our first simulation after only twenty time windows.
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>timestep-length value</span>: Maximum allowed length of a coupling timestep.
+          <span className={styles.highlight}>time-window-size value</span>: Maximum allowed size of a coupling time window.
         </li>
         <br/>
         <li>
@@ -120,13 +120,13 @@ export default Sub6;
  </li>
  <br/>
  <li>
- <span className={styles.highlight}>extrapolation-order value</span>: Specifies the number of previous timesteps from which the initial guess for the next timestep is constructed.
+ <span className={styles.highlight}>extrapolation-order value</span>: Specifies the number of previous time windows from which the initial guess for the next time window is constructed.
  <Tooltip
  trigger="click"
  interactive
  html={(
  <div>
- For example, if <span className={styles.highlight}>value</span> is 2, then a second-order extrapolation of the next timestep's initial guess is done from the current and the previous timestep results.
+ For example, if <span className={styles.highlight}>value</span> is 2, then a second-order extrapolation of the next time window's initial guess is done from the current and the previous time window results.
  </div>
  )}
  >
@@ -138,10 +138,10 @@ export default Sub6;
  The implicit coupling is solved via a fixed-point iteration.
  Sometimes the convergence of fixed-point iteration can be slow,
  especially when the interaction between the fluid and the structure is strong due to a high fluid/structure
- density ration or incompressibility of the flow. Therefore, we need some post-processing.
+ density ration or incompressibility of the flow. Therefore, we need some acceleration.
  </li>
  <li>
- <span className={styles.highlight}>post-processing</span>:  In order to improve the convergence rate,
+ <span className={styles.highlight}>acceleration</span>:  In order to improve the convergence rate,
  we use <span className={styles.highlight}>aitken</span> relaxation method which adapts the relaxation
  factor in each iteration based on the previous iterations.
  <Tooltip
@@ -150,7 +150,7 @@ export default Sub6;
  html={(
  <div>
  For more information about aitken, click <a style={{color: 'white'}}href="http://onlinelibrary.wiley.com/doi/10.1002/nme.1620010306/abstract">here</a>.
- preCICE offers various methods for post-processing.
+ preCICE offers various methods for acceleration.
  For more methods, please refer to <a style={{color: 'white'}}href="https://github.com/precice/precice/wiki/XML-Reference">XML reference</a>.
  </div>
  )}

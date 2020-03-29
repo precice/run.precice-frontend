@@ -119,13 +119,12 @@
     </participant>`,
  initialCodeString45 : ``,
  initialCodeString5 : `    <m2n:sockets
-      from="SU2_CFD" to="Calculix"
-     />`,
+      from="SU2_CFD" to="Calculix" />`,
  initialCodeString56 : ` `,
  initialCodeString6 : `    <coupling-scheme:serial-explicit>
       <participants first="SU2_CFD" second="Calculix"/>
-      <max-timesteps value="20"/>
-      <timestep-length value="1e-2" />
+      <max-time-windows value="20"/>
+      <time-window-size value="1e-2" />
       <exchange
         data="Forces0" mesh="Calculix_Mesh" 
         from="SU2_CFD" to="Calculix"/>

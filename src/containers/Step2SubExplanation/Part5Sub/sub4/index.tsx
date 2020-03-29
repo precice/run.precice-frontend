@@ -15,7 +15,7 @@ class Sub4 extends React.Component<Sub4Props, any> {
         <li>
           <span className={styles.highlight}>watch-point</span>: A watch point can be used to follow the transient
           changes of data and mesh vertex coordinates at a given point. Here we set a watch point on the CalculiX mesh
-          at the top of the flap. preCICE will then write the mesh displacement at the watch point to a file in each time step.
+          at the top of the flap. preCICE will then write the mesh displacement at the watch point to a file in each time window.
         </li>
       </div>
     );

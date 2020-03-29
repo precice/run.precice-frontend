@@ -118,16 +118,15 @@ export const config5 = {
     </participant>`,
  initialCodeString45 : ``,
  initialCodeString5 : `    <m2n:sockets
-      from="SU2_CFD" to="Calculix"
-      />`,
+      from="SU2_CFD" to="Calculix" />`,
  initialCodeString56 :  ``,
 
 
  initialCodeString6 : `    
     <coupling-scheme:parallel-implicit>
            <participants first="SU2_CFD" second="Calculix"/>
-           <max-timesteps value="400"/>
-           <timestep-length value="1e-2" />
+           <max-time-windows value="400"/>
+           <time-window-size value="1e-2" />
            
            <exchange
              data="Forces0" mesh="Calculix_Mesh"
@@ -144,15 +143,15 @@ export const config5 = {
             limit="1e-3" data="Forces0" mesh="Calculix_Mesh"/>
            <extrapolation-order value="2"/>
            
-          <post-processing:IQN-ILS>
+          <acceleration:IQN-ILS>
             <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
             <data name="Forces0" mesh="Calculix_Mesh"/>
             <preconditioner type="residual-sum"/>
             <filter type="QR1" limit="1e-6"/>
             <initial-relaxation value="0.5"/>
             <max-used-iterations value="40"/>
-            <timesteps-reused value="10"/>
-          </post-processing:IQN-ILS>      
+            <time-windows-reused value="10"/>
+          </acceleration:IQN-ILS>      
             
       </coupling-scheme:parallel-implicit>`,
 

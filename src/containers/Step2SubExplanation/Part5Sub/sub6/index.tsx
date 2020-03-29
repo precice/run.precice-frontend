@@ -16,7 +16,7 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <li>
           <span className={styles.highlight}>coupling-scheme:parallel-implicit</span>: The only change from the last part
           is that now both our solvers will be operating in parallel in a given time
-          step. Doing so, we can potentially speed up the simulation by getting rid of the wait time incurred by a serial
+          window. Doing so, we can potentially speed up the simulation by getting rid of the wait time incurred by a serial
           coupling scheme.
         </li>
       </div>

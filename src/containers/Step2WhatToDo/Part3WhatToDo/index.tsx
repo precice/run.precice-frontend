@@ -12,7 +12,7 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
         at the interface of the two solvers. Furthermore, we have to specify that we want to use adaptive Aitken underrelaxation.
         The preCICE configuration allows us to specify this through the tag
         <div className={styles.contentCenter}>
-          <pre>{`<post-processing:aitken>`}</pre>
+          <pre>{`<acceleration:aitken>`}</pre>
         </div>
       </div>
     );

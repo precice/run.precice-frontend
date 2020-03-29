@@ -15,15 +15,15 @@ class Sub6 extends React.Component<Sub6Props, any> {
         <li>
           <span className={styles.highlight}>coupling-scheme</span>: Here we use the <span className={styles.highlight}>serial-explicit</span>
           <span> </span>coupling scheme. <span className={styles.highlight}>Serial</span> refers to the fact that the two solvers operate serially with
-          respect to each other - one waits for the other to finish its timestep. <span className={styles.highlight}>Explicit</span>
-          <span> </span>means that we let every solver compute once and then move on to the next timestep.
+          respect to each other - one waits for the other to finish its time window. <span className={styles.highlight}>Explicit</span>
+          <span> </span>means that we let every solver compute once and then move on to the next time window.
           <Tooltip
             interactive
             html={(
               <div>
                 A <span className={styles.highlight}>parallel</span> coupling-scheme would allow simultaneous
                 computation. An <span className={styles.highlight}>implicit</span> scheme would have meant that
-                we sub-iterate between both solvers in every time step until convergence.
+                we sub-iterate between both solvers in every time window until convergence.
               </div>
             )}
           >
@@ -37,13 +37,13 @@ class Sub6 extends React.Component<Sub6Props, any> {
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>max-timesteps value</span>: This is the maximum number of
-          time steps that we will perform in our simulation. Here we are performing a maximum of fifty time steps
+          <span className={styles.highlight}>max-time-windows value</span>: This is the maximum number of
+          time windows (i.e. coupling time steps) that we will perform in our simulation. Here we are performing a maximum of fifty time windows
           in the hope that we'll see the flap oscillate.
         </li>
         <br/>
         <li>
-          <span className={styles.highlight}>timestep-length value</span>: Maximum allowed length of a coupling timestep.
+          <span className={styles.highlight}>time-window-size value</span>: Maximum allowed size of a coupling time window.
         </li>
         <br/>
         <li>

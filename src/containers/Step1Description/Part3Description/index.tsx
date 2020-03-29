@@ -19,9 +19,9 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
 
           <br/> <br/>
 
-          While a first thought would be to reduce the timestep, instabilities induced by explicit coupling
-          schemes usually cannot be cured through timestep reduction. In such cases we need to perform several
-          sub-iterations or coupling iterations in each timestep until the solution at the interface of both our solvers
+          While a first thought would be to reduce the time window size, instabilities induced by explicit coupling
+          schemes usually cannot be cured through time window size reduction. In such cases we need to perform several
+          sub-iterations or coupling iterations in each time window until the solution at the interface of both our solvers
           converges. preCICE allows us to do this by using an implicit coupling scheme.
 
           <br/><br/>
@@ -29,7 +29,7 @@ class Part3Sub extends React.Component<Part3SubProps, any> {
           Implicit coupling schemes are based on fixed-point iterations. To solve them in a robust and efficient manner,
           preCICE provides underrelaxation strategies like Adaptive Aitken and Quasi-Newton solvers. In this section,
           we will couple our solvers using an implicit coupling scheme with Aitken underrelaxation. In preCICE
-          nomenclature we call this "post-processing".
+          nomenclature we call this "acceleration".
         </div>
       </div>
     );

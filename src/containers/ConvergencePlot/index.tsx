@@ -81,7 +81,7 @@ class ConPlot extends React.Component<ConPlotProps, any> {
                   />
                   <VictoryAxis
                     crossAxis={true}
-                    label="Time Steps"
+                    label="Time Windows"
                     fixLabelOverlap={true}
                     axisLabelComponent={<VictoryLabel />}
                   />
@@ -113,7 +113,7 @@ class ConPlot extends React.Component<ConPlotProps, any> {
               />
               <VictoryAxis
                 crossAxis={true}
-                label="Time Steps"
+                label="Time Windows"
                 fixLabelOverlap={true}
                 axisLabelComponent={<VictoryLabel />}
               />

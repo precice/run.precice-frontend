@@ -119,15 +119,14 @@ export const config3 = {
     </participant>`,
  initialCodeString45 : ``,
  initialCodeString5 : `    <m2n:sockets
-      from="SU2_CFD" to="Calculix"
-      />`,
+      from="SU2_CFD" to="Calculix" />`,
  initialCodeString56 : ` `,
 
 
  initialCodeString6 : `    <coupling-scheme:serial-implicit>
            <participants first="SU2_CFD" second="Calculix"/>
-           <max-timesteps value="400"/>
-           <timestep-length value="1e-2" />
+           <max-time-windows value="400"/>
+           <time-window-size value="1e-2" />
            
            <exchange
              data="Forces0" mesh="Calculix_Mesh"
@@ -144,10 +143,10 @@ export const config3 = {
             limit="1e-3" data="Forces0" mesh="Calculix_Mesh"/>
            <extrapolation-order value="2"/>
            
-           <post-processing:aitken>
+           <acceleration:aitken>
               <data name="DisplacementDeltas0" mesh="Calculix_Mesh"/>
               <initial-relaxation value="0.8"/>
-           </post-processing:aitken>
+           </acceleration:aitken>
         
         </coupling-scheme:serial-implicit>`,
 
